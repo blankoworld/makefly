@@ -17,7 +17,7 @@ DESTDIR = ./pub
 FILES != cd ${SRCDIR}; ls
 #FILES = a.md b.md c.md
 
-all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//}
+all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css
 
 .for FILE in ${FILES}
 TARGET_${FILE} = ${FILE:S/.md$/.xhtml/:S/^/${DESTDIR}\//}
@@ -37,6 +37,11 @@ ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 		} ; \
 	} && echo "-- Page built: ${TARGET_${FILE}}."
 .endfor
+
+${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
+	$Q{ \
+		cp ${STYLEDIR}/simple.css ${DESTDIR}/simple.css ; \
+	}
 
 clean: ${FILES:S/.md$/.xhtml/:S/^/clean-${DESTDIR}\//}
 
