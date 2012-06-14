@@ -43,12 +43,8 @@ ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
 		cp ${STYLEDIR}/simple.css ${DESTDIR}/simple.css ; \
 	}
 
-clean: ${FILES:S/.md$/.xhtml/:S/^/clean-${DESTDIR}\//}
-
-.for ${FILE} in ${FILES}
-	.warning clean-${TARGET_${FILE}} ${FILE}
-	clean-${TARGET_${FILE}}:
-	$Qrm -f ${TARGET_${FILE}} && \
-	echo "${TARGET_${FILE}} removed."
-.endfor
-
+clean: ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css
+	$Q{ \
+		rm ${DESTDIR}/simple.css ; \
+		rm -f ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ; \
+	}
