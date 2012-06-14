@@ -1,0 +1,11 @@
+- template comme Nanoblogger avec formule magique : 
+
+eval "cat << ___EOF___
+$(cat)
+___EOF___"
+
+pour permettre de remplacer des variables dans un template.
+N'est possible qu'avec zsh apparemment.
+
+- hymby : Host Your MiniBlog Yourself pour le blog + interface Lua
+- Makefly Blog pour le moteur de blog (car utilise make, Mcfly est le héros de "Retour vers le futur")
