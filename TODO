@@ -1,11 +1,8 @@
-- template comme Nanoblogger avec formule magique : 
+- permit template like Nanoblogger or Utterson. For an example with m4 or with this:
 
 eval "cat << ___EOF___
 $(cat)
 ___EOF___"
 
-pour permettre de remplacer des variables dans un template.
-N'est possible qu'avec zsh apparemment.
+This permit to replace some variables. It's seems to be not valid without zsh.
 
-- hymby : Host Your MiniBlog Yourself pour le blog + interface Lua
-- Makefly Blog pour le moteur de blog (car utilise make, Mcfly est le héros de "Retour vers le futur")
