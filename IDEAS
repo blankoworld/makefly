@@ -1,0 +1,20 @@
+Some ideas:
+- hymby : Host Your MiniBlog Yourself for static blog engine (hymby) + Lua interface
+- create a template of what should look like a post. For an example, a post could be:
+"""
+TITLE=My title with some 
+DESCRIPTION=
+DATE=
+"""
+
+or do some files. On for article content, one for some data. It would be simple to dispatch data than write all data in ONE file. For geek or console user, we could do an interface to simplify files creation. With Lua, lambda users could create files quickly and without any knowledge.
+- use layout/template for all pages
+- permit to add an introduction
+- add categories for all articles (or tags?)
+- permit to add plugins?
+- permit to add last identica ' status
+- rss feeds
+- atom feeds
+- HTML verification?
+- archive page
+- how could we add comments on each post? Disqus @ begining, then which system? => Lua system with a DB?
