@@ -13,14 +13,16 @@ footer ?= ${TMPLDIR}/footer.xhtml
 
 SRCDIR  = ./src
 DESTDIR = ./pub
+DBDIR   = ./db
+TMPDIR  = ./tmp
 
 FILES != cd ${SRCDIR}; ls
-#FILES = a.md b.md c.md
 
-all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css
+all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml
 
 .for FILE in ${FILES}
 TARGET_${FILE} = ${FILE:S/.md$/.xhtml/:S/^/${DESTDIR}\//}
+TMP_${FILE} = ${FILE:S/.md$/.mk/:S/^/${TMPDIR}\//}
 .endfor
 
 .for FILE in ${FILES}
@@ -36,15 +38,31 @@ ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 			false                                             ; \
 		} ; \
 	} && echo "-- Page built: ${TARGET_${FILE}}."
+
+${TMP_${FILE}}:
+	$Q{ \
+		sh index.sh ${FILE:S/.md$/.mk/}; \
+	}
 .endfor
 
 ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
 	$Q{ \
 		cp ${STYLEDIR}/simple.css ${DESTDIR}/simple.css ; \
+	} && echo "-- CSS: ${DESTDIR}/simple.css."
+
+${DESTDIR}/index.xhtml: ${FILES:S/.md$/.mk/:S/^/${TMPDIR}\//}
+	$Q{ \
+		cat ${header} >> ${DESTDIR}/index.xhtml ; \
+		cat tmp/${FILES:S/.md$/.mk /} >> ${DESTDIR}/index.xhtml ; \
+		rm -f ${TMPDIR}/${FILES:S/.md$/.mk /} ; \
+		cat ${footer} >> ${DESTDIR}/index.xhtml ; \
 	}
 
-clean: ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css
+clean: ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml
 	$Q{ \
 		rm ${DESTDIR}/simple.css ; \
-		rm -f ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ; \
+		rm ${DESTDIR}/index.xhtml ; \
+		rm -f ${FILES:S/.md$/.xhtml /:S/^/${DESTDIR}\//} ; \
 	}
+
+.MAIN: all
