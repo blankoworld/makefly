@@ -3,7 +3,7 @@
 file=$1
 element=`cat "template/element.xhtml"`
 
-echo "SCRIPT ${file}"
+echo "Using ${file} dbfile."
 
 . "db/${file}"
 echo ${element} |sed -e "s/\@\@TITLE\@\@/${TITLE}/" >> "tmp/${file}"
