@@ -5,4 +5,7 @@ $(cat)
 ___EOF___"
 
 This permit to replace some variables. It's seems to be not valid without zsh.
-
+- permit to sort article regarding a given timestamp (add timestamp to db/ files).
+  Example : date -d "2012-06-04 00:15:32" +'%s' to have timestamp at 2012-06-etc.
+  date +%s give current timestamp
+  File example : timestampnumber,article_title.mk
