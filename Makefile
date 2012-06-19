@@ -39,10 +39,11 @@ ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 		} ; \
 	} && echo "-- Page built: ${TARGET_${FILE}}."
 
-${TMP_${FILE}}:
+${TMP_${FILE}}: ${TARGET_${FILE}}
 	$Q{ \
 		sh index.sh ${FILE:S/.md$/.mk/}; \
 	}
+
 .endfor
 
 ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
@@ -53,8 +54,8 @@ ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
 ${DESTDIR}/index.xhtml: ${FILES:S/.md$/.mk/:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${header} >> ${DESTDIR}/index.xhtml ; \
-		cat tmp/${FILES:S/.md$/.mk /} >> ${DESTDIR}/index.xhtml ; \
-		rm -f ${TMPDIR}/${FILES:S/.md$/.mk /} ; \
+		cat ${FILES:S/.md$/.mk /:S/^/${TMPDIR}\//} >> ${DESTDIR}/index.xhtml ; \
+		rm -f ${FILES:S/.md$/.mk /:S/^/${TMPDIR}\//} ; \
 		cat ${footer} >> ${DESTDIR}/index.xhtml ; \
 	}
 
