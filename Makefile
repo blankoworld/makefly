@@ -18,6 +18,8 @@ TMPDIR  = ./tmp
 
 FILES != cd ${SRCDIR}; ls
 
+.include "makefly.rc"
+
 all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml
 
 .for FILE in ${FILES}
@@ -29,7 +31,7 @@ TMP_${FILE} = ${FILE:S/.md$/.mk/:S/^/${TMPDIR}\//}
 ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
-			cat ${header}                  && \
+			cat ${header} |sed -e "s|@@BLOGTITLE@@|${BLOGTITLE}|g" |sed -e "s|@@BASEURL@@|${BASEURL}|g" && \
 			${markdown} ${SRCDIR}/${FILE}  && \
 			cat ${footer}                   ; \
 		} > ${TARGET_${FILE}} || { \
@@ -53,10 +55,13 @@ ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
 
 ${DESTDIR}/index.xhtml: ${FILES:S/.md$/.mk/:S/^/${TMPDIR}\//}
 	$Q{ \
-		cat ${header} >> ${DESTDIR}/index.xhtml ; \
-		cat ${FILES:S/.md$/.mk /:S/^/${TMPDIR}\//} >> ${DESTDIR}/index.xhtml ; \
+		cat ${header} >> ${TMPDIR}/index.xhtml ; \
+		cat ${FILES:S/.md$/.mk /:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
 		rm -f ${FILES:S/.md$/.mk /:S/^/${TMPDIR}\//} ; \
-		cat ${footer} >> ${DESTDIR}/index.xhtml ; \
+		cat ${footer} >> ${TMPDIR}/index.xhtml ; \
+		sed -e "s|@@BASEURL@@|${BASEURL}|g" -e "s|@@BLOGTITLE@@|${BLOGTITLE}|g" ${TMPDIR}/index.xhtml > ${TMPDIR}/index.xhtml.tmp; \
+		mv ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml ; \
+		rm ${TMPDIR}/index.xhtml ; \
 	}
 
 clean: ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml
@@ -64,6 +69,8 @@ clean: ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR
 		rm ${DESTDIR}/simple.css ; \
 		rm ${DESTDIR}/index.xhtml ; \
 		rm -f ${FILES:S/.md$/.xhtml /:S/^/${DESTDIR}\//} ; \
+		rm -f ${TMPDIR}/index.xhtml ; \
+		rm -f ${TMPDIR}/index.xhtml.tmp ; \
 	}
 
 .MAIN: all
