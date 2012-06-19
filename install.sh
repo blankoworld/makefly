@@ -2,13 +2,13 @@
 
 # install.sh
 
-# Copy pub directory to users' public_html
+# Copy pub directory to user's public_html
 
 SRCDIR=./pub
 DESTDIR=${HOME}/public_html
 
 process() {
-  rm -f ${DESTDIR}/* && cp ${SRCDIR}/* ${DESTDIR} && echo "...installed!"
+  rm -f ${DESTDIR}/* && cp -r ${SRCDIR}/* ${DESTDIR} && echo "...installed!"
 }
 
 echo "INSTALL to ${DESTDIR}..."
