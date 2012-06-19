@@ -10,6 +10,7 @@ STYLEDIR = ./style
 
 header ?= ${TMPLDIR}/header.xhtml
 footer ?= ${TMPLDIR}/footer.xhtml
+element ?= cat ${TMPLDIR}/element.xhtml
 
 SRCDIR  = ./src
 DESTDIR = ./pub
@@ -47,10 +48,11 @@ ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 .endfor
 
 .for FILE in ${DBFILES}
+.include "${DBDIR}/${FILE}"
+timestamp != echo ${file}|cut -d ',' -f 1
+timestampdate != date -d "@${timestamp}" +'%Y-%m-%d %H:%M:%S'
 ${TMP_${FILE}}: ${TARGET_${FILE:S/^.*,//:S/.mk$/.md/}}
-	$Q{ \
-		sh index.sh ${FILE}; \
-	}
+	$Qecho ${element} |sed -e "s|@@TITLE@@|${TITLE}|"|sed -e "s|@@DATE@@|${timestampdate}|"|sed -e "s|@@FILE@@|${FILE:S/^.*,//:S/.mk$/.md/}|" >> "tmp/${FILE}"
 .endfor
 
 ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
