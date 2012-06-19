@@ -10,3 +10,19 @@ color: #999;
 a:hover {
 color: #eee;
 }
+
+h1 {
+text-align: center;
+}
+
+section {
+width: 80%;
+margin: 0 auto;
+padding: 0 15px;
+border: thin solid #999;
+}
+
+footer p {
+text-align: center;
+font-size: 70%;
+}
