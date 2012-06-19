@@ -17,6 +17,7 @@ DBDIR   = ./db
 TMPDIR  = ./tmp
 
 FILES != cd ${SRCDIR}; ls
+DBFILES != cd ${DBDIR}; ls|sort -r
 
 .include "makefly.rc"
 
@@ -24,7 +25,10 @@ all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/
 
 .for FILE in ${FILES}
 TARGET_${FILE} = ${FILE:S/.md$/.xhtml/:S/^/${DESTDIR}\//}
-TMP_${FILE} = ${FILE:S/.md$/.mk/:S/^/${TMPDIR}\//}
+.endfor
+
+.for FILE in ${DBFILES}
+TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 .endfor
 
 .for FILE in ${FILES}
@@ -40,12 +44,13 @@ ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 			false                                             ; \
 		} ; \
 	} && echo "-- Page built: ${TARGET_${FILE}}."
+.endfor
 
-${TMP_${FILE}}: ${TARGET_${FILE}}
+.for FILE in ${DBFILES}
+${TMP_${FILE}}: ${TARGET_${FILE:S/^.*,//:S/.mk$/.md/}}
 	$Q{ \
-		sh index.sh ${FILE:S/.md$/.mk/}; \
+		sh index.sh ${FILE}; \
 	}
-
 .endfor
 
 ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
@@ -53,11 +58,11 @@ ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
 		cp ${STYLEDIR}/simple.css ${DESTDIR}/simple.css ; \
 	} && echo "-- CSS: ${DESTDIR}/simple.css."
 
-${DESTDIR}/index.xhtml: ${FILES:S/.md$/.mk/:S/^/${TMPDIR}\//}
+${DESTDIR}/index.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/index.xhtml ; \
-		cat ${FILES:S/.md$/.mk /:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
-		rm -f ${FILES:S/.md$/.mk /:S/^/${TMPDIR}\//} ; \
+		cat ${DBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
+		rm -f ${DBFILES:S/^/${TMPDIR}\//} ; \
 		cat ${footer} >> ${TMPDIR}/index.xhtml ; \
 		sed -e "s|@@BASEURL@@|${BASEURL}|g" -e "s|@@BLOGTITLE@@|${BLOGTITLE}|g" ${TMPDIR}/index.xhtml > ${TMPDIR}/index.xhtml.tmp; \
 		mv ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml ; \
