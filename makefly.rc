@@ -1,0 +1,2 @@
+BLOGTITLE = Makefly
+BASEURL = http://localhost/~${USER}/
