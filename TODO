@@ -1,7 +1,7 @@
 TODO:
 -----
 
-- templating
+- templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
 - plugins
 - comments
 - categories/tags
