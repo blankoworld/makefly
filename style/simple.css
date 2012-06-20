@@ -15,11 +15,46 @@ h1 {
 text-align: center;
 }
 
+nav {
+width: 80%;
+margin: 0 auto;
+}
+
+nav ul {
+list-style-type: none;
+height: 20px;
+}
+
+nav ul li {
+}
+
+nav ul li a {
+display: block;
+float: left;
+margin-right: 2px;
+}
+
+nav ul a {
+padding: 2px;
+border-radius: 6px;
+text-decoration: none;
+border: thin solid #999;
+}
+
+nav ul a:hover {
+text-decoration: none;
+color: #000;
+background-color: #999;
+padding: 2px;
+border-radius: 6px;
+}
+
 #content {
 width: 80%;
 margin: 0 auto;
 padding: 0 15px;
 border: thin solid #999;
+border-radius: 10px;
 }
 
 footer p {
