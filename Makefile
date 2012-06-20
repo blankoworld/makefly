@@ -10,7 +10,7 @@ STYLEDIR = ./style
 
 header ?= ${TMPLDIR}/header.xhtml
 footer ?= ${TMPLDIR}/footer.xhtml
-element ?= cat ${TMPLDIR}/element.xhtml
+element ?= ${TMPLDIR}/element.xhtml
 
 SRCDIR  = ./src
 DESTDIR = ./pub
@@ -49,10 +49,11 @@ ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 
 .for FILE in ${DBFILES}
 .include "${DBDIR}/${FILE}"
-timestamp != echo ${file}|cut -d ',' -f 1
-timestampdate != date -d "@${timestamp}" +'%Y-%m-%d %H:%M:%S'
+TMSTMP_${FILE} != echo ${FILE}| cut -d ',' -f 1
+POSTDATE_${FILE} != date -d "@${TMSTMP_${FILE}}" +'%Y-%m-%d %H:%M:%S'
+NAME_${FILE} != echo ${FILE}| sed -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 ${TMP_${FILE}}: ${TARGET_${FILE:S/^.*,//:S/.mk$/.md/}}
-	$Qecho ${element} |sed -e "s|@@TITLE@@|${TITLE}|"|sed -e "s|@@DATE@@|${timestampdate}|"|sed -e "s|@@FILE@@|${FILE:S/^.*,//:S/.mk$/.md/}|" >> "tmp/${FILE}"
+	$Qcat ${element} | sed -e 's|@@TITLE@@|${TITLE}|' -e 's|@@DATE@@|${POSTDATE_${FILE}}|' -e 's|@@FILE@@|${NAME_${FILE}}|' > tmp/${FILE}
 .endfor
 
 ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
