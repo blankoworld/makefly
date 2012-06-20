@@ -49,11 +49,12 @@ ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 
 .for FILE in ${DBFILES}
 .include "${DBDIR}/${FILE}"
+TITLE_${FILE} != echo ${TITLE}
 TMSTMP_${FILE} != echo ${FILE}| cut -d ',' -f 1
 POSTDATE_${FILE} != date -d "@${TMSTMP_${FILE}}" +'%Y-%m-%d %H:%M:%S'
 NAME_${FILE} != echo ${FILE}| sed -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 ${TMP_${FILE}}: ${TARGET_${FILE:S/^.*,//:S/.mk$/.md/}}
-	$Qcat ${element} | sed -e 's|@@TITLE@@|${TITLE}|' -e 's|@@DATE@@|${POSTDATE_${FILE}}|' -e 's|@@FILE@@|${NAME_${FILE}}|' > tmp/${FILE}
+	$Qcat ${element} | sed -e 's|@@TITLE@@|${TITLE_${FILE}}|' -e 's|@@DATE@@|${POSTDATE_${FILE}}|' -e 's|@@FILE@@|${NAME_${FILE}}|' > tmp/${FILE}
 .endfor
 
 ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
