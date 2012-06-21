@@ -1,2 +1,5 @@
 BLOGTITLE = Makefly
+BLOGSHORTDESC = A static makefile weblog engine
+BLOGDESCRIPTION = Makefly is a makefile static weblog engine
 BASEURL = http://localhost/~${USER}
+RSSFEEDNAME = Makefly RSS feed
