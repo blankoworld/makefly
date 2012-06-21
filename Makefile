@@ -1,12 +1,14 @@
 #!/usr/bin/env pmake -f
 # XXX
 markdown ?= markdown
+lua ?= lua
 
 # use make Q= to enable the debug mode.
 Q ?= @
 
 TMPLDIR = ./template
 STYLEDIR = ./style
+BINDIR = ./bin
 
 header ?= ${TMPLDIR}/header.xhtml
 footer ?= ${TMPLDIR}/footer.xhtml
@@ -16,6 +18,8 @@ SRCDIR  = ./src
 DESTDIR = ./pub
 DBDIR   = ./db
 TMPDIR  = ./tmp
+
+parser ?= ${BINDIR}/parser.lua
 
 FILES != cd ${SRCDIR}; ls
 DBFILES != cd ${DBDIR}; ls|sort -r
@@ -36,7 +40,7 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
-			cat ${header} |sed -e "s|@@BLOGTITLE@@|${BLOGTITLE}|g" |sed -e "s|@@BASEURL@@|${BASEURL}|g" && \
+			cat ${header} | ${lua} ${parser} "BLOGTITLE=${BLOGTITLE}" "BASEURL=${BASEURL}" && \
 			${markdown} ${SRCDIR}/${FILE}  && \
 			cat ${footer}                   ; \
 		} > ${TARGET_${FILE}} || { \
@@ -54,7 +58,7 @@ TMSTMP_${FILE} != echo ${FILE}| cut -d ',' -f 1
 POSTDATE_${FILE} != date -d "@${TMSTMP_${FILE}}" +'%Y-%m-%d %H:%M:%S'
 NAME_${FILE} != echo ${FILE}| sed -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 ${TMP_${FILE}}: ${TARGET_${FILE:S/^.*,//:S/.mk$/.md/}}
-	$Qcat ${element} | sed -e 's|@@TITLE@@|${TITLE_${FILE}}|' -e 's|@@DATE@@|${POSTDATE_${FILE}}|' -e 's|@@FILE@@|${NAME_${FILE}}|' > tmp/${FILE}
+	$Qcat ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" > tmp/${FILE}
 .endfor
 
 ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
@@ -68,7 +72,7 @@ ${DESTDIR}/index.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${DBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
 		rm -f ${DBFILES:S/^/${TMPDIR}\//} ; \
 		cat ${footer} >> ${TMPDIR}/index.xhtml ; \
-		sed -e "s|@@BASEURL@@|${BASEURL}|g" -e "s|@@BLOGTITLE@@|${BLOGTITLE}|g" ${TMPDIR}/index.xhtml > ${TMPDIR}/index.xhtml.tmp; \
+		cat ${TMPDIR}/index.xhtml |${lua} ${parser} "BASEURL=${BASEURL}" "BLOGTITLE=${BLOGTITLE}" > ${TMPDIR}/index.xhtml.tmp; \
 		mv ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml ; \
 		rm ${TMPDIR}/index.xhtml ; \
 	}
