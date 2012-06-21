@@ -58,7 +58,10 @@ TMSTMP_${FILE} != echo ${FILE}| cut -d ',' -f 1
 POSTDATE_${FILE} != date -d "@${TMSTMP_${FILE}}" +'%Y-%m-%d %H:%M:%S'
 NAME_${FILE} != echo ${FILE}| sed -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 ${TMP_${FILE}}: ${TARGET_${FILE:S/^.*,//:S/.mk$/.md/}}
-	$Qcat ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" > tmp/${FILE}
+# Adapt article's content with some values
+	$Qcat ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${FILE}
+# Add article's title to page's header
+	$Qcat ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" > ${DESTDIR}/${NAME_${FILE}}
 .endfor
 
 ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
@@ -72,7 +75,7 @@ ${DESTDIR}/index.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${DBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
 		rm -f ${DBFILES:S/^/${TMPDIR}\//} ; \
 		cat ${footer} >> ${TMPDIR}/index.xhtml ; \
-		cat ${TMPDIR}/index.xhtml |${lua} ${parser} "BASEURL=${BASEURL}" "BLOGTITLE=${BLOGTITLE}" > ${TMPDIR}/index.xhtml.tmp; \
+		cat ${TMPDIR}/index.xhtml |${lua} ${parser} "BASEURL=${BASEURL}" "BLOGTITLE=${BLOGTITLE}" "TITLE=Home" > ${TMPDIR}/index.xhtml.tmp; \
 		mv ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml ; \
 		rm ${TMPDIR}/index.xhtml ; \
 	}
