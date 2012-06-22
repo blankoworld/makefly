@@ -1,7 +1,6 @@
 TODO:
 -----
 
-- templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
 - plugins
 - comments
 - categories/tags
@@ -14,13 +13,13 @@ TODO:
 - write a doc
 - find a logo
 - do a favicon with logo
-- permit template like Nanoblogger or Utterson. For an example with m4 or with this:
-
-eval "cat << ___EOF___
-$(cat)
-___EOF___"
-
-This permit to replace some variables. It's seems to be not valid without zsh.
+- template:
+  - permit template like Nanoblogger or Utterson. For an example with m4 or with this:
+    eval "cat << ___EOF___
+    $(cat)
+    ___EOF___"
+    This permit to replace some variables. It's seems to be not valid without zsh.
+  - templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
 
 DONE:
 -----
@@ -29,3 +28,6 @@ DONE:
   Example : date -d "2012-06-04 00:15:32" +'%s' to have timestamp at 2012-06-etc.
   date +%s give current timestamp
   File example : timestampnumber,article_title.mk
+- rss feed
+- simple templating system
+
