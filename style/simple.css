@@ -57,6 +57,24 @@ border: thin solid #999;
 border-radius: 10px;
 }
 
+#content article {
+display: block;
+color: #eee;
+background-color: #999;
+width: 100%;
+height: 100%;
+margin: 0 0 15px 0;
+border-radius: 6px;
+}
+
+#content article > * {
+padding: 10px;
+}
+
+#content article ul {
+padding-left: 30px;
+}
+
 footer p {
 text-align: center;
 font-size: 70%;
