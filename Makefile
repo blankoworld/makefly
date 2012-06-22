@@ -58,11 +58,12 @@ TMSTMP_${FILE} != echo ${FILE}| cut -d ',' -f 1
 POSTDATE_${FILE} != date -d "@${TMSTMP_${FILE}}" +'%Y-%m-%d %H:%M:%S'
 NAME_${FILE} != echo ${FILE}| sed -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 DESC_${FILE} != echo ${DESCRIPTION}
-${TMP_${FILE}}: ${TARGET_${FILE:S/^.*,//:S/.mk$/.md/}}
+${TMP_${FILE}}: ${TARGET_${NAME_${FILE}}}
 # Adapt article's content with some values
 	$Qcat ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${FILE}
 # Add article's title to page's header
-	$Qcat ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" > ${DESTDIR}/${NAME_${FILE}}
+	$Qcat ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "RSSFEED_NAME=${RSSFEEDNAME}" > ${TMPDIR}/${NAME_${FILE}}
+	$Qmv ${TMPDIR}/${NAME_${FILE}} ${DESTDIR}/${NAME_${FILE}}
 	$Qcat ${TMPLDIR}/feed.element.rss | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DESCRIPTION=${DESC_${FILE}}" "LINK=${BASEURL}/${NAME_${FILE}}" > ${TMPDIR}/${FILE}.rss
 .endfor
 
