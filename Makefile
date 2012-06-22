@@ -100,3 +100,5 @@ clean: ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR
 	}
 
 .MAIN: all
+
+#vim :tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
