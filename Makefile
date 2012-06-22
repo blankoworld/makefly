@@ -13,6 +13,7 @@ BINDIR = ./bin
 header ?= ${TMPLDIR}/header.xhtml
 footer ?= ${TMPLDIR}/footer.xhtml
 element ?= ${TMPLDIR}/element.xhtml
+article ?= ${TMPLDIR}/article.xhtml
 
 SRCDIR  = ./src
 DESTDIR = ./pub
@@ -22,11 +23,13 @@ TMPDIR  = ./tmp
 parser ?= ${BINDIR}/parser.lua
 
 FILES != cd ${SRCDIR}; ls
-DBFILES != cd ${DBDIR}; ls|sort -r
 
 .include "makefly.rc"
 
-all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml
+DBFILES != cd ${DBDIR}; ls|sort -r|sort -r
+MAINDBFILES != cd ${DBDIR}; ls|sort -r|head -n ${MAXPOST}
+
+all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${DESTDIR}/list.xhtml
 
 .for FILE in ${FILES}
 TARGET_${FILE} = ${FILE:S/.md$/.xhtml/:S/^/${DESTDIR}\//}
@@ -40,7 +43,7 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
-			cat ${header} | ${lua} ${parser} "BLOGTITLE=${BLOGTITLE}" "BASEURL=${BASEURL}" "HOMETITLE=${HOMETITLE}" && \
+			cat ${header} | ${lua} ${parser} "BLOGTITLE=${BLOGTITLE}" "BASEURL=${BASEURL}" "HOMETITLE=${HOMETITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" && \
 			echo "      <article>" && \
 			${markdown} ${SRCDIR}/${FILE} |sed "s|^|        |g" && \
 			echo "      </article>" && \
@@ -62,7 +65,15 @@ NAME_${FILE} != echo ${FILE}| sed -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 DESC_${FILE} != echo ${DESCRIPTION}
 ${TMP_${FILE}}: ${TARGET_${NAME_${FILE}}}
 # Adapt article's content with some values
-	$Qcat ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${FILE}
+	$Qcat ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${FILE}.list
+# Adapt article's content with some values
+	$Qecho "          <div id=\"date\">${POSTDATE_${FILE}}</div>" > ${TMPDIR}/${FILE}
+	$Qecho "        <article>" >> ${TMPDIR}/${FILE}
+	$Q${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/} >> ${TMPDIR}/${FILE}
+	$Qecho "          <a href=\"${BASEURL}/${NAME_${FILE}}\">${TITLE_${FILE}} (permalink)</a>" >> ${TMPDIR}/${FILE}
+	$Qecho "        </article>" >> ${TMPDIR}/${FILE}
+# The next line should replace at a later stage the 5 last lines.
+# $QCONTENT="5" && cat ${article} | ${lua} ${parser} "CONTENT=${CONTENT}" "TITLE=${TITLE_${FILE}}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${FILE}
 # Add article's title to page's header
 	$Qcat ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "RSSFEED_NAME=${RSSFEEDNAME}" > ${TMPDIR}/${NAME_${FILE}}
 	$Qmv ${TMPDIR}/${NAME_${FILE}} ${DESTDIR}/${NAME_${FILE}}
@@ -77,10 +88,10 @@ ${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
 ${DESTDIR}/index.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/index.xhtml ; \
-		cat ${DBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
+		cat ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
 		rm -f ${DBFILES:S/^/${TMPDIR}\//} ; \
 		cat ${footer} >> ${TMPDIR}/index.xhtml ; \
-		cat ${TMPDIR}/index.xhtml |${lua} ${parser} "BASEURL=${BASEURL}" "BLOGTITLE=${BLOGTITLE}" "TITLE=${HOMETITLE}" "RSSFEED_NAME=${RSSFEEDNAME}" "HOMETITLE=${HOMETITLE}" > ${TMPDIR}/index.xhtml.tmp; \
+		cat ${TMPDIR}/index.xhtml |${lua} ${parser} "BASEURL=${BASEURL}" "BLOGTITLE=${BLOGTITLE}" "TITLE=${HOMETITLE}" "RSSFEED_NAME=${RSSFEEDNAME}" "HOMETITLE=${HOMETITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" > ${TMPDIR}/index.xhtml.tmp; \
 		mv ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml ; \
 		rm ${TMPDIR}/index.xhtml ; \
 	}
@@ -91,6 +102,16 @@ ${DESTDIR}/rss.xml: ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml ; \
 		rm -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} ; \
 		cat ${TMPLDIR}/feed.footer.rss >> ${DESTDIR}/rss.xml ; \
+	}
+
+${DESTDIR}/list.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
+	$Q{ \
+		cat ${header} >> ${TMPDIR}/list.xhtml ; \
+		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list.xhtml ; \
+		rm -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} ; \
+		cat ${footer} >> ${TMPDIR}/list.xhtml ; \
+		cat ${TMPDIR}/list.xhtml | ${lua} ${parser} "BLOGTITLE=${BLOGTITLE}" "BLOGDESCRIPTION=${BLOGDESCRIPTION}" "BASEURL=${BASEURL}" "RSSFEED_NAME=${RSSFEEDNAME}" "HOMETITLE=${HOMETITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "TITLE=${POST_LIST_TITLE}" > ${DESTDIR}/list.xhtml ; \
+    rm ${TMPDIR}/list.xhtml ; \
 	}
 
 clean: ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml

@@ -4,3 +4,5 @@ BLOGDESCRIPTION = Makefly is a makefile static weblog engine
 BASEURL = http://localhost/${USER}
 RSSFEEDNAME = Makefly RSS feed
 HOMETITLE = Home
+MAXPOST = 2
+POST_LIST_TITLE = Post list
