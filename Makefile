@@ -41,7 +41,9 @@ ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
 			cat ${header} | ${lua} ${parser} "BLOGTITLE=${BLOGTITLE}" "BASEURL=${BASEURL}" "HOMETITLE=${HOMETITLE}" && \
-			${markdown} ${SRCDIR}/${FILE}  && \
+			echo "      <article>" && \
+			${markdown} ${SRCDIR}/${FILE} |sed "s|^|        |g" && \
+			echo "      </article>" && \
 			cat ${footer}                   ; \
 		} > ${TARGET_${FILE}} || { \
 			rm -f ${TARGET_${FILE}}                           ; \
