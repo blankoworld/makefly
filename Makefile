@@ -63,17 +63,12 @@ TMSTMP_${FILE} != echo ${FILE}| cut -d ',' -f 1
 POSTDATE_${FILE} != date -d "@${TMSTMP_${FILE}}" +'%Y-%m-%d %H:%M:%S'
 NAME_${FILE} != echo ${FILE}| sed -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 DESC_${FILE} != echo ${DESCRIPTION}
+CONTENT_${FILE} != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
 ${TMP_${FILE}}: ${TARGET_${NAME_${FILE}}}
 # Adapt article's content with some values
 	$Qcat ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${FILE}.list
 # Adapt article's content with some values
-	$Qecho "          <div id=\"date\">${POSTDATE_${FILE}}</div>" > ${TMPDIR}/${FILE}
-	$Qecho "        <article>" >> ${TMPDIR}/${FILE}
-	$Q${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/} >> ${TMPDIR}/${FILE}
-	$Qecho "          <a href=\"${BASEURL}/${NAME_${FILE}}\">${TITLE_${FILE}} (permalink)</a>" >> ${TMPDIR}/${FILE}
-	$Qecho "        </article>" >> ${TMPDIR}/${FILE}
-# The next line should replace at a later stage the 5 last lines.
-# $QCONTENT="5" && cat ${article} | ${lua} ${parser} "CONTENT=${CONTENT}" "TITLE=${TITLE_${FILE}}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${FILE}
+	$Qcat ${article} | ${lua} ${parser} "CONTENT=${CONTENT_${FILE}}" "TITLE=${TITLE_${FILE}}" "FILE=${NAME_${FILE}}" "DATE=${POSTDATE_${FILE}}" "PERMALINKTITLE=${PERMALINKTITLE}"> ${TMPDIR}/${FILE}
 # Add article's title to page's header
 	$Qcat ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "RSSFEED_NAME=${RSSFEEDNAME}" > ${TMPDIR}/${NAME_${FILE}}
 	$Qmv ${TMPDIR}/${NAME_${FILE}} ${DESTDIR}/${NAME_${FILE}}

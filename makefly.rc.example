@@ -6,3 +6,4 @@ RSSFEEDNAME = Makefly RSS feed
 HOMETITLE = Home
 MAXPOST = 2
 POST_LIST_TITLE = Post list
+PERMALINKTITLE = permalink
