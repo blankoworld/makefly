@@ -43,7 +43,7 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
-			cat ${header} | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BASE_URL=${BASE_URL}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" && \
+			cat ${header} | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BASE_URL=${BASE_URL}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" && \
 			echo "      <article>" && \
 			${markdown} ${SRCDIR}/${FILE} |sed "s|^|        |g" && \
 			echo "      </article>" && \
@@ -70,7 +70,7 @@ ${TMP_${FILE}}: ${TARGET_${NAME_${FILE}}}
 # Template for Home page
 	$Qcat ${article} | ${lua} ${parser} "CONTENT=${CONTENT_${FILE}}" "TITLE=${TITLE_${FILE}}" "FILE=${NAME_${FILE}}" "DATE=${POSTDATE_${FILE}}" "PERMALINK_TITLE=${PERMALINK_TITLE}"> ${TMPDIR}/${FILE}
 # Add article's title to page's header
-	$Qcat ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "RSS_FEED_NAME=${RSS_FEED_NAME}" > ${TMPDIR}/${NAME_${FILE}}
+	$Qcat ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "RSS_FEED_NAME=${RSS_FEED_NAME}"  > ${TMPDIR}/${NAME_${FILE}}
 	$Qmv ${TMPDIR}/${NAME_${FILE}} ${DESTDIR}/${NAME_${FILE}}
 	$Qcat ${TMPLDIR}/feed.element.rss | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DESCRIPTION=${DESC_${FILE}}" "LINK=${BASE_URL}/${NAME_${FILE}}" > ${TMPDIR}/${FILE}.rss
 .endfor
@@ -86,7 +86,7 @@ ${DESTDIR}/index.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
 		rm -f ${DBFILES:S/^/${TMPDIR}\//} ; \
 		cat ${footer} >> ${TMPDIR}/index.xhtml ; \
-		cat ${TMPDIR}/index.xhtml |${lua} ${parser} "BASE_URL=${BASE_URL}" "BLOG_TITLE=${BLOG_TITLE}" "TITLE=${HOME_TITLE}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" > ${TMPDIR}/index.xhtml.tmp; \
+		cat ${TMPDIR}/index.xhtml |${lua} ${parser} "BASE_URL=${BASE_URL}" "BLOG_TITLE=${BLOG_TITLE}" "TITLE=${HOME_TITLE}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" > ${TMPDIR}/index.xhtml.tmp; \
 		mv ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml ; \
 		rm ${TMPDIR}/index.xhtml ; \
 	}
@@ -105,7 +105,7 @@ ${DESTDIR}/list.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list.xhtml ; \
 		rm -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} ; \
 		cat ${footer} >> ${TMPDIR}/list.xhtml ; \
-		cat ${TMPDIR}/list.xhtml | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" "BASE_URL=${BASE_URL}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "TITLE=${POST_LIST_TITLE}" > ${DESTDIR}/list.xhtml ; \
+		cat ${TMPDIR}/list.xhtml | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" "BASE_URL=${BASE_URL}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" > ${DESTDIR}/list.xhtml ; \
     rm ${TMPDIR}/list.xhtml ; \
 	}
 

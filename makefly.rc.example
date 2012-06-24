@@ -7,3 +7,4 @@ HOME_TITLE = Home
 MAX_POST = 2
 POST_LIST_TITLE = Post list
 PERMALINK_TITLE = permalink
+BLOG_LANG = en
