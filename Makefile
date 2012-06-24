@@ -65,14 +65,13 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 # Do each FINAL post file
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
+CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE}
 ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
-			${cat} ${header} | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BASE_URL=${BASE_URL}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}"      && \
-			${echo} "      <article>"                                       && \
-			${markdown} ${SRCDIR}/${FILE} |${sed} "s|^|        |g"          && \
-			${echo} "      </article>"                                      && \
-			${cat} ${footer} | ${lua} ${parser} "POWERED_BY=${POWERED_BY}"  ; \
+			${cat} ${header} | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BASE_URL=${BASE_URL}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" && \
+      ${cat} ${article} | ${lua} ${parser} "CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} "s|^|        |g" && \
+			${cat} ${footer} | ${lua} ${parser} "POWERED_BY=${POWERED_BY}" ; \
 		} > ${TARGET_${FILE}} || { \
 			${rm} -f ${TARGET_${FILE}}                           ; \
 			${echo} "-- Error while building ${TARGET_${FILE}}." ; \
@@ -87,19 +86,20 @@ ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 # Include post information (example title, date, description, etc.)
 .include "${DBDIR}/${FILE}"
 # Fetch some data for this post
-TITLE_${FILE}    != ${echo} ${TITLE}
-TMSTMP_${FILE}   != ${echo} ${FILE}| ${cut} -d ',' -f 1
-POSTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'%Y-%m-%d %H:%M:%S'
-NAME_${FILE}     != ${echo} ${FILE}| ${sed} -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
-DESC_${FILE}     != ${echo} ${DESCRIPTION}
-CONTENT_${FILE}  != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
+TITLE_${FILE}     != ${echo} ${TITLE}
+TMSTMP_${FILE}    != ${echo} ${FILE}| ${cut} -d ',' -f 1
+POSTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
+SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
+NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
+DESC_${FILE}      != ${echo} ${DESCRIPTION}
+CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
 ${TMP_${FILE}}: ${TARGET_${NAME_${FILE}}}
 # Template for Post List page
-	$Q${cat} ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${FILE}.list
+	$Q${cat} ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" "SHORT_DATE=${SHORTDATE_${FILE}}" > ${TMPDIR}/${FILE}.list
 # Template for Home page
 	$Q${cat} ${article} | ${lua} ${parser} "CONTENT=${CONTENT_${FILE}}" "TITLE=${TITLE_${FILE}}" "FILE=${NAME_${FILE}}" "DATE=${POSTDATE_${FILE}}" "PERMALINK_TITLE=${PERMALINK_TITLE}"> ${TMPDIR}/${FILE}
 # Add article's title to page's header
-	$Q${cat} ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "RSS_FEED_NAME=${RSS_FEED_NAME}"  > ${TMPDIR}/${NAME_${FILE}}
+	$Q${cat} ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "PERMALINK_TITLE=${PERMALINK_TITLE}" "POSTED=${POSTED}" "DATE=${POSTDATE_${FILE}}" "BASE_URL=${BASE_URL}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${NAME_${FILE}}
 # Move temporary file to pub
 	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${DESTDIR}/${NAME_${FILE}}
 # Template for RSS Feed
@@ -120,7 +120,7 @@ ${DESTDIR}/index.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 		${cat} ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
 		${rm} -f ${DBFILES:S/^/${TMPDIR}\//} ; \
 		${cat} ${footer} >> ${TMPDIR}/index.xhtml ; \
-		${cat} ${TMPDIR}/index.xhtml |${lua} ${parser} "BASE_URL=${BASE_URL}" "BLOG_TITLE=${BLOG_TITLE}" "TITLE=${HOME_TITLE}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" "POWERED_BY=${POWERED_BY}" > ${TMPDIR}/index.xhtml.tmp; \
+		${cat} ${TMPDIR}/index.xhtml |${lua} ${parser} "BASE_URL=${BASE_URL}" "BLOG_TITLE=${BLOG_TITLE}" "TITLE=${HOME_TITLE}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" "POWERED_BY=${POWERED_BY}" "POSTED=${POSTED}" > ${TMPDIR}/index.xhtml.tmp; \
 		${mv} ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml ; \
 		${rm} ${TMPDIR}/index.xhtml ; \
 	}
