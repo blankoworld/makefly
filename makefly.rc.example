@@ -1,10 +1,7 @@
 BLOG_TITLE = Makefly
 BLOG_SHORT_DESC = A static makefile weblog engine
 BLOG_DESCRIPTION = Makefly is a makefile static weblog engine
+BLOG_LANG = en
 BASE_URL = http://localhost/${USER}
 RSS_FEED_NAME = Makefly RSS feed
-HOME_TITLE = Home
 MAX_POST = 2
-POST_LIST_TITLE = Post list
-PERMALINK_TITLE = permalink
-BLOG_LANG = en
