@@ -2,3 +2,4 @@ HOME_TITLE = Accueil
 POST_LIST_TITLE = Liste des articles
 PERMALINK_TITLE = lien permanent
 POWERED_BY = Propulsé par
+POSTED = publié

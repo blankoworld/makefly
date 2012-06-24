@@ -67,7 +67,6 @@ color: #eee;
 background-color: #999;
 width: 100%;
 height: 100%;
-margin: 0 0 15px 0;
 -moz-border-radius: 6px;
 border-radius: 6px;
 }
@@ -78,6 +77,15 @@ padding: 10px;
 
 #content article ul {
 padding-left: 30px;
+}
+
+#content .articleinfo {
+font-size: 70%;
+text-align: right;
+}
+
+#content .articleinfo p {
+margin: -10px 0 15px 0;
 }
 
 footer p {
