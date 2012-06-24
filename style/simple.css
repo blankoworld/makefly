@@ -16,6 +16,7 @@ text-align: center;
 }
 
 nav {
+display: block;
 width: 80%;
 margin: 0 auto;
 }
@@ -31,11 +32,12 @@ nav ul li {
 nav ul li a {
 display: block;
 float: left;
-margin-right: 2px;
+margin-right: 9px;
 }
 
 nav ul a {
 padding: 2px;
+-moz-border-radius: 6px;
 border-radius: 6px;
 text-decoration: none;
 border: thin solid #999;
@@ -46,6 +48,7 @@ text-decoration: none;
 color: #000;
 background-color: #999;
 padding: 2px;
+-moz-border-radius: 6px;
 border-radius: 6px;
 }
 
@@ -54,6 +57,7 @@ width: 80%;
 margin: 0 auto;
 padding: 0 15px;
 border: thin solid #999;
+-moz-border-radius: 10px;
 border-radius: 10px;
 }
 
@@ -64,6 +68,7 @@ background-color: #999;
 width: 100%;
 height: 100%;
 margin: 0 0 15px 0;
+-moz-border-radius: 6px;
 border-radius: 6px;
 }
 
