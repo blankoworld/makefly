@@ -9,6 +9,7 @@ Q ?= @
 TMPLDIR = ./template
 STYLEDIR = ./style
 BINDIR = ./bin
+LANGDIR = ./lang
 
 header ?= ${TMPLDIR}/header.xhtml
 footer ?= ${TMPLDIR}/footer.xhtml
@@ -25,6 +26,7 @@ parser ?= ${BINDIR}/parser.lua
 FILES != cd ${SRCDIR}; ls
 
 .include "makefly.rc"
+.include "${LANGDIR}/translate.${BLOG_LANG}"
 
 DBFILES != cd ${DBDIR}; ls|sort -r|sort -r
 MAINDBFILES != cd ${DBDIR}; ls|sort -r|head -n ${MAX_POST}
@@ -43,11 +45,11 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 ${TARGET_${FILE}}: ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
-			cat ${header} | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BASE_URL=${BASE_URL}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" && \
-			echo "      <article>" && \
-			${markdown} ${SRCDIR}/${FILE} |sed "s|^|        |g" && \
-			echo "      </article>" && \
-			cat ${footer}                   ; \
+			cat ${header} | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BASE_URL=${BASE_URL}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}"      && \
+			echo "      <article>"                                       && \
+			${markdown} ${SRCDIR}/${FILE} |sed "s|^|        |g"          && \
+			echo "      </article>"                                      && \
+			cat ${footer} | ${lua} ${parser} "POWERED_BY=${POWERED_BY}"  ; \
 		} > ${TARGET_${FILE}} || { \
 			rm -f ${TARGET_${FILE}}                           ; \
 			echo "-- Error while building ${TARGET_${FILE}}." ; \
@@ -86,7 +88,7 @@ ${DESTDIR}/index.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
 		rm -f ${DBFILES:S/^/${TMPDIR}\//} ; \
 		cat ${footer} >> ${TMPDIR}/index.xhtml ; \
-		cat ${TMPDIR}/index.xhtml |${lua} ${parser} "BASE_URL=${BASE_URL}" "BLOG_TITLE=${BLOG_TITLE}" "TITLE=${HOME_TITLE}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" > ${TMPDIR}/index.xhtml.tmp; \
+		cat ${TMPDIR}/index.xhtml |${lua} ${parser} "BASE_URL=${BASE_URL}" "BLOG_TITLE=${BLOG_TITLE}" "TITLE=${HOME_TITLE}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" "POWERED_BY=${POWERED_BY}" > ${TMPDIR}/index.xhtml.tmp; \
 		mv ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml ; \
 		rm ${TMPDIR}/index.xhtml ; \
 	}
@@ -105,7 +107,7 @@ ${DESTDIR}/list.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list.xhtml ; \
 		rm -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} ; \
 		cat ${footer} >> ${TMPDIR}/list.xhtml ; \
-		cat ${TMPDIR}/list.xhtml | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" "BASE_URL=${BASE_URL}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" > ${DESTDIR}/list.xhtml ; \
+		cat ${TMPDIR}/list.xhtml | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" "BASE_URL=${BASE_URL}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" "POWERED_BY=${POWERED_BY}" > ${DESTDIR}/list.xhtml ; \
     rm ${TMPDIR}/list.xhtml ; \
 	}
 
