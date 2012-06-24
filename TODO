@@ -1,14 +1,11 @@
 TODO:
 -----
 
-- add X articles on index page where X is in makefly.rc
 - permit user to select how many lines should be given for each articles on index page (for an example 10 lines): to do this, do a head -n 10 on art1.md then do markdown on it
-- do something not to destroy makefly.rc configuration. For an example an makefly.rc.example
 - plugins
 - comments
 - categories/tags
 - rss/atom feeds
-- permalink
 - smileys
 - sitemap (xml/html)
 - fortunes
@@ -33,4 +30,7 @@ DONE:
   File example : timestampnumber,article_title.mk
 - rss feed
 - simple templating system
-
+- add X articles on index page where X is in makefly.rc
+- do something not to destroy makefly.rc configuration. For an example an makefly.rc.example
+- permalink
+- some translations
