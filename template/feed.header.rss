@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <rss version="2.0">
   <channel>
-    <title>${BLOGTITLE}</title>
-    <description>${BLOGDESCRIPTION}</description>
-    <link>${BASEURL}</link>
+    <title>${BLOG_TITLE}</title>
+    <description>${BLOG_DESCRIPTION}</description>
+    <link>${BASE_URL}</link>
