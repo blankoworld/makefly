@@ -47,6 +47,18 @@ FILES != ${cd} ${SRCDIR}; ${ls}
 DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
 
+# DIRECTORIES
+.for DIR in DESTDIR TMPDIR
+${${DIR}}:
+	$Q[ -d "${${DIR}}" ] || { \
+		echo "-- Creating ${${DIR}}..." ; \
+		mkdir -p "${${DIR}}" || { \
+			echo "-- Error while creating ${${DIR}}" >&2 ; \
+			false ; \
+		}; \
+	}
+.endfor
+
 # BEGIN
 all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${DESTDIR}/list.xhtml
 
@@ -66,7 +78,7 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
 CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE}
-${TARGET_${FILE}}: ${SRCDIR}/${FILE}
+${TARGET_${FILE}}: ${DESTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
 			${cat} ${header} | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BASE_URL=${BASE_URL}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" && \
@@ -94,7 +106,7 @@ NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 DESC_${FILE}      != ${echo} ${DESCRIPTION}
 CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
 
-${TMP_${FILE}}: ${TARGET_${NAME_${FILE}}}
+${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 # Template for Post List page
 	$Q${cat} ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" "SHORT_DATE=${SHORTDATE_${FILE}}" > ${TMPDIR}/${FILE}.list
 # Template for Home page
@@ -108,14 +120,14 @@ ${TMP_${FILE}}: ${TARGET_${NAME_${FILE}}}
 .endfor
 
 # Do CSS file
-${DESTDIR}/simple.css: ${STYLEDIR}/simple.css
+${DESTDIR}/simple.css: ${DESTDIR} ${STYLEDIR}/simple.css
 	$Q{ \
 		${cp} ${STYLEDIR}/simple.css ${DESTDIR}/simple.css ; \
 	} && ${echo} "-- CSS: ${DESTDIR}/simple.css."
 
 # Do Homepage
 # EXAMPLE: pub/index.xhtml
-${DESTDIR}/index.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
+${DESTDIR}/index.xhtml: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		${cat} ${header} >> ${TMPDIR}/index.xhtml ; \
 		${cat} ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
@@ -128,7 +140,7 @@ ${DESTDIR}/index.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
 
 # Do RSS Feed
 # EXAMPLE: pub/rss.xml
-${DESTDIR}/rss.xml: ${DBFILES:S/^/${TMPDIR}\//}
+${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		${cat} ${TMPLDIR}/feed.header.rss | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" "BASE_URL=${BASE_URL}" > ${DESTDIR}/rss.xml ; \
 		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml ; \
@@ -138,7 +150,7 @@ ${DESTDIR}/rss.xml: ${DBFILES:S/^/${TMPDIR}\//}
 
 # Do Post List page
 # EXAMPLE: pub/list.xhtml
-${DESTDIR}/list.xhtml: ${DBFILES:S/^/${TMPDIR}\//}
+${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		${cat} ${header} >> ${TMPDIR}/list.xhtml ; \
 		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list.xhtml ; \
