@@ -107,15 +107,15 @@ DESC_${FILE}      != ${echo} ${DESCRIPTION}
 CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
 
 ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
-# Template for Post List page
+	@# Template for Post List page
 	$Q${cat} ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" "SHORT_DATE=${SHORTDATE_${FILE}}" > ${TMPDIR}/${FILE}.list
-# Template for Home page
+	@# Template for Home page
 	$Q${cat} ${article} | ${lua} ${parser} "CONTENT=${CONTENT_${FILE}}" "TITLE=${TITLE_${FILE}}" "FILE=${NAME_${FILE}}" "DATE=${POSTDATE_${FILE}}" "PERMALINK_TITLE=${PERMALINK_TITLE}"> ${TMPDIR}/${FILE}
-# Add article's title to page's header
+	@# Add article's title to page's header
 	$Q${cat} ${DESTDIR}/${NAME_${FILE}} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "PERMALINK_TITLE=${PERMALINK_TITLE}" "POSTED=${POSTED}" "DATE=${POSTDATE_${FILE}}" "BASE_URL=${BASE_URL}" "FILE=${NAME_${FILE}}" > ${TMPDIR}/${NAME_${FILE}}
-# Move temporary file to pub
+	@# Move temporary file to pub
 	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${DESTDIR}/${NAME_${FILE}}
-# Template for RSS Feed
+	@# Template for RSS Feed
 	$Q${cat} ${TMPLDIR}/feed.element.rss | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DESCRIPTION=${DESC_${FILE}}" "LINK=${BASE_URL}/${NAME_${FILE}}" > ${TMPDIR}/${FILE}.rss
 .endfor
 
