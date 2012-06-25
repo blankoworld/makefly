@@ -93,6 +93,7 @@ SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 DESC_${FILE}      != ${echo} ${DESCRIPTION}
 CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
+
 ${TMP_${FILE}}: ${TARGET_${NAME_${FILE}}}
 # Template for Post List page
 	$Q${cat} ${element} | ${lua} ${parser} "TITLE=${TITLE_${FILE}}" "DATE=${POSTDATE_${FILE}}" "FILE=${NAME_${FILE}}" "SHORT_DATE=${SHORTDATE_${FILE}}" > ${TMPDIR}/${FILE}.list
