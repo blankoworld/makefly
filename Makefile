@@ -121,52 +121,58 @@ ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 
 # Do CSS file
 ${DESTDIR}/simple.css: ${DESTDIR} ${STYLEDIR}/simple.css
-	$Q{ \
-		${cp} ${STYLEDIR}/simple.css ${DESTDIR}/simple.css ; \
-	} && ${echo} "-- CSS: ${DESTDIR}/simple.css."
+	$Q${cp} ${STYLEDIR}/simple.css ${DESTDIR}/simple.css && \
+		${echo} "-- CSS copied: ${DESTDIR}/simple.css"
 
 # Do Homepage
 # EXAMPLE: pub/index.xhtml
 ${DESTDIR}/index.xhtml: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${header} >> ${TMPDIR}/index.xhtml ; \
-		${cat} ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml ; \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//} ; \
-		${cat} ${footer} >> ${TMPDIR}/index.xhtml ; \
-		${cat} ${TMPDIR}/index.xhtml |${lua} ${parser} "BASE_URL=${BASE_URL}" "BLOG_TITLE=${BLOG_TITLE}" "TITLE=${HOME_TITLE}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" "POWERED_BY=${POWERED_BY}" "POSTED=${POSTED}" > ${TMPDIR}/index.xhtml.tmp; \
-		${mv} ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml ; \
-		${rm} ${TMPDIR}/index.xhtml ; \
-	}
+		${cat} ${header} >> ${TMPDIR}/index.xhtml && \
+		${cat} ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml && \
+		${rm} -f ${DBFILES:S/^/${TMPDIR}\//} && \
+		${cat} ${footer} >> ${TMPDIR}/index.xhtml && \
+		${cat} ${TMPDIR}/index.xhtml |${lua} ${parser} "BASE_URL=${BASE_URL}" "BLOG_TITLE=${BLOG_TITLE}" "TITLE=${HOME_TITLE}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" "POWERED_BY=${POWERED_BY}" "POSTED=${POSTED}" > ${TMPDIR}/index.xhtml.tmp && \
+		${mv} ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml && \
+		${rm} ${TMPDIR}/index.xhtml || { \
+			echo "-- Could not build index page: $@" ; \
+			false ; \
+		} ; \
+	} && echo "-- Index page built: $@"
 
 # Do RSS Feed
 # EXAMPLE: pub/rss.xml
 ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${TMPLDIR}/feed.header.rss | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" "BASE_URL=${BASE_URL}" > ${DESTDIR}/rss.xml ; \
-		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml ; \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} ; \
-		${cat} ${TMPLDIR}/feed.footer.rss >> ${DESTDIR}/rss.xml ; \
-	}
+		${cat} ${TMPLDIR}/feed.header.rss | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" "BASE_URL=${BASE_URL}" > ${DESTDIR}/rss.xml && \
+		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml && \
+		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} && \
+		${cat} ${TMPLDIR}/feed.footer.rss >> ${DESTDIR}/rss.xml || { \
+			echo "-- Could not build RSS page: $@" ; \
+			false ; \
+		} ; \
+	} && echo "-- RSS page built: $@"
 
 # Do Post List page
 # EXAMPLE: pub/list.xhtml
 ${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${header} >> ${TMPDIR}/list.xhtml ; \
-		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list.xhtml ; \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} ; \
-		${cat} ${footer} >> ${TMPDIR}/list.xhtml ; \
-		${cat} ${TMPDIR}/list.xhtml | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" "BASE_URL=${BASE_URL}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" "POWERED_BY=${POWERED_BY}" > ${DESTDIR}/list.xhtml ; \
-    ${rm} ${TMPDIR}/list.xhtml ; \
-	}
+		${cat} ${header} >> ${TMPDIR}/list.xhtml && \
+		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list.xhtml && \
+		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} && \
+		${cat} ${footer} >> ${TMPDIR}/list.xhtml && \
+		${cat} ${TMPDIR}/list.xhtml | ${lua} ${parser} "BLOG_TITLE=${BLOG_TITLE}" "BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" "BASE_URL=${BASE_URL}" "RSS_FEED_NAME=${RSS_FEED_NAME}" "HOME_TITLE=${HOME_TITLE}" "POST_LIST_TITLE=${POST_LIST_TITLE}" "TITLE=${POST_LIST_TITLE}" "LANG=${BLOG_LANG}" "POWERED_BY=${POWERED_BY}" > ${DESTDIR}/list.xhtml && \
+    ${rm} ${TMPDIR}/list.xhtml || { \
+			echo "-- Could not build list page: $@" ; \
+			false ; \
+		} ; \
+	} && echo "-- List page built: $@"
 
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
 clean: ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${DESTDIR}/list.xhtml
-	$Q{ \
-		${rm} -f ${DESTDIR}/* ; \
-		${rm} -f ${TMPDIR}/* ; \
-	}
+	$Q${rm} -f ${DESTDIR}/*
+	$Q${rm} -f ${TMPDIR}/*
 
 # END
 .MAIN: all
