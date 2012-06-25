@@ -222,7 +222,7 @@ ${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
-clean: ${FILES:S/.md$/.xhtml/:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${DESTDIR}/list.xhtml
+clean:
 	$Q${rm} -f ${DESTDIR}/*
 	$Q${rm} -f ${TMPDIR}/*
 
