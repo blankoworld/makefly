@@ -7,10 +7,18 @@
 DBDIR=`cat Makefile |grep "^DBDIR[ ]*="|cut -d'=' -f2`
 SRCDIR=`cat Makefile |grep "^SRCDIR[ ]*="|cut -d'=' -f2`
 LIMIT='255'
+YOUR_EDITOR=`which nano`
 
 #####
 ## TEST
 ###
+
+edit=${EDITOR:-$YOUR_EDITOR}
+
+if [ -z "$edit" ]; then
+  echo "No editor found! Please config EDITOR in your .bashrc or edit YOUR_EDITOR in '`basename $0`' script."
+  exit 1
+fi
 
 if ! test -d ${DBDIR};then
   echo "Database directory is missing! It's useful for posts data."
@@ -56,7 +64,7 @@ echo "DATE=\"${date}\""
 echo "# ${title}" >> ${file}
 echo "" >> ${file}
 echo "Type your text in markdown format here" >> ${file}
-vi ${file}
+${edit} ${file}
 
 #####
 ## END
