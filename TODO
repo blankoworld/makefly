@@ -2,6 +2,7 @@ TODO:
 -----
 
 - add a license (for an example BSD)
+- create a documentation in markdown and add a target in Makefile to create .html doc :)
 - permit user to select how many lines should be given for each articles on index page (for an example 10 lines): to do this, do a head -n 10 on art1.md then do markdown on it
 - plugins
 - comments
