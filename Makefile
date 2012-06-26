@@ -35,6 +35,7 @@ sed      ?= sed
 cut      ?= cut
 date     ?= date
 cp       ?= cp
+grep     ?= grep
 
 # include some VARIABLES
 # first main variables
@@ -44,8 +45,8 @@ cp       ?= cp
 
 # some files'list
 FILES != ${cd} ${SRCDIR}; ${ls}
-DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
-MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
+DBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r
+MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r|${head} -n ${MAX_POST}
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR
