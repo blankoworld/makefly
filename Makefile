@@ -35,6 +35,7 @@ sed      ?= sed
 cut      ?= cut
 date     ?= date
 cp       ?= cp
+grep     ?= grep
 
 # include some VARIABLES
 # first main variables
@@ -44,8 +45,8 @@ cp       ?= cp
 
 # some files'list
 FILES != ${cd} ${SRCDIR}; ${ls}
-DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
-MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
+DBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r
+MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r|${head} -n ${MAX_POST}
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR
@@ -60,7 +61,7 @@ ${${DIR}}:
 .endfor
 
 # BEGIN
-all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${DESTDIR}/list.xhtml
+all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${DESTDIR}/list.xhtml ${DESTDIR}/taglist.xhtml
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -110,6 +111,7 @@ SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 DESC_${FILE}      != ${echo} ${DESCRIPTION}
 CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
+TAGS_${FILE}      != ${echo} ${TAGS}
 
 ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 	@# Template for Post List page
@@ -167,16 +169,17 @@ ${DESTDIR}/index.xhtml: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
 			"RSS_FEED_NAME=${RSS_FEED_NAME}"     \
 			"HOME_TITLE=${HOME_TITLE}"           \
 			"POST_LIST_TITLE=${POST_LIST_TITLE}" \
+			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"   \
 			"LANG=${BLOG_LANG}"                  \
 			"POWERED_BY=${POWERED_BY}"           \
 			"POSTED=${POSTED}"                   \
 			> ${TMPDIR}/index.xhtml.tmp && \
 		${mv} ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml && \
 		${rm} ${TMPDIR}/index.xhtml || { \
-			echo "-- Could not build index page: $@" ; \
+			${echo} "-- Could not build index page: $@" ; \
 			false ; \
 		} ; \
-	} && echo "-- Index page built: $@"
+	} && ${echo} "-- Index page built: $@"
 
 # Do RSS Feed
 # EXAMPLE: pub/rss.xml
@@ -190,10 +193,10 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml && \
 		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} && \
 		${cat} ${TMPLDIR}/feed.footer.rss >> ${DESTDIR}/rss.xml || { \
-			echo "-- Could not build RSS page: $@" ; \
+			${echo} "-- Could not build RSS page: $@" ; \
 			false ; \
 		} ; \
-	} && echo "-- RSS page built: $@"
+	} && ${echo} "-- RSS page built: $@"
 
 # Do Post List page
 # EXAMPLE: pub/list.xhtml
@@ -210,15 +213,41 @@ ${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 			"RSS_FEED_NAME=${RSS_FEED_NAME}"       \
 			"HOME_TITLE=${HOME_TITLE}"             \
 			"POST_LIST_TITLE=${POST_LIST_TITLE}"   \
+			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"     \
 			"TITLE=${POST_LIST_TITLE}"             \
 			"LANG=${BLOG_LANG}"                    \
 			"POWERED_BY=${POWERED_BY}"             \
 			> ${DESTDIR}/list.xhtml &&             \
     ${rm} ${TMPDIR}/list.xhtml || { \
-			echo "-- Could not build list page: $@" ; \
+			${echo} "-- Could not build list page: $@" ; \
 			false ; \
 		} ; \
-	} && echo "-- List page built: $@"
+	} && ${echo} "-- List page built: $@"
+
+# Do Tag List page
+# EXAMPLE: pub/taglist.xhtml
+${DESTDIR}/taglist.xhtml: ${DESTDIR} ${DBDIR}/tags.list
+	$Q{ \
+		${cat} ${header} >> ${TMPDIR}/taglist.xhtml && \
+		${cat} ${DBDIR}/tags.list |${cut} -d ':' -f 1 >> ${TMPDIR}/taglist.xhtml && \
+		${cat} ${footer} >> ${TMPDIR}/taglist.xhtml && \
+		${cat} ${TMPDIR}/taglist.xhtml | ${parser}     \
+			"BLOG_TITLE=${BLOG_TITLE}"                   \
+			"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"       \
+			"BASE_URL=${BASE_URL}"                       \
+			"RSS_FEED_NAME=${RSS_FEED_NAME}"             \
+			"HOME_TITLE=${HOME_TITLE}"                   \
+			"POST_LIST_TITLE=${POST_LIST_TITLE}"         \
+			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"           \
+			"TITLE=${TAG_LIST_TITLE}"                    \
+			"LANG=${BLOG_LANG}"                          \
+			"POWERED_BY=${POWERED_BY}"                   \
+			> ${DESTDIR}/taglist.xhtml && \
+	  ${rm} ${TMPDIR}/taglist.xhtml || { \
+			${echo} "-- Could not build tag list page: $@" ; \
+			false ; \
+		} ; \
+	} && ${echo} "-- Tag list built: $@"
 
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
