@@ -12,6 +12,7 @@ SRCDIR   = ./src
 DESTDIR  = ./pub
 DBDIR    = ./db
 TMPDIR   = ./tmp
+TAGDIR   = ${DESTDIR}/tags
 
 # template's files
 header  ?= ${TMPLDIR}/header.xhtml
@@ -47,9 +48,10 @@ grep     ?= grep
 FILES != ${cd} ${SRCDIR}; ${ls}
 DBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r|${head} -n ${MAX_POST}
+TAGLIST != ${cat} ${DBDIR}/tags.list|${cut} -d ':' -f 1
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR
+.for DIR in DESTDIR TMPDIR TAGDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
@@ -226,12 +228,27 @@ ${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 
 # Do Tag List page
 # EXAMPLE: pub/taglist.xhtml
-${DESTDIR}/taglist.xhtml: ${DESTDIR} ${DBDIR}/tags.list
+.for TAG in ${TAGLIST}
+TAGNAME_${TAG} = ${TAG}
+TAGFILE_${TAG} = ${TAG}.xhtml
+${TAG}: ${DBDIR}/tags.list ${TAGDIR}
+	$Q${cat} ${TMPLDIR}/tagelement.xhtml | ${parser} \
+		"TAGNAME=${TAGNAME_${TAG}}" \
+		"TAGFILE=${TAGFILE_${TAG}}" \
+		>> ${TMPDIR}/tags.list
+	$Q${echo} "No post" >> ${DESTDIR}/tags/${TAGFILE_${TAG}}
+.endfor
+
+TAGLIST_CONTENT != ${cat} ${TMPDIR}/tags.list
+
+${DESTDIR}/taglist.xhtml: ${DESTDIR} ${DBDIR}/tags.list ${TAGLIST}
 	$Q{ \
 		${cat} ${header} >> ${TMPDIR}/taglist.xhtml && \
-		${cat} ${DBDIR}/tags.list |${cut} -d ':' -f 1 >> ${TMPDIR}/taglist.xhtml && \
+		${cat} ${TMPLDIR}/tags.xhtml >> ${TMPDIR}/taglist.xhtml && \
 		${cat} ${footer} >> ${TMPDIR}/taglist.xhtml && \
 		${cat} ${TMPDIR}/taglist.xhtml | ${parser}     \
+			"TAGLIST_CONTENT=${TAGLIST_CONTENT}"         \
+			"TAGDIR=${TAGDIR}"                           \
 			"BLOG_TITLE=${BLOG_TITLE}"                   \
 			"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"       \
 			"BASE_URL=${BASE_URL}"                       \
@@ -252,10 +269,10 @@ ${DESTDIR}/taglist.xhtml: ${DESTDIR} ${DBDIR}/tags.list
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
 clean:
-	$Q${rm} -f ${DESTDIR}/*
+	$Q${rm} -rf ${DESTDIR}/*
 	$Q${rm} -f ${TMPDIR}/*
 
 # END
 .MAIN: all
 
-#vim :tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
+# vim:tabstop=2:softtabstop=2:shiftwidth=2:noexpandtab
