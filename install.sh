@@ -8,7 +8,7 @@ SRCDIR=./pub
 DESTDIR=${HOME}/public_html
 
 process() {
-  rm -f ${DESTDIR}/* && cp -r ${SRCDIR}/* ${DESTDIR} && echo "...installed!"
+  rm -rf ${DESTDIR}/* && cp -r ${SRCDIR}/* ${DESTDIR} && echo "...installed!"
 }
 
 echo "INSTALL to ${DESTDIR}..."
