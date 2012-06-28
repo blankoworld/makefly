@@ -262,6 +262,7 @@ ${TAG}: ${DBDIR}/tags.list ${TAGDIR}
 		"LANG=${BLOG_LANG}"                          \
 		"POWERED_BY=${POWERED_BY}"                   \
 		> ${DESTDIR}/tags/${TAGFILE_${TAG}}
+	$Q${rm} ${TMPDIR}/${TAGFILE_${TAG}}.tag
 .endfor
 
 ${DESTDIR}/tags/index.xhtml: ${DESTDIR} ${DBDIR}/tags.list ${TAGLIST}
