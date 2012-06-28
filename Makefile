@@ -115,7 +115,7 @@ SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 DESC_${FILE}      != ${echo} ${DESCRIPTION}
 CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
-TAGS_${FILE}      != ${echo} ${TAGS}
+TAGS_${FILE}      != ${echo} ${TAGS} |${sed} -e 's/,/, /g'
 
 ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 	@# Template for Post List page
@@ -124,6 +124,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"FILE=${NAME_${FILE}}"                     \
 		"SHORT_DATE=${SHORTDATE_${FILE}}"          \
+		"TAGLIST=${TAGS_${FILE}}"                  \
 		> ${TMPDIR}/${FILE}.list
 	@# Template for Home page
 	$Q${cat} ${article} | ${parser}              \
@@ -132,6 +133,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 		"FILE=${NAME_${FILE}}"                     \
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"PERMALINK_TITLE=${PERMALINK_TITLE}"       \
+		"TAGLIST=${TAGS_${FILE}}"                  \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
 	$Q${cat} ${DESTDIR}/${NAME_${FILE}} | ${parser}    \
@@ -142,6 +144,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"BASE_URL=${BASE_URL}"                     \
 		"FILE=${NAME_${FILE}}"                     \
+		"TAGLIST=${TAGS_${FILE}}"                  \
 		> ${TMPDIR}/${NAME_${FILE}}
 	@# Move temporary file to pub
 	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${DESTDIR}/${NAME_${FILE}}
