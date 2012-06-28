@@ -48,7 +48,8 @@ grep     ?= grep
 FILES != ${cd} ${SRCDIR}; ${ls}
 DBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r|${head} -n ${MAX_POST}
-TAGLIST != ${cat} ${DBDIR}/tags.list|${cut} -d ':' -f 1
+TAGLIST != ${cat} ${DBDIR}/tags.list|${cut} -d ':' -f 1 |${sort}
+#def TAGLIST_CONTENT
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR
@@ -63,7 +64,7 @@ ${${DIR}}:
 .endfor
 
 # BEGIN
-all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${DESTDIR}/list.xhtml ${DESTDIR}/taglist.xhtml
+all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${DESTDIR}/list.xhtml ${DESTDIR}/tags/index.xhtml
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -84,13 +85,14 @@ CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE}
 ${TARGET_${FILE}}: ${DESTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
-			${cat} ${header} | ${parser} \
-				"BLOG_TITLE=${BLOG_TITLE}" \
-				"BASE_URL=${BASE_URL}" \
-				"HOME_TITLE=${HOME_TITLE}" \
+			${cat} ${header} | ${parser}           \
+				"BLOG_TITLE=${BLOG_TITLE}"           \
+				"BASE_URL=${BASE_URL}"               \
+				"HOME_TITLE=${HOME_TITLE}"           \
 				"POST_LIST_TITLE=${POST_LIST_TITLE}" \
+				"TAG_LIST_TITLE=${TAG_LIST_TITLE}"   \
 				"LANG=${BLOG_LANG}" && \
-      ${cat} ${article} | ${parser} "CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} "s|^|        |g" && \
+			${cat} ${article} | ${parser} "CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} "s|^|        |g" && \
 			${cat} ${footer} | ${parser} "POWERED_BY=${POWERED_BY}" ; \
 		} > ${TARGET_${FILE}} || { \
 			${rm} -f ${TARGET_${FILE}}                           ; \
@@ -117,14 +119,14 @@ TAGS_${FILE}      != ${echo} ${TAGS}
 
 ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 	@# Template for Post List page
-	$Q${cat} ${element} | ${parser}                    \
+	$Q${cat} ${element} | ${parser}              \
 		"TITLE=${TITLE_${FILE}}"                   \
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"FILE=${NAME_${FILE}}"                     \
 		"SHORT_DATE=${SHORTDATE_${FILE}}"          \
 		> ${TMPDIR}/${FILE}.list
 	@# Template for Home page
-	$Q${cat} ${article} | ${parser}                    \
+	$Q${cat} ${article} | ${parser}              \
 		"CONTENT=${CONTENT_${FILE}}"               \
 		"TITLE=${TITLE_${FILE}}"                   \
 		"FILE=${NAME_${FILE}}"                     \
@@ -231,24 +233,24 @@ ${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 .for TAG in ${TAGLIST}
 TAGNAME_${TAG} = ${TAG}
 TAGFILE_${TAG} = ${TAG}.xhtml
+TAGLINK_${TAG} = \"${BASE_URL}/tags/${TAGFILE_${TAG}}\"
+# Sed is needed to avoid problem with missing double quote
+TAGCONTENT_${TAG} != ${cat} ${TMPLDIR}/tagelement.xhtml |${sed} -e 's|\"|\\"|g' |${parser} \
+	"TAGNAME=${TAGNAME_${TAG}}" \
+	"TAGLINK=${TAGLINK_${TAG}}"
+TAGLIST_CONTENT += ${TAGCONTENT_${TAG}}
+
 ${TAG}: ${DBDIR}/tags.list ${TAGDIR}
-	$Q${cat} ${TMPLDIR}/tagelement.xhtml | ${parser} \
-		"TAGNAME=${TAGNAME_${TAG}}" \
-		"TAGFILE=${TAGFILE_${TAG}}" \
-		>> ${TMPDIR}/tags.list
 	$Q${echo} "No post" >> ${DESTDIR}/tags/${TAGFILE_${TAG}}
 .endfor
 
-TAGLIST_CONTENT != ${cat} ${TMPDIR}/tags.list
-
-${DESTDIR}/taglist.xhtml: ${DESTDIR} ${DBDIR}/tags.list ${TAGLIST}
+${DESTDIR}/tags/index.xhtml: ${DESTDIR} ${DBDIR}/tags.list ${TAGLIST}
 	$Q{ \
 		${cat} ${header} >> ${TMPDIR}/taglist.xhtml && \
 		${cat} ${TMPLDIR}/tags.xhtml >> ${TMPDIR}/taglist.xhtml && \
 		${cat} ${footer} >> ${TMPDIR}/taglist.xhtml && \
 		${cat} ${TMPDIR}/taglist.xhtml | ${parser}     \
 			"TAGLIST_CONTENT=${TAGLIST_CONTENT}"         \
-			"TAGDIR=${TAGDIR}"                           \
 			"BLOG_TITLE=${BLOG_TITLE}"                   \
 			"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"       \
 			"BASE_URL=${BASE_URL}"                       \
@@ -259,7 +261,7 @@ ${DESTDIR}/taglist.xhtml: ${DESTDIR} ${DBDIR}/tags.list ${TAGLIST}
 			"TITLE=${TAG_LIST_TITLE}"                    \
 			"LANG=${BLOG_LANG}"                          \
 			"POWERED_BY=${POWERED_BY}"                   \
-			> ${DESTDIR}/taglist.xhtml && \
+			> ${DESTDIR}/tags/index.xhtml && \
 	  ${rm} ${TMPDIR}/taglist.xhtml || { \
 			${echo} "-- Could not build tag list page: $@" ; \
 			false ; \
