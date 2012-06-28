@@ -48,7 +48,7 @@ grep     ?= grep
 FILES != ${cd} ${SRCDIR}; ${ls}
 DBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r|${head} -n ${MAX_POST}
-TAGLIST != ${cat} ${DBDIR}/tags.list|${cut} -d ':' -f 1 |${sort}
+TAGLIST != ${cat} ${DBDIR}/tags.list|${sed} -e 's/\:/@/g'|${sort}
 #def TAGLIST_CONTENT
 
 # DIRECTORIES
@@ -231,17 +231,37 @@ ${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 # Do Tag List page
 # EXAMPLE: pub/taglist.xhtml
 .for TAG in ${TAGLIST}
-TAGNAME_${TAG} = ${TAG}
-TAGFILE_${TAG} = ${TAG}.xhtml
+TAGNAME_${TAG} != ${echo} ${TAG} |${cut} -d '@' -f1
+TAGFILE_${TAG} = ${TAGNAME_${TAG}}.xhtml
 TAGLINK_${TAG} = \"${BASE_URL}/tags/${TAGFILE_${TAG}}\"
-# Sed is needed to avoid problem with missing double quote
+ARTICLES_${TAG} != ${echo} ${TAG} |${cut} -d '@' -f2|${sed} -e 's|,| |g'
+# Sed is needed to avoid problem with missing double quote in template parsing
 TAGCONTENT_${TAG} != ${cat} ${TMPLDIR}/tagelement.xhtml |${sed} -e 's|\"|\\"|g' |${parser} \
 	"TAGNAME=${TAGNAME_${TAG}}" \
 	"TAGLINK=${TAGLINK_${TAG}}"
 TAGLIST_CONTENT += ${TAGCONTENT_${TAG}}
 
 ${TAG}: ${DBDIR}/tags.list ${TAGDIR}
-	$Q${echo} "No post" >> ${DESTDIR}/tags/${TAGFILE_${TAG}}
+	$Q${cat} ${header} >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
+	$Q${echo} "      <ul>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
+.	for ARTICLE in ${ARTICLES_${TAG}}
+	$Q${echo} "        <li><a href=\"${BASE_URL}/${ARTICLE:S/.md$/.xhtml/}\">${ARTICLE:S/.md$//}</a></li>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
+.	endfor
+	$Q${echo} "      </ul>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
+	$Q${cat} ${footer} >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
+	$Q${cat} ${TMPDIR}/${TAGFILE_${TAG}}.tag |${parser} \
+		"TAGLIST_CONTENT=${TAGLIST_CONTENT}"         \
+		"BLOG_TITLE=${BLOG_TITLE}"                   \
+		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"       \
+		"BASE_URL=${BASE_URL}"                       \
+		"RSS_FEED_NAME=${RSS_FEED_NAME}"             \
+		"HOME_TITLE=${HOME_TITLE}"                   \
+		"POST_LIST_TITLE=${POST_LIST_TITLE}"         \
+		"TAG_LIST_TITLE=${TAG_LIST_TITLE}"           \
+		"TITLE=${TAGNAME_${TAG}}"                    \
+		"LANG=${BLOG_LANG}"                          \
+		"POWERED_BY=${POWERED_BY}"                   \
+		> ${DESTDIR}/tags/${TAGFILE_${TAG}}
 .endfor
 
 ${DESTDIR}/tags/index.xhtml: ${DESTDIR} ${DBDIR}/tags.list ${TAGLIST}
