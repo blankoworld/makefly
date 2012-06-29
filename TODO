@@ -6,18 +6,11 @@ TODO:
 - change all variable to be UNIQUE in TEMPLATES
 - Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
 - Use posts'title for each individual page and homepage. For an example to have "My first post" then content of post
-- Add "tag(s)" before tags on posts'footer
 - Create a template for tag list with some text (in order to be more readeable in elinks)
 - Add ankor to join content's page on EACH page
 - permit user to select how many lines should be given for each articles on index page (for an example 10 lines): to do this, do a head -n 10 on art1.md then do markdown on it
 - plugins
 - comments
-- categories/tags:
-  .for ARTICLE in ${ARTICLES}
-  .for TAG in ${TAGS}
-  TAG_${TAG} += ${ARTICLE}
-  .endfor
-  .endfor
 - rss/atom feeds
 - smileys
 - sitemap (xml/html)
@@ -49,3 +42,11 @@ DONE:
 - some translations
 - permit user to select which format the date should have
 - change template for each post (in order to have date and permalink)
+- Add "tag(s)" before tags on posts'footer
+- categories/tags:
+  .for ARTICLE in ${ARTICLES}
+  .for TAG in ${TAGS}
+  TAG_${TAG} += ${ARTICLE}
+  .endfor
+  .endfor
+
