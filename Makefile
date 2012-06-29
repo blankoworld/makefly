@@ -232,6 +232,7 @@ ${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 			"HOME_TITLE=${HOME_TITLE}"             \
 			"POST_LIST_TITLE=${POST_LIST_TITLE}"   \
 			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"     \
+			"TAG_TITLE=${TAG_TITLE}"               \
 			"TITLE=${POST_LIST_TITLE}"             \
 			"LANG=${BLOG_LANG}"                    \
 			"POWERED_BY=${POWERED_BY}"             \
