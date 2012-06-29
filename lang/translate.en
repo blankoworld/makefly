@@ -1,6 +1,7 @@
 HOME_TITLE = Home
 POST_LIST_TITLE = Post list
 TAG_LIST_TITLE = Tag list
+TAG_TITLE = Tag(s)
 PERMALINK_TITLE = permalink
 POWERED_BY = Powered by
 POSTED = Posted
