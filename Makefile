@@ -4,15 +4,18 @@
 Q ?= @
 
 # directories
-TMPLDIR  = ./template
-STYLEDIR = ./style
-BINDIR   = ./bin
-LANGDIR  = ./lang
-SRCDIR   = ./src
-DESTDIR  = ./pub
-DBDIR    = ./db
-TMPDIR   = ./tmp
-TAGDIR   = ${DESTDIR}/tags
+TMPLDIR      = ./template
+STYLEDIR     = ./style
+BINDIR       = ./bin
+LANGDIR      = ./lang
+SRCDIR       = ./src
+DESTDIR      = ./pub
+DBDIR        = ./db
+TMPDIR       = ./tmp
+TAGDIR_NAME  = tags
+POSTDIR_NAME = posts
+TAGDIR       = ${DESTDIR}/${TAGDIR_NAME}
+POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 
 # template's files
 header  ?= ${TMPLDIR}/header.xhtml
@@ -52,7 +55,7 @@ TAGLIST != ${cat} ${DBDIR}/tags.list|${sed} -e 's/\:/@/g'|${sort}
 #def TAGLIST_CONTENT
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR TAGDIR
+.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
@@ -64,12 +67,12 @@ ${${DIR}}:
 .endfor
 
 # BEGIN
-all: ${FILES:S/.md/.xhtml/g:S/^/${DESTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${DESTDIR}/list.xhtml ${DESTDIR}/tags/index.xhtml
+all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/index.xhtml ${TAGDIR}/index.xhtml
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
-TARGET_${FILE} = ${FILE:S/.md$/.xhtml/:S/^/${DESTDIR}\//}
+TARGET_${FILE} = ${FILE:S/.md$/.xhtml/:S/^/${POSTDIR}\//}
 .endfor
 
 # Create temporary files LIST (this temporary files will fetch some infos for Post List and Homepage)
@@ -82,7 +85,7 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
 CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE}
-${TARGET_${FILE}}: ${DESTDIR} ${SRCDIR}/${FILE}
+${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
 			${cat} ${header} | ${parser}           \
@@ -90,7 +93,9 @@ ${TARGET_${FILE}}: ${DESTDIR} ${SRCDIR}/${FILE}
 				"BASE_URL=${BASE_URL}"               \
 				"HOME_TITLE=${HOME_TITLE}"           \
 				"POST_LIST_TITLE=${POST_LIST_TITLE}" \
+				"POSTDIR_NAME=${POSTDIR_NAME}"       \
 				"TAG_LIST_TITLE=${TAG_LIST_TITLE}"   \
+				"TAGDIR_NAME=${TAGDIR_NAME}"         \
 				"LANG=${BLOG_LANG}" && \
 			${cat} ${article} | ${parser} "CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} "s|^|        |g" && \
 			${cat} ${footer} | ${parser} "POWERED_BY=${POWERED_BY}" ; \
@@ -126,43 +131,47 @@ TAGLIST_TMP_${FILE} += ${TAGLINK_${FILE}_${TAG}}
 
 TAGLIST_${FILE} != ${echo} "${TAGLIST_TMP_${FILE}}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 
-${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
+${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	@# Template for Post List page
 	$Q${cat} ${element} | ${parser}              \
-		"TITLE=${TITLE_${FILE}}"                   \
+		"POST_TITLE=${TITLE_${FILE}}"              \
 		"DATE=${POSTDATE_${FILE}}"                 \
-		"FILE=${NAME_${FILE}}"                     \
+		"POST_FILE=${NAME_${FILE}}"                \
 		"SHORT_DATE=${SHORTDATE_${FILE}}"          \
-		"TAGLIST=${TAGLIST_${FILE}}"                  \
+		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
 		> ${TMPDIR}/${FILE}.list
 	@# Template for Home page
 	$Q${cat} ${article} | ${parser}              \
 		"CONTENT=${CONTENT_${FILE}}"               \
 		"TITLE=${TITLE_${FILE}}"                   \
-		"FILE=${NAME_${FILE}}"                     \
+		"POST_FILE=${NAME_${FILE}}"                \
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"PERMALINK_TITLE=${PERMALINK_TITLE}"       \
-		"TAGLIST=${TAGLIST_${FILE}}"               \
+		"POSTDIR_NAME=${POSTDIR_NAME}"             \
+		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
+		"TAGDIR_NAME=${TAGDIR_NAME}"               \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
-	$Q${cat} ${DESTDIR}/${NAME_${FILE}} | ${parser}    \
+	$Q${cat} ${POSTDIR}/${NAME_${FILE}} | ${parser}    \
 		"TITLE=${TITLE_${FILE}}"                   \
 		"RSS_FEED_NAME=${RSS_FEED_NAME}"           \
 		"PERMALINK_TITLE=${PERMALINK_TITLE}"       \
 		"POSTED=${POSTED}"                         \
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"BASE_URL=${BASE_URL}"                     \
-		"FILE=${NAME_${FILE}}"                     \
-		"TAGLIST=${TAGLIST_${FILE}}"               \
+		"POST_FILE=${NAME_${FILE}}"                \
+		"POSTDIR_NAME=${POSTDIR_NAME}"             \
+		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
 		"TAG_TITLE=${TAG_TITLE}"                   \
+		"TAGDIR_NAME=${TAGDIR_NAME}"               \
 		> ${TMPDIR}/${NAME_${FILE}}
 	@# Move temporary file to pub
-	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${DESTDIR}/${NAME_${FILE}}
+	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${POSTDIR}/${NAME_${FILE}}
 	@# Template for RSS Feed
 	$Q${cat} ${TMPLDIR}/feed.element.rss | ${parser}   \
 		"TITLE=${TITLE_${FILE}}"                   \
 		"DESCRIPTION=${DESC_${FILE}}"              \
-		"LINK=${BASE_URL}/${NAME_${FILE}}"         \
+		"LINK=${BASE_URL}/${POSTDIR_NAME}/${NAME_${FILE}}"         \
 		> ${TMPDIR}/${FILE}.rss
 .endfor
 
@@ -186,8 +195,10 @@ ${DESTDIR}/index.xhtml: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
 			"RSS_FEED_NAME=${RSS_FEED_NAME}"     \
 			"HOME_TITLE=${HOME_TITLE}"           \
 			"POST_LIST_TITLE=${POST_LIST_TITLE}" \
+			"POSTDIR_NAME=${POSTDIR_NAME}"       \
 			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"   \
 			"TAG_TITLE=${TAG_TITLE}"             \
+			"TAGDIR_NAME=${TAGDIR_NAME}"         \
 			"LANG=${BLOG_LANG}"                  \
 			"POWERED_BY=${POWERED_BY}"           \
 			"POSTED=${POSTED}"                   \
@@ -218,7 +229,7 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 
 # Do Post List page
 # EXAMPLE: pub/list.xhtml
-${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
+${POSTDIR}/index.xhtml: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		${cat} ${header} >> ${TMPDIR}/list.xhtml && \
 		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list.xhtml && \
@@ -231,12 +242,14 @@ ${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 			"RSS_FEED_NAME=${RSS_FEED_NAME}"       \
 			"HOME_TITLE=${HOME_TITLE}"             \
 			"POST_LIST_TITLE=${POST_LIST_TITLE}"   \
+			"POSTDIR_NAME=${POSTDIR_NAME}"         \
 			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"     \
 			"TAG_TITLE=${TAG_TITLE}"               \
+			"TAGDIR_NAME=${TAGDIR_NAME}"           \
 			"TITLE=${POST_LIST_TITLE}"             \
 			"LANG=${BLOG_LANG}"                    \
 			"POWERED_BY=${POWERED_BY}"             \
-			> ${DESTDIR}/list.xhtml &&             \
+			> ${POSTDIR}/index.xhtml &&             \
     ${rm} ${TMPDIR}/list.xhtml || { \
 			${echo} "-- Could not build list page: $@" ; \
 			false ; \
@@ -244,11 +257,11 @@ ${DESTDIR}/list.xhtml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	} && ${echo} "-- List page built: $@"
 
 # Do Tag List page
-# EXAMPLE: pub/taglist.xhtml
+# EXAMPLE: pub/tags/index.xhtml
 .for TAG in ${TAGLIST}
 TAGNAME_${TAG} != ${echo} ${TAG} |${cut} -d '@' -f1
 TAGFILE_${TAG} = ${TAGNAME_${TAG}}.xhtml
-TAGLINK_${TAG} = \"${BASE_URL}/tags/${TAGFILE_${TAG}}\"
+TAGLINK_${TAG} = \"${BASE_URL}/${TAGDIR_NAME}/${TAGFILE_${TAG}}\"
 ARTICLES_${TAG} != ${echo} ${TAG} |${cut} -d '@' -f2|${sed} -e 's|,| |g'
 # Sed is needed to avoid problem with missing double quote in template parsing
 TAGCONTENT_${TAG} != ${cat} ${TMPLDIR}/tagelement.xhtml |${sed} -e 's|\"|\\"|g' |${parser} \
@@ -260,7 +273,7 @@ ${TAG}: ${DBDIR}/tags.list ${TAGDIR}
 	$Q${cat} ${header} >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
 	$Q${echo} "      <ul>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
 .	for ARTICLE in ${ARTICLES_${TAG}}
-	$Q${echo} "        <li><a href=\"${BASE_URL}/${ARTICLE:S/.md$/.xhtml/}\">${ARTICLE:S/.md$//}</a></li>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
+	$Q${echo} "        <li><a href=\"${BASE_URL}/${POSTDIR_NAME}/${ARTICLE:S/.md$/.xhtml/}\">${ARTICLE:S/.md$//}</a></li>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
 .	endfor
 	$Q${echo} "      </ul>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
 	$Q${cat} ${footer} >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
@@ -272,15 +285,17 @@ ${TAG}: ${DBDIR}/tags.list ${TAGDIR}
 		"RSS_FEED_NAME=${RSS_FEED_NAME}"             \
 		"HOME_TITLE=${HOME_TITLE}"                   \
 		"POST_LIST_TITLE=${POST_LIST_TITLE}"         \
+		"POSTDIR_NAME=${POSTDIR_NAME}"               \
 		"TAG_LIST_TITLE=${TAG_LIST_TITLE}"           \
+		"TAGDIR_NAME=${TAGDIR_NAME}"                 \
 		"TITLE=${TAGNAME_${TAG}}"                    \
 		"LANG=${BLOG_LANG}"                          \
 		"POWERED_BY=${POWERED_BY}"                   \
-		> ${DESTDIR}/tags/${TAGFILE_${TAG}}
+		> ${TAGDIR}/${TAGFILE_${TAG}}
 	$Q${rm} ${TMPDIR}/${TAGFILE_${TAG}}.tag
 .endfor
 
-${DESTDIR}/tags/index.xhtml: ${DESTDIR} ${DBDIR}/tags.list ${TAGLIST}
+${TAGDIR}/index.xhtml: ${TAGDIR} ${DBDIR}/tags.list ${TAGLIST}
 	$Q{ \
 		${cat} ${header} >> ${TMPDIR}/taglist.xhtml && \
 		${cat} ${TMPLDIR}/tags.xhtml >> ${TMPDIR}/taglist.xhtml && \
@@ -293,7 +308,9 @@ ${DESTDIR}/tags/index.xhtml: ${DESTDIR} ${DBDIR}/tags.list ${TAGLIST}
 			"RSS_FEED_NAME=${RSS_FEED_NAME}"             \
 			"HOME_TITLE=${HOME_TITLE}"                   \
 			"POST_LIST_TITLE=${POST_LIST_TITLE}"         \
+			"POSTDIR_NAME=${POSTDIR_NAME}"               \
 			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"           \
+			"TAGDIR_NAME=${TAGDIR_NAME}"                 \
 			"TITLE=${TAG_LIST_TITLE}"                    \
 			"LANG=${BLOG_LANG}"                          \
 			"POWERED_BY=${POWERED_BY}"                   \
