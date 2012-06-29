@@ -115,7 +115,16 @@ SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 DESC_${FILE}      != ${echo} ${DESCRIPTION}
 CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
-TAGS_${FILE}      != ${echo} ${TAGS} |${sed} -e 's/,/, /g'
+TAGS_${FILE}      != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+
+.for TAG in ${TAGS_${FILE}}
+TAGLINK_${FILE}_${TAG} != ${cat} "${TMPLDIR}/taglink.xhtml" |${parser} \
+	TAG_PAGE=${TAG}.xhtml \
+	TAG_NAME=${TAG}
+TAGLIST_TMP_${FILE} += ${TAGLINK_${FILE}_${TAG}}
+.endfor
+
+TAGLIST_${FILE} != ${echo} "${TAGLIST_TMP_${FILE}}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 
 ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 	@# Template for Post List page
@@ -124,7 +133,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"FILE=${NAME_${FILE}}"                     \
 		"SHORT_DATE=${SHORTDATE_${FILE}}"          \
-		"TAGLIST=${TAGS_${FILE}}"                  \
+		"TAGLIST=${TAGLIST_${FILE}}"                  \
 		> ${TMPDIR}/${FILE}.list
 	@# Template for Home page
 	$Q${cat} ${article} | ${parser}              \
@@ -133,7 +142,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 		"FILE=${NAME_${FILE}}"                     \
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"PERMALINK_TITLE=${PERMALINK_TITLE}"       \
-		"TAGLIST=${TAGS_${FILE}}"                  \
+		"TAGLIST=${TAGLIST_${FILE}}"               \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
 	$Q${cat} ${DESTDIR}/${NAME_${FILE}} | ${parser}    \
@@ -144,7 +153,8 @@ ${TMP_${FILE}}: ${TMPDIR} ${TARGET_${NAME_${FILE}}}
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"BASE_URL=${BASE_URL}"                     \
 		"FILE=${NAME_${FILE}}"                     \
-		"TAGLIST=${TAGS_${FILE}}"                  \
+		"TAGLIST=${TAGLIST_${FILE}}"               \
+		"TAG_TITLE=${TAG_TITLE}"                   \
 		> ${TMPDIR}/${NAME_${FILE}}
 	@# Move temporary file to pub
 	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${DESTDIR}/${NAME_${FILE}}
@@ -177,6 +187,7 @@ ${DESTDIR}/index.xhtml: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
 			"HOME_TITLE=${HOME_TITLE}"           \
 			"POST_LIST_TITLE=${POST_LIST_TITLE}" \
 			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"   \
+			"TAG_TITLE=${TAG_TITLE}"             \
 			"LANG=${BLOG_LANG}"                  \
 			"POWERED_BY=${POWERED_BY}"           \
 			"POSTED=${POSTED}"                   \
