@@ -32,9 +32,9 @@ Some programs on which makefly depends:
 
 No need to install it. But after generation, perhaps would you install result in a specific directory?
 
-You should so use **create_post.sh** which is a bash shell script. Just launch it:
+You should so use **install.sh** which is a bash shell script. Just launch it:
 
-    bash create_post.sh
+    bash install.sh
 
 ## Configuration
 
@@ -43,6 +43,10 @@ The first time you use Makefly you don't have any configuration file. An example
 For more information please read **The makefly.rc configuration file** section.
 
 ## Create content
+
+A bash shell script is available: **create_post.sh**. To use it:
+
+    bash create_post.sh
 
 ## Use it!
 
