@@ -23,6 +23,9 @@ footer  ?= ${TMPLDIR}/footer.xhtml
 element ?= ${TMPLDIR}/element.xhtml
 article ?= ${TMPLDIR}/article.xhtml
 
+# other files
+htmldoc ?= README.html
+
 # programs
 markdown ?= markdown
 lua      ?= lua
@@ -326,6 +329,10 @@ ${TAGDIR}/index.xhtml: ${TAGDIR} ${DBDIR}/tags.list ${TAGLIST}
 clean:
 	$Q${rm} -rf ${DESTDIR}/*
 	$Q${rm} -f ${TMPDIR}/*
+	$Q${rm} -f README.html
+
+doc: README.md
+	$Q${markdown} README.md > ${htmldoc}
 
 # END
 .MAIN: all
