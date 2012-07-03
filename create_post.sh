@@ -9,6 +9,7 @@ SRCDIR=`cat Makefile |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g"` # sed
 LIMIT='255'
 YOUR_EDITOR=`which nano`
 TAGFILELIST="${DBDIR}/tags.list"
+QUIET=0
 
 #####
 ## TEST
@@ -31,6 +32,12 @@ fi
 if ! test -f ${TAGFILELIST}; then
   echo "'${TAGFILELIST}' doesn't exists!"
   exit 1
+fi
+
+if test $# -gt 0;then
+  if test "$1" == "-q";then
+    QUIET=1
+  fi
 fi
 
 #####
@@ -93,7 +100,10 @@ touch ${file}
 echo "# ${title}" >> ${file}
 echo "" >> ${file}
 echo "Type your text in markdown format here" >> ${file}
-${edit} ${file}
+
+if test "$QUIET" -eq 0;then
+  ${edit} ${file}
+fi
 
 #####
 ## END
