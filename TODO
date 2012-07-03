@@ -1,8 +1,9 @@
 TODO:
 -----
 
+- complete README.md
+- create a script that generate some posts and delete current posts (except an example post?)
 - add a license (for an example BSD)
-- create a documentation in markdown and add a target in Makefile to create .html doc :)
 - change all variable to be UNIQUE in TEMPLATES
 - Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
 - Use posts'title for each individual page and homepage. For an example to have "My first post" then content of post
@@ -16,7 +17,6 @@ TODO:
 - sitemap (xml/html)
 - fortunes
 - identica'status
-- write a doc
 - find a logo
 - do a favicon with logo
 - template:
@@ -49,4 +49,5 @@ DONE:
   TAG_${TAG} += ${ARTICLE}
   .endfor
   .endfor
-
+- create a documentation in markdown and add a target in Makefile to create .html doc :)
+- write a doc
