@@ -1,4 +1,5 @@
-test:art1.md,art2.md,art3.md
-example:art1.md
-makefly:art3.md
-news:art3.md
+makefly:welcome_to_makefly.md,makefly_project.md
+news:welcome_to_makefly.md,official_weblog_open.md
+social:makefly_project.md
+programmation:makefly_project.md
+web:official_weblog_open.md

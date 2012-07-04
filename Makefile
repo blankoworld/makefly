@@ -55,7 +55,6 @@ FILES != ${cd} ${SRCDIR}; ${ls}
 DBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r|${head} -n ${MAX_POST}
 TAGLIST != ${cat} ${DBDIR}/tags.list|${sed} -e 's/\:/@/g'|${sort}
-#def TAGLIST_CONTENT
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR POSTDIR
@@ -87,7 +86,7 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 # Do each FINAL post file
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
-CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE}
+CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |${sed} -e 's|\"|\\"|g'
 ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
@@ -100,7 +99,7 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 				"TAG_LIST_TITLE=${TAG_LIST_TITLE}"   \
 				"TAGDIR_NAME=${TAGDIR_NAME}"         \
 				"LANG=${BLOG_LANG}" && \
-			${cat} ${article} | ${parser} "CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} "s|^|        |g" && \
+			${cat} ${article} |${parser} "CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} -e "s|^|        |g" && \
 			${cat} ${footer} | ${parser} "POWERED_BY=${POWERED_BY}" ; \
 		} > ${TARGET_${FILE}} || { \
 			${rm} -f ${TARGET_${FILE}}                           ; \
@@ -122,7 +121,7 @@ POSTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
 DESC_${FILE}      != ${echo} ${DESCRIPTION}
-CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/}
+CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/} |${sed} -e 's/\"/\\"/g'
 TAGS_${FILE}      != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
 
 .for TAG in ${TAGS_${FILE}}

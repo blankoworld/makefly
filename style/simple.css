@@ -79,6 +79,10 @@ padding: 10px;
 padding-left: 30px;
 }
 
+#content article a {
+color: #ccc;
+}
+
 #content .articleinfo {
 font-size: 70%;
 text-align: right;

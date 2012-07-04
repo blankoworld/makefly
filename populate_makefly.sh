@@ -59,7 +59,7 @@ Some others information could be seen @ohloh: [http://www.ohloh.net/p/makefly](h
 
 ## Contact
 
-For other piece of information, you could contact me at this email address: <olivier+makefly@dossmann.net>.
+For other piece of information, you could contact me at this email address: [olivier [AT] dossmann [DOT] net](ma    ilto:olivier+makefly@dossmann.net "Contact me").
 EOF
 IFS="\\"
 
@@ -87,7 +87,10 @@ IFS="\\"
 ./create_post.sh -q < <(echo ${POST1_TITLE}; echo ${POST1_DESC}; echo ${POST1_DATE}; echo ${POST1_TAGS}) && echo -e ${POST1_CONTENT} > src/welcome_to_makefly.md || exit 1
 
 # create POST 2
-./create_post.sh -q < <(echo ${POST2_TITLE}; echo ${POST2_DESC}; echo ${POST2_DATE}; echo ${POST2_TAGS}) && echo -e ${POST2_CONTENT} > src/welcome_to_makefly.md || exit 1
+./create_post.sh -q < <(echo ${POST2_TITLE}; echo ${POST2_DESC}; echo ${POST2_DATE}; echo ${POST2_TAGS}) && echo -e ${POST2_CONTENT} > src/makefly_project.md || exit 1
+
+# create POST 3
+./create_post.sh -q < <(echo ${POST3_TITLE}; echo ${POST3_DESC}; echo ${POST3_DATE}; echo ${POST3_TAGS}) && echo -e ${POST3_CONTENT} > src/official_weblog_open.md || exit 1
 
 # END
 exit 0
