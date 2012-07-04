@@ -1,5 +1,6 @@
 Some ideas:
 - hymby : Host Your MiniBlog Yourself for static blog engine (hymby) + Lua interface
+- Another Naughty Static Weblog Engine Response = ANSWER
 - create a template of what should look like a post. For an example, a post could be:
 """
 TITLE=My title with some 
