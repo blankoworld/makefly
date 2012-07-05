@@ -25,6 +25,9 @@ TODO:
     ___EOF___"
     This permit to replace some variables. It's seems to be not valid without zsh.
   - templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
+- create a Makefile that permit user to setup and install makefly (this permit to return an error if a program is missing)
+  - permit to change language regarding LOCALE (makefly.rc.example configuration)
+  - permit to setup programs like sed, bash/zsh, etc. or return an error if no one exists
 
 DONE:
 -----
