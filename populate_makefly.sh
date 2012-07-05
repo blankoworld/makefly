@@ -59,7 +59,7 @@ Some others information could be seen @ohloh: [http://www.ohloh.net/p/makefly](h
 
 ## Contact
 
-For other piece of information, you could contact me at this email address: [olivier [AT] dossmann [DOT] net](ma    ilto:olivier+makefly@dossmann.net "Contact me").
+For other piece of information, you could contact me at this email address: [olivier [AT] dossmann [DOT] net](mailto:olivier+makefly@dossmann.net "Contact me").
 EOF
 IFS="\\"
 
@@ -91,6 +91,11 @@ IFS="\\"
 
 # create POST 3
 ./create_post.sh -q < <(echo ${POST3_TITLE}; echo ${POST3_DESC}; echo ${POST3_DATE}; echo ${POST3_TAGS}) && echo -e ${POST3_CONTENT} > src/official_weblog_open.md || exit 1
+
+# Change TIMESTAMP of posts
+mv db/*,welcome_to_makefly.mk "db/`date -d ${POST1_DATE} +'%s'`,welcome_to_makefly.mk"
+mv db/*,makefly_project.mk "db/`date -d ${POST2_DATE} +'%s'`,makefly_project.mk"
+mv db/*,official_weblog_open.mk "db/`date -d ${POST3_DATE} +'%s'`,official_weblog_open.mk"
 
 # END
 exit 0
