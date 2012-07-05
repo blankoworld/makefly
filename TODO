@@ -2,7 +2,6 @@ TODO:
 -----
 
 - complete README.md
-- create a script that generate some posts and delete current posts (except an example post?)
 - add a license (for an example BSD)
 - change all variable to be UNIQUE in TEMPLATES
 - Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
@@ -51,3 +50,4 @@ DONE:
   .endfor
 - create a documentation in markdown and add a target in Makefile to create .html doc :)
 - write a doc
+- create a script that generate some posts and delete current posts (except an example post?)
