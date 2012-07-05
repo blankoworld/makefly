@@ -6,7 +6,7 @@ Makefly is a static weblog engine that used a BSD Makefile to work.
 
 ### Website
 
-Coming soon.
+Stay tuned to [Makefly weblog](http://makefly.e-mergence.org/ "Visit Makefly official website").
 
 ### Contact
 
@@ -15,6 +15,10 @@ You can contact me [to this address](mailto:olivier+makefly@dossmann.net "Contac
 ### License
 
 Will come ASAP.
+
+### Stats
+
+Some stats about projet could be found [on Ohloh.net](http://www.ohloh.net/p/makefly "See ohloh's analysis for Makefly project").
 
 ## Description
 
