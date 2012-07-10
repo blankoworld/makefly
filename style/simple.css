@@ -17,9 +17,20 @@ color: #FFD700;
 }
 
 blockquote {
-background-color: #ccc;
 color: #fff;
 border-left: medium solid #FFD700;
+}
+
+pre {
+color: #000;
+background-color: #ccc;
+width: 90%;
+margin: 0 auto;
+padding: 5px 0;
+}
+
+pre code {
+padding: 5px;
 }
 
 nav {
