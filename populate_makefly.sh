@@ -73,7 +73,9 @@ IFS='' read -r -d '' POST3_CONTENT<<'EOF'
 
 Just remember one address for last makefly news: [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Visit official Makefly weblog to have news about Makefly!").
 
-I will post some tips & tricks, news and event about Makefly here.
+I will post some tips & tricks, news and event about Makefly here. For this, I could use some example like this to be changed in a file:
+
+    YOURVAR = the content of your variable
 
 But those who prefer to be more connected, I suggest you [to follow Makefly identica's group](http://identi.ca/group/makefly).
 
