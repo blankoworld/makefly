@@ -1,7 +1,6 @@
 TODO:
 -----
 
-- Permit user to have images (copy all files from src, except .md files)
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
 - complete README.md
 - add a license (for an example BSD)
@@ -58,3 +57,4 @@ DONE:
 - create a script that generate some posts and delete current posts (except an example post?)
 - Add a parser_opts to parser in order to give it some VAR. Example : ${parser} ${parse_opts} and parse_opts = "VAR=content VAR2=content2"
 - Change colors from links (a better gray or another color)
+- Permit user to have images (copy all files from src, except .md files)
