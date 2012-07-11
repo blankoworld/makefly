@@ -68,6 +68,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}" \
 FILES != ${cd} ${SRCDIR}; ${ls}
 DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
+MEDIAFILES != ${cd} ${SRCDIR}; ${ls}|${grep} -v ".md"
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR POSTDIR
@@ -81,8 +82,18 @@ ${${DIR}}:
 	}
 .endfor
 
+# MEDIA FILES (all files in SRCDIR except *.md files)
+.for FILE in ${MEDIAFILES}
+
+MEDIA_TARGET_${FILE} = ${FILE:S/^/${DESTDIR}\//}
+
+${MEDIA_TARGET_${FILE}}: ${DESTDIR}
+	$Q${cp} ${SRCDIR}/${FILE} ${MEDIA_TARGET_${FILE}}
+
+.endfor
+
 # BEGIN
-all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/index.xhtml ${TAGDIR}/index.xhtml
+all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/index.xhtml ${TAGDIR}/index.xhtml ${MEDIAFILES:S/^/${DESTDIR}\//}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
