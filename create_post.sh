@@ -8,7 +8,6 @@ DBDIR=`cat Makefile |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g"` # sed d
 SRCDIR=`cat Makefile |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g"` # sed delete useless space
 LIMIT='255'
 YOUR_EDITOR=`which nano`
-TAGFILELIST="${DBDIR}/tags.list"
 QUIET=0
 
 #####
@@ -77,23 +76,6 @@ echo "TITLE=\"${title}\"" > ${dbfile}
 echo "DESCRIPTION=\"${desc}\"" >> ${dbfile}
 echo "DATE=\"${date}\"" >> ${dbfile}
 echo "TAGS=\"${tags}\"" >> ${dbfile}
-
-# Write tags to tag list file
-IFS=","
-for tag in ${tags}; do
-  # delete not wanted chars
-  nonasciitag="${tag//[a-zA-Z0-9_-]/}"
-  new_tagname=$(echo "${tag:0:$LIMIT}" |sed -e "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/; s/[\`\~\!\@\#\$\%\^\*\(\)\+\=\{\}\|\\\;\:\'\"\,\<\>\/\?]//g; s/ [\&] / and /g; s/^[ ]//g; s/[ ]$//g; s/[\.]/_/g; s/\[//g; s/\]//g; s/ /_/g; s/[$nonasciitag ]/_/g" |sed -e '/[\_\-]*$/ s///g; /[\_\-]$/ s///g' |sed -e 's/__/_/g')
-  # search this tag
-  findtag=$(grep -E "^${new_tagname}:" ${TAGFILELIST})
-  if [ -z "${findtag}" ]; then
-    echo "Create new tag: ${new_tagname}"
-    echo "${new_tagname}:${new_name}.md" >> ${TAGFILELIST}
-  else
-    sed "/^${new_tagname}:/{s/$/,${new_name}.md/}" ${TAGFILELIST} > ${TAGFILELIST}.tmp
-    mv ${TAGFILELIST}.tmp ${TAGFILELIST}
-  fi
-done
 
 # create src file
 touch ${file}

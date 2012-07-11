@@ -66,9 +66,8 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}" \
 
 # some files'list
 FILES != ${cd} ${SRCDIR}; ${ls}
-DBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r
-MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${grep} -v tags.list|${sort} -r|${head} -n ${MAX_POST}
-TAGLIST != ${cat} ${DBDIR}/tags.list|${sed} -e 's/\:/@/g'|${sort}
+DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
+MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR POSTDIR
@@ -105,7 +104,8 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
 			${cat} ${header} | ${parser} ${parser_opts} && \
-			${cat} ${article} |${parser} "CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} -e "s|^|        |g" && \
+			${cat} ${article} |${parser}                   \
+				"CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} -e "s|^|        |g" && \
 			${cat} ${footer} | ${parser} ${parser_opts}; \
 		} > ${TARGET_${FILE}} || { \
 			${rm} -f ${TARGET_${FILE}}                           ; \
@@ -166,11 +166,27 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	@# Move temporary file to pub
 	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${POSTDIR}/${NAME_${FILE}}
 	@# Template for RSS Feed
-	$Q${cat} ${TMPLDIR}/feed.element.rss | ${parser}   \
-		"TITLE=${TITLE_${FILE}}"                   \
-		"DESCRIPTION=${DESC_${FILE}}"              \
-		"LINK=${BASE_URL}/${POSTDIR_NAME}/${NAME_${FILE}}"         \
+	$Q${cat} ${TMPLDIR}/feed.element.rss | ${parser}     \
+		"TITLE=${TITLE_${FILE}}"                           \
+		"DESCRIPTION=${DESC_${FILE}}"                      \
+		"LINK=${BASE_URL}/${POSTDIR_NAME}/${NAME_${FILE}}" \
 		> ${TMPDIR}/${FILE}.rss
+	@# Prepare TAGS
+	$Qfor TAG in ${TAGS_${FILE}}; do                       \
+		${cat} ${TMPLDIR}/tagelement.xhtml | ${parser}       \
+			"TAGLINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}.xhtml" \
+			"TAGNAME=$${TAG}"                                  \
+		>> ${TMPDIR}/tags.list;                              \
+	done
+	$Qfor TAG in ${TAGS_${FILE}}; do               \
+		${cat} ${element} | ${parser} ${parser_opts} \
+			"POST_TITLE=${TITLE_${FILE}}"              \
+			"DATE=${POSTDATE_${FILE}}"                 \
+			"POST_FILE=${NAME_${FILE}}"                \
+			"SHORT_DATE=${SHORTDATE_${FILE}}"          \
+			"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
+		>> ${TMPDIR}/$${TAG}.tag; \
+	done
 .endfor
 
 # Do CSS file
@@ -229,46 +245,32 @@ ${POSTDIR}/index.xhtml: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 
 # Do Tag List page
 # EXAMPLE: pub/tags/index.xhtml
-.for TAG in ${TAGLIST}
-TAGNAME_${TAG} != ${echo} ${TAG} |${cut} -d '@' -f1
-TAGFILE_${TAG} = ${TAGNAME_${TAG}}.xhtml
-TAGLINK_${TAG} = \"${BASE_URL}/${TAGDIR_NAME}/${TAGFILE_${TAG}}\"
-ARTICLES_${TAG} != ${echo} ${TAG} |${cut} -d '@' -f2|${sed} -e 's|,| |g'
-# Sed is needed to avoid problem with missing double quote in template parsing
-TAGCONTENT_${TAG} != ${cat} ${TMPLDIR}/tagelement.xhtml |${sed} -e 's|\"|\\"|g' |${parser} \
-	"TAGNAME=${TAGNAME_${TAG}}" \
-	"TAGLINK=${TAGLINK_${TAG}}"
-TAGLIST_CONTENT += ${TAGCONTENT_${TAG}}
-
-${TAG}: ${DBDIR}/tags.list ${TAGDIR}
-	$Q${cat} ${header} >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
-	$Q${echo} "      <ul>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
-.	for ARTICLE in ${ARTICLES_${TAG}}
-	$Q${echo} "        <li><a href=\"${BASE_URL}/${POSTDIR_NAME}/${ARTICLE:S/.md$/.xhtml/}\">${ARTICLE:S/.md$//}</a></li>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
-.	endfor
-	$Q${echo} "      </ul>" >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
-	$Q${cat} ${footer} >> ${TMPDIR}/${TAGFILE_${TAG}}.tag
-	$Q${cat} ${TMPDIR}/${TAGFILE_${TAG}}.tag |${parser} ${parser_opts} \
-		"TAGLIST_CONTENT=${TAGLIST_CONTENT}"                             \
-		"TITLE=${TAGNAME_${TAG}}"                                        \
-		> ${TAGDIR}/${TAGFILE_${TAG}}
-	$Q${rm} ${TMPDIR}/${TAGFILE_${TAG}}.tag
-.endfor
-
-${TAGDIR}/index.xhtml: ${TAGDIR} ${DBDIR}/tags.list ${TAGLIST}
+${TAGDIR}/index.xhtml: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${header} >> ${TMPDIR}/taglist.xhtml &&             \
-		${cat} ${TMPLDIR}/tags.xhtml >> ${TMPDIR}/taglist.xhtml && \
-		${cat} ${footer} >> ${TMPDIR}/taglist.xhtml &&             \
-		${cat} ${TMPDIR}/taglist.xhtml | ${parser} ${parser_opts}  \
-			"TAGLIST_CONTENT=${TAGLIST_CONTENT}"                     \
-			"TITLE=${TAG_LIST_TITLE}"                                \
-			> ${DESTDIR}/tags/index.xhtml &&                         \
-	  ${rm} ${TMPDIR}/taglist.xhtml || {                         \
-			${echo} "-- Could not build tag list page: $@" ;         \
-			false ;                                                  \
-		} ;                                                        \
+		${cat} ${header} > ${TMPDIR}/taglist.xhtml &&             \
+		${cat} ${TMPLDIR}/tags.xhtml | ${parser} ${parser_opts}   \
+			"TAGLIST_CONTENT=`${cat} ${TMPDIR}/tags.list |${sort} -u`" \
+			>> ${TMPDIR}/taglist.xhtml &&                           \
+		${cat} ${footer} >> ${TMPDIR}/taglist.xhtml &&            \
+		${cat} ${TMPDIR}/taglist.xhtml | ${parser} ${parser_opts} \
+			"TITLE=${TAG_LIST_TITLE}"                               \
+		> ${TAGDIR}/index.xhtml &&                                \
+		${rm} ${TMPDIR}/tags.list &&                              \
+		${rm} ${TMPDIR}/taglist.xhtml ||                          \
+		{                                                         \
+			${echo} "-- Could not build tag list page: $@" ;        \
+			false ;                                                 \
+		} ;                                                       \
 	} && ${echo} "-- Tag list built: $@"
+	$Qfor TAG in `cd ${TMPDIR};ls *.tag`; do                   \
+		${cat} ${header} >> ${TMPDIR}/${TAG}.xhtml &&            \
+		${cat} ${TMPDIR}/$${TAG} >> ${TMPDIR}/${TAG}.xhtml &&    \
+		${cat} ${footer} >> ${TMPDIR}/${TAG}.xhtml &&            \
+		${cat} ${TMPDIR}/${TAG}.xhtml | ${parser} ${parser_opts} \
+			"TITLE=$${TAG/\.tag/}"                                 \
+			>> ${TAGDIR}/$${TAG/\.tag/}.xhtml &&                   \
+			${rm} ${TMPDIR}/${TAG}.xhtml && ${rm} -f ${TMPDIR}/$${TAG}; \
+		done
 
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
