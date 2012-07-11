@@ -19,3 +19,4 @@ or do some files. On for article content, one for some data. It would be simple 
 - HTML verification?
 - archive page
 - how could we add comments on each post? Disqus @ begining, then which system? => Lua system with a DB?
+- comment system : http://code.google.com/p/jskomment/
