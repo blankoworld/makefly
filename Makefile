@@ -273,14 +273,14 @@ ${TAGDIR}/index.xhtml: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 			false ;                                                 \
 		} ;                                                       \
 	} && ${echo} "-- Tag list built: $@"
-	$Qfor TAG in `cd ${TMPDIR};ls *.tag`; do                    \
-		${cat} ${header} >> ${TMPDIR}/$${TAG}.xhtml &&            \
-		${cat} ${TMPDIR}/$${TAG} >> ${TMPDIR}/$${TAG}.xhtml &&    \
-		${cat} ${footer} >> ${TMPDIR}/$${TAG}.xhtml &&            \
-		${cat} ${TMPDIR}/$${TAG}.xhtml | ${parser} ${parser_opts} \
-			"TITLE=$${TAG/\.tag/}"                                  \
-			>> ${TAGDIR}/$${TAG/\.tag/}.xhtml &&                    \
-			${rm} ${TMPDIR}/$${TAG}.xhtml && ${rm} -f ${TMPDIR}/$${TAG}; \
+	$Qfor TAG in `${cd} ${TMPDIR};${ls} *.tag|${sed} -e 's|.tag$$||g'`; do \
+		${cat} ${header} >> ${TMPDIR}/$${TAG}.tag.xhtml &&            \
+		${cat} ${TMPDIR}/$${TAG}.tag >> ${TMPDIR}/$${TAG}.tag.xhtml &&    \
+		${cat} ${footer} >> ${TMPDIR}/$${TAG}.tag.xhtml &&            \
+		${cat} ${TMPDIR}/$${TAG}.tag.xhtml | ${parser} ${parser_opts} \
+			"TITLE=$${TAG}"                                  \
+			>> ${TAGDIR}/$${TAG}.xhtml &&                   \
+			${rm} ${TMPDIR}/$${TAG}.tag.xhtml && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
 		done
 
 # Clean all directories
