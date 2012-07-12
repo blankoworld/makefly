@@ -51,6 +51,7 @@ grep     ?= grep
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # Prepare parser options
 parser_opts = "BLOG_TITLE=${BLOG_TITLE}" \
+		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" \
 		"BASE_URL=${BASE_URL}"               \
 		"HOME_TITLE=${HOME_TITLE}"           \
 		"POST_LIST_TITLE=${POST_LIST_TITLE}" \
