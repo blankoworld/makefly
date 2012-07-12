@@ -64,6 +64,8 @@ After having created *makefly.rc* (from makefly.rc.example) and having created s
 
 It will generate a Makefly weblog to the **pub** directory.
 
+Note: *pmake* is for Debian like distribution. For other distributions, I suggest you to use **bmake**.
+
 ## The makefly.rc configuration file
 
 Here is some options you can change:
@@ -89,3 +91,10 @@ Source are available:
   * [On github](https://github.com/blankoworld/makefly)
   * [On personal git](http://git.dossmann.net/blogbox/makefly.git/)
 
+## Documentation
+
+This file is the documentation. You can [read it on github](https://github.com/blankoworld/makefly "Read documentation on Github") or simply generate an HTML file with this command:
+
+    pmake doc
+
+Note: pmake command is for Debian like. For other distribution, use **bmake** instead of pmake.
