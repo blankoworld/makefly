@@ -68,7 +68,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}" \
 FILES != ${cd} ${SRCDIR}; ${ls}
 DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
-MEDIAFILES != ${cd} ${SRCDIR}; ${ls}|${grep} -v ".md"
+MEDIAFILES != ${cd} ${SRCDIR}; ${ls}|${grep} -v ".md||false"
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR POSTDIR
