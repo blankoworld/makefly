@@ -56,6 +56,10 @@ Give script all information it needs. It will generate some files needed by Make
 
 Note that Makefly use the [markdown format](http://daringfireball.net/projects/markdown/ "Learn more about Markdown format") for its posts.
 
+### Static files
+
+If you want to add some static files, just add them to the *static* directory. They will be copied in destination directory.
+
 ## Use it!
 
 After having created *makefly.rc* (from makefly.rc.example) and having created some posts, just do this:
