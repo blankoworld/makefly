@@ -1,15 +1,17 @@
 TODO:
 -----
 
+- Permit user to choose FILE EXTENSION for all files
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
+- use : ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2012Q2/pkgsrc/Makefile to discover if/else/end in bsd makefile
 - complete README.md
-- add a license (for an example BSD)
 - change all variable to be UNIQUE in TEMPLATES
 - Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
 - Use posts'title for each individual page and homepage. For an example to have "My first post" then content of post
 - Create a template for tag list with some text (in order to be more readeable in elinks)
 - Add anchor to join content's page on EACH page
 - permit user to select how many lines should be given for each articles on index page (for an example 10 lines): to do this, do a head -n 10 on art1.md then do markdown on it
+- permit user to choose if yes or no it wants "how many lines" to be used or not in Makefly
 - plugins
 - comments
 - rss/atom feeds
@@ -58,3 +60,4 @@ DONE:
 - Add a parser_opts to parser in order to give it some VAR. Example : ${parser} ${parse_opts} and parse_opts = "VAR=content VAR2=content2"
 - Change colors from links (a better gray or another color)
 - Permit user to have images (copy all files from src, except .md files)
+- add a license (for an example BSD)
