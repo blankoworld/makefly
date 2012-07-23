@@ -7,3 +7,4 @@ RSS_FEED_NAME = Makefly RSS feed
 MAX_POST = 2
 DATE_FORMAT = %Y-%m-%d at %H:%M
 SHORT_DATE_FORMAT = %Y/%m
+COMMENT = 1
