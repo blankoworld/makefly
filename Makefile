@@ -30,19 +30,19 @@
 Q ?= @
 
 # directories
-TMPLDIR      = ./template
-STYLEDIR     = ./style
-BINDIR       = ./bin
-LANGDIR      = ./lang
-SRCDIR       = ./src
-DESTDIR      = ./pub
-DBDIR        = ./db
-TMPDIR       = ./tmp
-TAGDIR_NAME  = tags
-POSTDIR_NAME = posts
-TAGDIR       = ${DESTDIR}/${TAGDIR_NAME}
-POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
-STATICDIR    = ./static
+TMPLDIR         = ./template
+STYLEDIR        = ./style
+BINDIR          = ./bin
+LANGDIR         = ./lang
+SRCDIR          = ./src
+DESTDIR         = ./pub
+DBDIR           = ./db
+TMPDIR          = ./tmp
+TAGDIR_NAME     = tags
+POSTDIR_NAME    = posts
+SRCCOMMENTS     = ./comments
+COMMENTDIR_NAME = comments
+STATICDIR       = ./static
 
 # template's files
 header  ?= ${TMPLDIR}/header.xhtml
@@ -91,6 +91,10 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}" \
 		"POSTED=${POSTED}"                   \
     "PERMALINK_TITLE=${PERMALINK_TITLE}" \
 		"RSS_FEED_NAME=${RSS_FEED_NAME}"
+# Prepare some directory name
+TAGDIR       = ${DESTDIR}/${TAGDIR_NAME}
+POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
+COMMENTDIR   = ${DESTDIR}/${COMMENTDIR_NAME}
 
 # some files'list
 FILES != ${cd} ${SRCDIR}; ${ls}
@@ -100,7 +104,7 @@ STATICFILES := ${STATICDIR}/*
 MEDIAFILES != ${echo} ${STATICFILES}
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR
+.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR COMMENTDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
@@ -122,8 +126,15 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 
 .endfor
 
+# COMMENTS FILES
+.if defined(COMMENTS)
+.if ${COMMENTS} == "1"
+COMMENTS_LIST != ${ls} ${SRCCOMMENTS}
+.endif
+.endif
+
 # BEGIN
-all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/index.xhtml ${TAGDIR}/index.xhtml ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//}
+all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/index.xhtml ${TAGDIR}/index.xhtml ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${COMMENTS_LIST}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -312,6 +323,17 @@ ${TAGDIR}/index.xhtml: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 			>> ${TAGDIR}/$${TAG}.xhtml &&                   \
 			${rm} ${TMPDIR}/$${TAG}.tag.xhtml && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
 		done
+
+# Do Comments pages
+.for DIR in ${COMMENTS_LIST}
+
+${${DIR}_COMMENTS} != ${cd} ${SRCCOMMENTS}/${DIR}; ${ls} .md |${sort}
+${${DIR}_META} != ${cd} ${SRCCOMMENTS}/${DIR}; ${ls} .mk |${sort}
+
+${DIR}: ${COMMENTDIR}
+	$Q${echo} ${SRCCOMMENTS}/${DIR}
+
+.endfor
 
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
