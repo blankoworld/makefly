@@ -115,7 +115,7 @@ ${${DIR}}:
 	}
 .endfor
 
-# MEDIA FILES (all files in SRCDIR except *.md files)
+# MEDIA FILES
 .for FILE in ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//}
 
 MEDIA_TARGET_${FILE} = ${FILE}
@@ -129,12 +129,12 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 # COMMENTS FILES
 .if defined(COMMENTS)
 .if ${COMMENTS} == "1"
-COMMENTS_LIST != ${ls} ${SRCCOMMENTS}
+COMMENTS_LIST != ${cd} ${SRCCOMMENTS}; ${ls}
 .endif
 .endif
 
 # BEGIN
-all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/index.xhtml ${TAGDIR}/index.xhtml ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${COMMENTS_LIST}
+all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/index.xhtml ${TAGDIR}/index.xhtml ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${COMMENTS_LIST:S/^/${COMMENTDIR}\//:S/$/.xhtml/}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -327,11 +327,21 @@ ${TAGDIR}/index.xhtml: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 # Do Comments pages
 .for DIR in ${COMMENTS_LIST}
 
-${${DIR}_COMMENTS} != ${cd} ${SRCCOMMENTS}/${DIR}; ${ls} .md |${sort}
-${${DIR}_META} != ${cd} ${SRCCOMMENTS}/${DIR}; ${ls} .mk |${sort}
+TARGET_${DIR} = ${COMMENTDIR}/${DIR}.xhtml
+COMMENTS_${DIR} != ${cd} ${SRCCOMMENTS}/${DIR}; ${ls}|${grep} '.md' |${sort}
+META_${DIR} != ${cd} ${SRCCOMMENTS}/${DIR}; ${ls}|${grep} '.mk' |${sort}
 
-${DIR}: ${COMMENTDIR}
-	$Q${echo} ${SRCCOMMENTS}/${DIR}
+${TARGET_${DIR}}: ${COMMENTDIR}
+	$Q{ \
+		${cat} ${header} > ${TMPDIR}/${DIR}.comment &&                       \
+		${cat} ${COMMENTS_${DIR}:S/^/${SRCCOMMENTS}\/${DIR}\//} |${markdown} \
+			>> ${TMPDIR}/${DIR}.comment &&                                     \
+		${cat} ${footer} >> ${TMPDIR}/${DIR}.comment &&                      \
+		${cat} ${TMPDIR}/${DIR}.comment | ${parser} ${parser_opts}           \
+			"TITLE=${DIR}"                                                     \
+		>> ${TARGET_${DIR}} &&                                               \
+		${rm} ${TMPDIR}/${DIR}.comment;                                      \
+	} && ${echo} "-- Comment page built: $@"
 
 .endfor
 
