@@ -127,10 +127,8 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 .endfor
 
 # COMMENTS FILES
-.if defined(COMMENTS)
-.if ${COMMENTS} == "1"
+.if defined(COMMENTS) && $(COMMENTS)
 COMMENTS_LIST != ${cd} ${SRCCOMMENTS}; ${ls}
-.endif
 .endif
 
 # BEGIN
