@@ -1,6 +1,7 @@
 TODO:
 -----
 
+- Permit user to choose FILE EXTENSION for all files
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
 - use : ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2012Q2/pkgsrc/Makefile to discover if/else/end in bsd makefile
 - complete README.md
