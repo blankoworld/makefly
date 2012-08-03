@@ -120,9 +120,13 @@ ${${DIR}}:
 
 MEDIA_TARGET_${FILE} = ${FILE}
 
+.if defined(MEDIAFILES) && ${MEDIAFILES} != ${STATICDIR}/*
+
 ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
-	$Q${cp} ${FILE:S/^${DESTDIR}/${STATICDIR}/} ${MEDIA_TARGET_${FILE}} && \
+	$Q${cp} ${FILE:S/^${DESTDIR}\//${STATICDIR}/} ${MEDIA_TARGET_${FILE}} && \
 		${echo} "-- New static file: ${FILE:S/\/\//\//}"
+
+.endif
 
 .endfor
 
