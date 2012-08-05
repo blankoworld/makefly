@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="${BLOG_CHARSET}" ?>
 <!DOCTYPE html>
-<?xml-stylesheet href="${BASE_URL}/simple.css"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${LANG}">
-  <head>
-    <title>${BLOG_TITLE} - ${TITLE}</title>
-    <link rel="alternate" type="application/rss+xml" title="${RSS_FEED_NAME}" href="${BASE_URL}/rss.xml" />
-  </head>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${LANG}" lang="${LANG}" dir="ltr">
+<head>
+  <meta charset="${BLOG_CHARSET}" />
+  <title>${BLOG_TITLE} - ${TITLE}</title>
+  <link type="text/css" rel="stylesheet" media="screen" href="${BASE_URL}/simple.css" title="Default" />
+  <link rel="alternate" type="application/rss+xml" title="${RSS_FEED_NAME}" href="${BASE_URL}/rss.xml" />
+</head>
   <body>
     <header>
       <h1>${BLOG_TITLE}</h1>
