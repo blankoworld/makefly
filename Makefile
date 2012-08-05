@@ -77,19 +77,20 @@ grep     ?= grep
 # then translation variables
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # Prepare parser options
-parser_opts = "BLOG_TITLE=${BLOG_TITLE}" \
+parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
 		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" \
-		"BASE_URL=${BASE_URL}"               \
-		"HOME_TITLE=${HOME_TITLE}"           \
-		"POST_LIST_TITLE=${POST_LIST_TITLE}" \
-		"POSTDIR_NAME=${POSTDIR_NAME}"       \
-		"TAG_TITLE=${TAG_TITLE}"             \
-		"TAG_LIST_TITLE=${TAG_LIST_TITLE}"   \
-		"TAGDIR_NAME=${TAGDIR_NAME}"         \
-		"LANG=${BLOG_LANG}"                  \
-		"POWERED_BY=${POWERED_BY}"           \
-		"POSTED=${POSTED}"                   \
-    "PERMALINK_TITLE=${PERMALINK_TITLE}" \
+		"BASE_URL=${BASE_URL}"                 \
+		"HOME_TITLE=${HOME_TITLE}"             \
+		"POST_LIST_TITLE=${POST_LIST_TITLE}"   \
+		"POSTDIR_NAME=${POSTDIR_NAME}"         \
+		"TAG_TITLE=${TAG_TITLE}"               \
+		"TAG_LIST_TITLE=${TAG_LIST_TITLE}"     \
+		"TAGDIR_NAME=${TAGDIR_NAME}"           \
+		"LANG=${BLOG_LANG}"                    \
+		"BLOG_CHARSET=${BLOG_CHARSET}"         \
+		"POWERED_BY=${POWERED_BY}"             \
+		"POSTED=${POSTED}"                     \
+    "PERMALINK_TITLE=${PERMALINK_TITLE}"   \
 		"RSS_FEED_NAME=${RSS_FEED_NAME}"
 
 # some files'list
