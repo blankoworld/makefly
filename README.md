@@ -14,7 +14,7 @@ You can contact me [to this address](mailto:olivier+makefly@dossmann.net "Contac
 
 ### License
 
-Will come ASAP.
+This software is published under GNU Affero General Public License 3.0.
 
 ### Stats
 
@@ -78,6 +78,7 @@ Here is some options you can change:
   * BLOG_SHORT_DESC: A short description of your weblog
   * BLOG_DESCRIPTION: A long description of your weblog
   * BLOG_LANG: your language. Note that file lang/translate.YOUR_LANGUAGE should exists. For an example if I set this parameter to *en*, a *lang/translate.en* file should exists!
+  * BLOG_CHARSET: your encoding configuration. Should be something like **UTF-8** or **ISO-8859-1**
   * BASE_URL: absolute URL of your blog
   * RSS_FEED_NAME: Title for the RSS Feed
   * MAX_POST: Max post that would be showed on home page
