@@ -4,7 +4,6 @@ TODO:
 - Permit user to choose FILE EXTENSION for all files
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
 - use : ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2012Q2/pkgsrc/Makefile to discover if/else/end in bsd makefile
-- complete README.md
 - change all variable to be UNIQUE in TEMPLATES
 - Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
 - Use posts'title for each individual page and homepage. For an example to have "My first post" then content of post
@@ -61,3 +60,4 @@ DONE:
 - Change colors from links (a better gray or another color)
 - Permit user to have images (copy all files from src, except .md files)
 - add a license (for an example BSD)
+- complete README.md
