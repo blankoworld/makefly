@@ -9,3 +9,4 @@ MAX_POST = 2
 DATE_FORMAT = %Y-%m-%d at %H:%M
 SHORT_DATE_FORMAT = %Y/%m
 INDEX_FILENAME = index
+PAGE_EXT = .html
