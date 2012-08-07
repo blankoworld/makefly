@@ -90,8 +90,9 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
 		"BLOG_CHARSET=${BLOG_CHARSET}"         \
 		"POWERED_BY=${POWERED_BY}"             \
 		"POSTED=${POSTED}"                     \
-    "PERMALINK_TITLE=${PERMALINK_TITLE}"   \
-		"RSS_FEED_NAME=${RSS_FEED_NAME}"
+		"PERMALINK_TITLE=${PERMALINK_TITLE}"   \
+		"RSS_FEED_NAME=${RSS_FEED_NAME}"       \
+		"INDEX_FILENAME=${INDEX_FILENAME}"
 
 # some files'list
 FILES != ${cd} ${SRCDIR}; ${ls}
@@ -128,7 +129,7 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 .endfor
 
 # BEGIN
-all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/index.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/index.xhtml ${TAGDIR}/index.xhtml ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//}
+all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/${INDEX_FILENAME}.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/${INDEX_FILENAME}.xhtml ${TAGDIR}/${INDEX_FILENAME}.xhtml ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -242,7 +243,7 @@ ${DESTDIR}/simple.css: ${DESTDIR} ${STYLEDIR}/simple.css
 
 # Do Homepage
 # EXAMPLE: pub/index.xhtml
-${DESTDIR}/index.xhtml: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
+${DESTDIR}/${INDEX_FILENAME}.xhtml: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		${cat} ${header} >> ${TMPDIR}/index.xhtml &&                       \
 		${cat} ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml && \
@@ -251,7 +252,7 @@ ${DESTDIR}/index.xhtml: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		${cat} ${TMPDIR}/index.xhtml |${parser} ${parser_opts}             \
 			"TITLE=${HOME_TITLE}"                                            \
 			> ${TMPDIR}/index.xhtml.tmp &&                                   \
-		${mv} ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/index.xhtml &&          \
+		${mv} ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/${INDEX_FILENAME}.xhtml &&          \
 		${rm} ${TMPDIR}/index.xhtml || {                                   \
 			${echo} "-- Could not build index page: $@" ;                    \
 			false ;                                                          \
@@ -274,7 +275,7 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 
 # Do Post List page
 # EXAMPLE: pub/list.xhtml
-${POSTDIR}/index.xhtml: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
+${POSTDIR}/${INDEX_FILENAME}.xhtml: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		${cat} ${header} >> ${TMPDIR}/list.xhtml &&                              \
 		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list.xhtml && \
@@ -282,7 +283,7 @@ ${POSTDIR}/index.xhtml: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		${cat} ${footer} >> ${TMPDIR}/list.xhtml &&                              \
 		${cat} ${TMPDIR}/list.xhtml | ${parser} ${parser_opts}                   \
 			"TITLE=${POST_LIST_TITLE}"                                             \
-			> ${POSTDIR}/index.xhtml &&                                            \
+			> ${POSTDIR}/${INDEX_FILENAME}.xhtml &&                                \
     ${rm} ${TMPDIR}/list.xhtml || {                                          \
 			${echo} "-- Could not build list page: $@" ;                           \
 			false ;                                                                \
@@ -291,7 +292,7 @@ ${POSTDIR}/index.xhtml: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 
 # Do Tag List page
 # EXAMPLE: pub/tags/index.xhtml
-${TAGDIR}/index.xhtml: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
+${TAGDIR}/${INDEX_FILENAME}.xhtml: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		${cat} ${header} > ${TMPDIR}/taglist.xhtml &&             \
 		${cat} ${TMPLDIR}/tags.xhtml | ${parser} ${parser_opts}   \
@@ -300,7 +301,7 @@ ${TAGDIR}/index.xhtml: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		${cat} ${footer} >> ${TMPDIR}/taglist.xhtml &&            \
 		${cat} ${TMPDIR}/taglist.xhtml | ${parser} ${parser_opts} \
 			"TITLE=${TAG_LIST_TITLE}"                               \
-		> ${TAGDIR}/index.xhtml &&                                \
+		> ${TAGDIR}/${INDEX_FILENAME}.xhtml &&                                \
 		${rm} ${TMPDIR}/tags.list &&                              \
 		${rm} ${TMPDIR}/taglist.xhtml ||                          \
 		{                                                         \
