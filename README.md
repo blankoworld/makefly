@@ -84,6 +84,7 @@ Here is some options you can change:
   * MAX_POST: Max post that would be showed on home page
   * DATE_FORMAT: Date format. Please see man date's page for more information.
   * SHORT_DATE_FORMAT: Short date format that would be used on the post list page. Please see man date's page for more information.
+  * INDEX_FILENAME: Name given to all index'pages. For an example with **INDEX_FILENAME = mainpage**, post list page will be named *mainpage.html*.
 
 ## Translation
 
