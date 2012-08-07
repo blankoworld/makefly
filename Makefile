@@ -45,10 +45,13 @@ POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 STATICDIR    = ./static
 
 # template's files
-header  ?= ${TMPLDIR}/header.xhtml
-footer  ?= ${TMPLDIR}/footer.xhtml
-element ?= ${TMPLDIR}/element.xhtml
-article ?= ${TMPLDIR}/article.xhtml
+header     ?= ${TMPLDIR}/header.xhtml
+footer     ?= ${TMPLDIR}/footer.xhtml
+element    ?= ${TMPLDIR}/element.xhtml
+article    ?= ${TMPLDIR}/article.xhtml
+taglink    ?= ${TMPLDIR}/taglink.xhtml
+tagelement ?= ${TMPLDIR}/tagelement.xhtml
+tags       ?= ${TMPLDIR}/tags.xhtml
 
 # other files
 htmldoc ?= README.html
@@ -76,6 +79,9 @@ grep     ?= grep
 .include "makefly.rc"
 # then translation variables
 .include "${LANGDIR}/translate.${BLOG_LANG}"
+# Create postdir and tagdir index's filenames
+POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
+TAGDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
 # Prepare parser options
 parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
 		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" \
@@ -92,7 +98,8 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
 		"POSTED=${POSTED}"                     \
 		"PERMALINK_TITLE=${PERMALINK_TITLE}"   \
 		"RSS_FEED_NAME=${RSS_FEED_NAME}"       \
-		"INDEX_FILENAME=${INDEX_FILENAME}"
+		"POSTDIR_INDEX=${POSTDIR_INDEX}"       \
+		"TAGDIR_INDEX=${TAGDIR_INDEX}"
 
 # some files'list
 FILES != ${cd} ${SRCDIR}; ${ls}
@@ -129,12 +136,12 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 .endfor
 
 # BEGIN
-all: ${FILES:S/.md/.xhtml/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/${INDEX_FILENAME}.xhtml ${DESTDIR}/rss.xml ${POSTDIR}/${INDEX_FILENAME}.xhtml ${TAGDIR}/${INDEX_FILENAME}.xhtml ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//}
+all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
-TARGET_${FILE} = ${FILE:S/.md$/.xhtml/:S/^/${POSTDIR}\//}
+TARGET_${FILE} = ${FILE:S/.md$/${PAGE_EXT}/:S/^/${POSTDIR}\//}
 .endfor
 
 # Create temporary files LIST (this temporary files will fetch some infos for Post List and Homepage)
@@ -172,14 +179,14 @@ TITLE_${FILE}     != ${echo} ${TITLE}
 TMSTMP_${FILE}    != ${echo} ${FILE}| ${cut} -d ',' -f 1
 POSTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
-NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|.xhtml|' -e 's|^.*,||'
+NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
 DESC_${FILE}      != ${echo} ${DESCRIPTION}
-CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/.xhtml$/.md/} |${sed} -e 's/\"/\\"/g'
+CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g'
 TAGS_${FILE}      != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
 
 .for TAG in ${TAGS_${FILE}}
-TAGLINK_${FILE}_${TAG} != ${cat} "${TMPLDIR}/taglink.xhtml" |${parser} \
-	TAG_PAGE=${TAG}.xhtml \
+TAGLINK_${FILE}_${TAG} != ${cat} "${taglink}" |${parser} \
+	TAG_PAGE=${TAG}${PAGE_EXT} \
 	TAG_NAME=${TAG}
 TAGLIST_TMP_${FILE} += ${TAGLINK_${FILE}_${TAG}}
 .endfor
@@ -219,11 +226,11 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"LINK=${BASE_URL}/${POSTDIR_NAME}/${NAME_${FILE}}" \
 		> ${TMPDIR}/${FILE}.rss
 	@# Prepare TAGS
-	$Qfor TAG in ${TAGS_${FILE}}; do                       \
-		${cat} ${TMPLDIR}/tagelement.xhtml | ${parser}       \
-			"TAGLINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}.xhtml" \
-			"TAGNAME=$${TAG}"                                  \
-		>> ${TMPDIR}/tags.list;                              \
+	$Qfor TAG in ${TAGS_${FILE}}; do                             \
+		${cat} ${tagelement} | ${parser}                           \
+			"TAGLINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}$${PAGE_EXT}" \
+			"TAGNAME=$${TAG}"                                        \
+		>> ${TMPDIR}/tags.list;                                    \
 	done
 	$Qfor TAG in ${TAGS_${FILE}}; do               \
 		${cat} ${element} | ${parser} ${parser_opts} \
@@ -243,17 +250,17 @@ ${DESTDIR}/simple.css: ${DESTDIR} ${STYLEDIR}/simple.css
 
 # Do Homepage
 # EXAMPLE: pub/index.xhtml
-${DESTDIR}/${INDEX_FILENAME}.xhtml: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
+${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${header} >> ${TMPDIR}/index.xhtml &&                       \
-		${cat} ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index.xhtml && \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//} &&                            \
-		${cat} ${footer} >> ${TMPDIR}/index.xhtml &&                       \
-		${cat} ${TMPDIR}/index.xhtml |${parser} ${parser_opts}             \
-			"TITLE=${HOME_TITLE}"                                            \
-			> ${TMPDIR}/index.xhtml.tmp &&                                   \
-		${mv} ${TMPDIR}/index.xhtml.tmp ${DESTDIR}/${INDEX_FILENAME}.xhtml &&          \
-		${rm} ${TMPDIR}/index.xhtml || {                                   \
+		${cat} ${header} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
+		${cat} ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index${PAGE_EXT} &&         \
+		${rm} -f ${DBFILES:S/^/${TMPDIR}\//} &&                                         \
+		${cat} ${footer} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
+		${cat} ${TMPDIR}/index${PAGE_EXT} |${parser} ${parser_opts}                     \
+			"TITLE=${HOME_TITLE}"                                                         \
+			> ${TMPDIR}/index${PAGE_EXT}.tmp &&                                           \
+		${mv} ${TMPDIR}/index${PAGE_EXT}.tmp ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
+		${rm} ${TMPDIR}/index${PAGE_EXT} || {                                           \
 			${echo} "-- Could not build index page: $@" ;                    \
 			false ;                                                          \
 		} ;                                                                \
@@ -275,16 +282,16 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 
 # Do Post List page
 # EXAMPLE: pub/list.xhtml
-${POSTDIR}/${INDEX_FILENAME}.xhtml: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
+${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${header} >> ${TMPDIR}/list.xhtml &&                              \
-		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list.xhtml && \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} &&                       \
-		${cat} ${footer} >> ${TMPDIR}/list.xhtml &&                              \
-		${cat} ${TMPDIR}/list.xhtml | ${parser} ${parser_opts}                   \
-			"TITLE=${POST_LIST_TITLE}"                                             \
-			> ${POSTDIR}/${INDEX_FILENAME}.xhtml &&                                \
-    ${rm} ${TMPDIR}/list.xhtml || {                                          \
+		${cat} ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
+		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list${PAGE_EXT} && \
+		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} &&                            \
+		${cat} ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
+		${cat} ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
+			"TITLE=${POST_LIST_TITLE}"                                                  \
+			> ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                                \
+    ${rm} ${TMPDIR}/list${PAGE_EXT} || {                                          \
 			${echo} "-- Could not build list page: $@" ;                           \
 			false ;                                                                \
 		} ;                                                                      \
@@ -292,31 +299,31 @@ ${POSTDIR}/${INDEX_FILENAME}.xhtml: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 
 # Do Tag List page
 # EXAMPLE: pub/tags/index.xhtml
-${TAGDIR}/${INDEX_FILENAME}.xhtml: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
+${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${header} > ${TMPDIR}/taglist.xhtml &&             \
-		${cat} ${TMPLDIR}/tags.xhtml | ${parser} ${parser_opts}   \
-			"TAGLIST_CONTENT=`${cat} ${TMPDIR}/tags.list |${sort} -u`" \
-			>> ${TMPDIR}/taglist.xhtml &&                           \
-		${cat} ${footer} >> ${TMPDIR}/taglist.xhtml &&            \
-		${cat} ${TMPDIR}/taglist.xhtml | ${parser} ${parser_opts} \
-			"TITLE=${TAG_LIST_TITLE}"                               \
-		> ${TAGDIR}/${INDEX_FILENAME}.xhtml &&                                \
-		${rm} ${TMPDIR}/tags.list &&                              \
-		${rm} ${TMPDIR}/taglist.xhtml ||                          \
-		{                                                         \
-			${echo} "-- Could not build tag list page: $@" ;        \
-			false ;                                                 \
-		} ;                                                       \
+		${cat} ${header} > ${TMPDIR}/taglist${PAGE_EXT} &&             \
+		${cat} ${tags} | ${parser} ${parser_opts}                      \
+			"TAGLIST_CONTENT=`${cat} ${TMPDIR}/tags.list |${sort} -u`"   \
+			>> ${TMPDIR}/taglist${PAGE_EXT} &&                           \
+		${cat} ${footer} >> ${TMPDIR}/taglist${PAGE_EXT} &&            \
+		${cat} ${TMPDIR}/taglist${PAGE_EXT} | ${parser} ${parser_opts} \
+			"TITLE=${TAG_LIST_TITLE}"                                    \
+		> ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                    \
+		${rm} ${TMPDIR}/tags.list &&                                   \
+		${rm} ${TMPDIR}/taglist${PAGE_EXT} ||                          \
+		{                                                              \
+			${echo} "-- Could not build tag list page: $@" ;             \
+			false ;                                                      \
+		} ;                                                            \
 	} && ${echo} "-- Tag list built: $@"
-	$Qfor TAG in `${cd} ${TMPDIR};${ls} *.tag|${sed} -e 's|.tag$$||g'`; do \
-		${cat} ${header} >> ${TMPDIR}/$${TAG}.tag.xhtml &&            \
-		${cat} ${TMPDIR}/$${TAG}.tag >> ${TMPDIR}/$${TAG}.tag.xhtml &&    \
-		${cat} ${footer} >> ${TMPDIR}/$${TAG}.tag.xhtml &&            \
-		${cat} ${TMPDIR}/$${TAG}.tag.xhtml | ${parser} ${parser_opts} \
-			"TITLE=$${TAG}"                                  \
-			>> ${TAGDIR}/$${TAG}.xhtml &&                   \
-			${rm} ${TMPDIR}/$${TAG}.tag.xhtml && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
+	$Qfor TAG in `${cd} ${TMPDIR};${ls} *.tag|${sed} -e 's|.tag$$||g'`; do        \
+		${cat} ${header} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                    \
+		${cat} ${TMPDIR}/$${TAG}.tag >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&        \
+		${cat} ${footer} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                     \
+		${cat} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
+			"TITLE=$${TAG}"                                                           \
+			>> ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
+			${rm} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
 		done
 
 # Clean all directories
