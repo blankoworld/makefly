@@ -5,7 +5,7 @@
 # Copy pub directory to user's public_html
 
 SRCDIR=./pub
-DESTDIR=${HOME}/public_html
+DESTDIR=./www
 
 process() {
   rm -rf ${DESTDIR}/* && cp -r ${SRCDIR}/* ${DESTDIR} && echo "...installed!"
