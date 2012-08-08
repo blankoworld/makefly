@@ -1,6 +1,13 @@
 TODO:
 -----
 
+- Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
+- Make possibility to have a "About" page (kind of static webpage). Perhaps with a about.md?
+- Create a nanoblogger import script to migrate from Nanoblogger to Makefly
+- Other import script? From Wordpress to Makefly?
+- Add Search capability on home page
+- Integrate another theme like minisch (from schoewilliam)?
+- Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
 - Permit user to choose FILE EXTENSION for all files
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
 - use : ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2012Q2/pkgsrc/Makefile to discover if/else/end in bsd makefile
