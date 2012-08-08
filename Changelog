@@ -1,0 +1,16 @@
+Current (not released)
+- Permit user to choose page ' suffix
+- Permit user to choose index filenames
+- Complete README file
+- Some HTML5 improvements
+- Fix but when reusing pmake without pmake clean
+
+Version 0.1 (released 2012-07-17)
+- RSS feed
+- tags
+- permalink
+- possibility to set posting date (using a timestamp)
+- customization using options like max post on homepage
+- translation: English, French
+- static files
+- templates
