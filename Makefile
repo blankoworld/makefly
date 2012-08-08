@@ -40,8 +40,6 @@ DBDIR           = ./db
 TMPDIR          = ./tmp
 TAGDIR_NAME     = tags
 POSTDIR_NAME    = posts
-SRCCOMMENTS     = ./comments
-COMMENTDIR_NAME = comments
 STATICDIR       = ./static
 
 # template's files
@@ -104,7 +102,6 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
 # Prepare some directory name
 TAGDIR       = ${DESTDIR}/${TAGDIR_NAME}
 POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
-COMMENTDIR   = ${DESTDIR}/${COMMENTDIR_NAME}
 
 # some files'list
 FILES != ${cd} ${SRCDIR}; ${ls}
@@ -114,7 +111,7 @@ STATICFILES := ${STATICDIR}/*
 MEDIAFILES != ${echo} ${STATICFILES}
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR COMMENTDIR
+.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
