@@ -1,6 +1,8 @@
 TODO:
 -----
 
+- Create a nanoblogger import script to migrate from Nanoblogger to Makefly
+- Other import script? From Wordpress to Makefly?
 - Add Search capability on home page
 - Integrate another theme like minisch (from schoewilliam)?
 - Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
