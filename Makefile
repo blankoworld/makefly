@@ -103,6 +103,8 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
 		"RSS_FEED_NAME=${RSS_FEED_NAME}"       \
 		"POSTDIR_INDEX=${POSTDIR_INDEX}"       \
 		"TAGDIR_INDEX=${TAGDIR_INDEX}"         \
+		"SOURCE_LINK_NAME=${SOURCE_LINK_NAME}" \
+		"SOURCE_LINK_TITLE=${SOURCE_LINK_TITLE}" \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
