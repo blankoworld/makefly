@@ -1,6 +1,14 @@
 TODO:
 -----
 
+- Only permit to publish current post (if post have a date in the future, so don't take it)
+- Permit user to create a cron that publish posts each day?
+- Add more installation element in documentation
+- Create a french documentation
+- Create a [b|p]make publish in order to publish blog with a specific script
+- Do a script that export to a FTP or use rsync
+- Create a [b|p]make refreshall to clean all files, recompile them and publish blog
+- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
 - Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
 - Make possibility to have a "About" page (kind of static webpage). Perhaps with a about.md?
 - Create a nanoblogger import script to migrate from Nanoblogger to Makefly
@@ -8,7 +16,6 @@ TODO:
 - Add Search capability on home page
 - Integrate another theme like minisch (from schoewilliam)?
 - Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
-- Permit user to choose FILE EXTENSION for all files
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
 - use : ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2012Q2/pkgsrc/Makefile to discover if/else/end in bsd makefile
 - change all variable to be UNIQUE in TEMPLATES
@@ -68,3 +75,4 @@ DONE:
 - Permit user to have images (copy all files from src, except .md files)
 - add a license (for an example BSD)
 - complete README.md
+- Permit user to choose FILE EXTENSION for all files
