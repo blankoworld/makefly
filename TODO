@@ -2,7 +2,6 @@ TODO:
 -----
 
 - Create a list of error that you can encount and give some explanations to fix them
-- Add POSTDIR_NAME and TAGDIR_NAME to documentation in order to inform user that he can change that
 - Add in doc some explanation on how makefly work for src, db directory and linked files.
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Permit user to create a cron that publish posts each day?
@@ -79,3 +78,4 @@ DONE:
 - complete README.md
 - Permit user to choose FILE EXTENSION for all files
 - Make possibility to have a "About" page (kind of static webpage). Perhaps with a about.md?
+- Add POSTDIR_NAME and TAGDIR_NAME to documentation in order to inform user that he can change that
