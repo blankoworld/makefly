@@ -151,6 +151,7 @@ A simple way to translate Makefly to your language is to copy the **lang/transla
 
 Source are available: 
 
+  * [On gitorious](http://gitorious.org/makefly/master.git/)
   * [On github](https://github.com/blankoworld/makefly)
   * [On personal git](http://git.dossmann.net/blogbox/makefly.git/)
 

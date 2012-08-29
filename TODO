@@ -83,3 +83,4 @@ DONE:
 - Make possibility to have a "About" page (kind of static webpage). Perhaps with a about.md?
 - Add POSTDIR_NAME and TAGDIR_NAME to documentation in order to inform user that he can change that
 - Add more installation element in documentation
+- Change "github" source link to "gitorious" source link
