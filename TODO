@@ -1,6 +1,8 @@
 TODO:
 -----
 
+- Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
+- Make possibility to have a "About" page (kind of static webpage). Perhaps with a about.md?
 - Create a nanoblogger import script to migrate from Nanoblogger to Makefly
 - Other import script? From Wordpress to Makefly?
 - Add Search capability on home page
