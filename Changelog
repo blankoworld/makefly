@@ -6,6 +6,8 @@ Current (not released)
 - Fix but when reusing pmake without pmake clean
 - Add a "About"'s page
 - Add some missing variables in documentation
+- Complete documentation for installation via current version or developement
+version. More information for dependancies installation.
 
 Version 0.1 (released 2012-07-17)
 - RSS feed
