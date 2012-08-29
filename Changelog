@@ -5,6 +5,7 @@ Current (not released)
 - Some HTML5 improvements
 - Fix but when reusing pmake without pmake clean
 - Add a "About"'s page
+- Add some missing variables in documentation
 
 Version 0.1 (released 2012-07-17)
 - RSS feed
