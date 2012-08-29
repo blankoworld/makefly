@@ -5,3 +5,4 @@ TAG_TITLE = Mot-clé(s)
 PERMALINK_TITLE = lien permanent
 POWERED_BY = Propulsé par
 POSTED = publié
+ABOUT_TITLE = À propos

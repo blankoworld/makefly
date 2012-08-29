@@ -86,6 +86,7 @@ Here is some options you can change:
   * SHORT_DATE_FORMAT: Short date format that would be used on the post list page. Please see man date's page for more information.
   * INDEX_FILENAME: Name given to all index'pages. For an example with **INDEX_FILENAME = mainpage**, post list page will be named *mainpage.html*.
   * PAGE_EXT: suffix that all page will have. **DO NOT FORGET TO ADD A POINT BEFORE SUFFIX**. For an example, with **PAGE_EXT = .html**, all pages will be index.html.
+  * ABOUT_FILENAME: As described, this is the about's filename. If you set it to "about" for an example, you have to create a "about.md" file into **special** directory in order to have an about's page. If you change it to "toto", so you have to create a *toto.md* file into **special** directory.
 
 ## Translation
 

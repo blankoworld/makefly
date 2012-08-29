@@ -41,6 +41,8 @@ TMPDIR          = ./tmp
 TAGDIR_NAME     = tags
 POSTDIR_NAME    = posts
 STATICDIR       = ./static
+SPECIALDIR      = ./special
+ABOUT_FILENAME   = about
 
 # template's files
 header     ?= ${TMPLDIR}/header.xhtml
@@ -50,6 +52,7 @@ article    ?= ${TMPLDIR}/article.xhtml
 taglink    ?= ${TMPLDIR}/taglink.xhtml
 tagelement ?= ${TMPLDIR}/tagelement.xhtml
 tags       ?= ${TMPLDIR}/tags.xhtml
+aboutlink  ?= ${TMPLDIR}/menu.about.xhtml
 
 # other files
 htmldoc ?= README.html
@@ -80,6 +83,8 @@ grep     ?= grep
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
 TAGDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
+# Create about index filename
+ABOUT_INDEX = ${ABOUT_FILENAME}${PAGE_EXT}
 # Prepare parser options
 parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
 		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" \
@@ -97,7 +102,8 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
 		"PERMALINK_TITLE=${PERMALINK_TITLE}"   \
 		"RSS_FEED_NAME=${RSS_FEED_NAME}"       \
 		"POSTDIR_INDEX=${POSTDIR_INDEX}"       \
-		"TAGDIR_INDEX=${TAGDIR_INDEX}"
+		"TAGDIR_INDEX=${TAGDIR_INDEX}"         \
+		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
 TAGDIR       = ${DESTDIR}/${TAGDIR_NAME}
@@ -109,9 +115,11 @@ DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != ${echo} ${STATICFILES}
+ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
+ABOUTRESULT != ${echo} ${ABOUTFILE}
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR
+.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
@@ -137,8 +145,30 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 
 .endfor
 
+# ABOUT PAGE
+.if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
+
+ABOUT_LINK != ${cat} ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
+parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
+
+${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
+	$Q{ \
+		{ \
+			${cat} ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" && \
+			${markdown} ${ABOUTFILE} && \
+			${cat} ${footer} | ${parser} ${parser_opts}; \
+		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || { \
+			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ; \
+			${echo} "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
+			false                                             ; \
+		} ; \
+	} && ${echo} "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
+
+.endif
+
+
 # BEGIN
-all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//}
+all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
