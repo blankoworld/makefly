@@ -5,7 +5,6 @@ TODO:
 - Add in doc some explanation on how makefly work for src, db directory and linked files.
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Permit user to create a cron that publish posts each day?
-- Add more installation element in documentation
 - Create a french documentation
 - Create a [b|p]make publish in order to publish blog with a specific script
 - Do a script that export to a FTP or use rsync
@@ -83,3 +82,4 @@ DONE:
 - Permit user to choose FILE EXTENSION for all files
 - Make possibility to have a "About" page (kind of static webpage). Perhaps with a about.md?
 - Add POSTDIR_NAME and TAGDIR_NAME to documentation in order to inform user that he can change that
+- Add more installation element in documentation
