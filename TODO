@@ -1,6 +1,9 @@
 TODO:
 -----
 
+- Create a list of error that you can encount and give some explanations to fix them
+- Add POSTDIR_NAME and TAGDIR_NAME to documentation in order to inform user that he can change that
+- Add in doc some explanation on how makefly work for src, db directory and linked files.
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Permit user to create a cron that publish posts each day?
 - Add more installation element in documentation
@@ -10,7 +13,6 @@ TODO:
 - Create a [b|p]make refreshall to clean all files, recompile them and publish blog
 - Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
 - Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
-- Make possibility to have a "About" page (kind of static webpage). Perhaps with a about.md?
 - Create a nanoblogger import script to migrate from Nanoblogger to Makefly
 - Other import script? From Wordpress to Makefly?
 - Add Search capability on home page
@@ -76,3 +78,4 @@ DONE:
 - add a license (for an example BSD)
 - complete README.md
 - Permit user to choose FILE EXTENSION for all files
+- Make possibility to have a "About" page (kind of static webpage). Perhaps with a about.md?
