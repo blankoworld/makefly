@@ -71,24 +71,25 @@ grep     ?= grep
 # then translation variables
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # finally theme VARIABLES
-.include "${TMPLDIR}/${THEME}/config.mk"
+THEMEDIR = ${TMPLDIR}/${THEME}
+.include "${THEMEDIR}/config.mk"
 
 # template's files
-header     ?= ${TMPLDIR}/${THEME}/header.xhtml
-footer     ?= ${TMPLDIR}/${THEME}/footer.xhtml
-element    ?= ${TMPLDIR}/${THEME}/element.xhtml
-article    ?= ${TMPLDIR}/${THEME}/article.xhtml
-taglink    ?= ${TMPLDIR}/${THEME}/taglink.xhtml
-tagelement ?= ${TMPLDIR}/${THEME}/tagelement.xhtml
-tags       ?= ${TMPLDIR}/${THEME}/tags.xhtml
-aboutlink  ?= ${TMPLDIR}/${THEME}/menu.about.xhtml
+header     ?= ${THEMEDIR}/header.xhtml
+footer     ?= ${THEMEDIR}/footer.xhtml
+element    ?= ${THEMEDIR}/element.xhtml
+article    ?= ${THEMEDIR}/article.xhtml
+taglink    ?= ${THEMEDIR}/taglink.xhtml
+tagelement ?= ${THEMEDIR}/tagelement.xhtml
+tags       ?= ${THEMEDIR}/tags.xhtml
+aboutlink  ?= ${THEMEDIR}/menu.about.xhtml
 
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
 TAGDIR_INDEX  = ${INDEX_FILENAME}${PAGE_EXT}
 # Create about index filename
 ABOUT_INDEX   = ${ABOUT_FILENAME}${PAGE_EXT}
-STYLEDIR      = ${TMPLDIR}/${THEME}/style
+STYLEDIR      = ${THEMEDIR}/style
 
 # Prepare parser options
 parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
@@ -175,9 +176,23 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
 
 .endif
 
+# THEME STATIC FILES
+.if defined(THEME_STATIC_FILES) && $(THEME_STATIC_FILES)
+
+.for FILE in ${THEME_STATIC_FILES:S/^/${DESTDIR}\//}
+
+MEDIA_STATIC_${FILE} = ${FILE}
+
+${MEDIA_STATIC_${FILE}}: ${DESTDIR}
+	$Q${cp} ${FILE:S/^${DESTDIR}/${THEMEDIR}/} ${MEDIA_STATIC_${FILE}} && \
+		${echo} "-- New theme static file: ${FILE:S/\/\//\//}"
+
+.endfor
+
+.endif
 
 # BEGIN
-all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/}
+all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEME_STATIC_FILES:S/^/${DESTDIR}\//}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
