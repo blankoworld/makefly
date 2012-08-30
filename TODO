@@ -1,6 +1,7 @@
 TODO:
 -----
 
+- Permit THEME_STATIC_FILES to be copied from template/theme to pub directory (from config.mk given on each template
 - Create a list of error that you can encount and give some explanations to fix them
 - Add in doc some explanation on how makefly work for src, db directory and linked files.
 - Only permit to publish current post (if post have a date in the future, so don't take it)
