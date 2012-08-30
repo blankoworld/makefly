@@ -1,6 +1,11 @@
 TODO:
 -----
 
+- Create a [b|p]make backup to save all important files in a 20120822_13H44_makefly_archive.tar.gz (for an example):
+  * makefly.rc
+  * static directory
+  * special directory
+  * db directory
 - Create a list of error that you can encount and give some explanations to fix them
 - Add in doc some explanation on how makefly work for src, db directory and linked files.
 - Only permit to publish current post (if post have a date in the future, so don't take it)
