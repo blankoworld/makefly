@@ -1,7 +1,20 @@
 ## About
 
-This about page is included into *static* directory.
+Makefly is a static weblog engine working thanks to a BSD makefile.
 
-Just edit *about.md* file to change this text.
+It's composed of:
 
-If you doesn't want any about page, just delete it.
+* home page
+* post's list
+* tag's list
+
+and includes somes functionalities like:
+
+* RSS feed
+* tags
+* permalink
+* possibility to set posting date (using a timestamp)
+* customization using options like max post on homepage
+* translation: English, French
+
+In fact, it's a lightweight weblog engine that generates some HTML static files.
