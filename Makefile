@@ -31,7 +31,6 @@ Q ?= @
 
 # directories
 TMPLDIR         = ./template
-STYLEDIR        = ./style
 BINDIR          = ./bin
 LANGDIR         = ./lang
 SRCDIR          = ./src
@@ -41,15 +40,9 @@ TMPDIR          = ./tmp
 TAGDIR_NAME     = tags
 POSTDIR_NAME    = posts
 STATICDIR       = ./static
-
-# template's files
-header     ?= ${TMPLDIR}/header.xhtml
-footer     ?= ${TMPLDIR}/footer.xhtml
-element    ?= ${TMPLDIR}/element.xhtml
-article    ?= ${TMPLDIR}/article.xhtml
-taglink    ?= ${TMPLDIR}/taglink.xhtml
-tagelement ?= ${TMPLDIR}/tagelement.xhtml
-tags       ?= ${TMPLDIR}/tags.xhtml
+SPECIALDIR      = ./special
+ABOUT_FILENAME  = about
+THEME           = default
 
 # other files
 htmldoc ?= README.html
@@ -77,27 +70,49 @@ grep     ?= grep
 .include "makefly.rc"
 # then translation variables
 .include "${LANGDIR}/translate.${BLOG_LANG}"
+# finally theme VARIABLES
+.include "${TMPLDIR}/${THEME}/config.mk"
+
+# template's files
+header     ?= ${TMPLDIR}/${THEME}/header.xhtml
+footer     ?= ${TMPLDIR}/${THEME}/footer.xhtml
+element    ?= ${TMPLDIR}/${THEME}/element.xhtml
+article    ?= ${TMPLDIR}/${THEME}/article.xhtml
+taglink    ?= ${TMPLDIR}/${THEME}/taglink.xhtml
+tagelement ?= ${TMPLDIR}/${THEME}/tagelement.xhtml
+tags       ?= ${TMPLDIR}/${THEME}/tags.xhtml
+aboutlink  ?= ${TMPLDIR}/${THEME}/menu.about.xhtml
+
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
-TAGDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
+TAGDIR_INDEX  = ${INDEX_FILENAME}${PAGE_EXT}
+# Create about index filename
+ABOUT_INDEX   = ${ABOUT_FILENAME}${PAGE_EXT}
+STYLEDIR      = ${TMPLDIR}/${THEME}/style
+
 # Prepare parser options
-parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
-		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" \
-		"BASE_URL=${BASE_URL}"                 \
-		"HOME_TITLE=${HOME_TITLE}"             \
-		"POST_LIST_TITLE=${POST_LIST_TITLE}"   \
-		"POSTDIR_NAME=${POSTDIR_NAME}"         \
-		"TAG_TITLE=${TAG_TITLE}"               \
-		"TAG_LIST_TITLE=${TAG_LIST_TITLE}"     \
-		"TAGDIR_NAME=${TAGDIR_NAME}"           \
-		"LANG=${BLOG_LANG}"                    \
-		"BLOG_CHARSET=${BLOG_CHARSET}"         \
-		"POWERED_BY=${POWERED_BY}"             \
-		"POSTED=${POSTED}"                     \
-		"PERMALINK_TITLE=${PERMALINK_TITLE}"   \
-		"RSS_FEED_NAME=${RSS_FEED_NAME}"       \
-		"POSTDIR_INDEX=${POSTDIR_INDEX}"       \
-		"TAGDIR_INDEX=${TAGDIR_INDEX}"
+parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
+		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"   \
+		"BASE_URL=${BASE_URL}"                   \
+		"HOME_TITLE=${HOME_TITLE}"               \
+		"POST_LIST_TITLE=${POST_LIST_TITLE}"     \
+		"POSTDIR_NAME=${POSTDIR_NAME}"           \
+		"TAG_TITLE=${TAG_TITLE}"                 \
+		"TAG_LIST_TITLE=${TAG_LIST_TITLE}"       \
+		"TAGDIR_NAME=${TAGDIR_NAME}"             \
+		"LANG=${BLOG_LANG}"                      \
+		"BLOG_CHARSET=${BLOG_CHARSET}"           \
+		"POWERED_BY=${POWERED_BY}"               \
+		"POSTED=${POSTED}"                       \
+		"PERMALINK_TITLE=${PERMALINK_TITLE}"     \
+		"RSS_FEED_NAME=${RSS_FEED_NAME}"         \
+		"POSTDIR_INDEX=${POSTDIR_INDEX}"         \
+		"TAGDIR_INDEX=${TAGDIR_INDEX}"           \
+		"SOURCE_LINK_NAME=${SOURCE_LINK_NAME}"   \
+		"SOURCE_LINK_TITLE=${SOURCE_LINK_TITLE}" \
+		"CSS_NAME=${CSS_NAME}"                   \
+		"CSS_FILE=${CSS_FILE}"                   \
+		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
 TAGDIR       = ${DESTDIR}/${TAGDIR_NAME}
@@ -109,9 +124,11 @@ DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != ${echo} ${STATICFILES}
+ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
+ABOUTRESULT != ${echo} ${ABOUTFILE}
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR
+.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
@@ -137,8 +154,30 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 
 .endfor
 
+# ABOUT PAGE
+.if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
+
+ABOUT_LINK != ${cat} ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
+parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
+
+${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
+	$Q{ \
+		{ \
+			${cat} ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" && \
+			${markdown} ${ABOUTFILE} && \
+			${cat} ${footer} | ${parser} ${parser_opts}; \
+		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || { \
+			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ; \
+			${echo} "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
+			false                                             ; \
+		} ; \
+	} && ${echo} "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
+
+.endif
+
+
 # BEGIN
-all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//}
+all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -246,9 +285,9 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 .endfor
 
 # Do CSS file
-${DESTDIR}/simple.css: ${DESTDIR} ${STYLEDIR}/simple.css
-	$Q${cp} ${STYLEDIR}/simple.css ${DESTDIR}/simple.css && \
-		${echo} "-- CSS copied: ${DESTDIR}/simple.css"
+${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE}
+	$Q${cp} ${STYLEDIR}/${CSS_FILE} ${DESTDIR}/${CSS_FILE} && \
+		${echo} "-- CSS copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
 
 # Do Homepage
 # EXAMPLE: pub/index.xhtml

@@ -5,3 +5,6 @@ TAG_TITLE = Tag(s)
 PERMALINK_TITLE = permalink
 POWERED_BY = Powered by
 POSTED = Posted
+ABOUT_TITLE = About
+SOURCE_LINK_NAME = Sources on
+SOURCE_LINK_TITLE = Go to the gitorious makefly homepage

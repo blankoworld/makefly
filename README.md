@@ -32,13 +32,44 @@ Some programs on which makefly depends:
   * markdown command
   * lua 5.1 and earlier
 
+So use your distribution package manager. For an example on Debian and derivated, it would be:
+
+    apt-get install pmake markdown lua5.1
+
+For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
+
 ## Installation
 
-No need to install it. But after generation, perhaps would you install result in a specific directory?
+There is 2 ways to install Makefly on your computer:
 
-You should so use **install.sh** which is a bash shell script. Just launch it:
+  * Using last stable version by fetching a tarball (recommanded)
+  * Using current developement version by using a repository (for advanced user only)
 
-    bash install.sh
+### Using last stable version
+
+Just download last version on official website: [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Go to official makefly website").
+
+For an example [0.1 version](http://makefly.e-mergence.org/makefly_0.1.zip "Download Makefly 0.1").
+
+Then extract tarball's content into a directory.
+
+### Using current developement version
+
+You have to use **git** command. If you don't know what it is, have a look to [Git SCM website](http://git-scm.com/ "Learn more about Git").
+
+After git installation, go to a working directory and do this:
+
+    git clone git://gitorious.org/makefly/master.git makefly_dev
+
+This will fetch makefly repository and add files into **makefly_dev** directory.
+
+**Note**: Using git is useful to easily update makefly. In fact:
+
+    git pull git://gitorious.org/makefly/master.git
+
+will update your makefly.
+
+**WARNING**: You have to always backup your files! This method could delete some changes you made previously.
 
 ## Configuration
 
@@ -86,6 +117,32 @@ Here is some options you can change:
   * SHORT_DATE_FORMAT: Short date format that would be used on the post list page. Please see man date's page for more information.
   * INDEX_FILENAME: Name given to all index'pages. For an example with **INDEX_FILENAME = mainpage**, post list page will be named *mainpage.html*.
   * PAGE_EXT: suffix that all page will have. **DO NOT FORGET TO ADD A POINT BEFORE SUFFIX**. For an example, with **PAGE_EXT = .html**, all pages will be index.html.
+  * ABOUT_FILENAME: As described, this is the about's filename. If you set it to "about" for an example, you have to create a "about.md" file into **special** directory in order to have an about's page. If you change it to "toto", so you have to create a *toto.md* file into **special** directory.
+  * POSTDIR_NAME: The name you want to be displayed in URL when a user go to post list. For an example, if you set it to "myposts": http://makefly.e-mergence.org/myposts/ will display all you posts. This is useful for others languages.
+  * TAGDIR_NAME: Same behaviour as POSTDIR_NAME, but for tags. Change it to "mytags" for an example, and you will have URLs like this: http://makefly.e-mergence.org/mytags/ to display tag list.
+  * THEME: Name of the theme you want to be used. All themes are available in **template** directory. Each theme have its own directory. For an example, "default" theme have its **template/default** directory.
+
+## Publish result to the web
+
+The result is compatible with all HTML servers. In fact you could probably use result with your website provider. You just have to upload all files from **pub** directory to your provider's web directory.
+
+If you launch Makefly on you own server or probably on provider ' server, you should so use **install.sh** which is a bash shell script. Just launch it:
+
+    bash install.sh
+
+...and it will copy all files to **~/public_html** directory.
+
+**WARNING**: This will erase all files from *public_html* directory!
+
+**Note**: You can customize the script to copy files in another directory. To do that, just edit *install.sh** script and change this variable:
+
+    DESTDIR=${HOME}/public_html
+
+to
+
+    DESTDIR=/my/personal/website
+
+Relaunch *install.sh* script to see result.
 
 ## Translation
 
@@ -95,6 +152,7 @@ A simple way to translate Makefly to your language is to copy the **lang/transla
 
 Source are available: 
 
+  * [On gitorious](http://gitorious.org/makefly/master.git/)
   * [On github](https://github.com/blankoworld/makefly)
   * [On personal git](http://git.dossmann.net/blogbox/makefly.git/)
 

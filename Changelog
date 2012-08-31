@@ -4,6 +4,12 @@ Current (not released)
 - Complete README file
 - Some HTML5 improvements
 - Fix but when reusing pmake without pmake clean
+- Add a "About"'s page
+- Add some missing variables in documentation
+- Complete documentation for installation via current version or developement
+version. More information for dependancies installation.
+- Templating improvements in order to create more templates and cascading
+stylesheets
 
 Version 0.1 (released 2012-07-17)
 - RSS feed

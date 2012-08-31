@@ -4,7 +4,7 @@
 <head>
   <meta charset="${BLOG_CHARSET}" />
   <title>${BLOG_TITLE} - ${TITLE}</title>
-  <link type="text/css" rel="stylesheet" media="screen" href="${BASE_URL}/simple.css" title="Default" />
+  <link type="text/css" rel="stylesheet" media="screen" href="${BASE_URL}/${CSS_FILE}" title="${CSS_NAME}" />
   <link rel="alternate" type="application/rss+xml" title="${RSS_FEED_NAME}" href="${BASE_URL}/rss.xml" />
 </head>
   <body>
@@ -17,8 +17,8 @@
       <ul>
         <li><a href="${BASE_URL}">${HOME_TITLE}</a></li>
         <li><a href="${BASE_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
-        <li><a href="${BASE_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>
         <li><a href="/makefly_0.1.zip">Download v0.1</a></li>
+        <li><a href="${BASE_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
       </ul>
     </nav>
 
