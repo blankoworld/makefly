@@ -36,12 +36,14 @@ padding: 5px;
 nav {
 display: block;
 width: 80%;
-margin: 0 auto;
+margin: 0 auto 15px auto;
+border-bottom: 1px solid #999;
 }
 
 nav ul {
 list-style-type: none;
 height: 20px;
+text-align: center;
 }
 
 nav ul li {
@@ -58,7 +60,8 @@ padding: 2px;
 -moz-border-radius: 6px;
 border-radius: 6px;
 text-decoration: none;
-border: thin solid #999;
+border: 1px solid #999;
+color: #999;
 }
 
 nav ul a:hover {
@@ -68,15 +71,13 @@ background-color: #999;
 padding: 2px;
 -moz-border-radius: 6px;
 border-radius: 6px;
+border: 1px solid #999;
 }
 
 #content {
 width: 80%;
 margin: 0 auto;
 padding: 0 15px;
-border: thin solid #999;
--moz-border-radius: 10px;
-border-radius: 10px;
 }
 
 #content h1 {
@@ -85,16 +86,17 @@ color: #ccc;
 
 #content article {
 display: block;
-color: #eee;
-background-color: #999;
+color: #999;
 width: 100%;
 height: 100%;
 -moz-border-radius: 6px;
 border-radius: 6px;
+border: 1px solid #ccc;
+box-shadow: 1px 1px 15px #ccc;
 }
 
 #content article > * {
-padding: 10px;
+padding: 0 10px;
 }
 
 #content article ul {
@@ -106,6 +108,7 @@ color: #F1E5A5;
 }
 
 #content .articleinfo {
+padding-top: 15px;
 font-size: 70%;
 text-align: right;
 }
@@ -115,6 +118,10 @@ margin: 2px 0 15px 0;
 }
 
 footer p {
+width: 80%;
+margin: 0 auto;
+padding: 5px 0 0 0;
+border-top: 1px solid #999;
 text-align: center;
 font-size: 70%;
 }
