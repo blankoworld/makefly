@@ -43,6 +43,7 @@ STATICDIR       = ./static
 SPECIALDIR      = ./special
 ABOUT_FILENAME  = about
 THEME           = default
+BACKUPDIR       = ./mbackup
 
 # other files
 htmldoc ?= README.html
@@ -64,6 +65,7 @@ cut      ?= cut
 date     ?= date
 cp       ?= cp
 grep     ?= grep
+tar      ?= tar
 
 # include some VARIABLES
 # first main variables
@@ -129,7 +131,7 @@ ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
 ABOUTRESULT != ${echo} ${ABOUTFILE}
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR
+.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
@@ -389,8 +391,20 @@ clean:
 	$Q${rm} -f ${TMPDIR}/*
 	$Q${rm} -f README.html
 
+# Create documentation
 doc: README.md
 	$Q${markdown} README.md > ${htmldoc}
+
+# Save important files
+TODAY != date '+%Y%m%d'
+backup: makefly.rc ${BACKUPDIR}
+	$Q{ \
+		${tar} cfz ${BACKUPDIR}/${TODAY}_makefly.tar.gz makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} || \
+		{ \
+			${echo} "-- Backup failed!" ; \
+			false ; \
+		} ; \
+	} && ${echo} "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR} and ${SPECIALDIR}."
 
 # END
 .MAIN: all

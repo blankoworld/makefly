@@ -121,6 +121,7 @@ Here is some options you can change:
   * POSTDIR_NAME: The name you want to be displayed in URL when a user go to post list. For an example, if you set it to "myposts": http://makefly.e-mergence.org/myposts/ will display all you posts. This is useful for others languages.
   * TAGDIR_NAME: Same behaviour as POSTDIR_NAME, but for tags. Change it to "mytags" for an example, and you will have URLs like this: http://makefly.e-mergence.org/mytags/ to display tag list.
   * THEME: Name of the theme you want to be used. All themes are available in **template** directory. Each theme have its own directory. For an example, "default" theme have its **template/default** directory.
+  * BACKUPDIR: Name of directory where *backup* command will save all files.
 
 ## Publish result to the web
 
@@ -147,6 +148,29 @@ Relaunch *install.sh* script to see result.
 ## Translation
 
 A simple way to translate Makefly to your language is to copy the **lang/translate.en** file to another translation file. For an example, for french (with fr code), you can copy **lang/translate.en** to **lang/translate.fr** and change values. Then just change *BLOG_LANG* option in **makefly.rc** file.
+
+## Backup
+
+Perhaps would you backup some important files in Makefly? It's possible via **backup command**. Just launch it like this:
+
+    pmake backup
+
+Requirements:
+
+  * tar
+  * gzip
+
+Files saved:
+
+  * makefly.rc
+  * static directory
+  * special directory
+  * db directory
+  * src directory
+
+Result: This will create a *tarball* named *YYYYMMDD_makefly.tar.gz* in **mbackup** directory. You can so backup your Makefly each day for an example.
+
+Tip: You can customize backup directory by using **BACKUPDIR** option in your **makfley.rc** file.
 
 ## Sources
 
