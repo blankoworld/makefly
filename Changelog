@@ -10,6 +10,7 @@ Current (not released)
 version. More information for dependancies installation.
 - Templating improvements in order to create more templates and cascading
 stylesheets
+- Backup command to save all important files from Makefly
 
 Version 0.1 (released 2012-07-17)
 - RSS feed
