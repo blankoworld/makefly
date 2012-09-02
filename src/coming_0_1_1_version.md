@@ -2,9 +2,9 @@
 
 ## Introduction
 
-A month ago, [I announce you v0.1 was out](/posts/version_0_1_is_out.html "Read 'Version 0.1 is out!' post").
+A month ago, [I announced v0.1 was out](/posts/version_0_1_is_out.html "Read 'Version 0.1 is out!' post").
 
-Today we will see what's next and what expected for future version.
+Today we will see what's next and what expected for future versions.
 
 ## What's next?
 
