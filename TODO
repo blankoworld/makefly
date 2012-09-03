@@ -1,6 +1,7 @@
 TODO:
 -----
 
+- permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
 - Instead of copying each file from static, just copy all static directory content (cp static/* ./pub)
 - Instead of copying each file given in THEME_STATIC_FILES, just copy those given in template/theme_name/static directory
 - Create a list of error that you can encount and give some explanations to fix them
