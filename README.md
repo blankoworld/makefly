@@ -1,4 +1,8 @@
+<link href="./readme.css" rel="stylesheet"></link>
+
 # Makefly
+
+Une version fran&ccedil;aise de cette documentation est disponible dans le fichier **README.fr.md**.
 
 ## About
 
@@ -18,7 +22,7 @@ This software is published under GNU Affero General Public License 3.0.
 
 ### Stats
 
-Some stats about projet could be found [on Ohloh.net](http://www.ohloh.net/p/makefly "See ohloh's analysis for Makefly project").
+Some stats about project could be found [on Ohloh.net](http://www.ohloh.net/p/makefly "See ohloh's analysis for Makefly project").
 
 ## Description
 
@@ -32,7 +36,7 @@ Some programs on which makefly depends:
   * markdown command
   * lua 5.1 and earlier
 
-So use your distribution package manager. For an example on Debian and derivated, it would be:
+So use your distribution package manager to install them. For an example on Debian and derivated, it would be:
 
     apt-get install pmake markdown lua5.1
 
@@ -108,15 +112,15 @@ Here is some options you can change:
   * BLOG_TITLE: Title of your weblog
   * BLOG_SHORT_DESC: A short description of your weblog
   * BLOG_DESCRIPTION: A long description of your weblog
-  * BLOG_LANG: your language. Note that file lang/translate.YOUR_LANGUAGE should exists. For an example if I set this parameter to *en*, a *lang/translate.en* file should exists!
-  * BLOG_CHARSET: your encoding configuration. Should be something like **UTF-8** or **ISO-8859-1**
-  * BASE_URL: absolute URL of your blog
+  * BLOG_LANG: your language code. Note that file lang/translate.YOUR_LANGUAGE_CODE should exists. For an example if I set this parameter to *en*, a *lang/translate.en* file should exists!
+  * BLOG_CHARSET: your encoding configuration. Should be something like **UTF-8** or **ISO-8859-1**. If you don't know what's this option, just let it to *UTF-8*.
+  * BASE_URL: absolute URL of your blog. For an example http://makefly.e-mergence.org/.
   * RSS_FEED_NAME: Title for the RSS Feed
   * MAX_POST: Max post that would be showed on home page
-  * DATE_FORMAT: Date format. Please see man date's page for more information.
+  * DATE_FORMAT: Date format displayed for each post. Please see man date's page for more information.
   * SHORT_DATE_FORMAT: Short date format that would be used on the post list page. Please see man date's page for more information.
   * INDEX_FILENAME: Name given to all index'pages. For an example with **INDEX_FILENAME = mainpage**, post list page will be named *mainpage.html*.
-  * PAGE_EXT: suffix that all page will have. **DO NOT FORGET TO ADD A POINT BEFORE SUFFIX**. For an example, with **PAGE_EXT = .html**, all pages will be index.html.
+  * PAGE_EXT: suffix that all page will have. **DO NOT FORGET TO ADD A POINT BEFORE SUFFIX**. For an example, with **PAGE_EXT = .html**, all pages will be under the form: index.html.
   * ABOUT_FILENAME: As described, this is the about's filename. If you set it to "about" for an example, you have to create a "about.md" file into **special** directory in order to have an about's page. If you change it to "toto", so you have to create a *toto.md* file into **special** directory.
   * POSTDIR_NAME: The name you want to be displayed in URL when a user go to post list. For an example, if you set it to "myposts": http://makefly.e-mergence.org/myposts/ will display all you posts. This is useful for others languages.
   * TAGDIR_NAME: Same behaviour as POSTDIR_NAME, but for tags. Change it to "mytags" for an example, and you will have URLs like this: http://makefly.e-mergence.org/mytags/ to display tag list.
@@ -139,7 +143,7 @@ If you launch Makefly on you own server or probably on provider ' server, you sh
 
     DESTDIR=${HOME}/public_html
 
-to
+to:
 
     DESTDIR=/my/personal/website
 
@@ -168,17 +172,17 @@ Files saved:
   * db directory
   * src directory
 
-Result: This will create a *tarball* named *YYYYMMDD_makefly.tar.gz* in **mbackup** directory. You can so backup your Makefly each day for an example.
+Result: This will create a *tarball* named *YYYYMMDD_makefly.tar.gz* in **mbackup** directory (for an example 20120823_makefly.tar.gz). You can so backup your Makefly each day for an example.
 
 Tip: You can customize backup directory by using **BACKUPDIR** option in your **makfley.rc** file.
 
 ## Sources
 
-Source are available: 
+Sources are available: 
 
   * [On gitorious](http://gitorious.org/makefly/master.git/)
   * [On github](https://github.com/blankoworld/makefly)
-  * [On personal git](http://git.dossmann.net/blogbox/makefly.git/)
+  * [On my own git repository](http://git.dossmann.net/blogbox/makefly.git/)
 
 ## Documentation
 
