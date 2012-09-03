@@ -7,7 +7,6 @@ TODO:
 - Add in doc some explanation on how makefly work for src, db directory and linked files.
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Permit user to create a cron that publish posts each day?
-- Create a french documentation
 - Create a [b|p]make publish in order to publish blog with a specific script
 - Do a script that export to a FTP or use rsync
 - Create a [b|p]make refreshall to clean all files, recompile them and publish blog
@@ -93,4 +92,4 @@ DONE:
   * static directory
   * special directory
   * db directory
-
+- Create a french documentation

@@ -46,7 +46,7 @@ THEME           = default
 BACKUPDIR       = ./mbackup
 
 # other files
-htmldoc ?= README.html
+htmldoc ?= README
 
 # programs
 markdown ?= markdown
@@ -392,8 +392,9 @@ clean:
 	$Q${rm} -f README.html
 
 # Create documentation
-doc: README.md
-	$Q${markdown} README.md > ${htmldoc}
+doc: README.md README.fr.md
+	$Q${markdown} -e ${BLOG_CHARSET} README.md > ${htmldoc}${PAGE_EXT}
+	$Q${markdown} -e ${BLOG_CHARSET} README.fr.md > ${htmldoc}.fr${PAGE_EXT}
 
 # Save important files
 TODAY != date '+%Y%m%d'
