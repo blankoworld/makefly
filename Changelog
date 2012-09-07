@@ -16,6 +16,7 @@ stylesheets
 - Add some text on tag list
 - Add new theme: minisch
 - Permit to use ${VARIABLE} in CSS
+- Fix a bug that show twice post list for a given tag
 
 Version 0.1 (released 2012-07-17)
 - RSS feed
