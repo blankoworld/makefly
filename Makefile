@@ -213,13 +213,22 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
 CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |${sed} -e 's|\"|\\"|g'
+# Linked DB file (that contains metadata)
+DB_${FILE} != find ${DBDIR} -name "*${FILE:S/.md$/.mk/}"
+# Include it
+.include "${DB_${FILE}}"
+# Fetch some data for this post
+TITLE_${FILE} != ${echo} ${TITLE}
+
 ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
 			${cat} ${header} | ${parser} ${parser_opts} && \
 			${cat} ${article} |${parser}                   \
-				"CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} -e "s|^|        |g" && \
-			${cat} ${footer} | ${parser} ${parser_opts}; \
+				"CONTENT=${CONTENT_TARGET_${FILE}}"          \
+				"POST_TITLE=${TITLE_${FILE}}"                \
+				| ${sed} -e "s|^|        |g" &&              \
+			${cat} ${footer} | ${parser} ${parser_opts};   \
 		} > ${TARGET_${FILE}} || { \
 			${rm} -f ${TARGET_${FILE}}                           ; \
 			${echo} "-- Error while building ${TARGET_${FILE}}." ; \
@@ -268,6 +277,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"POST_FILE=${NAME_${FILE}}"                  \
 		"DATE=${POSTDATE_${FILE}}"                   \
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"          \
+		"POST_TITLE=${TITLE_${FILE}}"                \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
 	$Q${cat} ${POSTDIR}/${NAME_${FILE}} | ${parser} ${parser_opts} \
