@@ -1,6 +1,7 @@
 TODO:
 -----
 
+- Add sidebar.md in special directory in order to be displayed on Makefly
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
 - Instead of copying each file from static, just copy all static directory content (cp static/* ./pub)
 - Instead of copying each file given in THEME_STATIC_FILES, just copy those given in template/theme_name/static directory
@@ -16,14 +17,10 @@ TODO:
 - Create a nanoblogger import script to migrate from Nanoblogger to Makefly
 - Other import script? From Wordpress to Makefly?
 - Add Search capability on home page
-- Integrate another theme like minisch (from schoewilliam)?
 - Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
-- use : ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2012Q2/pkgsrc/Makefile to discover if/else/end in bsd makefile
 - change all variable to be UNIQUE in TEMPLATES
 - Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
-- Use posts'title for each individual page and homepage. For an example to have "My first post" then content of post
-- Create a template for tag list with some text (in order to be more readeable in elinks)
 - Add anchor to join content's page on EACH page
 - permit user to select how many lines should be given for each articles on index page (for an example 10 lines): to do this, do a head -n 10 on art1.md then do markdown on it
 - permit user to choose if yes or no it wants "how many lines" to be used or not in Makefly
@@ -94,3 +91,8 @@ DONE:
   * special directory
   * db directory
 - Create a french documentation
+- Integrate another theme like minisch (from schoewilliam)?
+- Create a template for tag list with some text (in order to be more readeable in elinks)
+- Use posts'title for each individual page and homepage. For an example to have "My first post" then content of post
+- use : ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2012Q2/pkgsrc/Makefile to discover if/else/end in bsd makefile
+
