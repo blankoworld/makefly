@@ -1,14 +1,11 @@
+<h1 class="entry-title">${POST_TITLE}</h1>
+<header class="entry-meta">
+  <time class="entry-date"><a href="${BASE_URL}/${POSTDIR_NAME}/${POST_FILE}">${DATE}</a></time>
+  <span class="tag-links">
+    ${TAG_LINKS_LIST}
+  </span>
+</header><!-- .entry-header -->
 <article id="post-${PERMALINK_TITLE}" class="post">
-
-	<header class="entry-header">
-      <div class="entry-meta">
-	      <h1 class="entry-title"><a href="${BASE_URL}/${POSTDIR_NAME}/${POST_FILE}">${POST_TITLE}</a></h1>
-        <time class="entry-date"><a href="${BASE_URL}/${POSTDIR_NAME}/${POST_FILE}">${DATE}</a></time>
-        <span class="tag-links">
-          ${TAG_LINKS_LIST}
-			  </span>
-		  </div><!-- .entry-meta -->
-    <section class="extrait">${CONTENT}</section>
-	</header><!-- .entry-header -->
+  <div class="entry-content">${CONTENT}</div>
 </article>
 

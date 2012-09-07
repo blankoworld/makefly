@@ -692,7 +692,7 @@ section#flux figure.featuredimage {
     overflow: hidden;
     text-align: center;
 }
-section#flux article.post, body.archive section#flux article.post, body.search section#flux article.post {
+body.home section#flux article.post, body.archive section#flux article.post, body.search section#flux article.post {
     border-radius: 3px;
     background-color: #FFFFFF;
     background-image: url("bg.png");

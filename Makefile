@@ -68,6 +68,7 @@ grep     ?= grep
 tar      ?= tar
 
 # include some VARIABLES
+BODY_CLASS = single
 # first main variables
 .include "makefly.rc"
 # then translation variables
@@ -77,14 +78,15 @@ THEMEDIR = ${TMPLDIR}/${THEME}
 .include "${THEMEDIR}/config.mk"
 
 # template's files
-header     ?= ${THEMEDIR}/header.xhtml
-footer     ?= ${THEMEDIR}/footer.xhtml
-element    ?= ${THEMEDIR}/element.xhtml
-article    ?= ${THEMEDIR}/article.xhtml
-taglink    ?= ${THEMEDIR}/taglink.xhtml
-tagelement ?= ${THEMEDIR}/tagelement.xhtml
-tags       ?= ${THEMEDIR}/tags.xhtml
-aboutlink  ?= ${THEMEDIR}/menu.about.xhtml
+header      ?= ${THEMEDIR}/header.xhtml
+footer      ?= ${THEMEDIR}/footer.xhtml
+element     ?= ${THEMEDIR}/element.xhtml
+article     ?= ${THEMEDIR}/article.xhtml
+article_idx ?= ${THEMEDIR}/article.index.xhtml
+taglink     ?= ${THEMEDIR}/taglink.xhtml
+tagelement  ?= ${THEMEDIR}/tagelement.xhtml
+tags        ?= ${THEMEDIR}/tags.xhtml
+aboutlink   ?= ${THEMEDIR}/menu.about.xhtml
 
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
@@ -116,6 +118,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"CSS_NAME=${CSS_NAME}"                   \
 		"CSS_FILE=${CSS_FILE}"                   \
 		"THEME_IS=${THEME_IS}"                   \
+		"BODY_CLASS=${BODY_CLASS}"               \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -219,6 +222,20 @@ DB_${FILE} != find ${DBDIR} -name "*${FILE:S/.md$/.mk/}"
 .include "${DB_${FILE}}"
 # Fetch some data for this post
 TITLE_${FILE} != ${echo} ${TITLE}
+TMSTMP_${FILE}    != ${echo} ${DB_${FILE}:S/^${DBDIR}\///}| ${cut} -d ',' -f 1
+POSTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
+SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
+DESC_${FILE}      != ${echo} ${DESCRIPTION}
+TAGS_${FILE}      != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+
+.for TAG in ${TAGS_${FILE}}
+TAGLINK_${FILE}_${TAG} != ${cat} "${taglink}" |${parser} \
+	TAG_PAGE=${TAG}${PAGE_EXT} \
+	TAG_NAME=${TAG}
+TAGLIST_TMP_${FILE} += ${TAGLINK_${FILE}_${TAG}}
+.endfor
+
+TAGLIST_${FILE} != ${echo} "${TAGLIST_TMP_${FILE}}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 
 ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
@@ -271,7 +288,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
 		> ${TMPDIR}/${FILE}.list
 	@# Template for Home page
-	$Q${cat} ${article} | ${parser} ${parser_opts} \
+	$Q${cat} ${article_idx} | ${parser} ${parser_opts} \
 		"CONTENT=${CONTENT_${FILE}}"                 \
 		"TITLE=${TITLE_${FILE}}"                     \
 		"POST_FILE=${NAME_${FILE}}"                  \
@@ -327,6 +344,7 @@ ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TM
 		${cat} ${footer} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
 		${cat} ${TMPDIR}/index${PAGE_EXT} |${parser} ${parser_opts}                     \
 			"TITLE=${HOME_TITLE}"                                                         \
+			"BODY_CLASS=home"                                                             \
 			> ${TMPDIR}/index${PAGE_EXT}.tmp &&                                           \
 		${mv} ${TMPDIR}/index${PAGE_EXT}.tmp ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
 		${rm} ${TMPDIR}/index${PAGE_EXT} || {                                           \
