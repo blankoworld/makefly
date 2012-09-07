@@ -407,12 +407,12 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		} ;                                                            \
 	} && ${echo} "-- Tag list built: $@"
 	$Qfor TAG in `${cd} ${TMPDIR};${ls} *.tag|${sed} -e 's|.tag$$||g'`; do        \
-		${cat} ${header} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                    \
+		${cat} ${header} > ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                    \
 		${cat} ${TMPDIR}/$${TAG}.tag >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&        \
 		${cat} ${footer} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                     \
 		${cat} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
 			"TITLE=$${TAG}"                                                           \
-			>> ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
+			> ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
 			${rm} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
 		done
 
