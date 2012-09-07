@@ -391,10 +391,12 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		${cat} ${header} > ${TMPDIR}/taglist${PAGE_EXT} &&             \
 		${cat} ${tags} | ${parser} ${parser_opts}                      \
+			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"                           \
 			"TAGLIST_CONTENT=`${cat} ${TMPDIR}/tags.list |${sort} -u`"   \
 			>> ${TMPDIR}/taglist${PAGE_EXT} &&                           \
 		${cat} ${footer} >> ${TMPDIR}/taglist${PAGE_EXT} &&            \
 		${cat} ${TMPDIR}/taglist${PAGE_EXT} | ${parser} ${parser_opts} \
+		  "BODY_CLASS=tags"                                            \
 			"TITLE=${TAG_LIST_TITLE}"                                    \
 		> ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                    \
 		${rm} ${TMPDIR}/tags.list &&                                   \

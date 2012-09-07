@@ -1,6 +1,6 @@
 HOME_TITLE = Accueil
 POST_LIST_TITLE = Liste des articles
-TAG_LIST_TITLE = Liste des mot-clés
+TAG_LIST_TITLE = Liste des mots-clés
 TAG_TITLE = Mot-clé(s)
 PERMALINK_TITLE = lien permanent
 POWERED_BY = Propulsé par
