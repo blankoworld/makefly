@@ -1,5 +1,3 @@
-# Welcome to Makefly!
-
 Makefly is a *static weblog engine* working thanks to a BSD **makefile**.
 
 It's composed of:
