@@ -331,7 +331,8 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 
 # Do CSS file
 ${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE}
-	$Q${cp} ${STYLEDIR}/${CSS_FILE} ${DESTDIR}/${CSS_FILE} && \
+	$Q${cat} ${STYLEDIR}/${CSS_FILE} |${parser} ${parser_opts} \
+		> ${DESTDIR}/${CSS_FILE} && \
 		${echo} "-- CSS copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
 
 # Do Homepage
