@@ -163,7 +163,7 @@ a.accueil {
     	   -moz-transition: all 0.2s ease 0s;
     	     -o-transition: all 0.2s ease 0s;
     	    -ms-transition: all 0.2s ease 0s;
-    background: url("logodefault.png") center center no-repeat;
+    background: center center no-repeat;
     color: #666666;
     display: block;
     font-size: 28px;
@@ -692,7 +692,7 @@ section#flux figure.featuredimage {
     overflow: hidden;
     text-align: center;
 }
-body.blog section#flux article.post, body.archive section#flux article.post, body.search section#flux article.post {
+section#flux article.post, body.archive section#flux article.post, body.search section#flux article.post {
     border-radius: 3px;
     background-color: #FFFFFF;
     background-image: url("bg.png");
