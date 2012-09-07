@@ -115,6 +115,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"SOURCE_LINK_TITLE=${SOURCE_LINK_TITLE}" \
 		"CSS_NAME=${CSS_NAME}"                   \
 		"CSS_FILE=${CSS_FILE}"                   \
+		"THEME_IS=${THEME_IS}"                   \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
