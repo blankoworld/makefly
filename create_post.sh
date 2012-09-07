@@ -103,9 +103,7 @@ echo "TAGS=\"${tags}\"" >> ${dbfile}
 
 # create src file
 touch ${file}
-echo "# ${title}" >> ${file}
-echo "" >> ${file}
-echo "Type your text in markdown format here" >> ${file}
+echo "Type your text in markdown format here" > ${file}
 
 if test "$QUIET" -eq 0;then
   ${edit} ${file}

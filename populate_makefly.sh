@@ -32,8 +32,6 @@ POST1_DESC="Makefly discovering"
 POST1_DATE="2012-06-29"
 POST1_TAGS="makefly, news"
 IFS='' read -r -d '' POST1_CONTENT<<'EOF'
-# Welcome to Makefly!
-
 Makefly is a *static weblog engine* working thanks to a BSD **makefile**.
 
 It's composed of:
@@ -61,8 +59,6 @@ POST2_DESC="How to contribute?"
 POST2_DATE="2012-07-01"
 POST2_TAGS="makefly, social, programmation"
 IFS='' read -r -d '' POST2_CONTENT<<'EOF'
-# Makefly project
-
 ## About
 
 Makefly could be followed on [the official Makefly weblog](http://makefly.e-mergence.org/ "Visit official website").
@@ -89,8 +85,6 @@ POST3_DESC="Makefly is now available on the web"
 POST3_DATE="2012-07-04"
 POST3_TAGS="news, web"
 IFS='' read -r -d '' POST3_CONTENT<<'EOF'
-# Official weblog: Open
-
 Just remember one address for last makefly news: [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Visit official Makefly weblog to have news about Makefly!").
 
 I will post some tips & tricks, news and event about Makefly here. For this, I could use some example like this to be changed in a file:
