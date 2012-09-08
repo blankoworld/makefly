@@ -30,20 +30,21 @@
 Q ?= @
 
 # directories
-TMPLDIR         = ./template
-BINDIR          = ./bin
-LANGDIR         = ./lang
-SRCDIR          = ./src
-DESTDIR         = ./pub
-DBDIR           = ./db
-TMPDIR          = ./tmp
-TAGDIR_NAME     = tags
-POSTDIR_NAME    = posts
-STATICDIR       = ./static
-SPECIALDIR      = ./special
-ABOUT_FILENAME  = about
-THEME           = default
-BACKUPDIR       = ./mbackup
+TMPLDIR          = ./template
+BINDIR           = ./bin
+LANGDIR          = ./lang
+SRCDIR           = ./src
+DESTDIR          = ./pub
+DBDIR            = ./db
+TMPDIR           = ./tmp
+TAGDIR_NAME      = tags
+POSTDIR_NAME     = posts
+STATICDIR        = ./static
+SPECIALDIR       = ./special
+ABOUT_FILENAME   = about
+THEME            = default
+BACKUPDIR        = ./mbackup
+SIDEBAR_FILENAME = sidebar
 
 # other files
 htmldoc ?= README
@@ -87,6 +88,7 @@ taglink     ?= ${THEMEDIR}/taglink.xhtml
 tagelement  ?= ${THEMEDIR}/tagelement.xhtml
 tags        ?= ${THEMEDIR}/tags.xhtml
 aboutlink   ?= ${THEMEDIR}/menu.about.xhtml
+sidebar_tpl ?= ${THEMEDIR}/sidebar.xhtml
 
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
@@ -119,6 +121,8 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"CSS_FILE=${CSS_FILE}"                   \
 		"THEME_IS=${THEME_IS}"                   \
 		"BODY_CLASS=${BODY_CLASS}"               \
+		"LINKS_TITLE=${LINKS_TITLE}"             \
+		"SIDEBAR="                               \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -133,6 +137,8 @@ STATICFILES := ${STATICDIR}/*
 MEDIAFILES != ${echo} ${STATICFILES}
 ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
 ABOUTRESULT != ${echo} ${ABOUTFILE}
+SIDEBARFILE := ${SPECIALDIR}/${SIDEBAR_FILENAME}*
+SIDEBARRESULT != ${echo} ${SIDEBARFILE}
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR
@@ -196,6 +202,17 @@ ${MEDIA_STATIC_${FILE}}: ${DESTDIR}
 .endfor
 
 .endif
+
+# SIDEBAR
+.if defined(SIDEBAR) && $(SIDEBAR) && defined(SIDEBARRESULT) && $(SIDEBARRESULT) != ${SPECIALDIR}/${SIDEBARFILE}*
+SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |${sed} -e 's|\"|\\"|g'
+.else
+SIDEBAR_CONTENT = ""
+.endif
+DO_TMP_SIDEBAR != ${cat} ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT} && ${echo} ""
+sidebar_tmp_file = ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
+parser_opts += "SIDEBAR=`${cat} ${sidebar_tmp_file}`"
+# end of SIDEBAR
 
 # BEGIN
 all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEME_STATIC_FILES:S/^/${DESTDIR}\//}
@@ -421,12 +438,13 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 clean:
 	$Q${rm} -rf ${DESTDIR}/*
 	$Q${rm} -f ${TMPDIR}/*
-	$Q${rm} -f README.html
+	$Q${rm} -f README${PAGE_EXT}
+	$Q${rm} -f README.fr${PAGE_EXT}
 
 # Create documentation
 doc: README.md README.fr.md
-	$Q${markdown} -e ${BLOG_CHARSET} README.md > ${htmldoc}${PAGE_EXT}
-	$Q${markdown} -e ${BLOG_CHARSET} README.fr.md > ${htmldoc}.fr${PAGE_EXT}
+	$Q${markdown} README.md > ${htmldoc}${PAGE_EXT}
+	$Q${markdown} README.fr.md > ${htmldoc}.fr${PAGE_EXT}
 
 # Save important files
 TODAY != date '+%Y%m%d'

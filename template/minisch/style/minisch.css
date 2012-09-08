@@ -1714,8 +1714,6 @@ body.page ul.children, body.error404 ul.children {
     padding: 0 0 0 5px;
 }
 
-
-
 /* CSS ANIMATIONS */
 @keyframes fondu {
 0% { opacity: 0; }

@@ -117,6 +117,26 @@ text-align: right;
 margin: 2px 0 15px 0;
 }
 
+aside {
+width: 80%;
+margin: 0 auto;
+border-top: 1px solid #999;
+font-size: 8pt;
+}
+
+aside > * {
+margin-left: 10%;
+}
+
+aside ul {
+list-style-type: none;
+margin-left: 5%;
+}
+
+aside ul li a {
+text-decoration: none;
+}
+
 footer p {
 width: 80%;
 margin: 0 auto;
