@@ -126,6 +126,8 @@ Here is some options you can change:
   * TAGDIR_NAME: Same behaviour as POSTDIR_NAME, but for tags. Change it to "mytags" for an example, and you will have URLs like this: http://makefly.e-mergence.org/mytags/ to display tag list.
   * THEME: Name of the theme you want to be used. All themes are available in **template** directory. Each theme have its own directory. For an example, "default" theme have its **template/default** directory.
   * BACKUPDIR: Name of directory where *backup* command will save all files.
+  * SIDEBAR_FILENAME: As described, name of sidebar file that would be used to create a sidebar. If you set it to "sidebar" for an example, you have to create a "sidebar.md" file into **special** directory in order to have this sidebar. Note that your theme should support sidebars!
+  * SIDEBAR: If set to 1, so activate a sidebar on Makefly. Note that your theme should support sidebars!
 
 ## Publish result to the web
 
