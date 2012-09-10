@@ -1,0 +1,13 @@
+BLOG_TITLE = Makefly
+BLOG_SHORT_DESC = A static weblog engine using a BSD makefile
+BLOG_DESCRIPTION = Makefly is a static weblog engine that uses a BSD makefile to "compile" it
+BLOG_LANG = en
+BLOG_CHARSET = UTF-8
+BASE_URL = http://makefly.e-mergence.org
+RSS_FEED_NAME = Makefly RSS feed
+MAX_POST = 3
+DATE_FORMAT = %Y-%m-%d at %H:%M
+SHORT_DATE_FORMAT = %Y/%m
+INDEX_FILENAME = index
+PAGE_EXT = .html
+SIDEBAR = 0
