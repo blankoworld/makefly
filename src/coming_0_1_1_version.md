@@ -1,5 +1,3 @@
-# Coming 0.1.1 version
-
 ## Introduction
 
 A month ago, [I announced v0.1 was out](/posts/version_0_1_is_out.html "Read 'Version 0.1 is out!' post").

@@ -1,5 +1,3 @@
-# Version 0.1 is out!
-
 I'm glad to announce that [Makefly v0.1](makefly_0.1.zip "Download makefly v0.1 on github") is out!
 
 It contains some interesting functionalities like:
