@@ -1,6 +1,7 @@
 TODO:
 -----
 
+- Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
 - Add sidebar.md in special directory in order to be displayed on Makefly
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
 - Instead of copying each file from static, just copy all static directory content (cp static/* ./pub)
