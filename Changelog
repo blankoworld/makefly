@@ -10,6 +10,14 @@ Current (not released)
 version. More information for dependancies installation.
 - Templating improvements in order to create more templates and cascading
 stylesheets
+- Backup command to save all important files from Makefly
+- French documentation is now available
+- Add post title on each post
+- Add some text on tag list
+- Add new theme: minisch
+- Permit to use ${VARIABLE} in CSS
+- Fix a bug that show twice post list for a given tag
+- Sidebar added
 
 Version 0.1 (released 2012-07-17)
 - RSS feed

@@ -14,21 +14,21 @@ Tags: light, white, black, gray, one-column, two-columns, left-sidebar, right-si
 
 @font-face {
   font-family: "Cantarell";
-  src: url("fonts/cantarell/Cantarell-Regular.ttf");
+  src: url("Cantarell-Regular.ttf");
 }
 @font-face {
   font-family: "Cantarell";
-  src: url("fonts/cantarell/Cantarell-Bold.ttf");
+  src: url("Cantarell-Bold.ttf");
   font-weight: bold;
 }
 @font-face {
   font-family: "Cantarell";
-  src: url("fonts/cantarell/Cantarell-Oblique.ttf");
+  src: url("Cantarell-Oblique.ttf");
   font-style: italic;
 }
 @font-face {
   font-family: "Cantarell";
-  src: url("fonts/cantarell/Cantarell-BoldOblique.ttf");
+  src: url("Cantarell-BoldOblique.ttf");
   font-style: italic;
   font-weight: bold;
 }
@@ -43,7 +43,7 @@ Tags: light, white, black, gray, one-column, two-columns, left-sidebar, right-si
 }
 
 body {
-    background: url("bg.png") center top repeat;
+    background: url("${BASE_URL}/bg.png") center top repeat;
     color: rgba(0, 0, 0, 0.6);
     display: block;
     margin: 0;
@@ -163,7 +163,7 @@ a.accueil {
     	   -moz-transition: all 0.2s ease 0s;
     	     -o-transition: all 0.2s ease 0s;
     	    -ms-transition: all 0.2s ease 0s;
-    background: url("logodefault.png") center center no-repeat;
+    background: center center no-repeat;
     color: #666666;
     display: block;
     font-size: 28px;
@@ -692,7 +692,7 @@ section#flux figure.featuredimage {
     overflow: hidden;
     text-align: center;
 }
-body.blog section#flux article.post, body.archive section#flux article.post, body.search section#flux article.post {
+body.home section#flux article.post, body.archive section#flux article.post, body.search section#flux article.post {
     border-radius: 3px;
     background-color: #FFFFFF;
     background-image: url("bg.png");
@@ -1713,8 +1713,6 @@ body.page ul.children, body.error404 ul.children {
     margin: 0 0 0 20px;
     padding: 0 0 0 5px;
 }
-
-
 
 /* CSS ANIMATIONS */
 @keyframes fondu {

@@ -1,5 +1,3 @@
-# Makefly project
-
 ## About
 
 Makefly could be followed on [the official Makefly weblog](http://makefly.e-mergence.org/ "Visit official website").
