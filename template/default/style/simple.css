@@ -117,6 +117,14 @@ text-align: right;
 margin: 2px 0 15px 0;
 }
 
+#content article.special {
+box-shadow: 1px 1px 15px #FFD700;
+}
+
+#content article.news {
+box-shadow: 1px 1px 15px #0000c1;
+}
+
 aside {
 width: 80%;
 margin: 0 auto;

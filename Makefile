@@ -123,6 +123,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"BODY_CLASS=${BODY_CLASS}"               \
 		"LINKS_TITLE=${LINKS_TITLE}"             \
 		"SIDEBAR="                               \
+		"ARTICLE_CLASS_TYPE=normal"              \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -238,12 +239,13 @@ DB_${FILE} != find ${DBDIR} -name "*${FILE:S/.md$/.mk/}"
 # Include it
 .include "${DB_${FILE}}"
 # Fetch some data for this post
-TITLE_${FILE} != ${echo} ${TITLE}
-TMSTMP_${FILE}    != ${echo} ${DB_${FILE}:S/^${DBDIR}\///}| ${cut} -d ',' -f 1
-POSTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
-SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
-DESC_${FILE}      != ${echo} ${DESCRIPTION}
-TAGS_${FILE}      != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+TITLE_${FILE}      != ${echo} ${TITLE}
+TMSTMP_${FILE}     != ${echo} ${DB_${FILE}:S/^${DBDIR}\///}| ${cut} -d ',' -f 1
+POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
+SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
+DESC_${FILE}       != ${echo} ${DESCRIPTION}
+TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+CLASS_TYPE_${FILE} != ${echo} ${TYPE}
 
 .for TAG in ${TAGS_${FILE}}
 TAGLINK_${FILE}_${TAG} != ${cat} "${taglink}" |${parser} \
@@ -261,6 +263,7 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 			${cat} ${article} |${parser}                   \
 				"CONTENT=${CONTENT_TARGET_${FILE}}"          \
 				"POST_TITLE=${TITLE_${FILE}}"                \
+				"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
 				| ${sed} -e "s|^|        |g" &&              \
 			${cat} ${footer} | ${parser} ${parser_opts};   \
 		} > ${TARGET_${FILE}} || { \
@@ -277,14 +280,15 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 # Include post information (example title, date, description, etc.)
 .include "${DBDIR}/${FILE}"
 # Fetch some data for this post
-TITLE_${FILE}     != ${echo} ${TITLE}
-TMSTMP_${FILE}    != ${echo} ${FILE}| ${cut} -d ',' -f 1
-POSTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
-SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
-NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
-DESC_${FILE}      != ${echo} ${DESCRIPTION}
-CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g'
-TAGS_${FILE}      != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+TITLE_${FILE}      != ${echo} ${TITLE}
+TMSTMP_${FILE}     != ${echo} ${FILE}| ${cut} -d ',' -f 1
+POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
+SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
+NAME_${FILE}       != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
+DESC_${FILE}       != ${echo} ${DESCRIPTION}
+CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g'
+TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+CLASS_TYPE_${FILE} != ${echo} ${TYPE}
 
 .for TAG in ${TAGS_${FILE}}
 TAGLINK_${FILE}_${TAG} != ${cat} "${taglink}" |${parser} \
@@ -312,6 +316,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"DATE=${POSTDATE_${FILE}}"                   \
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"          \
 		"POST_TITLE=${TITLE_${FILE}}"                \
+		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
 	$Q${cat} ${POSTDIR}/${NAME_${FILE}} | ${parser} ${parser_opts} \
