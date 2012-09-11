@@ -37,6 +37,7 @@ SRCDIR           = ./src
 DESTDIR          = ./pub
 DBDIR            = ./db
 TMPDIR           = ./tmp
+DOCDIR           = ./doc
 TAGDIR_NAME      = tags
 POSTDIR_NAME     = posts
 STATICDIR        = ./static
@@ -142,9 +143,11 @@ SIDEBARFILE := ${SPECIALDIR}/${SIDEBAR_FILENAME}*
 SIDEBARRESULT != ${echo} ${SIDEBARFILE}
 THEMESTATICFILES := ${THEMEDIR}/static/*
 THEMEMEDIAFILES != ${echo} ${THEMESTATICFILES}
+DOCFILES := ${DOCDIR}/*.md
+DOCFILESRESULT != ${echo} ${DOCFILES}
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR
+.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR DOCDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
@@ -445,13 +448,22 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 clean:
 	$Q${rm} -rf ${DESTDIR}/*
 	$Q${rm} -f ${TMPDIR}/*
-	$Q${rm} -f README${PAGE_EXT}
-	$Q${rm} -f README.fr${PAGE_EXT}
+	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT}
 
 # Create documentation
-doc: README.md README.fr.md
-	$Q${markdown} README.md > ${htmldoc}${PAGE_EXT}
-	$Q${markdown} README.fr.md > ${htmldoc}.fr${PAGE_EXT}
+.for FILE in ${DOCFILESRESULT}
+
+${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
+	$Q{                                                    \
+		${markdown} ${FILE} > ${FILE:S/.md$/${PAGE_EXT}/} || \
+		{                                                    \
+			${echo} "-- Could not build doc file: $@" ;        \
+		} ;                                                  \
+	} && ${echo} "-- Doc file built: $@"
+
+.endfor
+
+doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
 
 # Save important files
 TODAY != date '+%Y%m%d'
