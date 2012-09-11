@@ -1,30 +1,32 @@
 Current (not released)
-- Permit user to choose page ' suffix
-- Permit user to choose index filenames
-- Complete README file
-- Some HTML5 improvements
-- Fix but when reusing pmake without pmake clean
-- Add a "About"'s page
-- Add some missing variables in documentation
-- Complete documentation for installation via current version or developement
-version. More information for dependancies installation.
-- Templating improvements in order to create more templates and cascading
-stylesheets
-- Backup command to save all important files from Makefly
-- French documentation is now available
-- Add post title on each post
-- Add some text on tag list
-- Add new theme: minisch
-- Permit to use ${VARIABLE} in CSS
-- Fix a bug that show twice post list for a given tag
-- Sidebar added
+	- Permit user to choose page ' suffix
+	- Permit user to choose index filenames
+	- Complete README file
+	- Some HTML5 improvements
+	- Fix but when reusing pmake without pmake clean
+	- Add a "About"'s page
+	- Add some missing variables in documentation
+	- Complete documentation for installation via current version or developement
+	  version. More information for dependancies installation.
+	- Templating improvements in order to create more templates and cascading
+	  stylesheets
+	- Backup command to save all important files from Makefly
+	- French documentation is now available
+	- Add post title on each post
+	- Add some text on tag list
+	- Add new theme: minisch
+	- Permit to use ${VARIABLE} in CSS
+	- Fix a bug that show twice post list for a given tag
+	- Sidebar added
+	- Improve doc generation
+	- Migrate tools in a "tools" directory
 
 Version 0.1 (released 2012-07-17)
-- RSS feed
-- tags
-- permalink
-- possibility to set posting date (using a timestamp)
-- customization using options like max post on homepage
-- translation: English, French
-- static files
-- templates
+	- RSS feed
+	- tags
+	- permalink
+	- possibility to set posting date (using a timestamp)
+	- customization using options like max post on homepage
+	- translation: English, French
+	- static files
+	- templates
