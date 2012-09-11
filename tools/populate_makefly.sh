@@ -25,6 +25,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # VARIABLES
+Makefile='../Makefile'
+DBDIR=`cat ${Makefile} |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
+SRCDIR=`cat ${Makefile} |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
 
 # POST 1
 POST1_TITLE="Welcome to makefly!"
@@ -103,18 +106,18 @@ IFS="\\"
 # BEGIN
 
 # create POST 1
-./create_post.sh -q < <(echo ${POST1_TITLE}; echo ${POST1_DESC}; echo ${POST1_DATE}; echo ${POST1_TAGS}; echo ${POST1_TYPE}) && echo -e ${POST1_CONTENT} > src/welcome_to_makefly.md || exit 1
+./create_post.sh -q < <(echo ${POST1_TITLE}; echo ${POST1_DESC}; echo ${POST1_DATE}; echo ${POST1_TAGS}; echo ${POST1_TYPE}) && echo -e ${POST1_CONTENT} > ${SRCDIR}/welcome_to_makefly.md || exit 1
 
 # create POST 2
-./create_post.sh -q < <(echo ${POST2_TITLE}; echo ${POST2_DESC}; echo ${POST2_DATE}; echo ${POST2_TAGS}; echo ${POST2_TYPE}) && echo -e ${POST2_CONTENT} > src/makefly_project.md || exit 1
+./create_post.sh -q < <(echo ${POST2_TITLE}; echo ${POST2_DESC}; echo ${POST2_DATE}; echo ${POST2_TAGS}; echo ${POST2_TYPE}) && echo -e ${POST2_CONTENT} > ${SRCDIR}/makefly_project.md || exit 1
 
 # create POST 3
-./create_post.sh -q < <(echo ${POST3_TITLE}; echo ${POST3_DESC}; echo ${POST3_DATE}; echo ${POST3_TAGS}; echo ${POST3_TYPE}) && echo -e ${POST3_CONTENT} > src/official_weblog_open.md || exit 1
+./create_post.sh -q < <(echo ${POST3_TITLE}; echo ${POST3_DESC}; echo ${POST3_DATE}; echo ${POST3_TAGS}; echo ${POST3_TYPE}) && echo -e ${POST3_CONTENT} > ${SRCDIR}/official_weblog_open.md || exit 1
 
 # Change TIMESTAMP of posts
-mv db/*,welcome_to_makefly.mk "db/`date -d ${POST1_DATE} +'%s'`,welcome_to_makefly.mk"
-mv db/*,makefly_project.mk "db/`date -d ${POST2_DATE} +'%s'`,makefly_project.mk"
-mv db/*,official_weblog_open.mk "db/`date -d ${POST3_DATE} +'%s'`,official_weblog_open.mk"
+mv ${DBDIR}/*,welcome_to_makefly.mk "${DBDIR}/`date -d ${POST1_DATE} +'%s'`,welcome_to_makefly.mk"
+mv ${DBDIR}/*,makefly_project.mk "${DBDIR}/`date -d ${POST2_DATE} +'%s'`,makefly_project.mk"
+mv ${DBDIR}/*,official_weblog_open.mk "${DBDIR}/`date -d ${POST3_DATE} +'%s'`,official_weblog_open.mk"
 
 # END
 exit 0
