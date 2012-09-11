@@ -83,8 +83,9 @@ Pour plus d'informations, lisez la section **Le fichier de configuration makefly
 
 ## Cr&eacute;er du contenu
 
-Un script shell bash est disponible : **create_post.sh**. Pour l'utiliser : 
+Un script shell bash est disponible dans le r&eacute;pertoire **tools**: **create_post.sh**. Pour l'utiliser : 
 
+    cd tools
     bash create_post.sh
 
 Donnez au script toutes les informations n&eacute;cessaires. Cela g&eacute;n&egrave;rera les fichiers n&eacute;cessaires &agrave; Makefly.

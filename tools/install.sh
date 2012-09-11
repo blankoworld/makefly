@@ -4,7 +4,7 @@
 
 # Copy pub directory to user's public_html
 
-SRCDIR=./pub
+SRCDIR=../pub
 DESTDIR=${HOME}/public_html
 
 process() {

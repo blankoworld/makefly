@@ -83,8 +83,9 @@ For more information please read **The makefly.rc configuration file** section.
 
 ## Create content
 
-A bash shell script is available: **create_post.sh**. To use it:
+A bash shell script is available in **tools** directory: **create_post.sh**. To use it:
 
+    cd tools
     bash create_post.sh
 
 Give script all information it needs. It will generate some files needed by Makefly.

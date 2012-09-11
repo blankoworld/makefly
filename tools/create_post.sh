@@ -27,9 +27,9 @@
 #####
 ## VARIABLES
 ###
-
-DBDIR=`cat Makefile |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g"` # sed delete useless space
-SRCDIR=`cat Makefile |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g"` # sed delete useless space
+Makefile='../Makefile'
+DBDIR=`cat ${Makefile} |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
+SRCDIR=`cat ${Makefile} |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
 LIMIT='255'
 YOUR_EDITOR=`which nano`
 QUIET=0
