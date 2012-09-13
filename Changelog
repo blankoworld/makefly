@@ -20,6 +20,7 @@ Current (not released)
 	- Sidebar added
 	- Improve doc generation
 	- Migrate tools in a "tools" directory
+	- Publish command with a script that send result by rsync using SSH
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed
