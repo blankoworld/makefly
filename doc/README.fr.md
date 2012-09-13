@@ -65,7 +65,7 @@ Apr&egrave;s une installation git, allez dans un r&eacute;pertoire de travail et
 
     git clone git://gitorious.org/makefly/master.git makefly_dev
 
-Ceci va r&eacute;cup&eacute;rer le d&eacute;p&ocirc;t Makefly et ajouter les fichiers dans le dossier **makefly_dev**.
+Ceci va r&eacute;cup&eacute;rer le d&eacute;p&ocirc;t Makefly et ajouter les fichiers dans le dossier **makefly\_dev**.
 
 **Note**: Utiliser git est utile pour mettre &agrave; jour Makefly au fur et &agrave; mesure du d&eacute;veloppement de ce dernier. En effet : 
 
@@ -83,7 +83,7 @@ Pour plus d'informations, lisez la section **Le fichier de configuration makefly
 
 ## Cr&eacute;er du contenu
 
-Un script shell bash est disponible dans le r&eacute;pertoire **tools**: **create_post.sh**. Pour l'utiliser : 
+Un script shell bash est disponible dans le r&eacute;pertoire **tools**: **create\_post.sh**. Pour l'utiliser : 
 
     cd tools
     bash create_post.sh
@@ -110,39 +110,44 @@ Note: *pmake* est sur les distributions Debian et d&eacute;riv&eacute;es. Pour l
 
 Voici quelques options que vous pouvez changer : 
 
-  * BLOG_TITLE: Titre de votre blog
-  * BLOG_SHORT_DESC: Une courte description de votre blog
-  * BLOG_DESCRIPTION: Une description plus compl&egrave;te de votre blog
-  * BLOG_LANG: votre code langue. &Agrave; noter qu'un fichier lang/translate.VOTRE_CODE_LANGAGE doit exister. Par exemple si je configure ce param&egrave;tre &agrave; *fr*, un fichier *lang/translate.fr* doit exister !
-  * BLOG_CHARSET: votre configuration d'encodage. Doit ressembler &agrave; quelque chose comme **UTF-8** ou **ISO-8859-1**. Si vous ne savez pas ce que c'est, laissez la param&eacute;tr&eacute;e &agrave; *UTF-8*.
-  * BASE_URL: adresse URL absolue de votre blog. Par exemple http://makefly.e-mergence.org/.
-  * RSS_FEED_NAME: Titre affich&eacute; dans le flux RSS.
-  * MAX_POST: Nombre maximum d'articles qui seront affich&eacute;s sur la page d'accueil.
-  * DATE_FORMAT: Format de la date affich&eacute;e pour chaque article. Lisez les pages du manuel *date* pour plus d'informations.
-  * SHORT_DATE_FORMAT: Format court de la date. Sera utilis&eacute; sur la page de la liste des articles. Pour plus d'informations, lire les pages du manuel *date*.
-  * INDEX_FILENAME: Nom donn&eacute; &agrave; toutes les pages index. Par exemple avec **INDEX_FILENAME = mainpage**, la liste des articles se nommera *mainpage.html*.
-  * PAGE_EXT: suffixe que toutes les pages auront. **NE PAS OUBLIER D'AJOUTER UN POINT AVANT LE SUFFIXE**. Par exemple avec **PAGE_EXT = .html**, toutes les pages seront de la forme : *index.html*.
-  * ABOUT_FILENAME: Comme son nom l'indique, c'est le titre du fichier utilis&eacute; pour la page "&Agrave; propos". Si vous le param&eacute;trez &agrave; "apropos" par exemple, vous devez cr&eacute;er un fichier "apropos.md" dans le r&eacute;pertoire nomm&eacute; **special** afin de permettre  l'obtention d'une page d'&agrave; propos. Si vous le changez &agrave; *toto*, vous devez cr&eacute;er un fichier *toto.md* dans le dossier **special**.
-  * POSTDIR_NAME: Le nom que vous voudriez afficher dans l'URL quand un utilisateur se rend sur la page de la liste des articles. Par exemple, param&eacute;tr&eacute; &agrave; "mesarticles" : http://makefly.e-mergence.org/mesarticles/ affichera la liste de vos articles. Ceci est utile pour divers langages.
-  * TAGDIR_NAME: M&ecirc;me chose que pour le param&egrave;tre *POSTDIR_NAME*, mais pour les mots-cl&eacute;s (tags) cette fois. Modifiez le en "motcle" par exemple et l'adresse suivante affichera la liste des mots-cl&eacute;s : http://makefly.e-mergence.org/motcle/.
-  * THEME: Nom du th&egrave;me choisi. Les th&egrave;mes sont disponibles dans le dossier nomm&eacute; **template**. Chaque th&egrave;me poss&egrave;de son propre r&eacute;pertoire. Par exemple, le th&egrave;me *default* poss&egrave;de son propre r&eacute;pertoire **template/default**.
-  * BACKUPDIR: Nom du dossier o&ugrave; seront sauv&eacute;s les fichiers r&eacute;sultant de la commande *backup*.
-  * SIDEBAR_FILENAME: Comme d&eacute;crit, nom du fichier utilis&eacute; pour la barre lat&eacute;rale. Elle contient des liens et tout un tas d'autres choses. Si vous la param&eacute;trez &agrave; "sidebar.md", par exemple, vous devez cr&eacute;er le fichier dans le r&eacute;pertoire **special** pour obtenir cette barre. &Agrave; noter que votre th&egrave;me doit inclure les barres lat&eacute;rales !
-  * SIDEBAR: Mis &agrave; 1 permet d'activer la barre lat&eacute;rale sur Makefly. &Agrave; noter que votre th&egrave;me doit inclure les barres lat&eacute;rales !
+  * BLOG\_TITLE : Titre de votre blog
+  * BLOG\_SHORT\_DESC : Une courte description de votre blog
+  * BLOG\_DESCRIPTION : Une description plus compl&egrave;te de votre blog
+  * BLOG\_LANG : votre code langue. &Agrave; noter qu'un fichier lang/translate.VOTRE\_CODE\_LANGAGE doit exister. Par exemple si je configure ce param&egrave;tre &agrave; *fr*, un fichier *lang/translate.fr* doit exister !
+  * BLOG\_CHARSET : votre configuration d'encodage. Doit ressembler &agrave; quelque chose comme **UTF-8** ou **ISO-8859-1**. Si vous ne savez pas ce que c'est, laissez la param&eacute;tr&eacute;e &agrave; *UTF-8*.
+  * BASE\_URL : adresse URL absolue de votre blog. Par exemple http://makefly.e-mergence.org/.
+  * RSS\_FEED\_NAME : Titre affich&eacute; dans le flux RSS.
+  * MAX\_POST : Nombre maximum d'articles qui seront affich&eacute;s sur la page d'accueil.
+  * DATE\_FORMAT : Format de la date affich&eacute;e pour chaque article. Lisez les pages du manuel *date* pour plus d'informations.
+  * SHORT\_DATE\_FORMAT : Format court de la date. Sera utilis&eacute; sur la page de la liste des articles. Pour plus d'informations, lire les pages du manuel *date*.
+  * INDEX\_FILENAME : Nom donn&eacute; &agrave; toutes les pages index. Par exemple avec **INDEX\_FILENAME = mainpage**, la liste des articles se nommera *mainpage.html*.
+  * PAGE\_EXT : suffixe que toutes les pages auront. **NE PAS OUBLIER D'AJOUTER UN POINT AVANT LE SUFFIXE**. Par exemple avec **PAGE\_EXT = .html**, toutes les pages seront de la forme : *index.html*.
+  * ABOUT\_FILENAME : Comme son nom l'indique, c'est le titre du fichier utilis&eacute; pour la page "&Agrave; propos". Si vous le param&eacute;trez &agrave; "apropos" par exemple, vous devez cr&eacute;er un fichier "apropos.md" dans le r&eacute;pertoire nomm&eacute; **special** afin de permettre  l'obtention d'une page d'&agrave; propos. Si vous le changez &agrave; *toto*, vous devez cr&eacute;er un fichier *toto.md* dans le dossier **special**.
+  * POSTDIR\_NAME : Le nom que vous voudriez afficher dans l'URL quand un utilisateur se rend sur la page de la liste des articles. Par exemple, param&eacute;tr&eacute; &agrave; "mesarticles" : http://makefly.e-mergence.org/mesarticles/ affichera la liste de vos articles. Ceci est utile pour divers langages.
+  * TAGDIR\_NAME : M&ecirc;me chose que pour le param&egrave;tre *POSTDIR\_NAME*, mais pour les mots-cl&eacute;s (tags) cette fois. Modifiez le en "motcle" par exemple et l'adresse suivante affichera la liste des mots-cl&eacute;s : http://makefly.e-mergence.org/motcle/.
+  * THEME : Nom du th&egrave;me choisi. Les th&egrave;mes sont disponibles dans le dossier nomm&eacute; **template**. Chaque th&egrave;me poss&egrave;de son propre r&eacute;pertoire. Par exemple, le th&egrave;me *default* poss&egrave;de son propre r&eacute;pertoire **template/default**.
+  * BACKUPDIR : Nom du dossier o&ugrave; seront sauv&eacute;s les fichiers r&eacute;sultant de la commande *backup*.
+  * SIDEBAR\_FILENAME : Comme d&eacute;crit, nom du fichier utilis&eacute; pour la barre lat&eacute;rale. Elle contient des liens et tout un tas d'autres choses. Si vous la param&eacute;trez &agrave; "sidebar.md", par exemple, vous devez cr&eacute;er le fichier dans le r&eacute;pertoire **special** pour obtenir cette barre. &Agrave; noter que votre th&egrave;me doit inclure les barres lat&eacute;rales !
+  * SIDEBAR : Mis &agrave; 1 permet d'activer la barre lat&eacute;rale sur Makefly. &Agrave; noter que votre th&egrave;me doit inclure les barres lat&eacute;rales !
+  * PUBLISH\_DESTINATION : Adresse compl&egrave;te du lieu o&ugrave; envoyer les fichiers afin de les publier.
+  * PUBLISH\_SCRIPT\_NAME : Nom du fichier script utilis&eacute; pour envoyer les fichiers du dossier **pub** vers une destination renseign&eacute;e dans la variable *PUBLISH\_DESTINATION*.
 
 ## Publier le r&eacute;sultat sur le web
 
 Le r&eacute;sultat de Makefly est compatible avec tout le serveurs HTML. En effet vous pouvez probablement utiliser le r&eacute;sultat sur le site web de votre h&eacute;bergeur. Il suffit d'envoyer le contenu du r&eacute;pertoire **pub** dans celui de votre h&eacute;bergeur.
 
+### Sur un serveur web
+
 Si vous lancez Makefly sur votre propre serveur ou tr&egrave;s certainement sur le serveur de votre h&eacute;bergeur, vous pourrez utiliser **install.sh** qui est un script shell. Lancez simplement : 
 
+    cd tools
     bash install.sh
 
-...et cela copiera tout les fichiers dans le r&eacute;pertoire **~/public_html**.
+...et cela copiera tout les fichiers dans le r&eacute;pertoire **~/public\_html**.
 
-**ATTENTION**: Cela supprimera tout les fichiers contenus dans le dossier *public_html* !
+**ATTENTION**: Cela supprimera tout les fichiers contenus dans le dossier *public\_html* !
 
-**Note**: Vous pouvez personnaliser le script pour copier tout les fichiers dans un autre r&eacute;pertoire que le *public_html*. Pour cela, modifiez le script **install.sh** et changez cette variable : 
+**Note**: Vous pouvez personnaliser le script pour copier tout les fichiers dans un autre r&eacute;pertoire que le *public\_html*. Pour cela, modifiez le script **install.sh** et changez cette variable : 
 
     DESTDIR=${HOME}/public_html
 
@@ -152,9 +157,30 @@ en :
 
 Relancez le script *install.sh* pour voir le r&eacute;sultat.
 
+### Vers un ordinateur distant : la commande *publish*
+
+Pour publier votre blog vers une machine distante, vous devez : 
+
+  * avoir un acc&egrave;s SSH &agrave; la machine distante
+  * avoir le programme rsync
+  * configurer la variable **PUBLISH\_DESTINATION** dans le fichier **makefly.rc**
+  * lancer la commande **publish**
+
+C'est tout!
+
+&Agrave; noter que la variable **PUBLISH\_DESTINATION** ressemble &agrave; : 
+
+    monUtilisateurDistant@domaineDistant.tld:/mondossierhome/dossier_public
+
+Une fois cette variable renseign&eacute;e dans le fichier **makefly.rc**, lancez simplement : 
+
+    pmake publish
+
+Pour les d&eacute;velopeurs : Vous pouvez aussi modifier le fichier **tools/publish.sh** et changer le contenu du script par votre propre code.
+
 ## Traduction
 
-Une fa&ccedil;on simple de traduire Makefly dans votre langage est de copier le fichier **lang/translate.en** dans un autre fichier. Par exemple, pour le Fran&ccedil;ais (avec le code fr), vous pouvez copier **lang/translate.en** en **lang/translate.fr** et changez les valeurs. Puis changez simplement l'option *BLOG_LANG* dans le fichier **makefly.rc**.
+Une fa&ccedil;on simple de traduire Makefly dans votre langage est de copier le fichier **lang/translate.en** dans un autre fichier. Par exemple, pour le Fran&ccedil;ais (avec le code fr), vous pouvez copier **lang/translate.en** en **lang/translate.fr** et changez les valeurs. Puis changez simplement l'option *BLOG\_LANG* dans le fichier **makefly.rc**.
 
 ## Sauvegardes
 
@@ -175,7 +201,7 @@ Fichiers sauv&eacute;s :
   * le r&eacute;pertoire db
   * le r&eacute;pertoire src
 
-R&eacute;sultat : Ceci cr&eacute;era une *archive* nomm&eacute;e *YYYYMMDD_makefly.tar.gz* (20120823_makefly.tar.gz par exemple) dans le dossier **mbackup**. Vous pouvez ainsi sauvegarder votre Makefly chaque jour.
+R&eacute;sultat : Ceci cr&eacute;era une *archive* nomm&eacute;e *YYYYMMDD\_makefly.tar.gz* (20120823\_makefly.tar.gz par exemple) dans le dossier **mbackup**. Vous pouvez ainsi sauvegarder votre Makefly chaque jour.
 
 Astuce : Vous pouvez personnaliser le dossier de sauvegarde en utilisant l'option **BACKUPDIR** dans votre fichier **makfley.rc**.
 

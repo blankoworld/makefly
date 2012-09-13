@@ -46,6 +46,8 @@ ABOUT_FILENAME   = about
 THEME            = default
 BACKUPDIR        = ./mbackup
 SIDEBAR_FILENAME = sidebar
+TOOLSDIR         = ./tools
+MAKEFLYDIR       != pwd
 
 # other files
 htmldoc ?= README
@@ -68,6 +70,7 @@ date     ?= date
 cp       ?= cp
 grep     ?= grep
 tar      ?= tar
+PUBLISH_SCRIPT_NAME = publish.sh
 
 # include some VARIABLES
 BODY_CLASS = single
@@ -467,7 +470,7 @@ ${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
 
 doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
 
-# Save important files
+# Backup: save important files
 TODAY != date '+%Y%m%d'
 backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
@@ -477,6 +480,25 @@ backup: makefly.rc ${BACKUPDIR}
 			false ; \
 		} ; \
 	} && ${echo} "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR} and ${SPECIALDIR}."
+
+# Publish: send files out
+publish_script = ${TOOLSDIR}/${PUBLISH_SCRIPT_NAME}
+PUBDIR != ${echo} ${DESTDIR:S/^.\//${MAKEFLYDIR}\//}
+publish: ${DESTDIR}
+	$Q{ \
+		${cat} ${publish_script} |${parser} \
+			"DESTDIR=${PUBDIR}" \
+			"PUBLISH_DESTINATION=${PUBLISH_DESTINATION}" \
+			> ${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
+			chmod +x ${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
+			${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
+			${rm} -f ${TMPDIR}/${PUBLISH_SCRIPT_NAME} || \
+		{ \
+			${rm} -f ${TMPDIR}/${PUBLISH_SCRIPT_NAME} ; \
+			${echo} "-- Publication failed!" ; \
+			false ; \
+		} ; \
+	} && ${echo} "-- Publish ${DESTDIR} content with ${publish_script}: OK."
 
 # END
 .MAIN: all
