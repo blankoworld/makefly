@@ -107,6 +107,11 @@ padding-left: 30px;
 color: #F1E5A5;
 }
 
+#content article div.read_more {
+width: auto;
+text-align: right;
+}
+
 #content .articleinfo {
 padding-top: 15px;
 font-size: 70%;
