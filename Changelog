@@ -21,6 +21,8 @@ Current (not released)
 	- Improve doc generation
 	- Migrate tools in a "tools" directory
 	- Publish command with a script that send result by rsync using SSH
+	- Read more function: you can choose how many lines to display for each post
+	  on homepage.
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed

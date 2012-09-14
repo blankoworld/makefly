@@ -118,6 +118,7 @@ Here is some options you can change:
   * BASE\_URL: absolute URL of your blog. For an example http://makefly.e-mergence.org/.
   * RSS\_FEED\_NAME: Title for the RSS Feed
   * MAX\_POST: Max post that would be showed on home page
+  * MAX\_POST\_LINES: Number of lines that should be shown on Homepage. If set to 0 or not referenced in *makefly.rc* file, then posts are fully shown.
   * DATE\_FORMAT: Date format displayed for each post. Please see man date's page for more information.
   * SHORT\_DATE\_FORMAT: Short date format that would be used on the post list page. Please see man date's page for more information.
   * INDEX\_FILENAME: Name given to all index'pages. For an example with **INDEX\_FILENAME = mainpage**, post list page will be named *mainpage.html*.

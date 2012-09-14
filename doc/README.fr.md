@@ -118,6 +118,7 @@ Voici quelques options que vous pouvez changer :
   * BASE\_URL : adresse URL absolue de votre blog. Par exemple http://makefly.e-mergence.org/.
   * RSS\_FEED\_NAME : Titre affich&eacute; dans le flux RSS.
   * MAX\_POST : Nombre maximum d'articles qui seront affich&eacute;s sur la page d'accueil.
+  * MAX\_POST\_LINES : Nombre de lignes qui seront montr&eacute;es sur la page d'accueil. Si param&eacute;tr&eacute; &agrave; 0 ou inexistant dans le fichier *makefly.rc*, alors les articles sont enti&egrave;rement montr&eacute;s.
   * DATE\_FORMAT : Format de la date affich&eacute;e pour chaque article. Lisez les pages du manuel *date* pour plus d'informations.
   * SHORT\_DATE\_FORMAT : Format court de la date. Sera utilis&eacute; sur la page de la liste des articles. Pour plus d'informations, lire les pages du manuel *date*.
   * INDEX\_FILENAME : Nom donn&eacute; &agrave; toutes les pages index. Par exemple avec **INDEX\_FILENAME = mainpage**, la liste des articles se nommera *mainpage.html*.

@@ -93,6 +93,7 @@ tagelement  ?= ${THEMEDIR}/tagelement.xhtml
 tags        ?= ${THEMEDIR}/tags.xhtml
 aboutlink   ?= ${THEMEDIR}/menu.about.xhtml
 sidebar_tpl ?= ${THEMEDIR}/sidebar.xhtml
+read_more   ?= ${THEMEDIR}/read_more_link.xhtml
 
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
@@ -297,6 +298,11 @@ SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 NAME_${FILE}       != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
 DESC_${FILE}       != ${echo} ${DESCRIPTION}
 CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g'
+# Change content if MAX_POST_LINES is defined
+.if defined(MAX_POST_LINES) && $(MAX_POST_LINES)
+READ_MORE_LINK_${FILE} != ${cat} ${read_more}| ${parser} ${parser_opts} "POST_FILE=${NAME_${FILE}}" |${sed} -e 's/\"/\\"/g'
+CONTENT_${FILE}  != ${head} -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${markdown} |${sed} -e 's/\"/\\"/g' && ${echo} "${READ_MORE_LINK_${FILE}}"
+.endif
 TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
 CLASS_TYPE_${FILE} != ${echo} ${TYPE}
 
