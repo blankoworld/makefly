@@ -97,11 +97,11 @@ elif test -f ${file};then
 fi
 
 # create db file
-echo "TITLE=\"${title}\"" > ${dbfile}
-echo "DESCRIPTION=\"${desc}\"" >> ${dbfile}
-echo "DATE=\"${date}\"" >> ${dbfile}
-echo "TAGS=\"${tags}\"" >> ${dbfile}
-echo "TYPE=\"${post_type}\"" >> ${dbfile}
+echo "TITLE = ${title}" > ${dbfile}
+echo "DESCRIPTION = ${desc}" >> ${dbfile}
+echo "DATE = ${date}" >> ${dbfile}
+echo "TAGS = ${tags}" >> ${dbfile}
+echo "TYPE = ${post_type}" >> ${dbfile}
 
 # create src file
 touch ${file}
