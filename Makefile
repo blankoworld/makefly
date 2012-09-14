@@ -301,7 +301,11 @@ CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} 
 # Change content if MAX_POST_LINES is defined
 .if defined(MAX_POST_LINES) && $(MAX_POST_LINES)
 READ_MORE_LINK_${FILE} != ${cat} ${read_more}| ${parser} ${parser_opts} "POST_FILE=${NAME_${FILE}}" |${sed} -e 's/\"/\\"/g'
+SIZE_${FILE} != ${cat} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |wc -l
+# Add a "Read more" link but only if post is more tall than MAX_POST_LINES
+.if ${SIZE_${FILE}} > ${MAX_POST_LINES}
 CONTENT_${FILE}  != ${head} -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${markdown} |${sed} -e 's/\"/\\"/g' && ${echo} "${READ_MORE_LINK_${FILE}}"
+.endif
 .endif
 TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
 CLASS_TYPE_${FILE} != ${echo} ${TYPE}
