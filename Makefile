@@ -94,6 +94,7 @@ tags        ?= ${THEMEDIR}/tags.xhtml
 aboutlink   ?= ${THEMEDIR}/menu.about.xhtml
 sidebar_tpl ?= ${THEMEDIR}/sidebar.xhtml
 read_more   ?= ${THEMEDIR}/read_more_link.xhtml
+searchbar   ?= ${THEMEDIR}/menu.search_bar.xhtml
 
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
@@ -129,6 +130,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"LINKS_TITLE=${LINKS_TITLE}"             \
 		"SIDEBAR="                               \
 		"ARTICLE_CLASS_TYPE=normal"              \
+		"SEARCH_BAR="                            \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -195,6 +197,14 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
 			false                                             ; \
 		} ; \
 	} && ${echo} "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
+
+.endif
+
+# SEARCH BAR
+.if defined(SEARCH_BAR) && $(SEARCH_BAR)
+
+SEARCHBAR != ${cat} ${searchbar} |${sed} -e 's|\"|\\"|g'
+parser_opts += "SEARCHBAR=${SEARCHBAR}"
 
 .endif
 
