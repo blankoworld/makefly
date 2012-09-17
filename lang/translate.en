@@ -11,3 +11,5 @@ SOURCE_LINK_TITLE = Go to the gitorious makefly homepage
 THEME_IS = Theme is:
 LINKS_TITLE = Links
 READ_MORE = Read more
+SEARCH_BAR_CONTENT = Search
+SEARCH_BAR_BUTTON_NAME = Search

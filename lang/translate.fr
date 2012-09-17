@@ -11,3 +11,5 @@ SOURCE_LINK_TITLE = Le projet Makefly sur Gitorious
 THEME_IS = Le thème est : 
 LINKS_TITLE = Liens
 READ_MORE = Lire la suite
+SEARCH_BAR_CONTENT = Recherche
+SEARCH_BAR_BUTTON_NAME = Rechercher
