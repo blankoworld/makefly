@@ -143,6 +143,7 @@ color: #F1E5A5;
 #content article div.read_more {
 width: auto;
 text-align: right;
+margin: 0 1% 1% 0;
 }
 
 #content .articleinfo {
