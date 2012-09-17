@@ -74,6 +74,39 @@ border-radius: 6px;
 border: 1px solid #999;
 }
 
+nav form#search {
+display: block;
+position: absolute;
+top: 0;
+right: 0;
+width: auto;
+margin: 1% 1% 0 0;
+}
+
+nav form#search input {
+margin-left: auto;
+margin-right: auto;
+border: thin inset black;
+text-align: left;
+padding: 2px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+nav form#search input#text {
+background-color: #000000;
+color: #999;
+border-color: #999;
+}
+
+nav form#search input#validate_button {
+width: 0;
+display: none;
+background-color: #000000;
+color: #999;
+border-color: #999;
+}
+
 #content {
 width: 80%;
 margin: 0 auto;

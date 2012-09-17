@@ -203,7 +203,10 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
 # SEARCH BAR
 .if defined(SEARCH_BAR) && $(SEARCH_BAR)
 
-SEARCHBAR != ${cat} ${searchbar} |${sed} -e 's|\"|\\"|g'
+SEARCHBAR != ${cat} ${searchbar} |${parser} \
+	"SEARCH_BAR_BUTTON_NAME=${SEARCH_BAR_BUTTON_NAME}" \
+	"SEARCH_BAR_CONTENT=${SEARCH_BAR_CONTENT}" \
+	|${sed} -e 's|\"|\\"|g'
 parser_opts += "SEARCHBAR=${SEARCHBAR}"
 
 .endif
