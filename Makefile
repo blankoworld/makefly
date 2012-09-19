@@ -130,7 +130,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"LINKS_TITLE=${LINKS_TITLE}"             \
 		"SIDEBAR="                               \
 		"ARTICLE_CLASS_TYPE=normal"              \
-		"SEARCH_BAR="                            \
+		"SEARCHBAR="                             \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
