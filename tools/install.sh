@@ -5,7 +5,11 @@
 # Copy pub directory to user's public_html
 
 SRCDIR=../pub
+<<<<<<< HEAD:tools/install.sh
 DESTDIR=../www
+=======
+DESTDIR=${HOME}/public_html
+>>>>>>> master:tools/install.sh
 
 process() {
   rm -rf ${DESTDIR}/* && cp -r ${SRCDIR}/* ${DESTDIR} && echo "...installed!"
