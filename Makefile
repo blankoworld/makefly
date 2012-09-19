@@ -37,6 +37,7 @@ SRCDIR           = ./src
 DESTDIR          = ./pub
 DBDIR            = ./db
 TMPDIR           = ./tmp
+DOCDIR           = ./doc
 TAGDIR_NAME      = tags
 POSTDIR_NAME     = posts
 STATICDIR        = ./static
@@ -45,6 +46,8 @@ ABOUT_FILENAME   = about
 THEME            = default
 BACKUPDIR        = ./mbackup
 SIDEBAR_FILENAME = sidebar
+TOOLSDIR         = ./tools
+MAKEFLYDIR       != pwd
 
 # other files
 htmldoc ?= README
@@ -67,6 +70,7 @@ date     ?= date
 cp       ?= cp
 grep     ?= grep
 tar      ?= tar
+PUBLISH_SCRIPT_NAME = publish.sh
 
 # include some VARIABLES
 BODY_CLASS = single
@@ -89,6 +93,8 @@ tagelement  ?= ${THEMEDIR}/tagelement.xhtml
 tags        ?= ${THEMEDIR}/tags.xhtml
 aboutlink   ?= ${THEMEDIR}/menu.about.xhtml
 sidebar_tpl ?= ${THEMEDIR}/sidebar.xhtml
+read_more   ?= ${THEMEDIR}/read_more_link.xhtml
+searchbar   ?= ${THEMEDIR}/menu.search_bar.xhtml
 
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
@@ -124,6 +130,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"LINKS_TITLE=${LINKS_TITLE}"             \
 		"SIDEBAR="                               \
 		"ARTICLE_CLASS_TYPE=normal"              \
+		"SEARCH_BAR="                            \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -140,9 +147,13 @@ ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
 ABOUTRESULT != ${echo} ${ABOUTFILE}
 SIDEBARFILE := ${SPECIALDIR}/${SIDEBAR_FILENAME}*
 SIDEBARRESULT != ${echo} ${SIDEBARFILE}
+THEMESTATICFILES := ${THEMEDIR}/static/*
+THEMEMEDIAFILES != ${echo} ${THEMESTATICFILES}
+DOCFILES := ${DOCDIR}/*.md
+DOCFILESRESULT != ${echo} ${DOCFILES}
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR
+.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR DOCDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
@@ -189,20 +200,31 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
 
 .endif
 
-# THEME STATIC FILES
-.if defined(THEME_STATIC_FILES) && $(THEME_STATIC_FILES)
+# SEARCH BAR
+.if defined(SEARCH_BAR) && $(SEARCH_BAR)
 
-.for FILE in ${THEME_STATIC_FILES:S/^/${DESTDIR}\//}
-
-MEDIA_STATIC_${FILE} = ${FILE}
-
-${MEDIA_STATIC_${FILE}}: ${DESTDIR}
-	$Q${cp} ${FILE:S/^${DESTDIR}/${THEMEDIR}/} ${MEDIA_STATIC_${FILE}} && \
-		${echo} "-- New theme static file: ${FILE:S/\/\//\//}"
-
-.endfor
+SEARCHBAR != ${cat} ${searchbar} |${parser} \
+	"SEARCH_BAR_BUTTON_NAME=${SEARCH_BAR_BUTTON_NAME}" \
+	"SEARCH_BAR_CONTENT=${SEARCH_BAR_CONTENT}" \
+	|${sed} -e 's|\"|\\"|g'
+parser_opts += "SEARCHBAR=${SEARCHBAR}"
 
 .endif
+
+# THEME STATIC FILES
+.for FILE in ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
+
+THEME_MEDIA_TARGET_${FILE} = ${FILE}
+
+.if defined(THEMEMEDIAFILES) && ${THEMEMEDIAFILES} != ${THEMEDIR}/static/*
+
+${THEME_MEDIA_TARGET_${FILE}}: ${DESTDIR}
+	$Q${cp} ${FILE:S/^${DESTDIR}\//${THEMEDIR}\/static\//} ${THEME_MEDIA_TARGET_${FILE}} && \
+		${echo} "-- New theme static file: ${FILE:S/\/\//\//}"
+
+.endif
+
+.endfor
 
 # SIDEBAR
 .if defined(SIDEBAR) && $(SIDEBAR) && defined(SIDEBARRESULT) && $(SIDEBARRESULT) != ${SPECIALDIR}/${SIDEBARFILE}*
@@ -216,7 +238,9 @@ parser_opts += "SIDEBAR=`${cat} ${sidebar_tmp_file}`"
 # end of SIDEBAR
 
 # BEGIN
-all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEME_STATIC_FILES:S/^/${DESTDIR}\//}
+all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
+	@# Clean up tmp directory (because of persistent sidebar.md file)
+	$Q${rm} ${TMPDIR}/* -f
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -287,6 +311,15 @@ SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 NAME_${FILE}       != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
 DESC_${FILE}       != ${echo} ${DESCRIPTION}
 CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g'
+# Change content if MAX_POST_LINES is defined
+.if defined(MAX_POST_LINES) && $(MAX_POST_LINES)
+READ_MORE_LINK_${FILE} != ${cat} ${read_more}| ${parser} ${parser_opts} "POST_FILE=${NAME_${FILE}}" |${sed} -e 's/\"/\\"/g'
+SIZE_${FILE} != ${cat} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |wc -l
+# Add a "Read more" link but only if post is more tall than MAX_POST_LINES
+.if ${SIZE_${FILE}} > ${MAX_POST_LINES}
+CONTENT_${FILE}  != ${head} -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${markdown} |${sed} -e 's/\"/\\"/g' && ${echo} "${READ_MORE_LINK_${FILE}}"
+.endif
+.endif
 TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
 CLASS_TYPE_${FILE} != ${echo} ${TYPE}
 
@@ -443,15 +476,24 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 clean:
 	$Q${rm} -rf ${DESTDIR}/*
 	$Q${rm} -f ${TMPDIR}/*
-	$Q${rm} -f README${PAGE_EXT}
-	$Q${rm} -f README.fr${PAGE_EXT}
+	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT}
 
 # Create documentation
-doc: README.md README.fr.md
-	$Q${markdown} README.md > ${htmldoc}${PAGE_EXT}
-	$Q${markdown} README.fr.md > ${htmldoc}.fr${PAGE_EXT}
+.for FILE in ${DOCFILESRESULT}
 
-# Save important files
+${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
+	$Q{                                                    \
+		${markdown} ${FILE} > ${FILE:S/.md$/${PAGE_EXT}/} || \
+		{                                                    \
+			${echo} "-- Could not build doc file: $@" ;        \
+		} ;                                                  \
+	} && ${echo} "-- Doc file built: $@"
+
+.endfor
+
+doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
+
+# Backup: save important files
 TODAY != date '+%Y%m%d'
 backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
@@ -461,6 +503,25 @@ backup: makefly.rc ${BACKUPDIR}
 			false ; \
 		} ; \
 	} && ${echo} "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR} and ${SPECIALDIR}."
+
+# Publish: send files out
+publish_script = ${TOOLSDIR}/${PUBLISH_SCRIPT_NAME}
+PUBDIR != ${echo} ${DESTDIR:S/^.\//${MAKEFLYDIR}\//}
+publish: ${DESTDIR}
+	$Q{ \
+		${cat} ${publish_script} |${parser} \
+			"DESTDIR=${PUBDIR}" \
+			"PUBLISH_DESTINATION=${PUBLISH_DESTINATION}" \
+			> ${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
+			chmod +x ${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
+			${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
+			${rm} -f ${TMPDIR}/${PUBLISH_SCRIPT_NAME} || \
+		{ \
+			${rm} -f ${TMPDIR}/${PUBLISH_SCRIPT_NAME} ; \
+			${echo} "-- Publication failed!" ; \
+			false ; \
+		} ; \
+	} && ${echo} "-- Publish ${DESTDIR} content with ${publish_script}: OK."
 
 # END
 .MAIN: all

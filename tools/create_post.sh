@@ -27,9 +27,9 @@
 #####
 ## VARIABLES
 ###
-
-DBDIR=`cat Makefile |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g"` # sed delete useless space
-SRCDIR=`cat Makefile |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g"` # sed delete useless space
+Makefile='../Makefile'
+DBDIR=`cat ${Makefile} |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
+SRCDIR=`cat ${Makefile} |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
 LIMIT='255'
 YOUR_EDITOR=`which nano`
 QUIET=0
@@ -97,11 +97,11 @@ elif test -f ${file};then
 fi
 
 # create db file
-echo "TITLE=\"${title}\"" > ${dbfile}
-echo "DESCRIPTION=\"${desc}\"" >> ${dbfile}
-echo "DATE=\"${date}\"" >> ${dbfile}
-echo "TAGS=\"${tags}\"" >> ${dbfile}
-echo "TYPE=\"${post_type}\"" >> ${dbfile}
+echo "TITLE = ${title}" > ${dbfile}
+echo "DESCRIPTION = ${desc}" >> ${dbfile}
+echo "DATE = ${date}" >> ${dbfile}
+echo "TAGS = ${tags}" >> ${dbfile}
+echo "TYPE = ${post_type}" >> ${dbfile}
 
 # create src file
 touch ${file}
