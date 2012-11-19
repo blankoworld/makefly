@@ -8,7 +8,6 @@ TODO:
 - Add BLOG_CHARSET in RSS file
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
 - Instead of copying each file from static, just copy all static directory content (cp static/* ./pub)
-- Create a list of error that you can encount and give some explanations to fix them
 - Add in doc some explanation on how makefly work for src, db directory and linked files.
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Permit user to create a cron that publish posts each day?
@@ -101,3 +100,4 @@ DONE:
 - Create a [b|p]make publish in order to publish blog with a specific script
 - Do a script that export to a FTP or use rsync
 - Add Search capability on home page (for an example with http://duckduckgo.com/search_box.html) | http://patdryburgh.com/blog/adding-a-custom-duckduckgo-search-bar-to-your-site/
+- Create a list of error (known issues) that you can encount and give some explanations to fix them
