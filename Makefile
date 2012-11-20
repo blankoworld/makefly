@@ -259,7 +259,7 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 .for FILE in ${FILES}
 CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |${sed} -e 's|\"|\\"|g'
 # Linked DB file (that contains metadata)
-DB_${FILE} != find ${DBDIR} -name "*${FILE:S/.md$/.mk/}"
+DB_${FILE} != find ${DBDIR} -name "*,${FILE:S/.md$/.mk/}"
 # Include it
 .include "${DB_${FILE}}"
 # Fetch some data for this post
