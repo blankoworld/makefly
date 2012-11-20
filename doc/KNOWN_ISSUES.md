@@ -29,3 +29,12 @@ Solution: Markdown is missing. Install it by using a command like:
 
     apt-get install markdown
 
+## Issue 3
+
+Error:
+
+    pmake: "./makefly/Makefile" line XXX: warning: Couldn't read shell's output for "cd ./src; ls"
+    pmake: "./makefly/Makefile" line XXY: warning: Couldn't read shell's output for "cd ./db; ls|sort -r"
+    pmake: "./makefly/Makefile" line XXZ: warning: Couldn't read shell's output for "cd ./db; ls|sort -r|head -n 3"
+
+Solution: No post to process. Add new post for your blog :)
