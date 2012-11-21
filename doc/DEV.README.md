@@ -12,6 +12,11 @@
   * how templates work?
   * langage variables
   * makefly.rc: give some tips that permits to change some other variable, as programs, etc.
+  * Dev's best practices:
+    * if add a variable for TEMPLATE, add translation in lang directory, complete documentation
+    * if encount a problem and solve it: give solution into doc/KNOWN_ISSUES.md file
+    * if a problem is not solved: create an issue on github for other developers to know it and resolve it if possible
+    * if a fix is down or a new functionalities is available, don't forget to add a line into Changelog file
 
 ## Introduction
 
