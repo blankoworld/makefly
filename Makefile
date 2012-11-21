@@ -257,17 +257,17 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 # Do each FINAL post file
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
-CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |${sed} -e 's|\"|\\"|g'
+CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |${sed} -e 's|\"|\\"|g' -e 's|`|``\\`|g'
 # Linked DB file (that contains metadata)
-DB_${FILE} != find ${DBDIR} -name "*${FILE:S/.md$/.mk/}"
+DB_${FILE} != find ${DBDIR} -name "*,${FILE:S/.md$/.mk/}"
 # Include it
 .include "${DB_${FILE}}"
 # Fetch some data for this post
-TITLE_${FILE}      != ${echo} ${TITLE}
+TITLE_${FILE}      != ${echo} "${TITLE}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 TMSTMP_${FILE}     != ${echo} ${DB_${FILE}:S/^${DBDIR}\///}| ${cut} -d ',' -f 1
 POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
-DESC_${FILE}       != ${echo} ${DESCRIPTION}
+DESC_${FILE}       != ${echo} "${DESCRIPTION}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
 CLASS_TYPE_${FILE} != ${echo} ${TYPE}
 
@@ -304,13 +304,13 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 # Include post information (example title, date, description, etc.)
 .include "${DBDIR}/${FILE}"
 # Fetch some data for this post
-TITLE_${FILE}      != ${echo} ${TITLE}
+TITLE_${FILE}      != ${echo} "${TITLE}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 TMSTMP_${FILE}     != ${echo} ${FILE}| ${cut} -d ',' -f 1
 POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 NAME_${FILE}       != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
-DESC_${FILE}       != ${echo} ${DESCRIPTION}
-CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g'
+DESC_${FILE}       != ${echo} "${DESCRIPTION}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g' -e 's|`|``\\`|g'
 # Change content if MAX_POST_LINES is defined
 .if defined(MAX_POST_LINES) && $(MAX_POST_LINES)
 READ_MORE_LINK_${FILE} != ${cat} ${read_more}| ${parser} ${parser_opts} "POST_FILE=${NAME_${FILE}}" |${sed} -e 's/\"/\\"/g'
