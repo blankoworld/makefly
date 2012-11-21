@@ -17,6 +17,7 @@
     * if encount a problem and solve it: give solution into doc/KNOWN_ISSUES.md file
     * if a problem is not solved: create an issue on github for other developers to know it and resolve it if possible
     * if a fix is down or a new functionalities is available, don't forget to add a line into Changelog file
+  * Explain which tools exists: populate_makefly, install, etc.
 
 ## Introduction
 
@@ -61,13 +62,13 @@ Metadata file contains all metadata for the post.
 
 Source file contains the content of the post.
 
-You probably think that this make no sense, but have a look to the Makefile to see that's useful. For further information, read **Leanr more about posts ' files** section.
+You probably think that this make no sense, but have a look to the Makefile to see that's useful. For further information, read **Learn more about posts ' files** section.
 
 ### Configuration file
 
 As some programs, Makefly aims to permit configuration in ONE unique file: **makefly.rc**. But as others, you can do more by customizing Makefly's files as:
 
-  * Makefile: some variables could be useful to display errors in another langages, give some other template files, add more variables, etc.
+  * Makefile: some variables could be useful to display errors in another languages, give some other template files, add more variables, etc.
   * lang/translate.* files: You can add a new translation or add more values
   * template files: You can customize template as you want. But not sure it works after changes :-)
 
@@ -115,7 +116,53 @@ If you want to dev a functionnality, I suggest you to begin from **master branch
 
 ## Learn more about posts ' files
 
-FIXME
+As described previously, posts are composed of 2 files: 
+
+  * a DB file that contains meta data
+  * a source file that contains content of post
+
+This permit Makefly to just extract content or just meta info.
+
+Meta data are stored into the **db** directory (DBDIR variable). Furthermore source files are stored into **src** directory.
+
+### DB files
+
+Meta data files permit to generate a post list page. Their named are composed as:
+
+  * a **timestamp** that defined the date where the post should be **published**
+  * a coma: **,**
+  * the post's **title** in lower case, without spaces and no special chars as ?!:;,<>(){}
+  * the db file extension: **.mk**
+
+Note that db file extension is **.mk** which permit to include it into BSD Makefile and fetch directly variables.
+
+If you edit a meta data file, you can find something like:
+
+    VAR = content of your var
+
+For an example:
+
+    TITLE = The title of my post
+    TYPE = news
+    TAG = one_tag, another_tag
+
+Which informs that the post have a title "**The title of my post**", a type "**news**" and have some tags: one_tag and another_tag.
+
+DB files are included in Makefile when you see some code like:
+
+    .include "${DBFILES}"
+
+or
+
+    .include "${DBDIR}/${FILES}"
+
+If you add some VAR, you have to edit Makefile and complete it.
+
+### Source files
+
+Source files permit to generate each post.
+
+Source files extension is **.md** which means that they are **markdown files**. You can read more about this file format [markdown official website](http://daringfireball.net/projects/markdown/syntax/ "Markdown documentation").
 
 ## Main engine: The Makefile file
 
