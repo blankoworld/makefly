@@ -27,6 +27,8 @@ TODO:
 - create a Makefile that permit user to setup and install makefly (this permit to return an error if a program is missing)
   - permit to change language regarding LOCALE (makefly.rc.example configuration)
   - permit to setup programs like sed, bash/zsh, etc. or return an error if no one exists
+- limit RSS posts to 5, 10, etc. (add a new VAR in makefly.rc for this)
+- Add AUTHOR in db files + adapt template + update bash script that permits to create new posts
 
 IDEAS:
 ------
