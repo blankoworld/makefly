@@ -267,7 +267,7 @@ TITLE_${FILE}      != ${echo} "${TITLE}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's
 TMSTMP_${FILE}     != ${echo} ${DB_${FILE}:S/^${DBDIR}\///}| ${cut} -d ',' -f 1
 POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
-DESC_${FILE}       != ${echo} "${DESCRIPTION}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+DESC_${FILE}       != ${echo} "${DESCRIPTION:S/'/\'/}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
 CLASS_TYPE_${FILE} != ${echo} ${TYPE}
 
@@ -309,7 +309,7 @@ TMSTMP_${FILE}     != ${echo} ${FILE}| ${cut} -d ',' -f 1
 POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 NAME_${FILE}       != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
-DESC_${FILE}       != ${echo} "${DESCRIPTION}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+DESC_${FILE}       != ${echo} "${DESCRIPTION:S/'/\'/}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g' -e 's|`|``\\`|g'
 # Change content if MAX_POST_LINES is defined
 .if defined(MAX_POST_LINES) && $(MAX_POST_LINES)
