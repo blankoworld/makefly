@@ -23,7 +23,10 @@ Current (not released)
 	- Publish command with a script that send result by rsync using SSH
 	- 'Read more' function: you can choose how many lines to display for each post
 	  on homepage.
-  - Search bar added
+	- Search bar added
+	- Fix bug on articles that have similar names
+	- Add a KNOWN_ISSUE file to give known errors
+	- Fix a bug on ` chars
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed
