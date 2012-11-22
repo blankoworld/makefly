@@ -3,12 +3,13 @@ TODO:
 
 1/ Technical documentation
 
+- Delete var for these programs:
+  sed, cp, ls, cat, echo, head, cut, grep, tail
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
 - Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
 - Add BLOG_CHARSET in RSS file
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
 - Instead of copying each file from static, just copy all static directory content (cp static/* ./pub)
-- Create a list of error that you can encount and give some explanations to fix them
 - Add in doc some explanation on how makefly work for src, db directory and linked files.
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Permit user to create a cron that publish posts each day?
@@ -26,6 +27,8 @@ TODO:
 - create a Makefile that permit user to setup and install makefly (this permit to return an error if a program is missing)
   - permit to change language regarding LOCALE (makefly.rc.example configuration)
   - permit to setup programs like sed, bash/zsh, etc. or return an error if no one exists
+- limit RSS posts to 5, 10, etc. (add a new VAR in makefly.rc for this)
+- Add AUTHOR in db files + adapt template + update bash script that permits to create new posts
 
 IDEAS:
 ------
@@ -101,3 +104,4 @@ DONE:
 - Create a [b|p]make publish in order to publish blog with a specific script
 - Do a script that export to a FTP or use rsync
 - Add Search capability on home page (for an example with http://duckduckgo.com/search_box.html) | http://patdryburgh.com/blog/adding-a-custom-duckduckgo-search-bar-to-your-site/
+- Create a list of error (known issues) that you can encount and give some explanations to fix them
