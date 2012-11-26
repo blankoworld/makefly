@@ -29,6 +29,9 @@ TODO:
   - permit to setup programs like sed, bash/zsh, etc. or return an error if no one exists
 - limit RSS posts to 5, 10, etc. (add a new VAR in makefly.rc for this)
 - Add AUTHOR in db files + adapt template + update bash script that permits to create new posts
+- Add HTML keywords/meta on each post's page?
+- Add possibility to choose which meta/keywords add to each post?
+- Add HTML keywords/meta on main page regarding posts
 
 IDEAS:
 ------
