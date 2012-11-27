@@ -27,9 +27,9 @@
 #####
 ## VARIABLES
 ###
-
-DBDIR=`cat Makefile |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g"` # sed delete useless space
-SRCDIR=`cat Makefile |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g"` # sed delete useless space
+Makefile='../Makefile'
+DBDIR=`cat ${Makefile} |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
+SRCDIR=`cat ${Makefile} |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
 LIMIT='255'
 YOUR_EDITOR=`which nano`
 QUIET=0
@@ -76,6 +76,7 @@ read -p "Date: " date
 while [ -z "$tags" ]; do
   read -p "Tags (use comma as separator): " tags
 done
+read -p "Type (normal, special, news, etc.): " post_type
 timestamp=`date +'%s'`
 
 # code retrived from Nanoblogger translit_text method with a little improvement for double "_"
@@ -96,16 +97,15 @@ elif test -f ${file};then
 fi
 
 # create db file
-echo "TITLE=\"${title}\"" > ${dbfile}
-echo "DESCRIPTION=\"${desc}\"" >> ${dbfile}
-echo "DATE=\"${date}\"" >> ${dbfile}
-echo "TAGS=\"${tags}\"" >> ${dbfile}
+echo "TITLE = ${title}" > ${dbfile}
+echo "DESCRIPTION = ${desc}" >> ${dbfile}
+echo "DATE = ${date}" >> ${dbfile}
+echo "TAGS = ${tags}" >> ${dbfile}
+echo "TYPE = ${post_type}" >> ${dbfile}
 
 # create src file
 touch ${file}
-echo "# ${title}" >> ${file}
-echo "" >> ${file}
-echo "Type your text in markdown format here" >> ${file}
+echo "Type your text in markdown format here" > ${file}
 
 if test "$QUIET" -eq 0;then
   ${edit} ${file}

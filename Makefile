@@ -30,31 +30,29 @@
 Q ?= @
 
 # directories
-TMPLDIR         = ./template
-STYLEDIR        = ./style
-BINDIR          = ./bin
-LANGDIR         = ./lang
-SRCDIR          = ./src
-DESTDIR         = ./pub
-DBDIR           = ./db
-TMPDIR          = ./tmp
-TAGDIR_NAME     = tags
-POSTDIR_NAME    = posts
+TMPLDIR          = ./template
+BINDIR           = ./bin
+LANGDIR          = ./lang
+SRCDIR           = ./src
+DESTDIR          = ./pub
+DBDIR            = ./db
+TMPDIR           = ./tmp
+DOCDIR           = ./doc
+TAGDIR_NAME      = tags
+POSTDIR_NAME     = posts
+STATICDIR        = ./static
+SPECIALDIR       = ./special
+ABOUT_FILENAME   = about
+THEME            = default
+BACKUPDIR        = ./mbackup
+SIDEBAR_FILENAME = sidebar
+TOOLSDIR         = ./tools
+MAKEFLYDIR       != pwd
 SRCCOMMENTS     = ./comments
 COMMENTDIR_NAME = comments
-STATICDIR       = ./static
-
-# template's files
-header     ?= ${TMPLDIR}/header.xhtml
-footer     ?= ${TMPLDIR}/footer.xhtml
-element    ?= ${TMPLDIR}/element.xhtml
-article    ?= ${TMPLDIR}/article.xhtml
-taglink    ?= ${TMPLDIR}/taglink.xhtml
-tagelement ?= ${TMPLDIR}/tagelement.xhtml
-tags       ?= ${TMPLDIR}/tags.xhtml
 
 # other files
-htmldoc ?= README.html
+htmldoc ?= README
 
 # programs
 markdown ?= markdown
@@ -73,33 +71,69 @@ cut      ?= cut
 date     ?= date
 cp       ?= cp
 grep     ?= grep
+tar      ?= tar
+PUBLISH_SCRIPT_NAME = publish.sh
 
 # include some VARIABLES
+BODY_CLASS = single
 # first main variables
 .include "makefly.rc"
 # then translation variables
 .include "${LANGDIR}/translate.${BLOG_LANG}"
+# finally theme VARIABLES
+THEMEDIR = ${TMPLDIR}/${THEME}
+.include "${THEMEDIR}/config.mk"
+
+# template's files
+header      ?= ${THEMEDIR}/header.xhtml
+footer      ?= ${THEMEDIR}/footer.xhtml
+element     ?= ${THEMEDIR}/element.xhtml
+article     ?= ${THEMEDIR}/article.xhtml
+article_idx ?= ${THEMEDIR}/article.index.xhtml
+taglink     ?= ${THEMEDIR}/taglink.xhtml
+tagelement  ?= ${THEMEDIR}/tagelement.xhtml
+tags        ?= ${THEMEDIR}/tags.xhtml
+aboutlink   ?= ${THEMEDIR}/menu.about.xhtml
+sidebar_tpl ?= ${THEMEDIR}/sidebar.xhtml
+read_more   ?= ${THEMEDIR}/read_more_link.xhtml
+searchbar   ?= ${THEMEDIR}/menu.search_bar.xhtml
+
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
-TAGDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
+TAGDIR_INDEX  = ${INDEX_FILENAME}${PAGE_EXT}
+# Create about index filename
+ABOUT_INDEX   = ${ABOUT_FILENAME}${PAGE_EXT}
+STYLEDIR      = ${THEMEDIR}/style
+
 # Prepare parser options
-parser_opts = "BLOG_TITLE=${BLOG_TITLE}"   \
-		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}" \
-		"BASE_URL=${BASE_URL}"                 \
-		"HOME_TITLE=${HOME_TITLE}"             \
-		"POST_LIST_TITLE=${POST_LIST_TITLE}"   \
-		"POSTDIR_NAME=${POSTDIR_NAME}"         \
-		"TAG_TITLE=${TAG_TITLE}"               \
-		"TAG_LIST_TITLE=${TAG_LIST_TITLE}"     \
-		"TAGDIR_NAME=${TAGDIR_NAME}"           \
-		"LANG=${BLOG_LANG}"                    \
-		"BLOG_CHARSET=${BLOG_CHARSET}"         \
-		"POWERED_BY=${POWERED_BY}"             \
-		"POSTED=${POSTED}"                     \
-		"PERMALINK_TITLE=${PERMALINK_TITLE}"   \
-		"RSS_FEED_NAME=${RSS_FEED_NAME}"       \
-		"POSTDIR_INDEX=${POSTDIR_INDEX}"       \
-		"TAGDIR_INDEX=${TAGDIR_INDEX}"
+parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
+		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"   \
+		"BASE_URL=${BASE_URL}"                   \
+		"HOME_TITLE=${HOME_TITLE}"               \
+		"POST_LIST_TITLE=${POST_LIST_TITLE}"     \
+		"POSTDIR_NAME=${POSTDIR_NAME}"           \
+		"TAG_TITLE=${TAG_TITLE}"                 \
+		"TAG_LIST_TITLE=${TAG_LIST_TITLE}"       \
+		"TAGDIR_NAME=${TAGDIR_NAME}"             \
+		"LANG=${BLOG_LANG}"                      \
+		"BLOG_CHARSET=${BLOG_CHARSET}"           \
+		"POWERED_BY=${POWERED_BY}"               \
+		"POSTED=${POSTED}"                       \
+		"PERMALINK_TITLE=${PERMALINK_TITLE}"     \
+		"RSS_FEED_NAME=${RSS_FEED_NAME}"         \
+		"POSTDIR_INDEX=${POSTDIR_INDEX}"         \
+		"TAGDIR_INDEX=${TAGDIR_INDEX}"           \
+		"SOURCE_LINK_NAME=${SOURCE_LINK_NAME}"   \
+		"SOURCE_LINK_TITLE=${SOURCE_LINK_TITLE}" \
+		"CSS_NAME=${CSS_NAME}"                   \
+		"CSS_FILE=${CSS_FILE}"                   \
+		"THEME_IS=${THEME_IS}"                   \
+		"BODY_CLASS=${BODY_CLASS}"               \
+		"LINKS_TITLE=${LINKS_TITLE}"             \
+		"SIDEBAR="                               \
+		"ARTICLE_CLASS_TYPE=normal"              \
+		"SEARCHBAR="                             \
+		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
 TAGDIR       = ${DESTDIR}/${TAGDIR_NAME}
@@ -112,9 +146,17 @@ DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
 MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != ${echo} ${STATICFILES}
+ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
+ABOUTRESULT != ${echo} ${ABOUTFILE}
+SIDEBARFILE := ${SPECIALDIR}/${SIDEBAR_FILENAME}*
+SIDEBARRESULT != ${echo} ${SIDEBARFILE}
+THEMESTATICFILES := ${THEMEDIR}/static/*
+THEMEMEDIAFILES != ${echo} ${THEMESTATICFILES}
+DOCFILES := ${DOCDIR}/*.md
+DOCFILESRESULT != ${echo} ${DOCFILES}
 
 # DIRECTORIES
-.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR COMMENTDIR
+.for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR DOCDIR COMMENTDIR
 ${${DIR}}:
 	$Q[ -d "${${DIR}}" ] || { \
 		echo "-- Creating ${${DIR}}..." ; \
@@ -145,8 +187,69 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 COMMENTS_LIST != ${cd} ${SRCCOMMENTS}; ${ls}
 .endif
 
+# ABOUT PAGE
+.if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
+
+ABOUT_LINK != ${cat} ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
+parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
+
+${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
+	$Q{ \
+		{ \
+			${cat} ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" && \
+			${markdown} ${ABOUTFILE} && \
+			${cat} ${footer} | ${parser} ${parser_opts}; \
+		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || { \
+			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ; \
+			${echo} "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
+			false                                             ; \
+		} ; \
+	} && ${echo} "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
+
+.endif
+
+# SEARCH BAR
+.if defined(SEARCH_BAR) && $(SEARCH_BAR)
+
+SEARCHBAR != ${cat} ${searchbar} |${parser} \
+	"SEARCH_BAR_BUTTON_NAME=${SEARCH_BAR_BUTTON_NAME}" \
+	"SEARCH_BAR_CONTENT=${SEARCH_BAR_CONTENT}" \
+	|${sed} -e 's|\"|\\"|g'
+parser_opts += "SEARCHBAR=${SEARCHBAR}"
+
+.endif
+
+# THEME STATIC FILES
+.for FILE in ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
+
+THEME_MEDIA_TARGET_${FILE} = ${FILE}
+
+.if defined(THEMEMEDIAFILES) && ${THEMEMEDIAFILES} != ${THEMEDIR}/static/*
+
+${THEME_MEDIA_TARGET_${FILE}}: ${DESTDIR}
+	$Q${cp} ${FILE:S/^${DESTDIR}\//${THEMEDIR}\/static\//} ${THEME_MEDIA_TARGET_${FILE}} && \
+		${echo} "-- New theme static file: ${FILE:S/\/\//\//}"
+
+.endif
+
+.endfor
+
+# SIDEBAR
+.if defined(SIDEBAR) && $(SIDEBAR) && defined(SIDEBARRESULT) && $(SIDEBARRESULT) != ${SPECIALDIR}/${SIDEBARFILE}*
+SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |${sed} -e 's|\"|\\"|g'
+.else
+SIDEBAR_CONTENT = ""
+.endif
+DO_TMP_SIDEBAR != ${cat} ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT} && ${echo} ""
+sidebar_tmp_file = ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
+parser_opts += "SIDEBAR=`${cat} ${sidebar_tmp_file}`"
+# end of SIDEBAR
+
 # BEGIN
-all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/simple.css ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${COMMENTS_LIST:S/^/${COMMENTDIR}\//:S/$/.xhtml/}
+all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//} ${COMMENTS_LIST:S/^/${COMMENTDIR}\//:S/$/.xhtml/}
+
+	@# Clean up tmp directory (because of persistent sidebar.md file)
+	$Q${rm} ${TMPDIR}/* -f
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -163,14 +266,39 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 # Do each FINAL post file
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
-CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |${sed} -e 's|\"|\\"|g'
+CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |${sed} -e 's|\"|\\"|g' -e 's|`|``\\`|g'
+# Linked DB file (that contains metadata)
+DB_${FILE} != find ${DBDIR} -name "*,${FILE:S/.md$/.mk/}"
+# Include it
+.include "${DB_${FILE}}"
+# Fetch some data for this post
+TITLE_${FILE}      != ${echo} "${TITLE}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+TMSTMP_${FILE}     != ${echo} ${DB_${FILE}:S/^${DBDIR}\///}| ${cut} -d ',' -f 1
+POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
+SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
+DESC_${FILE}       != ${echo} "${DESCRIPTION:S/'/\'/}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+CLASS_TYPE_${FILE} != ${echo} ${TYPE}
+
+.for TAG in ${TAGS_${FILE}}
+TAGLINK_${FILE}_${TAG} != ${cat} "${taglink}" |${parser} \
+	TAG_PAGE=${TAG}${PAGE_EXT} \
+	TAG_NAME=${TAG}
+TAGLIST_TMP_${FILE} += ${TAGLINK_${FILE}_${TAG}}
+.endfor
+
+TAGLIST_${FILE} != ${echo} "${TAGLIST_TMP_${FILE}}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+
 ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
 			${cat} ${header} | ${parser} ${parser_opts} && \
 			${cat} ${article} |${parser}                   \
-				"CONTENT=${CONTENT_TARGET_${FILE}}" | ${sed} -e "s|^|        |g" && \
-			${cat} ${footer} | ${parser} ${parser_opts}; \
+				"CONTENT=${CONTENT_TARGET_${FILE}}"          \
+				"POST_TITLE=${TITLE_${FILE}}"                \
+				"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
+				| ${sed} -e "s|^|        |g" &&              \
+			${cat} ${footer} | ${parser} ${parser_opts};   \
 		} > ${TARGET_${FILE}} || { \
 			${rm} -f ${TARGET_${FILE}}                           ; \
 			${echo} "-- Error while building ${TARGET_${FILE}}." ; \
@@ -185,14 +313,24 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 # Include post information (example title, date, description, etc.)
 .include "${DBDIR}/${FILE}"
 # Fetch some data for this post
-TITLE_${FILE}     != ${echo} ${TITLE}
-TMSTMP_${FILE}    != ${echo} ${FILE}| ${cut} -d ',' -f 1
-POSTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
-SHORTDATE_${FILE} != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
-NAME_${FILE}      != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
-DESC_${FILE}      != ${echo} ${DESCRIPTION}
-CONTENT_${FILE}   != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g'
-TAGS_${FILE}      != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+TITLE_${FILE}      != ${echo} "${TITLE}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+TMSTMP_${FILE}     != ${echo} ${FILE}| ${cut} -d ',' -f 1
+POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
+SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
+NAME_${FILE}       != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
+DESC_${FILE}       != ${echo} "${DESCRIPTION:S/'/\'/}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g' -e 's|`|``\\`|g'
+# Change content if MAX_POST_LINES is defined
+.if defined(MAX_POST_LINES) && $(MAX_POST_LINES)
+READ_MORE_LINK_${FILE} != ${cat} ${read_more}| ${parser} ${parser_opts} "POST_FILE=${NAME_${FILE}}" |${sed} -e 's/\"/\\"/g'
+SIZE_${FILE} != ${cat} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |wc -l
+# Add a "Read more" link but only if post is more tall than MAX_POST_LINES
+.if ${SIZE_${FILE}} > ${MAX_POST_LINES}
+CONTENT_${FILE}  != ${head} -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${markdown} |${sed} -e 's/\"/\\"/g' && ${echo} "${READ_MORE_LINK_${FILE}}"
+.endif
+.endif
+TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+CLASS_TYPE_${FILE} != ${echo} ${TYPE}
 
 .for TAG in ${TAGS_${FILE}}
 TAGLINK_${FILE}_${TAG} != ${cat} "${taglink}" |${parser} \
@@ -213,12 +351,14 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
 		> ${TMPDIR}/${FILE}.list
 	@# Template for Home page
-	$Q${cat} ${article} | ${parser} ${parser_opts} \
+	$Q${cat} ${article_idx} | ${parser} ${parser_opts} \
 		"CONTENT=${CONTENT_${FILE}}"                 \
 		"TITLE=${TITLE_${FILE}}"                     \
 		"POST_FILE=${NAME_${FILE}}"                  \
 		"DATE=${POSTDATE_${FILE}}"                   \
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"          \
+		"POST_TITLE=${TITLE_${FILE}}"                \
+		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
 	$Q${cat} ${POSTDIR}/${NAME_${FILE}} | ${parser} ${parser_opts} \
@@ -254,9 +394,10 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 .endfor
 
 # Do CSS file
-${DESTDIR}/simple.css: ${DESTDIR} ${STYLEDIR}/simple.css
-	$Q${cp} ${STYLEDIR}/simple.css ${DESTDIR}/simple.css && \
-		${echo} "-- CSS copied: ${DESTDIR}/simple.css"
+${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE}
+	$Q${cat} ${STYLEDIR}/${CSS_FILE} |${parser} ${parser_opts} \
+		> ${DESTDIR}/${CSS_FILE} && \
+		${echo} "-- CSS copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
 
 # Do Homepage
 # EXAMPLE: pub/index.xhtml
@@ -268,6 +409,7 @@ ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TM
 		${cat} ${footer} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
 		${cat} ${TMPDIR}/index${PAGE_EXT} |${parser} ${parser_opts}                     \
 			"TITLE=${HOME_TITLE}"                                                         \
+			"BODY_CLASS=home"                                                             \
 			> ${TMPDIR}/index${PAGE_EXT}.tmp &&                                           \
 		${mv} ${TMPDIR}/index${PAGE_EXT}.tmp ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
 		${rm} ${TMPDIR}/index${PAGE_EXT} || {                                           \
@@ -313,10 +455,12 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		${cat} ${header} > ${TMPDIR}/taglist${PAGE_EXT} &&             \
 		${cat} ${tags} | ${parser} ${parser_opts}                      \
+			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"                           \
 			"TAGLIST_CONTENT=`${cat} ${TMPDIR}/tags.list |${sort} -u`"   \
 			>> ${TMPDIR}/taglist${PAGE_EXT} &&                           \
 		${cat} ${footer} >> ${TMPDIR}/taglist${PAGE_EXT} &&            \
 		${cat} ${TMPDIR}/taglist${PAGE_EXT} | ${parser} ${parser_opts} \
+		  "BODY_CLASS=tags"                                            \
 			"TITLE=${TAG_LIST_TITLE}"                                    \
 		> ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                    \
 		${rm} ${TMPDIR}/tags.list &&                                   \
@@ -327,12 +471,12 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		} ;                                                            \
 	} && ${echo} "-- Tag list built: $@"
 	$Qfor TAG in `${cd} ${TMPDIR};${ls} *.tag|${sed} -e 's|.tag$$||g'`; do        \
-		${cat} ${header} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                    \
+		${cat} ${header} > ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                    \
 		${cat} ${TMPDIR}/$${TAG}.tag >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&        \
 		${cat} ${footer} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                     \
 		${cat} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
 			"TITLE=$${TAG}"                                                           \
-			>> ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
+			> ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
 			${rm} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
 		done
 
@@ -362,10 +506,52 @@ ${TARGET_${DIR}}: ${COMMENTDIR}
 clean:
 	$Q${rm} -rf ${DESTDIR}/*
 	$Q${rm} -f ${TMPDIR}/*
-	$Q${rm} -f README.html
+	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT}
 
-doc: README.md
-	$Q${markdown} README.md > ${htmldoc}
+# Create documentation
+.for FILE in ${DOCFILESRESULT}
+
+${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
+	$Q{                                                    \
+		${markdown} ${FILE} > ${FILE:S/.md$/${PAGE_EXT}/} || \
+		{                                                    \
+			${echo} "-- Could not build doc file: $@" ;        \
+		} ;                                                  \
+	} && ${echo} "-- Doc file built: $@"
+
+.endfor
+
+doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
+
+# Backup: save important files
+TODAY != date '+%Y%m%d'
+backup: makefly.rc ${BACKUPDIR}
+	$Q{ \
+		${tar} cfz ${BACKUPDIR}/${TODAY}_makefly.tar.gz makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} || \
+		{ \
+			${echo} "-- Backup failed!" ; \
+			false ; \
+		} ; \
+	} && ${echo} "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR} and ${SPECIALDIR}."
+
+# Publish: send files out
+publish_script = ${TOOLSDIR}/${PUBLISH_SCRIPT_NAME}
+PUBDIR != ${echo} ${DESTDIR:S/^.\//${MAKEFLYDIR}\//}
+publish: ${DESTDIR}
+	$Q{ \
+		${cat} ${publish_script} |${parser} \
+			"DESTDIR=${PUBDIR}" \
+			"PUBLISH_DESTINATION=${PUBLISH_DESTINATION}" \
+			> ${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
+			chmod +x ${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
+			${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
+			${rm} -f ${TMPDIR}/${PUBLISH_SCRIPT_NAME} || \
+		{ \
+			${rm} -f ${TMPDIR}/${PUBLISH_SCRIPT_NAME} ; \
+			${echo} "-- Publication failed!" ; \
+			false ; \
+		} ; \
+	} && ${echo} "-- Publish ${DESTDIR} content with ${publish_script}: OK."
 
 # END
 .MAIN: all
