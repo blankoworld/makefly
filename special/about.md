@@ -33,6 +33,18 @@ You can so:
 
 In fact, it's a lightweight weblog engine that generates some HTML static files.
 
+## No UI?
+
+Makefly aims to do a thing and do it well. It's not user-friendly so you cannot easily add posts. To do this, you need a UI (User Interface) that Makefly's project don't get. But [BlogBox project (fr)](http://blogbox.e-mergence.org "Learn more on BlogBox project") wants to do this soon (approximatively 2013, March).
+
+If you are interested by an UI, perhaps would you be available for:
+
+  * creating pictures that show a web interface
+  * testing Makefly to explain what is missing
+  * developing a lightweight web interface for Makefly
+  * giving you opinion about Makefly
+  * explain what you expect about a weblog administration panel
+
 ## Makefly on the web
 
 Some repositories could be found here:
@@ -47,4 +59,11 @@ For those who likes statistics, you can find [Makefly on ohloh](http://www.ohloh
 
 ## Documentation
 
-You can find [Makefly's documentation on github](https://github.com/blankoworld/makefly/blob/master/README.md "Learn more about Makefly").
+You can find [Makefly's documentation on github](https://github.com/blankoworld/makefly/blob/master/doc/README.md "Learn more about Makefly").
+
+For developers, it exists [a Makefly's developers documentation on github](https://github.com/blankoworld/makefly/blob/master/doc/DEV.README.md "Learn more about Makefly for developers").
+
+## Archives
+
+  * [Makefly v0.1](${BASE_URL}/makefly_0.1.zip)
+  * [Makefly_v0.1.1-alph](${BASE_URL}/makefly_0.1.1-alpha.zip)
