@@ -2,6 +2,8 @@ TODO:
 -----
 
 1/ Technical documentation
+  * dev doc: description will fill in the RSS file
+  * dev doc: you can add some VARS in templates. You just have to initialize them into Makefil, makefly.rc or DB files (but for this one the Makefile should process them) 
 
 - Delete var for these programs:
   sed, cp, ls, cat, echo, head, cut, grep, tail
@@ -32,6 +34,7 @@ TODO:
 - Add HTML keywords/meta on each post's page?
 - Add possibility to choose which meta/keywords add to each post?
 - Add HTML keywords/meta on main page regarding posts
+- Add in a post some anchor on each title in order to make a link with the URL. For an example in post "the_super_post" with a H3 title to 'my h3 title', permit to add an anchor named "my_h3_title", so user give "the_super_post#my_h3_title" and he go to the h3 title in the page.
 
 IDEAS:
 ------
