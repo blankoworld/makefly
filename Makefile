@@ -268,7 +268,7 @@ TMSTMP_${FILE}     != ${echo} ${DB_${FILE}:S/^${DBDIR}\///}| ${cut} -d ',' -f 1
 POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 DESC_${FILE}       != ${echo} "${DESCRIPTION:S/'/\'/}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
-TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
 CLASS_TYPE_${FILE} != ${echo} ${TYPE}
 
 .for TAG in ${TAGS_${FILE}}
@@ -320,7 +320,7 @@ SIZE_${FILE} != ${cat} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |wc -l
 CONTENT_${FILE}  != ${head} -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${markdown} |${sed} -e 's/\"/\\"/g' && ${echo} "${READ_MORE_LINK_${FILE}}"
 .endif
 .endif
-TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/,/ /g'
+TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
 CLASS_TYPE_${FILE} != ${echo} ${TYPE}
 
 .for TAG in ${TAGS_${FILE}}
