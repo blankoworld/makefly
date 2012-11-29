@@ -29,6 +29,12 @@ TODO:
   - permit to setup programs like sed, bash/zsh, etc. or return an error if no one exists
 - limit RSS posts to 5, 10, etc. (add a new VAR in makefly.rc for this)
 - Add AUTHOR in db files + adapt template + update bash script that permits to create new posts
+- Permit user to integrate multimedia files as video, images, flash animation, etc.
+- For youtube iframe, do this:
+    iframe {
+      margin: 15px auto;
+      display: block;
+    }
 
 IDEAS:
 ------
