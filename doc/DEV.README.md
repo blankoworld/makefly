@@ -114,11 +114,11 @@ I work with branches. Each branch have a specific goal. Here is the 3 main branc
   * disqus\_comments: with disqus as comment system
   * comments: for 0.2 version with a integrated comment system
 
-If you want to dev a functionnality, I suggest you to begin from **master branch** on gitorious and/or github. Then to do a merge request on it.
+If you want to dev a functionnality, I suggest you to begin from **master branch** on gitorious and/or github. Then to do a *merge request* on it.
 
 ### How to create new branch and push specific changes into?
 
-FIXME
+I suggest you to read this article: [A successful git branching model](http://nvie.com/posts/a-successful-git-branching-model/ "Learn more about a successful git branching model"). This one explain how you can do branch and merge functionalities into.
 
 ## Learn more about posts ' files
 
@@ -130,6 +130,13 @@ As described previously, posts are composed of 2 files:
 This permit Makefly to just extract content or just meta info.
 
 Meta data are stored into the **db** directory (DBDIR variable). Furthermore source files are stored into **src** directory.
+
+For Makefly to work each post not only need ONE db file and ONE source file but it also need that these files have the same name. For an example, I write a post named "My First Post". I will so have two files:
+
+  * **db/1234567890,my_first_post.mk**
+  * **src/my_first_post.md**
+
+At blog compilation, Makefly will parse each file and publish one post.
 
 ### DB files
 
@@ -170,20 +177,89 @@ Source files permit to generate each post.
 
 Source files extension is **.md** which means that they are **markdown files**. You can read more about this file format [markdown official website](http://daringfireball.net/projects/markdown/syntax/ "Markdown documentation").
 
-
-
 ## Main engine: The Makefile file
 
-FIXME
+The core of Makefly: the **Makefile** file. This one generates all needed files for your future weblog.
+
+I suggest you to use the [pmake handbook](http://www.freebsd.org/doc/en/books/pmake/ "Learn more about pmake") to be your main support.
+
+Some things you have to know about the Makefile:
+
+  * if you want to add some targets, add them at the end of the file
+  * once you have developed your target, you can probably add it into the target called **all**
+  * to add global variable, add them at file's beginning
+    * variable that targets a directory are in upper case
+    * variable that targets a template's file or a program are in lower case
+  * if you want to add some VARS to be interpreted at template's parsing, add VARS into *parser_opts* variable
+  * Add a simple comment before your target in order some developer to understand why this block exists
+  * If you encount some problems and find a solution, don't forget to add problem/solution into *doc/KNOWN_ISSUES.md* file
 
 ## The makefly.rc file
 
-FIXME
+This file is needed by user to configure Makefly. User have to create it for Makefly to work.
+
+Most important variables:
+  * BLOG\_TITLE
+  * BLOG\_SHORT\_DESC
+  * BLOG\_DESCRIPTION
+  * BLOG\_LANG is a code used to search corresponding directory in **lang** directory
+  * BLOG\_CHARSET used for RSS feed and all HTML files
+  * BASE\_URL to complete all URL
+  * RSS\_FEED\_NAME
+  * MAX\_POST to limit the number of post on mainpage
+  * DATE\_FORMAT to transform timestamp of posts
+  * SHORT\_DATE\_FORMAT same as DATE\_FORMAT
+  * INDEX\_FILENAME if you want to name page as **main** instead of **index**
+  * PAGE\_EXT if you want another extension. For an example **xhtml** instead of **html**.
 
 ## Template's files
 
-FIXME
+Templates are located to **template** directory.
+
+Each theme have its own directory. So for default theme, a **default** directory is created in which you can see some files:
+
+  * .xhtml files to describe the content of the weblog
+  * a **style** directory in which you can see all CSS files for a defined theme
+  * a **config.mk** in which you have some details about the theme:
+    * CSS\_NAME: Name that will appear on the weblog with `${CSS_NAME}`
+    * CSS\_FILE: the filename of choosen CSS for a defined theme
+
+Here is some explanations about **.xhtml** file you can find into a theme:
+
+  * article.index.xhtml: Template for each post that are shown on homepage
+  * article.xhtml: Template for a post on its single page
+  * element.xhtml: Template for a line in **Post List** page
+  * footer.xhtml: End of each HTML page
+  * header.xhtml: Head of each HTML page
+  * menu.about.xhtml: Element that is used to show the link to the About's page
+  * menu.search_bar.xhtml: Template for search bar
+  * read_more_link.xhtml: Template for the link **Read more** for each post.
+  * sidebar.xhtml: Template for the sidebar
+  * tagelement.xhtml: Template for a line in **Tag List** page 
+  * taglink.xhtml: Template for a single link to a tag's page
+  * tags.xhtml: Template for the **Tag List** page
+
+FIXME : Note here which VAR could be used and what should be showned by using these variables
 
 ## Language files
 
 FIXME
+
+## Best practices
+
+### Add functionnality
+
+If you add a functionnality:
+
+  * complete **Changelog** file with a brief text to explain what have been changed/improved/fixed
+  * fix **doc**umentation to update Makefly's state
+  * don't forget to complete language files in **lang** directory
+  * if you add some needed VAR that could be changed by user, add it to the **makefly.rc.example**
+
+## Ideas
+
+You have any idea to improve Makefly? Add it to the **IDEAS** file.
+
+## A bug?
+
+Go to the [Makefly's github page](https://github.com/blankoworld/makefly/issues "Issue for Makefly on Github") and create a new issue, or add your issue into the **TODO** file.
