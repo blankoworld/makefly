@@ -38,3 +38,16 @@ Error:
     pmake: "./makefly/Makefile" line XXZ: warning: Couldn't read shell's output for "cd ./db; ls|sort -r|head -n 3"
 
 Solution: No post to process. Add new post for your blog :)
+
+## Issue 4
+
+Error:
+
+    pmake: "./makefly/Makefile" line 70: Could not find makefly.rc
+    pmake: "./makefly/Makefile" line 72: Could not find ./lang/translate.
+    head : l'option requiert un argument -- n
+    Saisissez « head --help » pour plus d'informations.
+    pmake: "./makefly/Makefile" line 135: warning: "cd ./db; ls|sort -r|head -n " returned non-zero status
+    pmake: Fatal errors encountered -- cannot continue
+
+Solution: Copy the makefly.rc.example to makefly.rc file.
