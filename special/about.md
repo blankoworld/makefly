@@ -65,5 +65,5 @@ For developers, it exists [a Makefly's developers documentation on github](https
 
 ## Archives
 
-  * [Makefly v0.1](${BASE_URL}/makefly_0.1.zip)
-  * [Makefly_v0.1.1-alph](${BASE_URL}/makefly_0.1.1-alpha.zip)
+  * [Makefly v0.1](/makefly_0.1.zip)
+  * [Makefly_v0.1.1-alpha](/makefly_0.1.1-alpha.zip)
