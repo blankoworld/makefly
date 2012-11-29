@@ -27,6 +27,8 @@ Current (not released)
 	- Fix bug on articles that have similar names
 	- Add a KNOWN_ISSUE file to give known errors
 	- Fix a bug on ` chars
+	- Delete some useless variable in Makefile
+	- Add charset in RSS
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed
