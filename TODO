@@ -7,7 +7,6 @@ TODO:
 
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
 - Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
-- Add BLOG_CHARSET in RSS file
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
 - Instead of copying each file from static, just copy all static directory content (cp static/* ./pub)
 - Add in doc some explanation on how makefly work for src, db directory and linked files.
@@ -111,3 +110,4 @@ DONE:
 - Create a list of error (known issues) that you can encount and give some explanations to fix them
 - Delete var for these programs:
   sed, cp, ls, cat, echo, head, cut, grep, tail
+- Add BLOG_CHARSET in RSS file
