@@ -5,8 +5,6 @@ TODO:
   * dev doc: description will fill in the RSS file
   * dev doc: you can add some VARS in templates. You just have to initialize them into Makefil, makefly.rc or DB files (but for this one the Makefile should process them) 
 
-- Delete var for these programs:
-  sed, cp, ls, cat, echo, head, cut, grep, tail
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
 - Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
 - Add BLOG_CHARSET in RSS file
@@ -111,3 +109,5 @@ DONE:
 - Do a script that export to a FTP or use rsync
 - Add Search capability on home page (for an example with http://duckduckgo.com/search_box.html) | http://patdryburgh.com/blog/adding-a-custom-duckduckgo-search-bar-to-your-site/
 - Create a list of error (known issues) that you can encount and give some explanations to fix them
+- Delete var for these programs:
+  sed, cp, ls, cat, echo, head, cut, grep, tail
