@@ -202,7 +202,7 @@ Most important variables:
   * BLOG\_TITLE
   * BLOG\_SHORT\_DESC
   * BLOG\_DESCRIPTION
-  * BLOG\_LANG is a code used to search corresponding directory in **lang** directory
+  * BLOG\_LANG is a code used to search corresponding files in **lang** directory
   * BLOG\_CHARSET used for RSS feed and all HTML files
   * BASE\_URL to complete all URL
   * RSS\_FEED\_NAME
@@ -253,7 +253,7 @@ If you add a functionnality:
 
   * complete **Changelog** file with a brief text to explain what have been changed/improved/fixed
   * fix **doc**umentation to update Makefly's state
-  * don't forget to complete language files in **lang** directory
+  * don't forget to complete language files in **lang** directory if you add some TEXT into templates!
   * if you add some needed VAR that could be changed by user, add it to the **makefly.rc.example**
 
 ## Ideas
