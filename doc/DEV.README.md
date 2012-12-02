@@ -199,6 +199,7 @@ Some things you have to know about the Makefile:
 This file is needed by user to configure Makefly. User have to create it for Makefly to work.
 
 Most important variables:
+
   * BLOG\_TITLE
   * BLOG\_SHORT\_DESC
   * BLOG\_DESCRIPTION
@@ -216,6 +217,8 @@ Most important variables:
 
 Templates are located to **template** directory.
 
+### Composition
+
 Each theme have its own directory. So for default theme, a **default** directory is created in which you can see some files:
 
   * .xhtml files to describe the content of the weblog
@@ -223,6 +226,8 @@ Each theme have its own directory. So for default theme, a **default** directory
   * a **config.mk** in which you have some details about the theme:
     * CSS\_NAME: Name that will appear on the weblog with `${CSS_NAME}`
     * CSS\_FILE: the filename of choosen CSS for a defined theme
+
+### Mandatory files
 
 Here is some explanations about **.xhtml** file you can find into a theme:
 
@@ -238,6 +243,53 @@ Here is some explanations about **.xhtml** file you can find into a theme:
   * tagelement.xhtml: Template for a line in **Tag List** page 
   * taglink.xhtml: Template for a single link to a tag's page
   * tags.xhtml: Template for the **Tag List** page
+
+### Completion
+
+To display content of posts or some elements in each page, you can use what we call **variables**. In Makefly's template, variable are showned as here:
+
+    ${SOME\_VARIABLE}
+
+Available variables:
+
+  * ${ABOUT\_INDEX}: Name of *About*'s page. For an example: about.html 
+  * ${ABOUT\_LINK}: Add a link to the about's page (if activated in default configuration's file
+  * ${ABOUT\_TITLE}: Title of about's page (just title). For an example: About.
+  * ${ARTICLE\_CLASS\_TYPE}: Class of article that user have filled in. For an example: news. This permit to adapt a stylesheet for each type of article.
+  * ${BASE\_URL}: Your website address. For an example: htt://my.weblog.tld/. The user give it in the configuration file.
+  * ${BLOG\_CHARSET}:
+  * ${BLOG\_TITLE}:
+  * ${BODY\_CLASS}:
+  * ${CONTENT}:
+  * ${CSS\_FILE}:
+  * ${CSS\_NAME}:
+  * ${HOME\_TITLE}:
+  * ${LANG}:
+  * ${POSTDIR\_INDEX}:
+  * ${POSTDIR\_NAME}:
+  * ${POST\_LIST\_TITLE}:
+  * ${POST\_FILE}:
+  * ${POST\_TITLE}:
+  * ${POWERED\_BY} :
+  * ${READ\_MORE}:
+  * ${RSS\_FEED\_NAME}:
+  * ${SEARCHBAR}:
+  * ${SEARCH\_BAR\_BUTTON\_NAME}:
+  * ${SEARCH\_BAR\_CONTENT}:
+  * ${SHORT\_DATE}:
+  * ${SIDEBAR}:
+  * ${SIDEBAR\_CONTENT}:
+  * ${TAGDIR\_NAME}:
+  * ${TAGDIR\_INDEX}:
+  * ${TAGLINK}:
+  * ${TAGLIST\_CONTENT}:
+  * ${TAGNAME}:
+  * ${TAG\_LIST\_TITLE}:
+  * ${TAG\_NAME}:
+  * ${TAG\_PAGE}:
+  * ${TAG\_TITLE}:
+  * ${TITLE}:
+  * ${THEME\_IS}:
 
 FIXME : Note here which VAR could be used and what should be showned by using these variables
 
@@ -263,3 +315,5 @@ You have any idea to improve Makefly? Add it to the **IDEAS** file.
 ## A bug?
 
 Go to the [Makefly's github page](https://github.com/blankoworld/makefly/issues "Issue for Makefly on Github") and create a new issue, or add your issue into the **TODO** file.
+
+
