@@ -257,41 +257,39 @@ Available variables:
   * ${ABOUT\_TITLE}: Title of about's page (just title). For an example: About.
   * ${ARTICLE\_CLASS\_TYPE}: Class of article that user have filled in. For an example: news. This permit to adapt a stylesheet for each type of article.
   * ${BASE\_URL}: Your website address. For an example: htt://my.weblog.tld/. The user give it in the configuration file.
-  * ${BLOG\_CHARSET}:
-  * ${BLOG\_TITLE}:
-  * ${BODY\_CLASS}:
-  * ${CONTENT}:
-  * ${CSS\_FILE}:
-  * ${CSS\_NAME}:
-  * ${HOME\_TITLE}:
-  * ${LANG}:
-  * ${POSTDIR\_INDEX}:
-  * ${POSTDIR\_NAME}:
-  * ${POST\_LIST\_TITLE}:
-  * ${POST\_FILE}:
-  * ${POST\_TITLE}:
-  * ${POWERED\_BY} :
-  * ${READ\_MORE}:
-  * ${RSS\_FEED\_NAME}:
-  * ${SEARCHBAR}:
-  * ${SEARCH\_BAR\_BUTTON\_NAME}:
-  * ${SEARCH\_BAR\_CONTENT}:
-  * ${SHORT\_DATE}:
-  * ${SIDEBAR}:
-  * ${SIDEBAR\_CONTENT}:
-  * ${TAGDIR\_NAME}:
-  * ${TAGDIR\_INDEX}:
-  * ${TAGLINK}:
-  * ${TAGLIST\_CONTENT}:
-  * ${TAGNAME}:
-  * ${TAG\_LIST\_TITLE}:
-  * ${TAG\_NAME}:
-  * ${TAG\_PAGE}:
-  * ${TAG\_TITLE}:
-  * ${TITLE}:
-  * ${THEME\_IS}:
-
-FIXME : Note here which VAR could be used and what should be showned by using these variables
+  * ${BLOG\_CHARSET}: Blog charset as *UTF-8* or *ISO-8859-15*. This is for HTML pages **and** RSS feeds
+  * ${BLOG\_TITLE}: Title of the blog. For an example *My first weblog*.
+  * ${BODY\_CLASS}: Name of class defined for current body's page tag. For an example, on home page, the body class is *home*. This is useful for CascadingStyleSheets.
+  * ${CONTENT}: Content of page/post. It often looks like a post content. But it could be another kind of content as a tag list, a post list, etc. This depends on the page you're editing.
+  * ${CSS\_FILE}: Name of CSS file. For an example *simple.css*.
+  * ${CSS\_NAME}: Name that will appears to user when it selects your CSS theme. For an example *default theme*.
+  * ${HOME\_TITLE}: Title that will appears on the link that redirect to homepage. For an example *Home*.
+  * ${LANG}: Country code used in HTML's page to define a language. For an example *en* for english, *fr* for *french*, etc.
+  * ${POSTDIR\_INDEX}: Exact name of postdir's index page. For an example *index.html*.
+  * ${POSTDIR\_NAME}: Name of posts directory. For an example *post*. That permit to have a better indexation on the Internet.
+  * ${POST\_LIST\_TITLE}: Name that will appears on the link to go to Post's list. For an example *Post List*.
+  * ${POST\_FILE}: Exact name of the post file. For an example with a post which title is *My first post*, the POST\_FILE would be *my_first_post*. This also permits a better web indexation.
+  * ${POST\_TITLE}: Title of the post. For an example: *My fist post*.
+  * ${POWERED\_BY}: Name displayed for the *Powered by* mention on all pages.
+  * ${READ\_MORE}: Name displayed for the *Read more* link on each post (if activated in the configuration file)
+  * ${RSS\_FEED\_NAME}: Name of your RSS feed. This will be shown for users that subscribe to your RSS. For an example *My first blog RSS feed*.
+  * ${SEARCHBAR}: Will display a search bar here. This works if searchbar is activated in configuration file.
+  * ${SEARCH\_BAR\_BUTTON\_NAME}: Name displayed for the search button. For an example *Search button*.
+  * ${SEARCH\_BAR\_CONTENT}: Text displayed in the search bar. For an example *A search...*.
+  * ${SHORT\_DATE}: Date using short date format (SHORT\_DATE\_FORMAT in makefly.rc configuration file) for post list's page. For an example *2012/11*.
+  * ${SIDEBAR}: Add a sidebar here if activated in configuration file and if you give some links to the **special/sidebar.md** file.
+  * ${SIDEBAR\_CONTENT}: Content of the sidebar will be displayed here.
+  * ${TAGDIR\_NAME}: Name of tags directory. For an example *tags*. This permits a better web indexation.
+  * ${TAGDIR\_INDEX}: Name of index file for tags. Example: *index.html*.
+  * ${TAGLINK}: Absolute link to a tag. For an example: *http://my.domain.tld/tags/my_tag.html*.
+  * ${TAGLIST\_CONTENT}: Content of tag list. A list of tags.
+  * ${TAGNAME}: Name of a given tag. For an example *my_first_tag*.
+  * ${TAG\_LIST\_TITLE}: Title of the list of tags. This is the name displayed on the link that redirect to tag's list. For an example *Tag list*.
+  * ${TAG\_NAME}: Name of a tag. Same as TAGNAME (FIXME: WTF?)
+  * ${TAG\_PAGE}: Real name of the page. For an example with a tag named *My tag*, it would be *my_tag.html*.
+  * ${TAG\_TITLE}: Title of the tag. For an example *my_tag*.
+  * ${TITLE}: Title of the current page. For an example *Homepage*, *Tag List*, *My first post*, etc.
+  * ${THEME\_IS}: Sentence that is used to explain which theme have been choosed. For an example *The theme of this page is: *.
 
 ## Language files
 
@@ -315,5 +313,4 @@ You have any idea to improve Makefly? Add it to the **IDEAS** file.
 ## A bug?
 
 Go to the [Makefly's github page](https://github.com/blankoworld/makefly/issues "Issue for Makefly on Github") and create a new issue, or add your issue into the **TODO** file.
-
 
