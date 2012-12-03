@@ -223,13 +223,16 @@ SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |sed -e 's|\"|\\"|g'
 .else
 SIDEBAR_CONTENT = ""
 .endif
-DO_TMP_SIDEBAR != cat ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT} && echo ""
+
+sidebar: ${TMPDIR}
+	$Qcat ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
+
 sidebar_tmp_file = ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
 parser_opts += "SIDEBAR=`cat ${sidebar_tmp_file}`"
 # end of SIDEBAR
 
 # BEGIN
-all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
+all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
 	@# Clean up tmp directory (because of persistent sidebar.md file)
 	$Q${rm} ${TMPDIR}/* -f
 
