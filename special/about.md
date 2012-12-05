@@ -2,7 +2,7 @@
 
 ## What's Makefly ?
 
-Makefly is a static weblog engine working thanks to a BSD makefile.
+Makefly is a static weblog engine working thanks to a BSD makefile under GNU Affero General Public License (AGPL).
 
 It's composed of:
 
