@@ -56,19 +56,10 @@ htmldoc ?= README
 markdown ?= markdown
 lua      ?= lua
 parser   ?= ${lua} ${BINDIR}/parser.lua
-echo     ?= echo
-cat      ?= cat
 mv       ?= mv
 rm       ?= rm
-cd       ?= cd
-ls       ?= ls
 sort     ?= sort
-head     ?= head
-sed      ?= sed
-cut      ?= cut
 date     ?= date
-cp       ?= cp
-grep     ?= grep
 tar      ?= tar
 PUBLISH_SCRIPT_NAME = publish.sh
 
@@ -138,19 +129,19 @@ TAGDIR       = ${DESTDIR}/${TAGDIR_NAME}
 POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 
 # some files'list
-FILES != ${cd} ${SRCDIR}; ${ls}
-DBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r
-MAINDBFILES != ${cd} ${DBDIR}; ${ls}|${sort} -r|${head} -n ${MAX_POST}
+FILES != cd ${SRCDIR}; ls
+DBFILES != cd ${DBDIR}; ls|${sort} -r
+MAINDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_POST}
 STATICFILES := ${STATICDIR}/*
-MEDIAFILES != ${echo} ${STATICFILES}
+MEDIAFILES != echo ${STATICFILES}
 ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
-ABOUTRESULT != ${echo} ${ABOUTFILE}
+ABOUTRESULT != echo ${ABOUTFILE}
 SIDEBARFILE := ${SPECIALDIR}/${SIDEBAR_FILENAME}*
-SIDEBARRESULT != ${echo} ${SIDEBARFILE}
+SIDEBARRESULT != echo ${SIDEBARFILE}
 THEMESTATICFILES := ${THEMEDIR}/static/*
-THEMEMEDIAFILES != ${echo} ${THEMESTATICFILES}
+THEMEMEDIAFILES != echo ${THEMESTATICFILES}
 DOCFILES := ${DOCDIR}/*.md
-DOCFILESRESULT != ${echo} ${DOCFILES}
+DOCFILESRESULT != echo ${DOCFILES}
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR DOCDIR
@@ -172,8 +163,8 @@ MEDIA_TARGET_${FILE} = ${FILE}
 .if defined(MEDIAFILES) && ${MEDIAFILES} != ${STATICDIR}/*
 
 ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
-	$Q${cp} ${FILE:S/^${DESTDIR}\//${STATICDIR}/} ${MEDIA_TARGET_${FILE}} && \
-		${echo} "-- New static file: ${FILE:S/\/\//\//}"
+	$Qcp ${FILE:S/^${DESTDIR}\//${STATICDIR}/} ${MEDIA_TARGET_${FILE}} && \
+		echo "-- New static file: ${FILE:S/\/\//\//}"
 
 .endif
 
@@ -182,31 +173,31 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 # ABOUT PAGE
 .if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
 
-ABOUT_LINK != ${cat} ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
+ABOUT_LINK != cat ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
 parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
 
 ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
 	$Q{ \
 		{ \
-			${cat} ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" && \
+			cat ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" && \
 			${markdown} ${ABOUTFILE} && \
-			${cat} ${footer} | ${parser} ${parser_opts}; \
+			cat ${footer} | ${parser} ${parser_opts}; \
 		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || { \
 			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ; \
-			${echo} "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
+			echo "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
 			false                                             ; \
 		} ; \
-	} && ${echo} "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
+	} && echo "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
 
 .endif
 
 # SEARCH BAR
 .if defined(SEARCH_BAR) && $(SEARCH_BAR)
 
-SEARCHBAR != ${cat} ${searchbar} |${parser} \
+SEARCHBAR != cat ${searchbar} |${parser} \
 	"SEARCH_BAR_BUTTON_NAME=${SEARCH_BAR_BUTTON_NAME}" \
 	"SEARCH_BAR_CONTENT=${SEARCH_BAR_CONTENT}" \
-	|${sed} -e 's|\"|\\"|g'
+	|sed -e 's|\"|\\"|g'
 parser_opts += "SEARCHBAR=${SEARCHBAR}"
 
 .endif
@@ -219,8 +210,8 @@ THEME_MEDIA_TARGET_${FILE} = ${FILE}
 .if defined(THEMEMEDIAFILES) && ${THEMEMEDIAFILES} != ${THEMEDIR}/static/*
 
 ${THEME_MEDIA_TARGET_${FILE}}: ${DESTDIR}
-	$Q${cp} ${FILE:S/^${DESTDIR}\//${THEMEDIR}\/static\//} ${THEME_MEDIA_TARGET_${FILE}} && \
-		${echo} "-- New theme static file: ${FILE:S/\/\//\//}"
+	$Qcp ${FILE:S/^${DESTDIR}\//${THEMEDIR}\/static\//} ${THEME_MEDIA_TARGET_${FILE}} && \
+		echo "-- New theme static file: ${FILE:S/\/\//\//}"
 
 .endif
 
@@ -228,17 +219,20 @@ ${THEME_MEDIA_TARGET_${FILE}}: ${DESTDIR}
 
 # SIDEBAR
 .if defined(SIDEBAR) && $(SIDEBAR) && defined(SIDEBARRESULT) && $(SIDEBARRESULT) != ${SPECIALDIR}/${SIDEBARFILE}*
-SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |${sed} -e 's|\"|\\"|g'
+SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |sed -e 's|\"|\\"|g'
 .else
 SIDEBAR_CONTENT = ""
 .endif
-DO_TMP_SIDEBAR != ${cat} ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT} && ${echo} ""
+
+sidebar: ${TMPDIR}
+	$Qcat ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
+
 sidebar_tmp_file = ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
-parser_opts += "SIDEBAR=`${cat} ${sidebar_tmp_file}`"
+parser_opts += "SIDEBAR=`cat ${sidebar_tmp_file}`"
 # end of SIDEBAR
 
 # BEGIN
-all: ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
+all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
 	@# Clean up tmp directory (because of persistent sidebar.md file)
 	$Q${rm} ${TMPDIR}/* -f
 
@@ -257,45 +251,45 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 # Do each FINAL post file
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
-CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |${sed} -e 's|\"|\\"|g' -e 's|`|``\\`|g'
+CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |sed -e 's|\"|\\"|g' -e 's|`|``\\`|g'
 # Linked DB file (that contains metadata)
 DB_${FILE} != find ${DBDIR} -name "*,${FILE:S/.md$/.mk/}"
 # Include it
 .include "${DB_${FILE}}"
 # Fetch some data for this post
-TITLE_${FILE}      != ${echo} "${TITLE}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
-TMSTMP_${FILE}     != ${echo} ${DB_${FILE}:S/^${DBDIR}\///}| ${cut} -d ',' -f 1
+TITLE_${FILE}      != echo "${TITLE}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+TMSTMP_${FILE}     != echo ${DB_${FILE}:S/^${DBDIR}\///}| cut -d ',' -f 1
 POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
-DESC_${FILE}       != ${echo} "${DESCRIPTION:S/'/\'/}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
-TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
-CLASS_TYPE_${FILE} != ${echo} ${TYPE}
+DESC_${FILE}       != echo "${DESCRIPTION:S/'/\'/}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
+CLASS_TYPE_${FILE} != echo ${TYPE}
 
 .for TAG in ${TAGS_${FILE}}
-TAGLINK_${FILE}_${TAG} != ${cat} "${taglink}" |${parser} \
+TAGLINK_${FILE}_${TAG} != cat "${taglink}" |${parser} \
 	TAG_PAGE=${TAG}${PAGE_EXT} \
 	TAG_NAME=${TAG}
 TAGLIST_TMP_${FILE} += ${TAGLINK_${FILE}_${TAG}}
 .endfor
 
-TAGLIST_${FILE} != ${echo} "${TAGLIST_TMP_${FILE}}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+TAGLIST_${FILE} != echo "${TAGLIST_TMP_${FILE}}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 
 ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
-			${cat} ${header} | ${parser} ${parser_opts} && \
-			${cat} ${article} |${parser}                   \
+			cat ${header} | ${parser} ${parser_opts} && \
+			cat ${article} |${parser}                   \
 				"CONTENT=${CONTENT_TARGET_${FILE}}"          \
 				"POST_TITLE=${TITLE_${FILE}}"                \
 				"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
-				| ${sed} -e "s|^|        |g" &&              \
-			${cat} ${footer} | ${parser} ${parser_opts};   \
+				| sed -e "s|^|        |g" &&              \
+			cat ${footer} | ${parser} ${parser_opts};   \
 		} > ${TARGET_${FILE}} || { \
 			${rm} -f ${TARGET_${FILE}}                           ; \
-			${echo} "-- Error while building ${TARGET_${FILE}}." ; \
+			echo "-- Error while building ${TARGET_${FILE}}." ; \
 			false                                             ; \
 		} ; \
-	} && ${echo} "-- Page built: ${TARGET_${FILE}}."
+	} && echo "-- Page built: ${TARGET_${FILE}}."
 .endfor
 
 # Do each TMP post files
@@ -304,37 +298,37 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 # Include post information (example title, date, description, etc.)
 .include "${DBDIR}/${FILE}"
 # Fetch some data for this post
-TITLE_${FILE}      != ${echo} "${TITLE}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
-TMSTMP_${FILE}     != ${echo} ${FILE}| ${cut} -d ',' -f 1
+TITLE_${FILE}      != echo "${TITLE}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+TMSTMP_${FILE}     != echo ${FILE}| cut -d ',' -f 1
 POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
-NAME_${FILE}       != ${echo} ${FILE}| ${sed} -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
-DESC_${FILE}       != ${echo} "${DESCRIPTION:S/'/\'/}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
-CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${sed} -e 's/\"/\\"/g' -e 's|`|``\\`|g'
+NAME_${FILE}       != echo ${FILE}| sed -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
+DESC_${FILE}       != echo "${DESCRIPTION:S/'/\'/}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |sed -e 's/\"/\\"/g' -e 's|`|``\\`|g'
 # Change content if MAX_POST_LINES is defined
 .if defined(MAX_POST_LINES) && $(MAX_POST_LINES)
-READ_MORE_LINK_${FILE} != ${cat} ${read_more}| ${parser} ${parser_opts} "POST_FILE=${NAME_${FILE}}" |${sed} -e 's/\"/\\"/g'
-SIZE_${FILE} != ${cat} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |wc -l
+READ_MORE_LINK_${FILE} != cat ${read_more}| ${parser} ${parser_opts} "POST_FILE=${NAME_${FILE}}" |sed -e 's/\"/\\"/g'
+SIZE_${FILE} != cat ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |wc -l
 # Add a "Read more" link but only if post is more tall than MAX_POST_LINES
 .if ${SIZE_${FILE}} > ${MAX_POST_LINES}
-CONTENT_${FILE}  != ${head} -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${markdown} |${sed} -e 's/\"/\\"/g' && ${echo} "${READ_MORE_LINK_${FILE}}"
+CONTENT_${FILE}  != head -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${markdown} |sed -e 's/\"/\\"/g' && echo "${READ_MORE_LINK_${FILE}}"
 .endif
 .endif
-TAGS_${FILE}       != ${echo} ${TAGS} |${sed} -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
-CLASS_TYPE_${FILE} != ${echo} ${TYPE}
+TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
+CLASS_TYPE_${FILE} != echo ${TYPE}
 
 .for TAG in ${TAGS_${FILE}}
-TAGLINK_${FILE}_${TAG} != ${cat} "${taglink}" |${parser} \
+TAGLINK_${FILE}_${TAG} != cat "${taglink}" |${parser} \
 	TAG_PAGE=${TAG}${PAGE_EXT} \
 	TAG_NAME=${TAG}
 TAGLIST_TMP_${FILE} += ${TAGLINK_${FILE}_${TAG}}
 .endfor
 
-TAGLIST_${FILE} != ${echo} "${TAGLIST_TMP_${FILE}}" |${sed} -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
+TAGLIST_${FILE} != echo "${TAGLIST_TMP_${FILE}}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 
 ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	@# Template for Post List page
-	$Q${cat} ${element} | ${parser}              \
+	$Qcat ${element} | ${parser}              \
 		"POST_TITLE=${TITLE_${FILE}}"              \
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"POST_FILE=${NAME_${FILE}}"                \
@@ -342,7 +336,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
 		> ${TMPDIR}/${FILE}.list
 	@# Template for Home page
-	$Q${cat} ${article_idx} | ${parser} ${parser_opts} \
+	$Qcat ${article_idx} | ${parser} ${parser_opts} \
 		"CONTENT=${CONTENT_${FILE}}"                 \
 		"TITLE=${TITLE_${FILE}}"                     \
 		"POST_FILE=${NAME_${FILE}}"                  \
@@ -352,7 +346,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
-	$Q${cat} ${POSTDIR}/${NAME_${FILE}} | ${parser} ${parser_opts} \
+	$Qcat ${POSTDIR}/${NAME_${FILE}} | ${parser} ${parser_opts} \
 		"TITLE=${TITLE_${FILE}}"                   \
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"POST_FILE=${NAME_${FILE}}"                \
@@ -361,20 +355,20 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	@# Move temporary file to pub
 	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${POSTDIR}/${NAME_${FILE}}
 	@# Template for RSS Feed
-	$Q${cat} ${TMPLDIR}/feed.element.rss | ${parser}     \
+	$Qcat ${TMPLDIR}/feed.element.rss | ${parser}     \
 		"TITLE=${TITLE_${FILE}}"                           \
 		"DESCRIPTION=${DESC_${FILE}}"                      \
 		"LINK=${BASE_URL}/${POSTDIR_NAME}/${NAME_${FILE}}" \
 		> ${TMPDIR}/${FILE}.rss
 	@# Prepare TAGS
 	$Qfor TAG in ${TAGS_${FILE}}; do                             \
-		${cat} ${tagelement} | ${parser}                           \
+		cat ${tagelement} | ${parser}                           \
 			"TAGLINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}${PAGE_EXT}" \
 			"TAGNAME=$${TAG}"                                        \
 		>> ${TMPDIR}/tags.list;                                    \
 	done
 	$Qfor TAG in ${TAGS_${FILE}}; do               \
-		${cat} ${element} | ${parser} ${parser_opts} \
+		cat ${element} | ${parser} ${parser_opts} \
 			"POST_TITLE=${TITLE_${FILE}}"              \
 			"DATE=${POSTDATE_${FILE}}"                 \
 			"POST_FILE=${NAME_${FILE}}"                \
@@ -386,86 +380,86 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 
 # Do CSS file
 ${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE}
-	$Q${cat} ${STYLEDIR}/${CSS_FILE} |${parser} ${parser_opts} \
+	$Qcat ${STYLEDIR}/${CSS_FILE} |${parser} ${parser_opts} \
 		> ${DESTDIR}/${CSS_FILE} && \
-		${echo} "-- CSS copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
+		echo "-- CSS copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
 
 # Do Homepage
 # EXAMPLE: pub/index.xhtml
 ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${header} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
-		${cat} ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index${PAGE_EXT} &&         \
+		cat ${header} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
+		cat ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index${PAGE_EXT} &&         \
 		${rm} -f ${DBFILES:S/^/${TMPDIR}\//} &&                                         \
-		${cat} ${footer} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
-		${cat} ${TMPDIR}/index${PAGE_EXT} |${parser} ${parser_opts}                     \
+		cat ${footer} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
+		cat ${TMPDIR}/index${PAGE_EXT} |${parser} ${parser_opts}                     \
 			"TITLE=${HOME_TITLE}"                                                         \
 			"BODY_CLASS=home"                                                             \
 			> ${TMPDIR}/index${PAGE_EXT}.tmp &&                                           \
 		${mv} ${TMPDIR}/index${PAGE_EXT}.tmp ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
 		${rm} ${TMPDIR}/index${PAGE_EXT} || {                                           \
-			${echo} "-- Could not build index page: $@" ;                    \
+			echo "-- Could not build index page: $@" ;                    \
 			false ;                                                          \
 		} ;                                                                \
-	} && ${echo} "-- Index page built: $@"
+	} && echo "-- Index page built: $@"
 
 # Do RSS Feed
 # EXAMPLE: pub/rss.xml
 ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${TMPLDIR}/feed.header.rss | ${parser} ${parser_opts} \
+		cat ${TMPLDIR}/feed.header.rss | ${parser} ${parser_opts} \
 			> ${DESTDIR}/rss.xml &&                \
-		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml && \
+		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml && \
 		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} && \
-		${cat} ${TMPLDIR}/feed.footer.rss >> ${DESTDIR}/rss.xml || { \
-			${echo} "-- Could not build RSS page: $@" ; \
+		cat ${TMPLDIR}/feed.footer.rss >> ${DESTDIR}/rss.xml || { \
+			echo "-- Could not build RSS page: $@" ; \
 			false ; \
 		} ; \
-	} && ${echo} "-- RSS page built: $@"
+	} && echo "-- RSS page built: $@"
 
 # Do Post List page
 # EXAMPLE: pub/list.xhtml
 ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
-		${cat} ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list${PAGE_EXT} && \
+		cat ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
+		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list${PAGE_EXT} && \
 		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} &&                            \
-		${cat} ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
-		${cat} ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
+		cat ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
+		cat ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
 			"TITLE=${POST_LIST_TITLE}"                                                  \
 			> ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                                \
     ${rm} ${TMPDIR}/list${PAGE_EXT} || {                                          \
-			${echo} "-- Could not build list page: $@" ;                           \
+			echo "-- Could not build list page: $@" ;                           \
 			false ;                                                                \
 		} ;                                                                      \
-	} && ${echo} "-- List page built: $@"
+	} && echo "-- List page built: $@"
 
 # Do Tag List page
 # EXAMPLE: pub/tags/index.xhtml
 ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
-		${cat} ${header} > ${TMPDIR}/taglist${PAGE_EXT} &&             \
-		${cat} ${tags} | ${parser} ${parser_opts}                      \
+		cat ${header} > ${TMPDIR}/taglist${PAGE_EXT} &&             \
+		cat ${tags} | ${parser} ${parser_opts}                      \
 			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"                           \
-			"TAGLIST_CONTENT=`${cat} ${TMPDIR}/tags.list |${sort} -u`"   \
+			"TAGLIST_CONTENT=`cat ${TMPDIR}/tags.list |${sort} -u`"   \
 			>> ${TMPDIR}/taglist${PAGE_EXT} &&                           \
-		${cat} ${footer} >> ${TMPDIR}/taglist${PAGE_EXT} &&            \
-		${cat} ${TMPDIR}/taglist${PAGE_EXT} | ${parser} ${parser_opts} \
+		cat ${footer} >> ${TMPDIR}/taglist${PAGE_EXT} &&            \
+		cat ${TMPDIR}/taglist${PAGE_EXT} | ${parser} ${parser_opts} \
 		  "BODY_CLASS=tags"                                            \
 			"TITLE=${TAG_LIST_TITLE}"                                    \
 		> ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                    \
 		${rm} ${TMPDIR}/tags.list &&                                   \
 		${rm} ${TMPDIR}/taglist${PAGE_EXT} ||                          \
 		{                                                              \
-			${echo} "-- Could not build tag list page: $@" ;             \
+			echo "-- Could not build tag list page: $@" ;             \
 			false ;                                                      \
 		} ;                                                            \
-	} && ${echo} "-- Tag list built: $@"
-	$Qfor TAG in `${cd} ${TMPDIR};${ls} *.tag|${sed} -e 's|.tag$$||g'`; do        \
-		${cat} ${header} > ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                    \
-		${cat} ${TMPDIR}/$${TAG}.tag >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&        \
-		${cat} ${footer} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                     \
-		${cat} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
+	} && echo "-- Tag list built: $@"
+	$Qfor TAG in `cd ${TMPDIR};ls *.tag|sed -e 's|.tag$$||g'`; do        \
+		cat ${header} > ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                    \
+		cat ${TMPDIR}/$${TAG}.tag >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&        \
+		cat ${footer} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                     \
+		cat ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
 			"TITLE=$${TAG}"                                                           \
 			> ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
 			${rm} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
@@ -485,9 +479,9 @@ ${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
 	$Q{                                                    \
 		${markdown} ${FILE} > ${FILE:S/.md$/${PAGE_EXT}/} || \
 		{                                                    \
-			${echo} "-- Could not build doc file: $@" ;        \
+			echo "-- Could not build doc file: $@" ;        \
 		} ;                                                  \
-	} && ${echo} "-- Doc file built: $@"
+	} && echo "-- Doc file built: $@"
 
 .endfor
 
@@ -499,17 +493,17 @@ backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
 		${tar} cfz ${BACKUPDIR}/${TODAY}_makefly.tar.gz makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} || \
 		{ \
-			${echo} "-- Backup failed!" ; \
+			echo "-- Backup failed!" ; \
 			false ; \
 		} ; \
-	} && ${echo} "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR} and ${SPECIALDIR}."
+	} && echo "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR} and ${SPECIALDIR}."
 
 # Publish: send files out
 publish_script = ${TOOLSDIR}/${PUBLISH_SCRIPT_NAME}
-PUBDIR != ${echo} ${DESTDIR:S/^.\//${MAKEFLYDIR}\//}
+PUBDIR != echo ${DESTDIR:S/^.\//${MAKEFLYDIR}\//}
 publish: ${DESTDIR}
 	$Q{ \
-		${cat} ${publish_script} |${parser} \
+		cat ${publish_script} |${parser} \
 			"DESTDIR=${PUBDIR}" \
 			"PUBLISH_DESTINATION=${PUBLISH_DESTINATION}" \
 			> ${TMPDIR}/${PUBLISH_SCRIPT_NAME} && \
@@ -518,10 +512,10 @@ publish: ${DESTDIR}
 			${rm} -f ${TMPDIR}/${PUBLISH_SCRIPT_NAME} || \
 		{ \
 			${rm} -f ${TMPDIR}/${PUBLISH_SCRIPT_NAME} ; \
-			${echo} "-- Publication failed!" ; \
+			echo "-- Publication failed!" ; \
 			false ; \
 		} ; \
-	} && ${echo} "-- Publish ${DESTDIR} content with ${publish_script}: OK."
+	} && echo "-- Publish ${DESTDIR} content with ${publish_script}: OK."
 
 # END
 .MAIN: all
