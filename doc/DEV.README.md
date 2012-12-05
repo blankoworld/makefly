@@ -7,7 +7,6 @@
   * how is made Makefile
   * how templates work?
   * makefly.rc: give some tips that permits to change some other variable, as programs, etc.
-  * Explain which tools exists: populate\_makefly, install, etc.
 
 ## Introduction
 
@@ -310,7 +309,7 @@ For an example:
 
     HOME_TITLE = Home
 
-### Existing word to translate
+### Existing words to translate
 
 At the time I write this documentation, here is the available words to translate (and their variable):
 
@@ -334,7 +333,27 @@ By using templates, you can easily add some texts and their translations in some
 
 ## Tools
 
-FIXME
+Makefly is delivered with some tools to be more usable. These tools are placed in **tools** directory.
+
+### create_post.sh
+
+Script that permit to help you to create new posts. Kind of lightweight console user interface.
+
+This is useful if no interface exists to create posts in Makefly, which, I remember you, is not the goal of Makefly. This one just compile some files to create a blog. To create these files, you need a user interface.
+
+### install.sh
+
+Script that permit to copy **pub** directory content to those of your choice. By default the **public_html** directory located in you home directory.
+
+This *install* method is not integrated in Makefly because it's could be dangerous to overwrite existing files. But you can have same effect with the *publish* method by using `pmake publish` and using **publish.sh**.
+
+### populate_makefly.sh
+
+Dev script that permits to populate Makefly by creating some posts. It uses **create_post.sh** script to work.
+
+### publish.sh
+
+This script give command to execute after having produced your blog. This permits to publish it on a remote server via SSH protocol or to synchronize your directory to another one. This is explained in USER documentation, so for more information please read **Publish result to the web** in the USER documentation.
 
 ## Best practices
 
