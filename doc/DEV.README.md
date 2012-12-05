@@ -4,19 +4,9 @@
 
 ## Plan - Working Intro
 
-  * explain db dir and src dir
-  * explain how works git repositories:
-    * 3 hosts (gitorious, github and git.dossmann.net)
-    * some branches (master, comments, weblog)
   * how is made Makefile
   * how templates work?
-  * langage variables
   * makefly.rc: give some tips that permits to change some other variable, as programs, etc.
-  * Dev's best practices:
-    * if add a variable for TEMPLATE, add translation in lang directory, complete documentation
-    * if encount a problem and solve it: give solution into doc/KNOWN\_ISSUES.md file
-    * if a problem is not solved: create an issue on github for other developers to know it and resolve it if possible
-    * if a fix is down or a new functionalities is available, don't forget to add a line into Changelog file
   * Explain which tools exists: populate\_makefly, install, etc.
 
 ## Introduction
@@ -291,7 +281,58 @@ Available variables:
   * ${TITLE}: Title of the current page. For an example *Homepage*, *Tag List*, *My first post*, etc.
   * ${THEME\_IS}: Sentence that is used to explain which theme have been choosed. For an example *The theme of this page is: *.
 
+These variables are given by the **Makefile** file in some sections. So you probably have to update the Makefile in order to add some other ones.
+
 ## Language files
+
+In Makefly you can adapt some content to your native language. For this you have to fill in some files in the **lang** directory.
+
+### Existing files
+
+Available files:
+
+  * translate.en
+  * translate.fr
+
+You can see that 2 files exists, one for **en**glish translation, another one for **fr**ench translation.
+
+If you want to add your, create another file named translate.**YOUR\_COUNTRY\_CODE**. For an example, for italian translation, create a file named **translate.it**.
+
+You can also use the **translate.en** as first support to known how many word you have to translate.
+
+### Language File Format
+
+The language file format is similar to DB files format:
+
+    A_VARIABLE = the translation about this variable
+
+For an example:
+
+    HOME_TITLE = Home
+
+### Existing word to translate
+
+At the time I write this documentation, here is the available words to translate (and their variable):
+
+  * HOME\_TITLE (Home)
+  * POST\_LIST\_TITLE (Post list)
+  * TAG\_LIST\_TITLE (Tag list)
+  * TAG\_TITLE (Tag(s))
+  * PERMALINK\_TITLE (permalink)
+  * POWERED\_BY (Powered by)
+  * POSTED (Posted)
+  * ABOUT\_TITLE (About)
+  * SOURCE\_LINK\_NAME (Sources on)
+  * SOURCE\_LINK\_TITLE (Go to the gitorious makefly homepage)
+  * THEME\_IS (Theme is:)
+  * LINKS\_TITLE (Links)
+  * READ\_MORE (Read more)
+  * SEARCH\_BAR\_CONTENT (Search)
+  * SEARCH\_BAR\_BUTTON\_NAME (Search)
+
+By using templates, you can easily add some texts and their translations in some themes.
+
+## Tools
 
 FIXME
 
@@ -305,6 +346,25 @@ If you add a functionnality:
   * fix **doc**umentation to update Makefly's state
   * don't forget to complete language files in **lang** directory if you add some TEXT into templates!
   * if you add some needed VAR that could be changed by user, add it to the **makefly.rc.example**
+
+### Customizing template
+
+If you add a text in a template, you have to add some variables for words to be translated. You also have to add theses variables into translation lang directory. Also complete this documentation.
+
+### Errors
+
+#### You have encounted a problem and resolved it?
+
+Add your error message and its solution into **doc/KNOWN\_ISSUES.md** file!
+
+#### You have encounted a problem and didn't have resolved it?
+
+Go to [Makefly's github page](https://github.com/blankoworld/makefly/issues "Go to Issue's page for Makefly's project on github") and add a new issue with a detailed error:
+
+  * where you encount the problem
+  * your configuration file
+  * how to reproduce the bug
+  * which error message you encount
 
 ## Ideas
 
