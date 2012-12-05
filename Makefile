@@ -49,9 +49,6 @@ SIDEBAR_FILENAME = sidebar
 TOOLSDIR         = ./tools
 MAKEFLYDIR       != pwd
 
-# other files
-htmldoc ?= README
-
 # programs
 markdown ?= markdown
 lua      ?= lua
