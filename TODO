@@ -1,9 +1,7 @@
 TODO:
 -----
 
-1/ Technical documentation
-  * dev doc: description will fill in the RSS file
-  * dev doc: you can add some VARS in templates. You just have to initialize them into Makefil, makefly.rc or DB files (but for this one the Makefile should process them) 
+1/ Technical documentation (french)
 
 - Problem with TAG_NAME and TAGNAME. And also TAGLINK.
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
@@ -119,3 +117,5 @@ DONE:
 - Delete var for these programs:
   sed, cp, ls, cat, echo, head, cut, grep, tail
 - Add BLOG_CHARSET in RSS file
+- Technical documentation (english)
+
