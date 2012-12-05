@@ -22,7 +22,7 @@ Nevertheless, I recommand you to know:
 
 ## Quick Bases
 
-First thing you have to know is : Makefly is not made to be KISS/simple. It's made to do a thing and do it well. To have an interface to publish posts and to write posts, another project will born (*HYMBY* or *ANSWER* project) to make this interface. But this is another subject.
+First thing you have to know is: Makefly is not made to be KISS/simple. It's made to do a thing and do it well. To have an interface to publish posts and to write posts, another project will born (*HYMBY* or *ANSWER* project) to make this interface. But this is another subject.
 
 ### Main engine
 
