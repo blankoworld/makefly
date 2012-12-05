@@ -2,12 +2,6 @@
 
 # Makefly Technical Documentation
 
-## Plan - Working Intro
-
-  * how is made Makefile
-  * how templates work?
-  * makefly.rc: give some tips that permits to change some other variable, as programs, etc.
-
 ## Introduction
 
 This documentation aims to explain how Makefly work. Developer will probably search information on how add code and how contribute on Makefly.
@@ -183,6 +177,8 @@ Some things you have to know about the Makefile:
   * Add a simple comment before your target in order some developer to understand why this block exists
   * If you encount some problems and find a solution, don't forget to add problem/solution into *doc/KNOWN_ISSUES.md* file
 
+For other info, I suggest you to read comments in the *Makefile* file. If you have any question, ask me (`olivier+makeflydoc[AT]dossmann[DOT]net`).
+
 ## The makefly.rc file
 
 This file is needed by user to configure Makefly. User have to create it for Makefly to work.
@@ -201,6 +197,39 @@ Most important variables:
   * SHORT\_DATE\_FORMAT same as DATE\_FORMAT
   * INDEX\_FILENAME if you want to name page as **main** instead of **index**
   * PAGE\_EXT if you want another extension. For an example **xhtml** instead of **html**.
+
+### Tip: redefine some others VARS
+
+Because of makefly.rc included into Makefile at process time, you can redefine some other variables into the **makefly.rc**:
+
+  * TMPLDIR: template directory (in which their is all themes). By default **template**.
+  * BINDIR: directory in which their is the LUA parser. By default **bin**.
+  * LANGDIR: language directory. By default **lang**.
+  * SRCDIR: source directory in which there is all posts ' content. By default **src**.
+  * DESTDIR: destination directory in which the result would be placed. By default **pub**.
+  * DBDIR: meta info directory in which there is all meta info for each post. By default **db**.
+  * TMPDIR: temporary directory in which some temp files would be created/deleted. By default **tmp**.
+  * DOCDIR: documentation directory. Useful for the documentation you're reading. By default **doc**.
+  * TAGDIR\_NAME: name of the *result* directory in which all tag's page should be written. By default **tags**. This is useful for a better web indexation.
+  * POSTDIR\_NAME: name of the *result* directory in which all posts should be written. By default **posts**. This is useful for a better web indexation.
+  * STATICDIR: static directory in which user give files that would be copied into the result directory (DESTDIR). By default **static**.
+  * SPECIALDIR: special directory in which you could find the **sidebar.md** file and the **about.md** file. By default **special**.
+  * ABOUT\_FILENAME: name of the about's page. This is used to find the about's page in the SPECIALDIR **and** to rename the final about's page. By default **about**.
+  * THEME: theme by default. Already explained in USER documentation.
+  * BACKUPDIR: backup directory in which you can backup all files from Makefly. By default **mbackup**.
+  * SIDEBAR\_FILENAME: name of the sidebar's page. Not only used to find the file, but also to write it into result directory. By default **sidebar**.
+  * TOOLSDIR: tools directory in which some useful tools could be found. It's used for *publish* command. Do not redefine it without knowing what you're doing! By default: **tools**.
+  * MAKEFLYDIR: current directory. DO NOT redefine it.
+  * markdown: markdown command. By default **markdown**. But could be changed by python markdown, lua markdown, etc.
+  * lua: lua command. By default **lua**.
+  * parser: parser used to parse all files. Should not be redefined!
+  * mv: command to move files.
+  * rm: command to remove files.
+  * sort: command to sort files or lists.
+  * date: command to give timestamps, dates, etc.
+  * tar: command to archivate files.
+  * PUBLISH\_SCRIPT\_NAME: name of the publish script. Could be renamed by another one. The script should be located into the **TOOLSDIR** directory. By default: **publish.sh**.
+  * BODY\_CLASS: Class used by the body html tag in all pages. Useful for theme and stylesheets. By default **single**.
 
 ## Template's files
 
