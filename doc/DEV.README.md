@@ -36,7 +36,7 @@ Have a look to **Main engine: The Makefile file** section to understand how it w
 
 ### Posts
 
-In makefly, a post is split in 2 files:
+In Makefly, a post is split in 2 files:
 
   * a metadata file
   * a source file
@@ -79,7 +79,7 @@ The code is put on 3 git repositories:
   * [Github](http://github.com/blankoworld/makefly/ "Makefly on Github")
   * Personal repository: http://git.dossmann.net/
 
-You can pull them with **git** command in a terminal, for an example with gitorious:
+You can pull them with **git** command in a terminal, for an example with gitorious repository:
 
     git clone git://gitorious.org/makefly/master.git master
 
