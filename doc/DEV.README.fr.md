@@ -26,173 +26,172 @@ La première chose que vous devez savoir est : Makefly n'a pas été construit p
 
 ### Moteur principal
 
-Makefly is a program that use a BSD Makefile to work. The BSD Makefile is a system that watch all needed files, all target files and will compile/make only what useful from needed files to target files. In fact, if you relaunch command, it will only recompile what needed.
+Makefly est un programme qui utilise un Makefile BSD pour fonctionner. Le Makefile BSD est un système qui regarde tout les fichiers nécessaires, tout les fichiers cibles et va compiler/faire seulement ce qui est utile pour les fichiers cibles nécessaires. En effet, si vous relancer la commande, il ne compilera que ce qui est nécessaire.
 
-For an example, if you change only one file, and this file is only used in ONE target file, then BSD Makefile will only compile/make the target file with the source file.
+Par exemple si vous changez seulement un fichier, et que ce fichier est simplement utilisé dans UN fichier cible, alors le Makefile BSD compilera/fera seulement le fichier cible avec le fichier source.
 
-This mechanism permits to save up time and resources. To my mind, this is the power of Makefly.
+Ce mécanisme permet d'économiser du temps et des ressources. Selon moi c'est ce qui fait la puissance de Makefly.
 
-Have a look to **Main engine: The Makefile file** section to understand how it works.
+Jetez un œil à la section **Moteur principal : Le fichier Makefile** pour comprendre comment cela fonctionne.
 
-### Posts
+### Articles
 
-In makefly, a post is split in 2 files:
+Dans Makefly les articles sont séparés en 2 fichiers : 
 
-  * a metadata file
-  * a source file
+  * un fichier méta-données
+  * un fichier source
 
-The metadata file contains all metadata for the post.
+Le fichier méta-données contient toutes les méta-données de l'article.
 
-The source file contains the content of the post.
+Le fichier source contient le contenu de l'article.
 
-You probably think that this make no sense, but have a look to the Makefile to see that's useful. For further information, read **Learn more about posts ' files** section.
+Vous pensez probablement que cela ne fait pas de sens, mais regardez du côté du Makefile pour voir que c'est utile. Pour plus d'information, lisez la section **En savoir plus à propos des fichiers articles**.
 
-### Configuration file
+### Fichier de configuration
 
-As some programs, Makefly aims to permit configuration in ONE unique file: **makefly.rc**. But as others, you can do more by customizing Makefly's files as:
+Comme d'autres programmes, Makefly vise à permettre la configuration dans UN fichier unique : **makefly.rc**. Mais comme d'autres, vous pouvez faire plus en personnalisant les fichiers de Makefly comme : 
 
-  * Makefile: some variables could be useful to display errors in another languages, give some other template files, add more variables, etc.
-  * lang/translate.* files: You can add a new translation or add more values
-  * template files: You can customize template as you want. But not sure it works after changes :-)
+  * Makefile : quelques variables peuvent être utiles pour montrer les erreurs dans d'autres langues, donner d'autres fichiers template, ajouter plus de variables, etc.
+  * Les fichiers lang/translate.* : Vous pouvez ajouter de nouvelles traductions ou d'autres valeurs
+  * Les fichiers template : Vous pouvez personnaliser les templates comme vous voulez. Il n'est pas certain que cela fonctionne après changements :-)
 
-With the main configuration file (**makefly.rc**) you can do some things as:
+Avec le fichier de configuration principal (**makefly.rc**) vous pouvez faire des choses comme : 
 
-  * activate/desactivate a sidebar, a searchbar
-  * change template
-  * change date format
-  * name, description of your blog
-  * name of index files
-  * extension of your blog
+  * activer/désactiver une barre latérale, une barre de recherche
+  * changer les templates du thème
+  * changer le format de date
+  * nom, description de votre joueb (JOUrnal wEB)
+  * nom des fichiers index
+  * extension de votre blog
   * etc.
 
-For more information, please have a look to **The makefly.rc file** section.
+Pour plus d'information regardez la section **Le fichier makefly.rc**.
 
-## Where is the code?
+## Où est le code ?
 
-The code is distributed on the Internet on some repositories. Each repository have some branches. Each branch is used for a specific goal. For an example the official Makefly website is contained in a branch called *weblog*.
+Le code est distribué sur Internet sur quelques dépôts. Chaque dépôts a quelques branches. Chaque branche est utilisée pour un but précis. Par exemple le site officiel Makefly est contenu dans une branche appelée *weblog*.
+### Dépôts
 
-### Repos
+Le code est mis dans 3 dépôts git : 
 
-The code is put on 3 git repositories:
+  * [Gitorious](http://gitorious.org/makefly/ "Makefly sur Gitorious")
+  * [Github](http://github.com/blankoworld/makefly/ "Makefly sur Github")
+  * Dépôt personnel : http://git.dossmann.net/
 
-  * [Gitorious](http://gitorious.org/makefly/ "Makefly on Gitorious")
-  * [Github](http://github.com/blankoworld/makefly/ "Makefly on Github")
-  * Personal repository: http://git.dossmann.net/
-
-You can pull them with **git** command in a terminal, for an example with gitorious:
+Vous pouvez les récupérer avec la commande **git** dans un terminal, par exemple avec le dépôt gitorious : 
 
     git clone git://gitorious.org/makefly/master.git master
 
-For gitub:
+Pour github : 
 
     git clone git://github.com/blankoworld/makefly.git
 
-**Note**: We have no time to discuss about my git choice. If you dislike git, perhaps could you use another VCS like HG and its [hg-git plugin](http://hg-git.github.com/ "Learn more about hg-git").
+**Note**: Nous n'avons pas le temps de débattre sur mon choix de git. Si vous n'aimez pas git, peut-être pourriez-vous utiliser un autre système de gestion de version comme HQ (mercurial) et son [hg-git plugin](http://hg-git.github.com/ "En apprendre plus sur hg-git").
 
-### Branches
+### Les branches
 
-I work with branches. Each branch have a specific goal. Here is the 3 main branches I have:
+Je travaille avec des branches. Chaque branche a un but spécifique. Voici 3 branches principales dont je dispose : 
 
-  * master: last makefly development
-  * disqus\_comments: with disqus as comment system
-  * comments: for 0.2 version with a integrated comment system
+  * master: derniers développement de Makefly
+  * disqus\_comments: avec Disqus comme système de commentaire
+  * comments: pour la version 0.2 avec un système de commentaire intégré
 
-If you want to dev a functionnality, I suggest you to begin from **master branch** on gitorious and/or github. Then to do a *merge request* on it.
+Si vous voulez développer une fonctionnalité, je vous suggère de commencer de la **branche master** sur gitorious et/ou github. Puis de faire une *demande de merge* sur cette dernière.
 
-### How to create new branch and push specific changes into?
+### Comment créer une nouvelle branche et pousser les changements adéquats dedans ?
 
-I suggest you to read this article: [A successful git branching model](http://nvie.com/posts/a-successful-git-branching-model/ "Learn more about a successful git branching model"). This one explain how you can do branch and merge functionalities into.
+Je vous suggère de lire cet article : [A successful git branching model](http://nvie.com/posts/a-successful-git-branching-model/ "En apprendre plus au sujet d'un modèle de branches git réussi") (anglais). Ce dernier explique comment faire une branche et ajouter des fonctionnalités dedans.
 
-## Learn more about posts ' files
+## En apprendre plus sur les fichiers articles
 
-As described previously, posts are composed of 2 files: 
+Comme expliqué précédemment, les articles sont composés de 2 fichiers : 
 
-  * a DB file that contains meta data
-  * a source file that contains content of post
+  * un fichier DB contenant les méta-données
+  * un fichier source qui contient le contenu de l'article
 
-This permit Makefly to just extract content or just meta info.
+Ceci permet à Makefly de simplement extraite le contenu ou juste les méta-données.
 
-Meta data are stored into the **db** directory (DBDIR variable). Furthermore source files are stored into **src** directory.
+Les méta-données sont stockées dans le dossier **db** (variable DBDIR). De plus les fichiers sources sont stockées dans le dossier **src**.
 
-For Makefly to work each post not only need ONE db file and ONE source file but it also need that these files have the same name. For an example, I write a post named "My First Post". I will so have two files:
+Pour que Makefly fonctionne, chaque article doit non seulement avoir UN fichier db et UN fichier source, mais il a aussi besoin que ces fichiers aient le même nom. Par exemple j'écris un article nommé "Mon premier article". J'aurai deux fichiers : 
 
-  * **db/1234567890,my_first_post.mk**
-  * **src/my_first_post.md**
+  * **db/1234567890,mon_premier_article.mk**
+  * **src/mon_premier_article.md**
 
-At blog compilation, Makefly will parse each file and publish one post.
+À la compilation du joueb (blog), Makefly va parcourir chaque fichier et publier l'article.
 
-### DB files
+### Les fichiers DB
 
-Meta data files permit to generate a post list page. Their named are composed as:
+Les fichiers méta-données permettent de générer la page qui contient la liste des articles. Leur nom est composé ainsi : 
 
-  * a **timestamp** that defined the date where the post should be **published**
-  * a coma: **,**
-  * the post's **title** in lower case, without spaces and no special chars as `?!:;,<>(){}`
-  * the db file extension: **.mk**
+  * un **timestamp** qui définit la date où l'article devrait être**publié**
+  * une virgule: **,**
+  * le **titre** de l'article en minuscule, sans espaces et sans caractères spéciaux comme `?!:;,<>(){}`
+  * l'extension de fichier db : **.mk**
 
-Note that db file extension is **.mk** which permit to include it into BSD Makefile and fetch directly variables.
+À noter que l'extension de fichier db est **.mk** ce qui autorise l'inclusion dans le Makefile BSD et récupère directement les variables.
 
-If you edit a meta data file, you can find something like:
+Si vous éditez un fichier de méta-données, vous pouvez y trouver quelque chose comme : 
 
-    VAR = content of your var
+    VAR = contenu de votre variable
 
-For an example:
+Par exemple : 
 
-    TITLE = The title of my post
-    TYPE = news
-    TAG = one_tag, another_tag
+    TITRE = Le titre de mon article
+    TYPE = nouvelle
+    TAG = une_etiquette, une_autre_etiquette
 
-Which informs that the post have a title "**The title of my post**", a type "**news**" and have some tags: one\_tag and another\_tag.
+Ce qui annonce que l'article aura pour titre "**Le titre de mon article**", un type "**nouvelle**" et aura quelques étiquettes : une\_etiquette et une\_autre\_etiquette.
 
-DB files are included in Makefile when you see some code like:
+Les fichiers DB sont inclut dans le Makefile quand vous voyez du code comme : 
 
     .include "${DBFILES}"
 
-or
+ou : 
 
     .include "${DBDIR}/${FILES}"
 
-If you add some VAR, you have to edit Makefile and complete it.
+Si vous ajoutez quelques VARIABLES, vous devez modifier le Makefile et le compléter.
 
-### Source files
+### Les fichiers sources
 
-Source files permit to generate each post.
+Les fichiers sources permettent la génération de chaque article.
 
-Source files extension is **.md** which means that they are **markdown files**. You can read more about this file format [markdown official website](http://daringfireball.net/projects/markdown/syntax/ "Markdown documentation").
+L'extension des fichiers source est **.md** ce qui implique qu'ils sont des **fichiers markdown**. Vous pouvez en lire plus sur le format de fichier sur le [site officiel de Markdown](http://daringfireball.net/projects/markdown/syntax/ "Documentation Markdown").
 
-## Main engine: The Makefile file
+## Moteur principal : Le fichier Makefile
 
-The core of Makefly: the **Makefile** file. This one generates all needed files for your future weblog.
+Le cœur de Makefly : the fichier **Makefile**. Ce dernier génère tout les fichiers nécessaires pour votre future joueb (JOUrnal wEB, blog).
 
-I suggest you to use the [pmake handbook](http://www.freebsd.org/doc/en/books/pmake/ "Learn more about pmake") to be your main support.
+Je vous suggère d'utiliser le [manuel de pmake](http://www.freebsd.org/doc/en/books/pmake/ "En savoir plus sur pmake") (anglais) comme support principal.
 
-Some things you have to know about the Makefile:
+Ce que vous devriez savoir à propos du Makefile : 
 
-  * if you want to add some targets, add them at the end of the file
-  * once you have developed your target, you can probably add it into the target called **all**
-  * to add global variable, add them at file's beginning
-    * variable that targets a directory are in upper case
-    * variable that targets a template's file or a program are in lower case
-  * if you want to add some VARS to be interpreted at template's parsing, add VARS into *parser_opts* variable
-  * Add a simple comment before your target in order some developer to understand why this block exists
-  * If you encount some problems and find a solution, don't forget to add problem/solution into *doc/KNOWN_ISSUES.md* file
+  * si vous voulez ajouter quelques cibles, ajoutez les à la fichier du fichier
+  * une fois que vous avez développé votre cible, vous pouvez probablement l'ajouter dans la cible nommée **all**
+  * pour ajouter une variable globale, ajoutez la en début de fichier
+    * les variables qui ciblent un répertoire sont en majuscule
+    * les variables qui ciblent a fichier template ou un programme sont en minuscule
+  * si vous voulez ajouter quelques VARIABLES pour être interprétées lors du parcours des templates, ajoutez VARIABLES dans la variable *parser_opts*
+  * ajoutez un commentaire simple avant votre cible dans le but d'être compréhensible pour les quelques dévelopeurs suivants afin de comprendre pourquoi cette cible existe
+  * si vous rencontrez des problèmes et trouvez une solution, n'oubliez pas d'ajouter le problème et la solution dans le fichier *doc/KNOWN_ISSUES.md*
 
-For other info, I suggest you to read comments in the *Makefile* file. If you have any question, ask me (`olivier+makeflydoc[AT]dossmann[DOT]net`).
+Pour d'autres information, je vous suggère de lire les commentaires dans le fichier *Makefile*. Si vous avez une question, demandez-moi (`olivier+makeflydoc[AT]dossmann[DOT]net`).
 
-## The makefly.rc file
+## Le fichier makefly.rc
 
-This file is needed by user to configure Makefly. User have to create it for Makefly to work.
+Le fichier est nécessaire pour l'utilisateur afin de configurer Makefly. L'utilisateur doit le créer pour que Makefly fonctionne.
 
-Most important variables:
+Quelques variables importantes : 
 
-  * BLOG\_TITLE
-  * BLOG\_SHORT\_DESC
-  * BLOG\_DESCRIPTION
-  * BLOG\_LANG is a code used to search corresponding files in **lang** directory
-  * BLOG\_CHARSET used for RSS feed and all HTML files
-  * BASE\_URL to complete all URL
-  * RSS\_FEED\_NAME
-  * MAX\_POST to limit the number of post on mainpage
+  * BLOG\_TITLE : titre du blog
+  * BLOG\_SHORT\_DESC : description courte du blog (non utilisé actuellement)
+  * BLOG\_DESCRIPTION : description du blog pour le flux RSS
+  * BLOG\_LANG : est un code utilisé pour chercher le fichier correspondant dans le répertoire **lang**. Par exemple **fr** pour Français, ou **en** pour anglais.
+  * BLOG\_CHARSET : utilisé pour le flux RSS et tout les fichiers HTML. Similaire à **UTF-8** ou **ISO-8859-15** par exemple.
+  * BASE\_URL: pour compléter toutes les adresses URL. Par example : **http://mon.joueb.tld/**
+  * RSS\_FEED\_NAME: The name that appears as title in your RSS feed.
+  * MAX\_POST: to limit the number of post on mainpage. If 0, do not add any limit.
   * DATE\_FORMAT to transform timestamp of posts
   * SHORT\_DATE\_FORMAT same as DATE\_FORMAT
   * INDEX\_FILENAME if you want to name page as **main** instead of **index**
