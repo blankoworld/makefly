@@ -93,7 +93,7 @@ For gitub:
 
 I work with branches. Each branch have a specific goal. Here is the 3 main branches I have:
 
-  * master: last makefly development
+  * master: last Makefly development
   * disqus\_comments: with disqus as comment system
   * comments: for 0.2 version with a integrated comment system
 
@@ -158,7 +158,7 @@ If you add some VAR, you have to edit Makefile and complete it.
 
 Source files permit to generate each post.
 
-Source files extension is **.md** which means that they are **markdown files**. You can read more about this file format [markdown official website](http://daringfireball.net/projects/markdown/syntax/ "Markdown documentation").
+Source files extension is **.md** which means that they are **markdown files**. You can read more about this file format under the [markdown official website](http://daringfireball.net/projects/markdown/syntax/ "Markdown documentation").
 
 ## Main engine: The Makefile file
 
@@ -185,18 +185,18 @@ This file is needed by user to configure Makefly. User have to create it for Mak
 
 Most important variables:
 
-  * BLOG\_TITLE
-  * BLOG\_SHORT\_DESC
-  * BLOG\_DESCRIPTION
-  * BLOG\_LANG is a code used to search corresponding files in **lang** directory
-  * BLOG\_CHARSET used for RSS feed and all HTML files
-  * BASE\_URL to complete all URL
-  * RSS\_FEED\_NAME
-  * MAX\_POST to limit the number of post on mainpage
-  * DATE\_FORMAT to transform timestamp of posts
-  * SHORT\_DATE\_FORMAT same as DATE\_FORMAT
-  * INDEX\_FILENAME if you want to name page as **main** instead of **index**
-  * PAGE\_EXT if you want another extension. For an example **xhtml** instead of **html**.
+  * BLOG\_TITLE: Title of the blog
+  * BLOG\_SHORT\_DESC: Short description (not used for this moment)
+  * BLOG\_DESCRIPTION: More verbose description, used for RSS Feed
+  * BLOG\_LANG: is a code used to search corresponding files in **lang** directory. For an example **en** for English, **fr** for French, etc.
+  * BLOG\_CHARSET: used for RSS feed and all HTML files. Should be **UTF-8** for an example, or **ISO-8859-1**.
+  * BASE\_URL: to complete all URL. For an example : **http://my.weblog.com/**
+  * RSS\_FEED\_NAME: The name that appears as title in your RSS feed.
+  * MAX\_POST: to limit the number of post on mainpage. If 0, do not add any limit.
+  * DATE\_FORMAT: to transform timestamp of posts
+  * SHORT\_DATE\_FORMAT: same as DATE\_FORMAT
+  * INDEX\_FILENAME: if you want to name page as **main** instead of **index**
+  * PAGE\_EXT: if you want another extension. For an example **xhtml** instead of **html**.
 
 ### Tip: redefine some others VARS
 
