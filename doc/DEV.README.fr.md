@@ -139,9 +139,9 @@ Par exemple :
 
     TITRE = Le titre de mon article
     TYPE = nouvelle
-    TAG = une_etiquette, une_autre_etiquette
+    TAG = un_mot_cle, un_autre_mot_cle
 
-Ce qui annonce que l'article aura pour titre "**Le titre de mon article**", un type "**nouvelle**" et aura quelques étiquettes : une\_etiquette et une\_autre\_etiquette.
+Ce qui annonce que l'article aura pour titre "**Le titre de mon article**", un type "**nouvelle**" et aura quelques mots-clés : un\_mot\_cle et un\_autre\_mot\_cle.
 
 Les fichiers DB sont inclut dans le Makefile quand vous voyez du code comme : 
 
@@ -201,223 +201,223 @@ Quelques variables importantes :
 
 Du fait que le fichier makefly.rc est inclus dans le Makefile au moment du traitement, vous pouvez redéfinir quelques autres variables dans le fichier **makefly.rc** : 
 
-  * TMPLDIR: répertoire des templates (dans lequel il y a tout les thèmes). Par défaut **template**.
-  * BINDIR: répertoire dans lequel il y a l'analyseur LUA. Par défaut **bin**.
-  * LANGDIR: répertoire pour les traductions. Par défaut **lang**.
-  * SRCDIR: répertoire source dans lequel il y a tout les contenu d'articles. Par défaut **src**.
-  * DESTDIR: destination directory in which the result would be placed. By default **pub**.
-  * DBDIR: meta info directory in which there is all meta info for each post. By default **db**.
-  * TMPDIR: temporary directory in which some temp files would be created/deleted. By default **tmp**.
-  * DOCDIR: documentation directory. Useful for the documentation you're reading. By default **doc**.
-  * TAGDIR\_NAME: name of the *result* directory in which all tag's page should be written. By default **tags**. This is useful for a better web indexation.
-  * POSTDIR\_NAME: name of the *result* directory in which all posts should be written. By default **posts**. This is useful for a better web indexation.
-  * STATICDIR: static directory in which user give files that would be copied into the result directory (DESTDIR). By default **static**.
-  * SPECIALDIR: special directory in which you could find the **sidebar.md** file and the **about.md** file. By default **special**.
-  * ABOUT\_FILENAME: name of the about's page. This is used to find the about's page in the SPECIALDIR **and** to rename the final about's page. By default **about**.
-  * THEME: theme by default. Already explained in USER documentation.
-  * BACKUPDIR: backup directory in which you can backup all files from Makefly. By default **mbackup**.
-  * SIDEBAR\_FILENAME: name of the sidebar's page. Not only used to find the file, but also to write it into result directory. By default **sidebar**.
-  * TOOLSDIR: tools directory in which some useful tools could be found. It's used for *publish* command. Do not redefine it without knowing what you're doing! By default: **tools**.
-  * MAKEFLYDIR: current directory. DO NOT redefine it.
-  * markdown: markdown command. By default **markdown**. But could be changed by python markdown, lua markdown, etc.
-  * lua: lua command. By default **lua**.
-  * parser: parser used to parse all files. Should not be redefined!
-  * mv: command to move files.
-  * rm: command to remove files.
-  * sort: command to sort files or lists.
-  * date: command to give timestamps, dates, etc.
-  * tar: command to archivate files.
-  * PUBLISH\_SCRIPT\_NAME: name of the publish script. Could be renamed by another one. The script should be located into the **TOOLSDIR** directory. By default: **publish.sh**.
-  * BODY\_CLASS: Class used by the body html tag in all pages. Useful for theme and stylesheets. By default **single**.
+  * TMPLDIR : répertoire des templates (dans lequel il y a tout les thèmes). Par défaut **template**.
+  * BINDIR : répertoire dans lequel il y a l'analyseur LUA. Par défaut **bin**.
+  * LANGDIR : répertoire pour les traductions. Par défaut **lang**.
+  * SRCDIR : répertoire source dans lequel il y a tout les contenu d'articles. Par défaut **src**.
+  * DESTDIR : répertoire de destination dans lequel le résultat sera mis. Par défaut **pub**.
+  * DBDIR : répertoire des méta-données dans lequel il y aura les méta-infos de chaque article. Par défaut **db**.
+  * TMPDIR : répertoire temporaire dans lequel quelques fichiers temporaires seront crées/supprimés. Par défaut **tmp**.
+  * DOCDIR : répertoire de documentation. Utile pour la documentation que vous être en train de lire. Par défaut **doc**.
+  * TAGDIR\_NAME : nom du répertoire résultant dans lequel seront écrits les pages de tag. Par défaut **tags**. C'est utile pour un meilleur référencement web.
+  * POSTDIR\_NAME : nom du répertoire résultant dans lequel seront écrits les articles. Par défaut **posts**. C'est utile pour un meilleur référencement web.
+  * STATICDIR : répertoire statique dans lequel l'utilisateur donne les fichiers qui seront copiés dans le dossier résultat (DESTDIR). Par défaut **static**.
+  * SPECIALDIR : répertoire spécial dans lequel vous pouvez trouver le fichier **sidebar.md** et le fichier **about.md**. Par défaut **special**.
+  * ABOUT\_FILENAME : nom de la page d'à propos. Ceci est utilisé pour trouver le fichier d'à propos dans le répertoire SPECIALDIR **et** pour renommer la page d'à propos finale. Par défaut **about**.
+  * THEME : thème par défaut. Déjà expliqué dans la documentation UTILISATEUR.
+  * BACKUPDIR : répertoire de sauvegarde dans lequel vous pouvez sauver tout les fichiers importants de Makefly. Par défaut **mbackup**.
+  * SIDEBAR\_FILENAME : nom de la page de panneau latéral. Non seulement utilisé pour trouver le fichier, mais aussi pour l'écrire dans le dossier résultant. Par défaut **sidebar**.
+  * TOOLSDIR : répertoire d'outils dans lequel vous pouvez trouver quelques outils utiles. C'est utilisé pour la commande *publish*. Ne pas la redéfinir sans savoir ce que vous faites ! Par défaut **tools**.
+  * MAKEFLYDIR : répertoire actuel. NE PAS le redéfinir.
+  * markdown : commande markdown. Par défaut **markdown**. Mais peut être changé par *python markdown*, *lua markdown.lua*, etc.
+  * lua : commande lua. Par défaut **lua**.
+  * parser : analyseur utilisé pour parcourir tout les fichiers. Ne devrait pas être redéfini !
+  * mv : commande pour déplacer des fichiers.
+  * rm : commande pour supprimer des fichiers.
+  * sort : commande pour ordonner des fichiers ou des listes.
+  * date : commande pour donner des dates, des timestamps, etc.
+  * tar : commande pour archiver des fichiers.
+  * PUBLISH\_SCRIPT\_NAME : nom du script de publication. Pourrait être renommé par un autre script. Ce script devrait être situé dans le répertoire **TOOLSDIR**. Par défaut **publish.sh**.
+  * BODY\_CLASS : Classe utilisée par la baliste html *body* dans toutes les pages. Utile pour le thème et les feuilles de style. Par défaut **single**.
 
-## Template's files
+## Les fichiers template
 
-Templates are located to **template** directory.
+Les templates sont situés dans le dossier **template** (variable TMPLDIR).
 
 ### Composition
 
-Each theme have its own directory. So for default theme, a **default** directory is created in which you can see some files:
+Chaque thème a son propre répertoire. Ainsi pour le thème *défaut*, un dossier **défaut** est crée dans lequel vous pouvez voir quelques fichiers comme :
 
-  * .xhtml files to describe the content of the weblog
-  * a **style** directory in which you can see all CSS files for a defined theme
-  * a **config.mk** in which you have some details about the theme:
-    * CSS\_NAME: Name that will appear on the weblog with `${CSS_NAME}`
-    * CSS\_FILE: the filename of choosen CSS for a defined theme
+  * les fichiers .xhtml pour décrire le contenu du joueb (JOUrnal wEB, blog)
+  * un dossier **style** dans lequel vous pouvez voir tout les fichiers CSS pour un thème défini
+  * un **config.mk** dans lequel vous avez des détails à propos du thème : 
+    * CSS\_NAME : Nom qui apparaîtra dans le joueb avec `${CSS_NAME}`
+    * CSS\_FILE : le nom de fichier du CSS choisi pour un thème spécifique
 
-### Mandatory files
+### Fichiers obligatoires
 
-Here is some explanations about **.xhtml** file you can find into a theme:
+Voici quelques explications à propos des fichiers **.xhtml** que vous pouvez trouver dans un thème : 
 
-  * article.index.xhtml: Template for each post that are shown on homepage
-  * article.xhtml: Template for a post on its single page
-  * element.xhtml: Template for a line in **Post List** page
-  * footer.xhtml: End of each HTML page
-  * header.xhtml: Head of each HTML page
-  * menu.about.xhtml: Element that is used to show the link to the About's page
-  * menu.search_bar.xhtml: Template for search bar
-  * read_more_link.xhtml: Template for the link **Read more** for each post.
-  * sidebar.xhtml: Template for the sidebar
-  * tagelement.xhtml: Template for a line in **Tag List** page 
-  * taglink.xhtml: Template for a single link to a tag's page
-  * tags.xhtml: Template for the **Tag List** page
+  * article.index.xhtml: Template pour chaque article qui est montré sur la page principale
+  * article.xhtml: Template pour un article sur sa page seule
+  * element.xhtml: Template pour une liste dans la page **Post List** (liste des articles)
+  * footer.xhtml: Fin de chaque page HTML
+  * header.xhtml: Début de chaque page HTML
+  * menu.about.xhtml: Élément qui est utilisé pour montrer le lien de la page *À propos*.
+  * menu.search_bar.xhtml: Template pour la barre de recherche
+  * read_more_link.xhtml: Template pour le lien **Lire la suite** pour chaque article.
+  * sidebar.xhtml: Template pour le panneau latéral
+  * tagelement.xhtml: Template pour une ligne sur la page **Tag List** (liste des mots-clés)
+  * taglink.xhtml: Template pour un lien seul vers une page de mot-clé
+  * tags.xhtml: Template pour la page **Tag List** (liste des mots-clés)
 
-### Completion
+### Complètement
 
-To display content of posts or some elements in each page, you can use what we call **variables**. In Makefly's template, variable are showned as here:
+Pour afficher le contenu des articles ou quelques éléments de chaque page, vous pouvez utiliser ce que nous appelons des **variables**. Dans les templates de Makefly, les variables sont montrées ainsi : 
 
-    ${SOME\_VARIABLE}
+    ${UNE\_VARIABLE}
 
-Available variables:
+Variables disponibles : 
 
-  * ${ABOUT\_INDEX}: Name of *About*'s page. For an example: about.html 
-  * ${ABOUT\_LINK}: Add a link to the about's page (if activated in default configuration's file
-  * ${ABOUT\_TITLE}: Title of about's page (just title). For an example: About.
-  * ${ARTICLE\_CLASS\_TYPE}: Class of article that user have filled in. For an example: news. This permit to adapt a stylesheet for each type of article.
-  * ${BASE\_URL}: Your website address. For an example: htt://my.weblog.tld/. The user give it in the configuration file.
-  * ${BLOG\_CHARSET}: Blog charset as *UTF-8* or *ISO-8859-15*. This is for HTML pages **and** RSS feeds
-  * ${BLOG\_TITLE}: Title of the blog. For an example *My first weblog*.
-  * ${BODY\_CLASS}: Name of class defined for current body's page tag. For an example, on home page, the body class is *home*. This is useful for CascadingStyleSheets.
-  * ${CONTENT}: Content of page/post. It often looks like a post content. But it could be another kind of content as a tag list, a post list, etc. This depends on the page you're editing.
-  * ${CSS\_FILE}: Name of CSS file. For an example *simple.css*.
-  * ${CSS\_NAME}: Name that will appears to user when it selects your CSS theme. For an example *default theme*.
-  * ${HOME\_TITLE}: Title that will appears on the link that redirect to homepage. For an example *Home*.
-  * ${LANG}: Country code used in HTML's page to define a language. For an example *en* for english, *fr* for *french*, etc.
-  * ${POSTDIR\_INDEX}: Exact name of postdir's index page. For an example *index.html*.
-  * ${POSTDIR\_NAME}: Name of posts directory. For an example *post*. That permit to have a better indexation on the Internet.
-  * ${POST\_LIST\_TITLE}: Name that will appears on the link to go to Post's list. For an example *Post List*.
-  * ${POST\_FILE}: Exact name of the post file. For an example with a post which title is *My first post*, the POST\_FILE would be *my_first_post*. This also permits a better web indexation.
-  * ${POST\_TITLE}: Title of the post. For an example: *My fist post*.
-  * ${POWERED\_BY}: Name displayed for the *Powered by* mention on all pages.
-  * ${READ\_MORE}: Name displayed for the *Read more* link on each post (if activated in the configuration file)
-  * ${RSS\_FEED\_NAME}: Name of your RSS feed. This will be shown for users that subscribe to your RSS. For an example *My first blog RSS feed*.
-  * ${SEARCHBAR}: Will display a search bar here. This works if searchbar is activated in configuration file.
-  * ${SEARCH\_BAR\_BUTTON\_NAME}: Name displayed for the search button. For an example *Search button*.
-  * ${SEARCH\_BAR\_CONTENT}: Text displayed in the search bar. For an example *A search...*.
-  * ${SHORT\_DATE}: Date using short date format (SHORT\_DATE\_FORMAT in makefly.rc configuration file) for post list's page. For an example *2012/11*.
-  * ${SIDEBAR}: Add a sidebar here if activated in configuration file and if you give some links to the **special/sidebar.md** file.
-  * ${SIDEBAR\_CONTENT}: Content of the sidebar will be displayed here.
-  * ${TAGDIR\_NAME}: Name of tags directory. For an example *tags*. This permits a better web indexation.
-  * ${TAGDIR\_INDEX}: Name of index file for tags. Example: *index.html*.
-  * ${TAGLINK}: Absolute link to a tag. For an example: *http://my.domain.tld/tags/my_tag.html*.
-  * ${TAGLIST\_CONTENT}: Content of tag list. A list of tags.
-  * ${TAGNAME}: Name of a given tag. For an example *my_first_tag*.
-  * ${TAG\_LIST\_TITLE}: Title of the list of tags. This is the name displayed on the link that redirect to tag's list. For an example *Tag list*.
-  * ${TAG\_NAME}: Name of a tag. Same as TAGNAME (FIXME: WTF?)
-  * ${TAG\_PAGE}: Real name of the page. For an example with a tag named *My tag*, it would be *my_tag.html*.
-  * ${TAG\_TITLE}: Title of the tag. For an example *my_tag*.
-  * ${TITLE}: Title of the current page. For an example *Homepage*, *Tag List*, *My first post*, etc.
-  * ${THEME\_IS}: Sentence that is used to explain which theme have been choosed. For an example *The theme of this page is: *.
+  * ${ABOUT\_INDEX} : Nom de la page *À propos*. Par exemple : apropos.html
+  * ${ABOUT\_LINK} : Ajoute un lien vers la page *À propos* (si activé dans le fichier de configuration par défaut)
+  * ${ABOUT\_TITLE} : Titre de la page d'à propos (juste le titre). Par exemple : À propos.
+  * ${ARTICLE\_CLASS\_TYPE} : Classe de l'article que l'utilisateur a rempli. Par exemple : news. Ceci permit d'adapter la feuille de style pour chaque type d'article.
+  * ${BASE\_URL} : L'adresse de votre site web. Par exemple : http://mon.blog L'utilisateur le renseigne dans le fichier de configuration.
+  * ${BLOG\_CHARSET} : Encodage du blog, comme *UTF-8* ou *ISO-8859-15*. Ceci est pour les pages HTML **et** les flux RSS.
+  * ${BLOG\_TITLE} : Titre du blog. Par exemple *Mon premier joueb*.
+  * ${BODY\_CLASS} : Nom de la classe définie pour la balise *body* de la page courante. Par exemple, sur la page d'accueil, la classe *body* est *home*. Ceci est utile pour les feuilles de style en cascade.
+  * ${CONTENT} : Contenu de la page / de l'article. Cela ressemble souvent au contenu d'un article. Mais cela peut être un autre type de contenu comme une liste de mots-clés, une liste d'articles, etc. Ceci dépend de la page que vous éditez.
+  * ${CSS\_FILE} : Nom du fichier CSS. Par exemple *simple.css*.
+  * ${CSS\_NAME} : Nom qui apparaîtra à l'utilisateur quand il choisira votre thème CSS. Par exemple le thème *défaut*.
+  * ${HOME\_TITLE} : Titre qui apparaîtra sur le lien qui redirige vers la page d'accueil. Par exemple *Accueil*.
+  * ${LANG} : Code pays utilisé dans les pages HTML pour définir une langue. Par exemple *fr* pour français, *en* pour anglais, etc.
+  * ${POSTDIR\_INDEX} : Nom exact de la page d'index des articles. Par exemple *index.html*.
+  * ${POSTDIR\_NAME} : Nom du répertoire des articles. Par exemple *articles*. Ceci permet d'avoir un meilleur référencement sur Internet.
+  * ${POST\_LIST\_TITLE} : Nom qui apparaîtra sur le lien pour aller sur la liste des articles. Par exemple *Liste des articles*.
+  * ${POST\_FILE} : Nom exact du fichier article. Par exemple pour un article dont le nom est *Mon premier article*, la variable POST\_FILE devrait être *mon_premier_article*. Ceci permet également un meilleur référencement.
+  * ${POST\_TITLE} : Titre de l'article. Par exemple : *Mon premier article*.
+  * ${POWERED\_BY} : Nom affiché pour la mention *Propulsé par* sur toutes les pages.
+  * ${READ\_MORE} : Nom affiché pour le lien *Lire la suite* sur chaque article (si activé dans le fichier de configuration)
+  * ${RSS\_FEED\_NAME} : Nom pour votre flux RSS. Ceci sera montré aux utilisateurs qui souscrivent à votre RSS. Par exemple *Flux RSS de mon premier blog*.
+  * ${SEARCHBAR} : Affichera une barre de recherche ici. Ceci fonctionne si la barre de recherche est activée dans le fichier de configuration.
+  * ${SEARCH\_BAR\_BUTTON\_NAME} : Nom affiché pour le bouton de recherche. Par exemple *Rechercher*.
+  * ${SEARCH\_BAR\_CONTENT} : Texte affiché dans la barre de recherche. Par exemple *Recherche...*.
+  * ${SHORT\_DATE} : Date utilisant le format court de date. (variable SHORT\_DATE\_FORMAT dans le fichier de configuration makefly.rc) sur la page de la liste des articles. Par exemple *11/2012*.
+  * ${SIDEBAR} : Ajoute un panneau latéral ici si activé dans le fichier de configuration et si vous donnez quelques liens dans le fichier **special/sidebar.md**.
+  * ${SIDEBAR\_CONTENT} : Le contenu du panneau latéral sera affiché ici.
+  * ${TAGDIR\_NAME} : Nom du répertoire de mots-clés. Par exemple *motscles*. Ceci permet un meilleur référencement.
+  * ${TAGDIR\_INDEX} : Nom du fichier index pour les mots-clés. Exemple : *index.html*.
+  * ${TAGLINK} : Lien absolu vers un mot-clé. Par exemple : *http://mon.domaine.tld/motscles/mon_mot_cle.html*.
+  * ${TAGLIST\_CONTENT} : Contenu de la liste des mots-clés. Une liste de mots-clés.
+  * ${TAGNAME} : Nom d'un mot-clé donné. Par exemple *mon_mot_cle*.
+  * ${TAG\_LIST\_TITLE} : Titre de la liste des mots-clés. Ceci est le nom affiché sur le lien qui redirige vers la liste des mots-clés. Par exemple *Liste de mots-clés*.
+  * ${TAG\_NAME} : Nom d'un mot-clé. Identique à la variable TAGNAME (FIXME: WTF?)
+  * ${TAG\_PAGE} : Nom réel d'une page. Par exemple avec un mot-clé nommé *Mon mot clé*, cela sera *mon_mot_cle.html*.
+  * ${TAG\_TITLE} : Titre du mot-clé. Par exemple *mon_mot_cle*.
+  * ${TITLE} : Titre de la page courante. Par exemple *Accueil*, *Liste des mots-clés*, *Mon premier article*, etc.
+  * ${THEME\_IS} : Phrase qui est utilisée pour expliquer le thème choisi. Par exemple *Le thème de cette page est : *.
 
-These variables are given by the **Makefile** file in some sections. So you probably have to update the Makefile in order to add some other ones.
+Ces variables sont données dans le fichier **Makefile** dans plusieurs sections. Donc vous avez probablement à mettre à jour le Makefile pour en ajouter plusieurs autres.
 
-## Language files
+## Les fichiers de langue
 
-In Makefly you can adapt some content to your native language. For this you have to fill in some files in the **lang** directory.
+Dans Makefly vous pouvez adapter du contenu dans votre langue natale. Pour cela vous avez à remplir quelques fichiers dans le répertoire **lang** (variable LANGDIR).
 
-### Existing files
+### Fichiers existants
 
-Available files:
+Fichiers disponibles : 
 
   * translate.en
   * translate.fr
 
-You can see that 2 files exists, one for **en**glish translation, another one for **fr**ench translation.
+Vous pouvez voir que 2 fichiers existent, l'un pour la traduction anglaise (**en**), l'autre pour la traduction **fr**ançaise.
 
-If you want to add your, create another file named translate.**YOUR\_COUNTRY\_CODE**. For an example, for italian translation, create a file named **translate.it**.
+Si vous voulez ajouter le votre, crééez un autre fichier nommé translate.**VOTRE\_CODE\_PAYS**. Par exemple, pour la traduction italienne, crééez le fichier nommé **translate.it**.
 
-You can also use the **translate.en** as first support to known how many word you have to translate.
+Vous pouvez aussi utiliser le fichier **translate.en** comme premier support pour savoir combien de mots vous avez à traduire.
 
-### Language File Format
+### Format de fichier langue
 
-The language file format is similar to DB files format:
+Le format de fichier de langue est similaire à celui des fichiers DB :
 
-    A_VARIABLE = the translation about this variable
+    UNE_VARIABLE = la traduction de cette variable
 
-For an example:
+Par exemple : 
 
-    HOME_TITLE = Home
+    HOME_TITLE = Accueil
 
-### Existing words to translate
+### Mot existants à traduire
 
-At the time I write this documentation, here is the available words to translate (and their variable):
+Au moment où j'écrivais cette documentation, voici les mots disponible à la traduction (et leur variable) : 
 
-  * HOME\_TITLE (Home)
-  * POST\_LIST\_TITLE (Post list)
-  * TAG\_LIST\_TITLE (Tag list)
-  * TAG\_TITLE (Tag(s))
-  * PERMALINK\_TITLE (permalink)
-  * POWERED\_BY (Powered by)
-  * POSTED (Posted)
-  * ABOUT\_TITLE (About)
-  * SOURCE\_LINK\_NAME (Sources on)
-  * SOURCE\_LINK\_TITLE (Go to the gitorious makefly homepage)
-  * THEME\_IS (Theme is:)
-  * LINKS\_TITLE (Links)
-  * READ\_MORE (Read more)
-  * SEARCH\_BAR\_CONTENT (Search)
-  * SEARCH\_BAR\_BUTTON\_NAME (Search)
+  * HOME\_TITLE (Accueil)
+  * POST\_LIST\_TITLE (Liste des articles)
+  * TAG\_LIST\_TITLE (Liste des mots-clés)
+  * TAG\_TITLE (Mot(s)-clé(s))
+  * PERMALINK\_TITLE (lien permanent)
+  * POWERED\_BY (Propulsé par)
+  * POSTED (Publié)
+  * ABOUT\_TITLE (À propos)
+  * SOURCE\_LINK\_NAME (Sources disponibles sur)
+  * SOURCE\_LINK\_TITLE (Aller sur la page d'accueil Makefly sur gitorious)
+  * THEME\_IS (Le thème est : )
+  * LINKS\_TITLE (Liens)
+  * READ\_MORE (Lire la suite)
+  * SEARCH\_BAR\_CONTENT (Recherche)
+  * SEARCH\_BAR\_BUTTON\_NAME (Rechercher)
 
-By using templates, you can easily add some texts and their translations in some themes.
+En utilisant les templates, vous pouvez facilement ajouter du texte et leur traduction dans plusieurs thèmes.
 
-## Tools
+## Outils
 
-Makefly is delivered with some tools to be more usable. These tools are placed in **tools** directory.
+Makefly est livré avec quelques outils pour être plus utilisable. Ces outils sont mis dans le répertoire **tools**.
 
 ### create_post.sh
 
-Script that permit to help you to create new posts. Kind of lightweight console user interface.
+Script qui permet de vous aider à créer de nouveaux articles. Un genre d'interface utilisateur légère en mode console.
 
-This is useful if no interface exists to create posts in Makefly, which, I remember you, is not the goal of Makefly. This one just compile some files to create a blog. To create these files, you need a user interface.
+Ceci est utile si aucune interface n'existe pour créer des articles dans Makefly, ce qui, je vous le rappelle, n'est pas le but de Makefly. Ce dernier compile simplement quelque fichiers pour créer un joueb (JOUrnal wEB, blog). Pour créer ces fichiers, vous avez besoin d'une interface utilisateur.
 
 ### install.sh
 
-Script that permit to copy **pub** directory content to those of your choice. By default the **public_html** directory located in you home directory.
+Script qui permet de copier le contenu du répertoire **pub** dans celui de votre choix. Par défaut le dossier **public_html** situé dans votre dossier *home*.
 
-This *install* method is not integrated in Makefly because it's could be dangerous to overwrite existing files. But you can have same effect with the *publish* method by using `pmake publish` and using **publish.sh**.
+Cette méthode d'*install*ation n'est pas intégrée dans Makefly directement parce qu'il peut être dangeureux d'écrire par dessus des fichiers existants. Mais vous pouvez avoir le même effet avec la méthode *publish* en utilisant `pmake publish` et en utilisant le script **publish.sh**.
 
 ### populate_makefly.sh
 
-Dev script that permits to populate Makefly by creating some posts. It uses **create_post.sh** script to work.
+Script de développement qui permet de peupler Makefly en créant quelques articles. Ça utilise le script **create\_post.sh** pour fonctionner.
 
 ### publish.sh
 
-This script give command to execute after having produced your blog. This permits to publish it on a remote server via SSH protocol or to synchronize your directory to another one. This is explained in USER documentation, so for more information please read **Publish result to the web** in the USER documentation.
+Ce script donne des commandes à exécuter après avoir produit votre joueb (JOUrnal wEB, blog). Ceci permet de le publier sur un serveur distant via le protocole SSH ou de synchroniser votre dossier vers un autre. Ceci est expliqué dans la documentation UTILISATEUR, donc pour plus d'information, lisez **Publier le résultat sur le web** dans la documentation UTILISATEUR.
 
-## Best practices
+## Meilleures pratiques
 
-### Add functionnality
+### Ajouter une fonctionnalité
 
-If you add a functionnality:
+Si vous ajoutez une fonctionnalité : 
 
-  * complete **Changelog** file with a brief text to explain what have been changed/improved/fixed
-  * fix **doc**umentation to update Makefly's state
-  * don't forget to complete language files in **lang** directory if you add some TEXT into templates!
-  * if you add some needed VAR that could be changed by user, add it to the **makefly.rc.example**
+  * complétez le fichier **Changelog** avec un texte bref pour expliquer ce qui a été changé/amélioré/corrigé
+  * complétez la **doc**umentation pour mettre à jour l'état de Makefly
+  * n'oubliez pas de parfaire les fichiers de langue dans le dossier **lang** si vous ajoutez du texte dans les templates !
+  * si vous ajoutez quelques VARIABLES nécessaires qui peuvent être changées par l'utilisateur, ajoutez les dans le fichier **makefly.rc.example**
 
-### Customizing template
+### Personnalisez les templates
 
-If you add a text in a template, you have to add some variables for words to be translated. You also have to add theses variables into translation lang directory. Also complete this documentation.
+Si vous ajoutez du texte dans un template, vous devez ajouter quelques variables pour les mots à traduire. Vous devez également ajouter ces variables dans le dossier de traduction *lang*. Complétez aussi cette documentation.
 
-### Errors
+### Erreurs
 
-#### You have encounted a problem and resolved it?
+#### Vous avez rencontré une erreur et l'avez résolue ?
 
-Add your error message and its solution into **doc/KNOWN\_ISSUES.md** file!
+Ajoutez vos messages d'erreurs et leurs solutions dans le fichier **doc/KNOWN\_ISSUES.md** !
 
-#### You have encounted a problem and didn't have resolved it?
+#### Vous avez rencontré un problème et ne l'avez pas résolu ?
 
-Go to [Makefly's github page](https://github.com/blankoworld/makefly/issues "Go to Issue's page for Makefly's project on github") and add a new issue with a detailed error:
+Allez sur la [page github de Makefly](https://github.com/blankoworld/makefly/issues "Aller sur la page d'erreur du projet Makefly sur Github") et ajoutez une nouvelle issue avec une erreur détaillée :
 
-  * where you encount the problem
-  * your configuration file
-  * how to reproduce the bug
-  * which error message you encount
+  * où vous avez rencontré le problème
+  * votre fichier de configuration
+  * comment reproduire le bug
+  * quelle message d'erreur vous rencontrez
 
-## Ideas
+## Idées
 
-You have any idea to improve Makefly? Add it to the **IDEAS** file.
+Vous avez une idée pour améliorer Makefly ? Ajoutez là dans le fichier **IDEAS**.
 
-## A bug?
+## Un bug ?
 
-Go to the [Makefly's github page](https://github.com/blankoworld/makefly/issues "Issue for Makefly on Github") and create a new issue, or add your issue into the **TODO** file.
+Aller sur la [page github de Makefly](https://github.com/blankoworld/makefly/issues "Issue pour Makefly sur Github") et créez une nouvelle issue ou bien ajoutez votre issue dans le fichier **TODO**.
 
