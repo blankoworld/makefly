@@ -190,21 +190,21 @@ Quelques variables importantes :
   * BLOG\_LANG : est un code utilisé pour chercher le fichier correspondant dans le répertoire **lang**. Par exemple **fr** pour Français, ou **en** pour anglais.
   * BLOG\_CHARSET : utilisé pour le flux RSS et tout les fichiers HTML. Similaire à **UTF-8** ou **ISO-8859-15** par exemple.
   * BASE\_URL: pour compléter toutes les adresses URL. Par example : **http://mon.joueb.tld/**
-  * RSS\_FEED\_NAME: The name that appears as title in your RSS feed.
-  * MAX\_POST: to limit the number of post on mainpage. If 0, do not add any limit.
-  * DATE\_FORMAT to transform timestamp of posts
-  * SHORT\_DATE\_FORMAT same as DATE\_FORMAT
-  * INDEX\_FILENAME if you want to name page as **main** instead of **index**
-  * PAGE\_EXT if you want another extension. For an example **xhtml** instead of **html**.
+  * RSS\_FEED\_NAME: Le nom qui apparaît comme titre dans votre flux RSS.
+  * MAX\_POST: Pour limiter le nombre d'article sur la page principale. Si 0, n'ajoute aucune limite.
+  * DATE\_FORMAT: pour transformer le timestamp des articles en un autre format de votre choix.
+  * SHORT\_DATE\_FORMAT: même chose que pour DATE\_FORMAT
+  * INDEX\_FILENAME: si vous voulez nommer la page **principal** au lieu de **index**.
+  * PAGE\_EXT: si vous voulez une autre extension. Par exemple **xhtml** au lieu de **html**.
 
-### Tip: redefine some others VARS
+### Astuce : redéfinir d'autres VARIABLES
 
-Because of makefly.rc included into Makefile at process time, you can redefine some other variables into the **makefly.rc**:
+Du fait que le fichier makefly.rc est inclus dans le Makefile au moment du traitement, vous pouvez redéfinir quelques autres variables dans le fichier **makefly.rc** : 
 
-  * TMPLDIR: template directory (in which their is all themes). By default **template**.
-  * BINDIR: directory in which their is the LUA parser. By default **bin**.
-  * LANGDIR: language directory. By default **lang**.
-  * SRCDIR: source directory in which there is all posts ' content. By default **src**.
+  * TMPLDIR: répertoire des templates (dans lequel il y a tout les thèmes). Par défaut **template**.
+  * BINDIR: répertoire dans lequel il y a l'analyseur LUA. Par défaut **bin**.
+  * LANGDIR: répertoire pour les traductions. Par défaut **lang**.
+  * SRCDIR: répertoire source dans lequel il y a tout les contenu d'articles. Par défaut **src**.
   * DESTDIR: destination directory in which the result would be placed. By default **pub**.
   * DBDIR: meta info directory in which there is all meta info for each post. By default **db**.
   * TMPDIR: temporary directory in which some temp files would be created/deleted. By default **tmp**.

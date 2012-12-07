@@ -193,7 +193,7 @@ Most important variables:
   * BASE\_URL: to complete all URL. For an example : **http://my.weblog.com/**
   * RSS\_FEED\_NAME: The name that appears as title in your RSS feed.
   * MAX\_POST: to limit the number of post on mainpage. If 0, do not add any limit.
-  * DATE\_FORMAT: to transform timestamp of posts
+  * DATE\_FORMAT: to transform timestamp of posts in another format that you choose.
   * SHORT\_DATE\_FORMAT: same as DATE\_FORMAT
   * INDEX\_FILENAME: if you want to name page as **main** instead of **index**
   * PAGE\_EXT: if you want another extension. For an example **xhtml** instead of **html**.
@@ -202,9 +202,9 @@ Most important variables:
 
 Because of makefly.rc included into Makefile at process time, you can redefine some other variables into the **makefly.rc**:
 
-  * TMPLDIR: template directory (in which their is all themes). By default **template**.
-  * BINDIR: directory in which their is the LUA parser. By default **bin**.
-  * LANGDIR: language directory. By default **lang**.
+  * TMPLDIR: template directory (in which there is all themes). By default **template**.
+  * BINDIR: directory in which there is the LUA parser. By default **bin**.
+  * LANGDIR: translation directory. By default **lang**.
   * SRCDIR: source directory in which there is all posts ' content. By default **src**.
   * DESTDIR: destination directory in which the result would be placed. By default **pub**.
   * DBDIR: meta info directory in which there is all meta info for each post. By default **db**.
