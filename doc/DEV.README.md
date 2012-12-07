@@ -220,7 +220,7 @@ Because of makefly.rc included into Makefile at process time, you can redefine s
   * SIDEBAR\_FILENAME: name of the sidebar's page. Not only used to find the file, but also to write it into result directory. By default **sidebar**.
   * TOOLSDIR: tools directory in which some useful tools could be found. It's used for *publish* command. Do not redefine it without knowing what you're doing! By default: **tools**.
   * MAKEFLYDIR: current directory. DO NOT redefine it.
-  * markdown: markdown command. By default **markdown**. But could be changed by python markdown, lua markdown, etc.
+  * markdown: markdown command. By default **markdown**. But could be changed by *python markdown*, *lua markdown.lua*, etc.
   * lua: lua command. By default **lua**.
   * parser: parser used to parse all files. Should not be redefined!
   * mv: command to move files.
@@ -229,7 +229,7 @@ Because of makefly.rc included into Makefile at process time, you can redefine s
   * date: command to give timestamps, dates, etc.
   * tar: command to archivate files.
   * PUBLISH\_SCRIPT\_NAME: name of the publish script. Could be renamed by another one. The script should be located into the **TOOLSDIR** directory. By default: **publish.sh**.
-  * BODY\_CLASS: Class used by the body html tag in all pages. Useful for theme and stylesheets. By default **single**.
+  * BODY\_CLASS: Class used by the *body* html tag in all pages. Useful for theme and stylesheets. By default **single**.
 
 ## Template's files
 
@@ -237,7 +237,7 @@ Templates are located to **template** directory.
 
 ### Composition
 
-Each theme have its own directory. So for default theme, a **default** directory is created in which you can see some files:
+Each theme have its own directory. So for *default* theme, a **default** directory is created in which you can see some files:
 
   * .xhtml files to describe the content of the weblog
   * a **style** directory in which you can see all CSS files for a defined theme
@@ -247,7 +247,7 @@ Each theme have its own directory. So for default theme, a **default** directory
 
 ### Mandatory files
 
-Here is some explanations about **.xhtml** file you can find into a theme:
+Here is some explanations about **.xhtml** files you can find into a theme:
 
   * article.index.xhtml: Template for each post that are shown on homepage
   * article.xhtml: Template for a post on its single page
@@ -271,20 +271,20 @@ To display content of posts or some elements in each page, you can use what we c
 Available variables:
 
   * ${ABOUT\_INDEX}: Name of *About*'s page. For an example: about.html 
-  * ${ABOUT\_LINK}: Add a link to the about's page (if activated in default configuration's file
+  * ${ABOUT\_LINK}: Add a link to the about's page (if activated in default configuration's file)
   * ${ABOUT\_TITLE}: Title of about's page (just title). For an example: About.
   * ${ARTICLE\_CLASS\_TYPE}: Class of article that user have filled in. For an example: news. This permit to adapt a stylesheet for each type of article.
-  * ${BASE\_URL}: Your website address. For an example: htt://my.weblog.tld/. The user give it in the configuration file.
-  * ${BLOG\_CHARSET}: Blog charset as *UTF-8* or *ISO-8859-15*. This is for HTML pages **and** RSS feeds
+  * ${BASE\_URL}: Your website address. For an example: http://my.weblog.com The user give it in the configuration file.
+  * ${BLOG\_CHARSET}: Blog charset as *UTF-8* or *ISO-8859-15*. This is for HTML pages **and** RSS feeds.
   * ${BLOG\_TITLE}: Title of the blog. For an example *My first weblog*.
-  * ${BODY\_CLASS}: Name of class defined for current body's page tag. For an example, on home page, the body class is *home*. This is useful for CascadingStyleSheets.
+  * ${BODY\_CLASS}: Name of class defined for current *body*'s page tag. For an example, on home page, the body class is *home*. This is useful for CascadingStyleSheets.
   * ${CONTENT}: Content of page/post. It often looks like a post content. But it could be another kind of content as a tag list, a post list, etc. This depends on the page you're editing.
   * ${CSS\_FILE}: Name of CSS file. For an example *simple.css*.
   * ${CSS\_NAME}: Name that will appears to user when it selects your CSS theme. For an example *default theme*.
   * ${HOME\_TITLE}: Title that will appears on the link that redirect to homepage. For an example *Home*.
   * ${LANG}: Country code used in HTML's page to define a language. For an example *en* for english, *fr* for *french*, etc.
   * ${POSTDIR\_INDEX}: Exact name of postdir's index page. For an example *index.html*.
-  * ${POSTDIR\_NAME}: Name of posts directory. For an example *post*. That permit to have a better indexation on the Internet.
+  * ${POSTDIR\_NAME}: Name of posts directory. For an example *posts*. That permit to have a better indexation on the Internet.
   * ${POST\_LIST\_TITLE}: Name that will appears on the link to go to Post's list. For an example *Post List*.
   * ${POST\_FILE}: Exact name of the post file. For an example with a post which title is *My first post*, the POST\_FILE would be *my_first_post*. This also permits a better web indexation.
   * ${POST\_TITLE}: Title of the post. For an example: *My fist post*.
@@ -299,21 +299,21 @@ Available variables:
   * ${SIDEBAR\_CONTENT}: Content of the sidebar will be displayed here.
   * ${TAGDIR\_NAME}: Name of tags directory. For an example *tags*. This permits a better web indexation.
   * ${TAGDIR\_INDEX}: Name of index file for tags. Example: *index.html*.
-  * ${TAGLINK}: Absolute link to a tag. For an example: *http://my.domain.tld/tags/my_tag.html*.
+  * ${TAGLINK}: Absolute link to a tag. For an example: *http://my.domain.com/tags/my_tag.html*.
   * ${TAGLIST\_CONTENT}: Content of tag list. A list of tags.
   * ${TAGNAME}: Name of a given tag. For an example *my_first_tag*.
   * ${TAG\_LIST\_TITLE}: Title of the list of tags. This is the name displayed on the link that redirect to tag's list. For an example *Tag list*.
   * ${TAG\_NAME}: Name of a tag. Same as TAGNAME (FIXME: WTF?)
   * ${TAG\_PAGE}: Real name of the page. For an example with a tag named *My tag*, it would be *my_tag.html*.
   * ${TAG\_TITLE}: Title of the tag. For an example *my_tag*.
-  * ${TITLE}: Title of the current page. For an example *Homepage*, *Tag List*, *My first post*, etc.
+  * ${TITLE}: Title of the current page. For an example *Homepage*, *Tags List*, *My first post*, etc.
   * ${THEME\_IS}: Sentence that is used to explain which theme have been choosed. For an example *The theme of this page is: *.
 
 These variables are given by the **Makefile** file in some sections. So you probably have to update the Makefile in order to add some other ones.
 
 ## Language files
 
-In Makefly you can adapt some content to your native language. For this you have to fill in some files in the **lang** directory.
+In Makefly you can adapt some content to your native language. For this you have to fill in some files in the **lang** directory (LANGDIR variable).
 
 ### Existing files
 
@@ -326,7 +326,7 @@ You can see that 2 files exists, one for **en**glish translation, another one fo
 
 If you want to add your, create another file named translate.**YOUR\_COUNTRY\_CODE**. For an example, for italian translation, create a file named **translate.it**.
 
-You can also use the **translate.en** as first support to known how many word you have to translate.
+You can also use the **translate.en** file as first support to known how many word you have to translate.
 
 ### Language File Format
 
@@ -372,13 +372,13 @@ This is useful if no interface exists to create posts in Makefly, which, I remem
 
 ### install.sh
 
-Script that permit to copy **pub** directory content to those of your choice. By default the **public_html** directory located in you home directory.
+Script that permit to copy **pub** directory content to those of your choice. By default the **public\_html** directory located in you *home* directory.
 
-This *install* method is not integrated in Makefly because it's could be dangerous to overwrite existing files. But you can have same effect with the *publish* method by using `pmake publish` and using **publish.sh**.
+This *install* method is not directly integrated in Makefly because it's could be dangerous to overwrite existing files. But you can have same effect with the *publish* method by using `pmake publish` and using **publish.sh** script.
 
 ### populate_makefly.sh
 
-Dev script that permits to populate Makefly by creating some posts. It uses **create_post.sh** script to work.
+Dev script that permits to populate Makefly by creating some posts. It uses **create\_post.sh** script to work.
 
 ### publish.sh
 
@@ -393,11 +393,11 @@ If you add a functionnality:
   * complete **Changelog** file with a brief text to explain what have been changed/improved/fixed
   * fix **doc**umentation to update Makefly's state
   * don't forget to complete language files in **lang** directory if you add some TEXT into templates!
-  * if you add some needed VAR that could be changed by user, add it to the **makefly.rc.example**
+  * if you add some needed VARS that could be changed by user, add them to the **makefly.rc.example** file
 
 ### Customizing template
 
-If you add a text in a template, you have to add some variables for words to be translated. You also have to add theses variables into translation lang directory. Also complete this documentation.
+If you add a text in a template, you have to add some variables for words to be translated. You also have to add theses variables into translation *lang* directory. Also complete this documentation.
 
 ### Errors
 
