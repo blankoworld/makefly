@@ -384,6 +384,14 @@ Dev script that permits to populate Makefly by creating some posts. It uses **cr
 
 This script give command to execute after having produced your blog. This permits to publish it on a remote server via SSH protocol or to synchronize your directory to another one. This is explained in USER documentation, so for more information please read **Publish result to the web** in the USER documentation.
 
+### flush.sh
+
+This script **delete** all SRC and DB files. So to use it:
+
+    cd tools && ./flush.sh && cd ..
+
+will **erase** all SRC and DB files.
+
 ## Best practices
 
 ### Add functionnality
