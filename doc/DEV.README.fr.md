@@ -383,6 +383,14 @@ Script de développement qui permet de peupler Makefly en créant quelques artic
 
 Ce script donne des commandes à exécuter après avoir produit votre joueb (JOUrnal wEB, blog). Ceci permet de le publier sur un serveur distant via le protocole SSH ou de synchroniser votre dossier vers un autre. Ceci est expliqué dans la documentation UTILISATEUR, donc pour plus d'information, lisez **Publier le résultat sur le web** dans la documentation UTILISATEUR.
 
+### flush.sh
+
+Ce script **supprime** tout les fichiers SRC et DB. Donc pour l'utiliser : 
+
+    cd tools && ./flush.sh && cd ..
+
+écrasera tout les fichiers SRC et DB.
+
 ## Meilleures pratiques
 
 ### Ajouter une fonctionnalité
