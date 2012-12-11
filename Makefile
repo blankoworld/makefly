@@ -160,7 +160,7 @@ MEDIA_TARGET_${FILE} = ${FILE}
 .if defined(MEDIAFILES) && ${MEDIAFILES} != ${STATICDIR}/*
 
 ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
-	$Qcp ${FILE:S/^${DESTDIR}\//${STATICDIR}/} ${MEDIA_TARGET_${FILE}} && \
+	$Qcp -r ${FILE:S/^${DESTDIR}\//${STATICDIR}/} ${MEDIA_TARGET_${FILE}} && \
 		echo "-- New static file: ${FILE:S/\/\//\//}"
 
 .endif
