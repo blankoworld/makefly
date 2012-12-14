@@ -1,6 +1,7 @@
 TODO:
 -----
 
+- Add short description behind H1 HEADER
 - Add AUTHOR in db files + adapt template + update bash script that permits to create new posts
 - print.css
 - Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
