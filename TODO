@@ -1,11 +1,13 @@
 TODO:
 -----
 
+- print.css
+- limit RSS posts to 5, 10, etc. (add a new VAR in makefly.rc for this)
+- Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
+- Add AUTHOR in db files + adapt template + update bash script that permits to create new posts
 - Problem with TAG_NAME and TAGNAME. And also TAGLINK.
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
-- Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
-- Add in doc some explanation on how makefly work for src, db directory and linked files.
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Permit user to create a cron that publish posts each day?
 - Create a [b|p]make refreshall to clean all files, recompile them and publish blog
@@ -18,12 +20,9 @@ TODO:
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
 - change all variable to be UNIQUE in TEMPLATES
 - Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
-- Add anchor to join content's page on EACH page
 - create a Makefile that permit user to setup and install makefly (this permit to return an error if a program is missing)
   - permit to change language regarding LOCALE (makefly.rc.example configuration)
   - permit to setup programs like sed, bash/zsh, etc. or return an error if no one exists
-- limit RSS posts to 5, 10, etc. (add a new VAR in makefly.rc for this)
-- Add AUTHOR in db files + adapt template + update bash script that permits to create new posts
 - Permit user to integrate multimedia files as video, images, flash animation, etc.
 - For youtube iframe, do this:
     iframe {
@@ -35,7 +34,6 @@ TODO:
 - Add HTML keywords/meta on main page regarding posts
 - Add in a post some anchor on each title in order to make a link with the URL. For an example in post "the_super_post" with a H3 title to 'my h3 title', permit to add an anchor named "my_h3_title", so user give "the_super_post#my_h3_title" and he go to the h3 title in the page.
 - Permit HTTPS on links
-- print.css
 
 IDEAS:
 ------
@@ -118,3 +116,4 @@ DONE:
 - Technical documentation (english)
 - Technical documentation (french)
 - Instead of copying each file from static, just copy all static directory content (cp static/* ./pub)
+- Add in doc some explanation on how makefly work for src, db directory and linked files.
