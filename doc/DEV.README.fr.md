@@ -191,11 +191,12 @@ Quelques variables importantes :
   * BLOG\_CHARSET : utilisé pour le flux RSS et tout les fichiers HTML. Similaire à **UTF-8** ou **ISO-8859-15** par exemple.
   * BASE\_URL: pour compléter toutes les adresses URL. Par example : **http://mon.joueb.tld/**
   * RSS\_FEED\_NAME: Le nom qui apparaît comme titre dans votre flux RSS.
-  * MAX\_POST: Pour limiter le nombre d'article sur la page principale. Si 0, n'ajoute aucune limite.
+  * MAX\_POST: Pour limiter le nombre d'article sur la page principale.
   * DATE\_FORMAT: pour transformer le timestamp des articles en un autre format de votre choix.
   * SHORT\_DATE\_FORMAT: même chose que pour DATE\_FORMAT
   * INDEX\_FILENAME: si vous voulez nommer la page **principal** au lieu de **index**.
   * PAGE\_EXT: si vous voulez une autre extension. Par exemple **xhtml** au lieu de **html**.
+  * MAX_RSS: Pour limiter le nombre d'article sur le flux RSS.
 
 ### Astuce : redéfinir d'autres VARIABLES
 

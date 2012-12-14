@@ -192,11 +192,12 @@ Most important variables:
   * BLOG\_CHARSET: used for RSS feed and all HTML files. Should be **UTF-8** for an example, or **ISO-8859-1**.
   * BASE\_URL: to complete all URL. For an example : **http://my.weblog.com/**
   * RSS\_FEED\_NAME: The name that appears as title in your RSS feed.
-  * MAX\_POST: to limit the number of post on mainpage. If 0, do not add any limit.
+  * MAX\_POST: to limit the number of post on mainpage.
   * DATE\_FORMAT: to transform timestamp of posts in another format that you choose.
   * SHORT\_DATE\_FORMAT: same as DATE\_FORMAT
   * INDEX\_FILENAME: if you want to name page as **main** instead of **index**
   * PAGE\_EXT: if you want another extension. For an example **xhtml** instead of **html**.
+  * MAX_RSS: to limit the number of post on RSS feed.
 
 ### Tip: redefine some others VARS
 
