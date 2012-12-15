@@ -405,6 +405,27 @@ Ce script **supprime** tout les fichiers SRC et DB. Donc pour l'utiliser :
 
 écrasera tout les fichiers SRC et DB.
 
+### Ce qui peut être fait avec tout ça
+
+#### Regénérer le blog et l'installer dans le dossier cible
+
+Quand je dévelope certaines fonctionnalités, j'ai pour habitude de regénérer tout le blog. Pour cela j'utilise :
+
+    cd makefly
+    pmake clean && pmake && cd tools && ./install.sh && cd ..
+
+Cela va aller dans le dossier *makefly* puis nettoyer les fichiers, regénérer le blog, aller dans le dossier *tools*, lancer le script *install.sh* puis revenir dans le dossier *makefly*.
+
+#### Regénérer les articles
+
+Il peut être utile de regénérer tout les articles. Ce que j'utilise : 
+
+    cd tools/ && ./flush.sh && ./populate_makefly.sh && cd ..
+
+On va dans le répertoire *tools*, on supprime tout les articles, puis on les recrée.
+
+Faites attention, cela détruira tout les articles !
+
 ## Meilleures pratiques
 
 ### Ajouter une fonctionnalité
