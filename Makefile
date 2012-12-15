@@ -129,6 +129,7 @@ POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 FILES != cd ${SRCDIR}; ls
 DBFILES != cd ${DBDIR}; ls|${sort} -r
 MAINDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_POST}
+RSSDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_RSS} 
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != echo ${STATICFILES}
 ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
@@ -406,8 +407,8 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${TMPLDIR}/feed.header.rss | ${parser} ${parser_opts} \
 			> ${DESTDIR}/rss.xml &&                \
-		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml && \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} && \
+		cat ${RSSDBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml && \
+		${rm} -f ${RSSDBFILES:S/^/${TMPDIR}\//:S/$/.rss/} && \
 		cat ${TMPLDIR}/feed.footer.rss >> ${DESTDIR}/rss.xml || { \
 			echo "-- Could not build RSS page: $@" ; \
 			false ; \

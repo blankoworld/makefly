@@ -132,7 +132,8 @@ Here is some options you can change:
   * SIDEBAR: If set to 1, so activate a sidebar on Makefly. Note that your theme should support sidebars!
   * PUBLISH\_DESTINATION: Full address from where to send files in order to publish them.
   * PUBLISH\_SCRIPT\_NAME: script filename used to send files from **pub** directory to a destination filled in *PUBLISH\_DESTINATION* variable.
-  * SEARCH_BAR: If set to 1, activate a search bar on Makefly. Note that your theme should support search bar!
+  * SEARCH\_BAR: If set to 1, activate a search bar on Makefly. Note that your theme should support search bar!
+  * MAX\_RSS: Max RSS posts that would be fetch from your users.
 
 ## Publish result to the web
 
@@ -149,7 +150,7 @@ If you launch Makefly on you own server or probably on provider ' server, you sh
 
 **WARNING**: This will erase all files from *public\_html* directory!
 
-**Note**: You can customize the script to copy files in another directory. To do that, just edit *install.sh** script and change this variable:
+**Note**: You can customize the script to copy files in another directory. To do that, just edit **install.sh** script and change this variable:
 
     DESTDIR=${HOME}/public_html
 
