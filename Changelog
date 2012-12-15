@@ -30,6 +30,7 @@ Current (0.1.1-alpha)
 	- Delete some useless variable in Makefile
 	- Add charset in RSS
 	- Add AUTHOR as a new metadata for each post
+	- BLOG_SHORT_DESC is now used as a kind of second title for blog title
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed

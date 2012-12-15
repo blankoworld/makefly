@@ -196,7 +196,7 @@ Le fichier est nécessaire pour l'utilisateur afin de configurer Makefly. L'util
 Quelques variables importantes : 
 
   * BLOG\_TITLE : titre du blog
-  * BLOG\_SHORT\_DESC : description courte du blog (non utilisé actuellement)
+  * BLOG\_SHORT\_DESC : description courte du blog
   * BLOG\_DESCRIPTION : description du blog pour le flux RSS
   * BLOG\_LANG : est un code utilisé pour chercher le fichier correspondant dans le répertoire **lang**. Par exemple **fr** pour Français, ou **en** pour anglais.
   * BLOG\_CHARSET : utilisé pour le flux RSS et tout les fichiers HTML. Similaire à **UTF-8** ou **ISO-8859-15** par exemple.

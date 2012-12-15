@@ -197,7 +197,7 @@ This file is needed by user to configure Makefly. User have to create it for Mak
 Most important variables:
 
   * BLOG\_TITLE: Title of the blog
-  * BLOG\_SHORT\_DESC: Short description (not used for this moment)
+  * BLOG\_SHORT\_DESC: Short description
   * BLOG\_DESCRIPTION: More verbose description, used for RSS Feed
   * BLOG\_LANG: is a code used to search corresponding files in **lang** directory. For an example **en** for English, **fr** for French, etc.
   * BLOG\_CHARSET: used for RSS feed and all HTML files. Should be **UTF-8** for an example, or **ISO-8859-1**.
