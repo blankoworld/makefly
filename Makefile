@@ -94,6 +94,7 @@ STYLEDIR      = ${THEMEDIR}/style
 # Prepare parser options
 parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"   \
+		"BLOG_SHORT_DESC=${BLOG_SHORT_DESC}"     \
 		"BASE_URL=${BASE_URL}"                   \
 		"HOME_TITLE=${HOME_TITLE}"               \
 		"POST_LIST_TITLE=${POST_LIST_TITLE}"     \

@@ -1,7 +1,6 @@
 TODO:
 -----
 
-- Add short description behind H1 HEADER
 - Add AUTHOR in db files + adapt template + update bash script that permits to create new posts
 - print.css
 - Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
@@ -119,3 +118,4 @@ DONE:
 - Instead of copying each file from static, just copy all static directory content (cp static/* ./pub)
 - Add in doc some explanation on how makefly work for src, db directory and linked files.
 - limit RSS posts to 5, 10, etc. (add a new VAR in makefly.rc for this)
+- Add short description behind H1 HEADER
