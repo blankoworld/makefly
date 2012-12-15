@@ -153,6 +153,17 @@ ou :
 
 Si vous ajoutez quelques VARIABLES, vous devez modifier le Makefile et le compléter.
 
+#### VARIABLES disponibles dans les fichiers DB
+
+Ce que vous pouvez y trouver : 
+
+  * TITLE : Titre de l'article (affiché dans toutes les pages liées à un article)
+  * DESCRIPTION : Description de l'article (actuellement utilisé dans les flux RSS)
+  * DATE : Pas encore utilisé (inutile ?)
+  * TAGS : Liste des mots-clés dans lesquels les articles sont inclus.
+  * TYPE : nom utilisé pour différencier un type d'article d'un autre. Utile pour les feuilles de style.
+  * AUTHOR : Rédacteur de l'article.
+
 ### Les fichiers sources
 
 Les fichiers sources permettent la génération de chaque article.
@@ -285,6 +296,7 @@ Variables disponibles :
   * ${LANG} : Code pays utilisé dans les pages HTML pour définir une langue. Par exemple *fr* pour français, *en* pour anglais, etc.
   * ${POSTDIR\_INDEX} : Nom exact de la page d'index des articles. Par exemple *index.html*.
   * ${POSTDIR\_NAME} : Nom du répertoire des articles. Par exemple *articles*. Ceci permet d'avoir un meilleur référencement sur Internet.
+  * ${POST\_AUTHOR}: Rédacteur de l'article
   * ${POST\_LIST\_TITLE} : Nom qui apparaîtra sur le lien pour aller sur la liste des articles. Par exemple *Liste des articles*.
   * ${POST\_FILE} : Nom exact du fichier article. Par exemple pour un article dont le nom est *Mon premier article*, la variable POST\_FILE devrait être *mon_premier_article*. Ceci permet également un meilleur référencement.
   * ${POST\_TITLE} : Titre de l'article. Par exemple : *Mon premier article*.
@@ -357,6 +369,7 @@ Au moment où j'écrivais cette documentation, voici les mots disponible à la t
   * READ\_MORE (Lire la suite)
   * SEARCH\_BAR\_CONTENT (Recherche)
   * SEARCH\_BAR\_BUTTON\_NAME (Rechercher)
+  * AUTHOR\_LABEL (Rédacteur)
 
 En utilisant les templates, vous pouvez facilement ajouter du texte et leur traduction dans plusieurs thèmes.
 

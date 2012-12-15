@@ -154,6 +154,17 @@ or
 
 If you add some VAR, you have to edit Makefile and complete it.
 
+#### Available VAR in DB files
+
+What you can find:
+
+  * TITLE: Title of post (displayed in all page that are linked to a post)
+  * DESCRIPTION: Description of post (currently used in RSS feeds)
+  * DATE: Not used yet (useless?)
+  * TAGS: List of tags in which this post is included
+  * TYPE: name used to differenciate a post type from another. Useful for CSS.
+  * AUTHOR: Author of the post.
+
 ### Source files
 
 Source files permit to generate each post.
@@ -286,6 +297,7 @@ Available variables:
   * ${LANG}: Country code used in HTML's page to define a language. For an example *en* for english, *fr* for *french*, etc.
   * ${POSTDIR\_INDEX}: Exact name of postdir's index page. For an example *index.html*.
   * ${POSTDIR\_NAME}: Name of posts directory. For an example *posts*. That permit to have a better indexation on the Internet.
+  * ${POST\_AUTHOR}: Post's author
   * ${POST\_LIST\_TITLE}: Name that will appears on the link to go to Post's list. For an example *Post List*.
   * ${POST\_FILE}: Exact name of the post file. For an example with a post which title is *My first post*, the POST\_FILE would be *my_first_post*. This also permits a better web indexation.
   * ${POST\_TITLE}: Title of the post. For an example: *My fist post*.
@@ -358,6 +370,7 @@ At the time I write this documentation, here is the available words to translate
   * READ\_MORE (Read more)
   * SEARCH\_BAR\_CONTENT (Search)
   * SEARCH\_BAR\_BUTTON\_NAME (Search)
+  * AUTHOR\_LABEL (Author)
 
 By using templates, you can easily add some texts and their translations in some themes.
 
