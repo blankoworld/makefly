@@ -406,6 +406,27 @@ This script **delete** all SRC and DB files. So to use it:
 
 will **erase** all SRC and DB files.
 
+### What could be done with this
+
+#### Regenerate blog and install it to the target directory
+
+When I develop some functionnalities, I'm used to regenerate all blog. To do this, I use:
+
+    cd makefly
+    pmake clean && pmake && cd tools && ./install.sh && cd ..
+
+This will go to the *makefly*' s directory, then clean up files, regenerate the blog, go to the *tools* directory, launch *install.sh* script then return to *makefly*'s directory.
+
+#### Regenerate posts
+
+It could be useful to regenerate all posts. What I use:
+
+    cd tools/ && ./flush.sh && ./populate_makefly.sh && cd ..
+
+This will go to the *tools* directory, flush all posts, then recreate them.
+
+Pay attention that this will erase ALL posts!
+
 ## Best practices
 
 ### Add functionnality
