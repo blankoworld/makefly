@@ -34,6 +34,7 @@ TODO:
 - Add HTML keywords/meta on main page regarding posts
 - Add in a post some anchor on each title in order to make a link with the URL. For an example in post "the_super_post" with a H3 title to 'my h3 title', permit to add an anchor named "my_h3_title", so user give "the_super_post#my_h3_title" and he go to the h3 title in the page.
 - Permit HTTPS on links
+- Add author URL that permit to each author to add a URL/link (this is not mandatory for posts, but could be useful for a UI
 
 IDEAS:
 ------

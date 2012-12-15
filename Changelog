@@ -1,4 +1,4 @@
-Current (not released)
+Current (0.1.1-alpha)
 	- Permit user to choose page ' suffix
 	- Permit user to choose index filenames
 	- Complete README file
@@ -29,6 +29,7 @@ Current (not released)
 	- Fix a bug on ` chars
 	- Delete some useless variable in Makefile
 	- Add charset in RSS
+	- Add AUTHOR as a new metadata for each post
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed
