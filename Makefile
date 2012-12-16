@@ -363,7 +363,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	@# Template for RSS Feed
 	$Qcat ${TMPLDIR}/feed.element.rss | ${parser}        \
 		"TITLE=${TITLE_${FILE}}"                           \
-		"DESCRIPTION=${DESC_${FILE}}"                      \
+		"DESCRIPTION=${CONTENT_${FILE}}"                   \
 		"LINK=${BASE_URL}/${POSTDIR_NAME}/${NAME_${FILE}}" \
 		"POST_AUTHOR=${AUTHOR_${FILE}}"                    \
 	> ${TMPDIR}/${FILE}.rss
