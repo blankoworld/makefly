@@ -30,6 +30,7 @@ DBDIR=`cat ${Makefile} |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s
 SRCDIR=`cat ${Makefile} |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
 
 # POST 1
+POST1_AUTHOR="blankoworld"
 POST1_TITLE="Welcome to makefly!"
 POST1_DESC="Makefly discovering"
 POST1_DATE="2012-06-29"
@@ -52,12 +53,25 @@ and includes somes functionalities like:
   * possibility to set posting date (using a _timestamp_)
   * customization using options like max post on homepage
   * translation: English, French
+  * static files
+  * templates
+
+You can so:
+
+  * create posts
+  * add tags to them
+  * add image
+  * generate an RSS feed
+  * give some static files (for an example to share PDF)
+  * have your own template
+  * translate Makefly in your language
 
 In fact, it's a lightweight weblog engine that generate some HTML files.
 EOF
 IFS="\\"
 
 # POST 2
+POST2_AUTHOR="anonymous"
 POST2_TITLE="Makefly project"
 POST2_DESC="How to contribute?"
 POST2_DATE="2012-07-01"
@@ -85,6 +99,7 @@ EOF
 IFS="\\"
 
 # POST 3
+POST3_AUTHOR="The best long pseudo I ever seen"
 POST3_TITLE="Official weblog: Open"
 POST3_DESC="Makefly is now available on the web"
 POST3_DATE="2012-07-04"
@@ -106,13 +121,13 @@ IFS="\\"
 # BEGIN
 
 # create POST 1
-./create_post.sh -q < <(echo ${POST1_TITLE}; echo ${POST1_DESC}; echo ${POST1_DATE}; echo ${POST1_TAGS}; echo ${POST1_TYPE}) && echo -e ${POST1_CONTENT} > ${SRCDIR}/welcome_to_makefly.md || exit 1
+./create_post.sh -q < <(echo ${POST1_AUTHOR}; echo ${POST1_TITLE}; echo ${POST1_DESC}; echo ${POST1_DATE}; echo ${POST1_TAGS}; echo ${POST1_TYPE}) && echo -e ${POST1_CONTENT} > ${SRCDIR}/welcome_to_makefly.md || exit 1
 
 # create POST 2
-./create_post.sh -q < <(echo ${POST2_TITLE}; echo ${POST2_DESC}; echo ${POST2_DATE}; echo ${POST2_TAGS}; echo ${POST2_TYPE}) && echo -e ${POST2_CONTENT} > ${SRCDIR}/makefly_project.md || exit 1
+./create_post.sh -q < <(echo ${POST2_AUTHOR}; echo ${POST2_TITLE}; echo ${POST2_DESC}; echo ${POST2_DATE}; echo ${POST2_TAGS}; echo ${POST2_TYPE}) && echo -e ${POST2_CONTENT} > ${SRCDIR}/makefly_project.md || exit 1
 
 # create POST 3
-./create_post.sh -q < <(echo ${POST3_TITLE}; echo ${POST3_DESC}; echo ${POST3_DATE}; echo ${POST3_TAGS}; echo ${POST3_TYPE}) && echo -e ${POST3_CONTENT} > ${SRCDIR}/official_weblog_open.md || exit 1
+./create_post.sh -q < <(echo ${POST3_AUTHOR}; echo ${POST3_TITLE}; echo ${POST3_DESC}; echo ${POST3_DATE}; echo ${POST3_TAGS}; echo ${POST3_TYPE}) && echo -e ${POST3_CONTENT} > ${SRCDIR}/official_weblog_open.md || exit 1
 
 # Change TIMESTAMP of posts
 mv ${DBDIR}/*,welcome_to_makefly.mk "${DBDIR}/`date -d ${POST1_DATE} +'%s'`,welcome_to_makefly.mk"

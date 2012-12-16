@@ -68,6 +68,9 @@ fi
 ###
 
 # Fetch data
+while [ -z "$author" ]; do
+  read -p "Author: " author
+done
 while [ -z "$title" ]; do
   read -p "Title: " title
 done
@@ -102,6 +105,7 @@ echo "DESCRIPTION = ${desc}" >> ${dbfile}
 echo "DATE = ${date}" >> ${dbfile}
 echo "TAGS = ${tags}" >> ${dbfile}
 echo "TYPE = ${post_type}" >> ${dbfile}
+echo "AUTHOR = ${author}" >> ${dbfile}
 
 # create src file
 touch ${file}
