@@ -31,6 +31,8 @@ Current (0.1.1-alpha)
 	- Add charset in RSS
 	- Add AUTHOR as a new metadata for each post
 	- BLOG_SHORT_DESC is now used as a kind of second title for blog title
+	- Limit RSS number with MAX_RSS
+	- Add content of post in RSS file
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed

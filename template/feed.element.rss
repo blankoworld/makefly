@@ -1,5 +1,5 @@
     <item>
         <title>${TITLE}</title>
-        <description>${DESCRIPTION}</description>
         <link>${LINK}</link>
+        <description><![CDATA[${DESCRIPTION}]]></description>
     </item>
