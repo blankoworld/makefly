@@ -13,3 +13,4 @@ LINKS_TITLE = Liens
 READ_MORE = Lire la suite
 SEARCH_BAR_CONTENT = Recherche
 SEARCH_BAR_BUTTON_NAME = Rechercher
+AUTHOR_LABEL = Rédacteur

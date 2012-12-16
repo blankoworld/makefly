@@ -154,6 +154,17 @@ or
 
 If you add some VAR, you have to edit Makefile and complete it.
 
+#### Available VAR in DB files
+
+What you can find:
+
+  * TITLE: Title of post (displayed in all page that are linked to a post)
+  * DESCRIPTION: Description of post (currently used in RSS feeds)
+  * DATE: Not used yet (useless?)
+  * TAGS: List of tags in which this post is included
+  * TYPE: name used to differenciate a post type from another. Useful for CSS.
+  * AUTHOR: Author of the post.
+
 ### Source files
 
 Source files permit to generate each post.
@@ -186,17 +197,18 @@ This file is needed by user to configure Makefly. User have to create it for Mak
 Most important variables:
 
   * BLOG\_TITLE: Title of the blog
-  * BLOG\_SHORT\_DESC: Short description (not used for this moment)
+  * BLOG\_SHORT\_DESC: Short description
   * BLOG\_DESCRIPTION: More verbose description, used for RSS Feed
   * BLOG\_LANG: is a code used to search corresponding files in **lang** directory. For an example **en** for English, **fr** for French, etc.
   * BLOG\_CHARSET: used for RSS feed and all HTML files. Should be **UTF-8** for an example, or **ISO-8859-1**.
   * BASE\_URL: to complete all URL. For an example : **http://my.weblog.com/**
   * RSS\_FEED\_NAME: The name that appears as title in your RSS feed.
-  * MAX\_POST: to limit the number of post on mainpage. If 0, do not add any limit.
+  * MAX\_POST: to limit the number of post on mainpage.
   * DATE\_FORMAT: to transform timestamp of posts in another format that you choose.
   * SHORT\_DATE\_FORMAT: same as DATE\_FORMAT
   * INDEX\_FILENAME: if you want to name page as **main** instead of **index**
   * PAGE\_EXT: if you want another extension. For an example **xhtml** instead of **html**.
+  * MAX_RSS: to limit the number of post on RSS feed.
 
 ### Tip: redefine some others VARS
 
@@ -285,6 +297,7 @@ Available variables:
   * ${LANG}: Country code used in HTML's page to define a language. For an example *en* for english, *fr* for *french*, etc.
   * ${POSTDIR\_INDEX}: Exact name of postdir's index page. For an example *index.html*.
   * ${POSTDIR\_NAME}: Name of posts directory. For an example *posts*. That permit to have a better indexation on the Internet.
+  * ${POST\_AUTHOR}: Post's author
   * ${POST\_LIST\_TITLE}: Name that will appears on the link to go to Post's list. For an example *Post List*.
   * ${POST\_FILE}: Exact name of the post file. For an example with a post which title is *My first post*, the POST\_FILE would be *my_first_post*. This also permits a better web indexation.
   * ${POST\_TITLE}: Title of the post. For an example: *My fist post*.
@@ -357,6 +370,7 @@ At the time I write this documentation, here is the available words to translate
   * READ\_MORE (Read more)
   * SEARCH\_BAR\_CONTENT (Search)
   * SEARCH\_BAR\_BUTTON\_NAME (Search)
+  * AUTHOR\_LABEL (Author)
 
 By using templates, you can easily add some texts and their translations in some themes.
 
@@ -383,6 +397,35 @@ Dev script that permits to populate Makefly by creating some posts. It uses **cr
 ### publish.sh
 
 This script give command to execute after having produced your blog. This permits to publish it on a remote server via SSH protocol or to synchronize your directory to another one. This is explained in USER documentation, so for more information please read **Publish result to the web** in the USER documentation.
+
+### flush.sh
+
+This script **delete** all SRC and DB files. So to use it:
+
+    cd tools && ./flush.sh && cd ..
+
+will **erase** all SRC and DB files.
+
+### What could be done with this
+
+#### Regenerate blog and install it to the target directory
+
+When I develop some functionnalities, I'm used to regenerate all blog. To do this, I use:
+
+    cd makefly
+    pmake clean && pmake && cd tools && ./install.sh && cd ..
+
+This will go to the *makefly*' s directory, then clean up files, regenerate the blog, go to the *tools* directory, launch *install.sh* script then return to *makefly*'s directory.
+
+#### Regenerate posts
+
+It could be useful to regenerate all posts. What I use:
+
+    cd tools/ && ./flush.sh && ./populate_makefly.sh && cd ..
+
+This will go to the *tools* directory, flush all posts, then recreate them.
+
+Pay attention that this will erase ALL posts!
 
 ## Best practices
 
@@ -421,3 +464,4 @@ You have any idea to improve Makefly? Add it to the **IDEAS** file.
 ## A bug?
 
 Go to the [Makefly's github page](https://github.com/blankoworld/makefly/issues "Issue for Makefly on Github") and create a new issue, or add your issue into the **TODO** file.
+

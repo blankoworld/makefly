@@ -153,6 +153,17 @@ ou :
 
 Si vous ajoutez quelques VARIABLES, vous devez modifier le Makefile et le compléter.
 
+#### VARIABLES disponibles dans les fichiers DB
+
+Ce que vous pouvez y trouver : 
+
+  * TITLE : Titre de l'article (affiché dans toutes les pages liées à un article)
+  * DESCRIPTION : Description de l'article (actuellement utilisé dans les flux RSS)
+  * DATE : Pas encore utilisé (inutile ?)
+  * TAGS : Liste des mots-clés dans lesquels les articles sont inclus.
+  * TYPE : nom utilisé pour différencier un type d'article d'un autre. Utile pour les feuilles de style.
+  * AUTHOR : Rédacteur de l'article.
+
 ### Les fichiers sources
 
 Les fichiers sources permettent la génération de chaque article.
@@ -185,17 +196,18 @@ Le fichier est nécessaire pour l'utilisateur afin de configurer Makefly. L'util
 Quelques variables importantes : 
 
   * BLOG\_TITLE : titre du blog
-  * BLOG\_SHORT\_DESC : description courte du blog (non utilisé actuellement)
+  * BLOG\_SHORT\_DESC : description courte du blog
   * BLOG\_DESCRIPTION : description du blog pour le flux RSS
   * BLOG\_LANG : est un code utilisé pour chercher le fichier correspondant dans le répertoire **lang**. Par exemple **fr** pour Français, ou **en** pour anglais.
   * BLOG\_CHARSET : utilisé pour le flux RSS et tout les fichiers HTML. Similaire à **UTF-8** ou **ISO-8859-15** par exemple.
   * BASE\_URL: pour compléter toutes les adresses URL. Par example : **http://mon.joueb.tld/**
   * RSS\_FEED\_NAME: Le nom qui apparaît comme titre dans votre flux RSS.
-  * MAX\_POST: Pour limiter le nombre d'article sur la page principale. Si 0, n'ajoute aucune limite.
+  * MAX\_POST: Pour limiter le nombre d'article sur la page principale.
   * DATE\_FORMAT: pour transformer le timestamp des articles en un autre format de votre choix.
   * SHORT\_DATE\_FORMAT: même chose que pour DATE\_FORMAT
   * INDEX\_FILENAME: si vous voulez nommer la page **principal** au lieu de **index**.
   * PAGE\_EXT: si vous voulez une autre extension. Par exemple **xhtml** au lieu de **html**.
+  * MAX_RSS: Pour limiter le nombre d'article sur le flux RSS.
 
 ### Astuce : redéfinir d'autres VARIABLES
 
@@ -284,6 +296,7 @@ Variables disponibles :
   * ${LANG} : Code pays utilisé dans les pages HTML pour définir une langue. Par exemple *fr* pour français, *en* pour anglais, etc.
   * ${POSTDIR\_INDEX} : Nom exact de la page d'index des articles. Par exemple *index.html*.
   * ${POSTDIR\_NAME} : Nom du répertoire des articles. Par exemple *articles*. Ceci permet d'avoir un meilleur référencement sur Internet.
+  * ${POST\_AUTHOR}: Rédacteur de l'article
   * ${POST\_LIST\_TITLE} : Nom qui apparaîtra sur le lien pour aller sur la liste des articles. Par exemple *Liste des articles*.
   * ${POST\_FILE} : Nom exact du fichier article. Par exemple pour un article dont le nom est *Mon premier article*, la variable POST\_FILE devrait être *mon_premier_article*. Ceci permet également un meilleur référencement.
   * ${POST\_TITLE} : Titre de l'article. Par exemple : *Mon premier article*.
@@ -356,6 +369,7 @@ Au moment où j'écrivais cette documentation, voici les mots disponible à la t
   * READ\_MORE (Lire la suite)
   * SEARCH\_BAR\_CONTENT (Recherche)
   * SEARCH\_BAR\_BUTTON\_NAME (Rechercher)
+  * AUTHOR\_LABEL (Rédacteur)
 
 En utilisant les templates, vous pouvez facilement ajouter du texte et leur traduction dans plusieurs thèmes.
 
@@ -382,6 +396,35 @@ Script de développement qui permet de peupler Makefly en créant quelques artic
 ### publish.sh
 
 Ce script donne des commandes à exécuter après avoir produit votre joueb (JOUrnal wEB, blog). Ceci permet de le publier sur un serveur distant via le protocole SSH ou de synchroniser votre dossier vers un autre. Ceci est expliqué dans la documentation UTILISATEUR, donc pour plus d'information, lisez **Publier le résultat sur le web** dans la documentation UTILISATEUR.
+
+### flush.sh
+
+Ce script **supprime** tout les fichiers SRC et DB. Donc pour l'utiliser : 
+
+    cd tools && ./flush.sh && cd ..
+
+écrasera tout les fichiers SRC et DB.
+
+### Ce qui peut être fait avec tout ça
+
+#### Regénérer le blog et l'installer dans le dossier cible
+
+Quand je dévelope certaines fonctionnalités, j'ai pour habitude de regénérer tout le blog. Pour cela j'utilise :
+
+    cd makefly
+    pmake clean && pmake && cd tools && ./install.sh && cd ..
+
+Cela va aller dans le dossier *makefly* puis nettoyer les fichiers, regénérer le blog, aller dans le dossier *tools*, lancer le script *install.sh* puis revenir dans le dossier *makefly*.
+
+#### Regénérer les articles
+
+Il peut être utile de regénérer tout les articles. Ce que j'utilise : 
+
+    cd tools/ && ./flush.sh && ./populate_makefly.sh && cd ..
+
+On va dans le répertoire *tools*, on supprime tout les articles, puis on les recrée.
+
+Faites attention, cela détruira tout les articles !
 
 ## Meilleures pratiques
 
