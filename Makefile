@@ -49,9 +49,6 @@ SIDEBAR_FILENAME = sidebar
 TOOLSDIR         = ./tools
 MAKEFLYDIR       != pwd
 
-# other files
-htmldoc ?= README
-
 # programs
 markdown ?= markdown
 lua      ?= lua
@@ -97,6 +94,7 @@ STYLEDIR      = ${THEMEDIR}/style
 # Prepare parser options
 parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"   \
+		"BLOG_SHORT_DESC=${BLOG_SHORT_DESC}"     \
 		"BASE_URL=${BASE_URL}"                   \
 		"HOME_TITLE=${HOME_TITLE}"               \
 		"POST_LIST_TITLE=${POST_LIST_TITLE}"     \
@@ -108,6 +106,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"BLOG_CHARSET=${BLOG_CHARSET}"           \
 		"POWERED_BY=${POWERED_BY}"               \
 		"POSTED=${POSTED}"                       \
+		"AUTHOR_LABEL=${AUTHOR_LABEL}"           \
 		"PERMALINK_TITLE=${PERMALINK_TITLE}"     \
 		"RSS_FEED_NAME=${RSS_FEED_NAME}"         \
 		"POSTDIR_INDEX=${POSTDIR_INDEX}"         \
@@ -132,6 +131,7 @@ POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 FILES != cd ${SRCDIR}; ls
 DBFILES != cd ${DBDIR}; ls|${sort} -r
 MAINDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_POST}
+RSSDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_RSS} 
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != echo ${STATICFILES}
 ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
@@ -163,7 +163,7 @@ MEDIA_TARGET_${FILE} = ${FILE}
 .if defined(MEDIAFILES) && ${MEDIAFILES} != ${STATICDIR}/*
 
 ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
-	$Qcp ${FILE:S/^${DESTDIR}\//${STATICDIR}/} ${MEDIA_TARGET_${FILE}} && \
+	$Qcp -r ${FILE:S/^${DESTDIR}\//${STATICDIR}/} ${MEDIA_TARGET_${FILE}} && \
 		echo "-- New static file: ${FILE:S/\/\//\//}"
 
 .endif
@@ -264,6 +264,7 @@ SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 DESC_${FILE}       != echo "${DESCRIPTION:S/'/\'/}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
 CLASS_TYPE_${FILE} != echo ${TYPE}
+AUTHOR_${FILE}     != echo ${AUTHOR}
 
 .for TAG in ${TAGS_${FILE}}
 TAGLINK_${FILE}_${TAG} != cat "${taglink}" |${parser} \
@@ -277,15 +278,16 @@ TAGLIST_${FILE} != echo "${TAGLIST_TMP_${FILE}}" |sed -e 's|</a> <a|</a>, <a|g' 
 ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 	$Q{ \
 		{ \
-			cat ${header} | ${parser} ${parser_opts} && \
-			cat ${article} |${parser}                   \
+			cat ${header} | ${parser} ${parser_opts} &&    \
+			cat ${article} |${parser}                      \
 				"CONTENT=${CONTENT_TARGET_${FILE}}"          \
 				"POST_TITLE=${TITLE_${FILE}}"                \
 				"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
-				| sed -e "s|^|        |g" &&              \
-			cat ${footer} | ${parser} ${parser_opts};   \
-		} > ${TARGET_${FILE}} || { \
-			${rm} -f ${TARGET_${FILE}}                           ; \
+				"POST_AUTHOR=${AUTHOR_${FILE}}"              \
+				| sed -e "s|^|        |g" &&                 \
+			cat ${footer} | ${parser} ${parser_opts};      \
+		} > ${TARGET_${FILE}} || {                       \
+			${rm} -f ${TARGET_${FILE}};                    \
 			echo "-- Error while building ${TARGET_${FILE}}." ; \
 			false                                             ; \
 		} ; \
@@ -316,6 +318,7 @@ CONTENT_${FILE}  != head -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_
 .endif
 TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
 CLASS_TYPE_${FILE} != echo ${TYPE}
+AUTHOR_${FILE}     != echo ${AUTHOR}
 
 .for TAG in ${TAGS_${FILE}}
 TAGLINK_${FILE}_${TAG} != cat "${taglink}" |${parser} \
@@ -328,22 +331,25 @@ TAGLIST_${FILE} != echo "${TAGLIST_TMP_${FILE}}" |sed -e 's|</a> <a|</a>, <a|g' 
 
 ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	@# Template for Post List page
-	$Qcat ${element} | ${parser}              \
+	$Qcat ${element} | ${parser}                 \
 		"POST_TITLE=${TITLE_${FILE}}"              \
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"POST_FILE=${NAME_${FILE}}"                \
 		"SHORT_DATE=${SHORTDATE_${FILE}}"          \
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
+		"POST_AUTHOR=${AUTHOR_${FILE}}"            \
+		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}" \
 		> ${TMPDIR}/${FILE}.list
 	@# Template for Home page
 	$Qcat ${article_idx} | ${parser} ${parser_opts} \
-		"CONTENT=${CONTENT_${FILE}}"                 \
-		"TITLE=${TITLE_${FILE}}"                     \
-		"POST_FILE=${NAME_${FILE}}"                  \
-		"DATE=${POSTDATE_${FILE}}"                   \
-		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"          \
-		"POST_TITLE=${TITLE_${FILE}}"                \
-		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
+		"CONTENT=${CONTENT_${FILE}}"                  \
+		"TITLE=${TITLE_${FILE}}"                      \
+		"POST_FILE=${NAME_${FILE}}"                   \
+		"DATE=${POSTDATE_${FILE}}"                    \
+		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"           \
+		"POST_TITLE=${TITLE_${FILE}}"                 \
+		"POST_AUTHOR=${AUTHOR_${FILE}}"               \
+		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"    \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
 	$Qcat ${POSTDIR}/${NAME_${FILE}} | ${parser} ${parser_opts} \
@@ -355,25 +361,27 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	@# Move temporary file to pub
 	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${POSTDIR}/${NAME_${FILE}}
 	@# Template for RSS Feed
-	$Qcat ${TMPLDIR}/feed.element.rss | ${parser}     \
+	$Qcat ${TMPLDIR}/feed.element.rss | ${parser}        \
 		"TITLE=${TITLE_${FILE}}"                           \
-		"DESCRIPTION=${DESC_${FILE}}"                      \
+		"DESCRIPTION=${CONTENT_${FILE}}"                   \
 		"LINK=${BASE_URL}/${POSTDIR_NAME}/${NAME_${FILE}}" \
-		> ${TMPDIR}/${FILE}.rss
+		"POST_AUTHOR=${AUTHOR_${FILE}}"                    \
+	> ${TMPDIR}/${FILE}.rss
 	@# Prepare TAGS
 	$Qfor TAG in ${TAGS_${FILE}}; do                             \
-		cat ${tagelement} | ${parser}                           \
-			"TAGLINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}${PAGE_EXT}" \
+		cat ${tagelement} | ${parser}                              \
+			"TAGLINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}${PAGE_EXT}"  \
 			"TAGNAME=$${TAG}"                                        \
 		>> ${TMPDIR}/tags.list;                                    \
 	done
 	$Qfor TAG in ${TAGS_${FILE}}; do               \
-		cat ${element} | ${parser} ${parser_opts} \
+		cat ${element} | ${parser} ${parser_opts}    \
 			"POST_TITLE=${TITLE_${FILE}}"              \
 			"DATE=${POSTDATE_${FILE}}"                 \
 			"POST_FILE=${NAME_${FILE}}"                \
 			"SHORT_DATE=${SHORTDATE_${FILE}}"          \
 			"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
+			"POST_AUTHOR=${AUTHOR_${FILE}}"            \
 		>> ${TMPDIR}/$${TAG}.tag; \
 	done
 .endfor
@@ -409,8 +417,8 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${TMPLDIR}/feed.header.rss | ${parser} ${parser_opts} \
 			> ${DESTDIR}/rss.xml &&                \
-		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml && \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.rss/} && \
+		cat ${RSSDBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml && \
+		${rm} -f ${RSSDBFILES:S/^/${TMPDIR}\//:S/$/.rss/} && \
 		cat ${TMPLDIR}/feed.footer.rss >> ${DESTDIR}/rss.xml || { \
 			echo "-- Could not build RSS page: $@" ; \
 			false ; \

@@ -3,3 +3,5 @@ DESCRIPTION = How to contribute?
 DATE = 2012-07-01
 TAGS = makefly, social, programmation
 TYPE = normal
+AUTHOR = anonymous
+AUTHOR = olivier
