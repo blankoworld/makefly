@@ -222,6 +222,7 @@ ${THEME_MEDIA_TARGET_${FILE}}: ${DESTDIR}
 SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |sed -e 's|\"|\\"|g'
 .else
 SIDEBAR_CONTENT = ""
+sidebar_tpl = 'empty.file'
 .endif
 
 sidebar: ${TMPDIR}
