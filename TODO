@@ -1,6 +1,8 @@
 TODO:
 -----
 
+- create a POST_ESCAPED_TITLE which is the post title without any whitespace, etc. Same as POST_FILE but without ".html" string (change doc)
+- add POST_ESCAPED_TITLE in minisch theme for article id="${POST_ESCAPED_TITLE}"
 - print.css
 - Problem with TAG_NAME and TAGNAME. And also TAGLINK.
 - Minisch theme update:
