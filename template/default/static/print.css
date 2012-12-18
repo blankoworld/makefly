@@ -12,6 +12,9 @@ img { max-width: 100% !important; }
 p, h2, h3 { orphans: 3; widows: 3; }
 h2, h3 { page-break-after: avoid; }
 nav { display: none; }
-header h1 {text-align: center; }
-header p#subtitle { text-align: center; margin: 0; font-size: 70%; }
+header h1 { text-align: center; margin: 25px 0 0 0; padding: 0; }
+header p#subtitle { text-align: center; font-size: 70%; margin: 0 0 25px 0; padding: 0; }
+.articleinfo { border-bottom: thin solid black; }
+.articleinfo a[href]:after { content: ""; }
+footer { display:none; }
 }
