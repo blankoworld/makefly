@@ -292,6 +292,8 @@ Variables disponibles :
   * ${CONTENT} : Contenu de la page / de l'article. Cela ressemble souvent au contenu d'un article. Mais cela peut être un autre type de contenu comme une liste de mots-clés, une liste d'articles, etc. Ceci dépend de la page que vous éditez.
   * ${CSS\_FILE} : Nom du fichier CSS. Par exemple *simple.css*.
   * ${CSS\_NAME} : Nom qui apparaîtra à l'utilisateur quand il choisira votre thème CSS. Par exemple le thème *défaut*.
+  * ${DATE}: Date utilisant le format de ${DATE\_FORMAT}.
+  * ${DATETIME}: Date utilisant le format ISO8601 pour être compatible avec la balise HTML5 *time*.
   * ${HOME\_TITLE} : Titre qui apparaîtra sur le lien qui redirige vers la page d'accueil. Par exemple *Accueil*.
   * ${LANG} : Code pays utilisé dans les pages HTML pour définir une langue. Par exemple *fr* pour français, *en* pour anglais, etc.
   * ${POSTDIR\_INDEX} : Nom exact de la page d'index des articles. Par exemple *index.html*.
