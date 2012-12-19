@@ -260,6 +260,7 @@ DB_${FILE} != find ${DBDIR} -name "*,${FILE:S/.md$/.mk/}"
 # Fetch some data for this post
 TITLE_${FILE}      != echo "${TITLE}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 TMSTMP_${FILE}     != echo ${DB_${FILE}:S/^${DBDIR}\///}| cut -d ',' -f 1
+ESCAPED_TITLE_${FILE} != echo ${DB_${FILE}:S/^${DBDIR}\///}| cut -d ',' -f 2|sed -e 's|.mk$$||g'
 POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 DATETIME_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'%Y-%m-%dT%H:%M'
@@ -284,6 +285,7 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
 			cat ${article} |${parser}                      \
 				"CONTENT=${CONTENT_TARGET_${FILE}}"          \
 				"POST_TITLE=${TITLE_${FILE}}"                \
+				"POST_ESCAPED_TITLE=${ESCAPED_TITLE_${FILE}}" \
 				"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
 				"POST_AUTHOR=${AUTHOR_${FILE}}"              \
 				| sed -e "s|^|        |g" &&                 \
@@ -307,6 +309,7 @@ TMSTMP_${FILE}     != echo ${FILE}| cut -d ',' -f 1
 POSTDATE_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'${DATE_FORMAT}'
 SHORTDATE_${FILE}  != ${date} -d "@${TMSTMP_${FILE}}" +'${SHORT_DATE_FORMAT}'
 DATETIME_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'%Y-%m-%dT%H:%M'
+ESCAPED_NAME_${FILE} != echo ${FILE}| sed -e 's|.mk$$||' -e 's|^.*,||'
 NAME_${FILE}       != echo ${FILE}| sed -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
 DESC_${FILE}       != echo "${DESCRIPTION:S/'/\'/}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |sed -e 's/\"/\\"/g' -e 's|`|``\\`|g'
@@ -337,6 +340,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	$Qcat ${element} | ${parser}                 \
 		"POST_TITLE=${TITLE_${FILE}}"              \
 		"DATE=${POSTDATE_${FILE}}"                 \
+		"POST_ESCAPED_TITLE=${ESCAPED_NAME_${FILE}}" \
 		"POST_FILE=${NAME_${FILE}}"                \
 		"SHORT_DATE=${SHORTDATE_${FILE}}"          \
 		"DATETIME=${DATETIME_${FILE}}"             \
@@ -348,6 +352,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	$Qcat ${article_idx} | ${parser} ${parser_opts} \
 		"CONTENT=${CONTENT_${FILE}}"                  \
 		"TITLE=${TITLE_${FILE}}"                      \
+		"POST_ESCAPED_TITLE=${ESCAPED_NAME_${FILE}}"  \
 		"POST_FILE=${NAME_${FILE}}"                   \
 		"DATE=${POSTDATE_${FILE}}"                    \
 		"DATETIME=${DATETIME_${FILE}}"                \
@@ -361,6 +366,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"TITLE=${TITLE_${FILE}}"                   \
 		"DATE=${POSTDATE_${FILE}}"                 \
 		"DATETIME=${DATETIME_${FILE}}"             \
+		"POST_ESCAPED_TITLE=${ESCAPED_NAME_${FILE}}" \
 		"POST_FILE=${NAME_${FILE}}"                \
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
 		> ${TMPDIR}/${NAME_${FILE}}
@@ -384,6 +390,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		cat ${element} | ${parser} ${parser_opts}    \
 			"POST_TITLE=${TITLE_${FILE}}"              \
 			"DATE=${POSTDATE_${FILE}}"                 \
+			"POST_ESCAPED_TITLE=${ESCAPED_NAME_${FILE}}" \
 			"POST_FILE=${NAME_${FILE}}"                \
 			"SHORT_DATE=${SHORTDATE_${FILE}}"          \
 			"DATETIME=${DATETIME_${FILE}}"             \
