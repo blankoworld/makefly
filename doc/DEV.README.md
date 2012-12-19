@@ -302,7 +302,8 @@ Available variables:
   * ${POST\_AUTHOR}: Post's author
   * ${POST\_LIST\_TITLE}: Name that will appears on the link to go to Post's list. For an example *Post List*.
   * ${POST\_FILE}: Exact name of the post file. For an example with a post which title is *My first post*, the POST\_FILE would be *my_first_post*. This also permits a better web indexation.
-  * ${POST\_TITLE}: Title of the post. For an example: *My fist post*.
+  * ${POST\_TITLE}: Title of the post. For an example: *My first post*.
+  * ${POST\_ESCAPED\_TITLE}: Title of the post without whitespace. For an example: *my_first_post*.
   * ${POWERED\_BY}: Name displayed for the *Powered by* mention on all pages.
   * ${READ\_MORE}: Name displayed for the *Read more* link on each post (if activated in the configuration file)
   * ${RSS\_FEED\_NAME}: Name of your RSS feed. This will be shown for users that subscribe to your RSS. For an example *My first blog RSS feed*.

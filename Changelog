@@ -33,7 +33,7 @@ Current (0.1.1-alpha)
 	- BLOG_SHORT_DESC is now used as a kind of second title for blog title
 	- Limit RSS number with MAX_RSS
 	- Add content of post in RSS file
-	- Minisch theme imrpovements
+	- Minisch theme imrpovements: date, escaped_title, etc.
 	- Add datetime as new value
 
 Version 0.1 (released 2012-07-17)

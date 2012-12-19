@@ -302,6 +302,7 @@ Variables disponibles :
   * ${POST\_LIST\_TITLE} : Nom qui apparaîtra sur le lien pour aller sur la liste des articles. Par exemple *Liste des articles*.
   * ${POST\_FILE} : Nom exact du fichier article. Par exemple pour un article dont le nom est *Mon premier article*, la variable POST\_FILE devrait être *mon_premier_article*. Ceci permet également un meilleur référencement.
   * ${POST\_TITLE} : Titre de l'article. Par exemple : *Mon premier article*.
+  * ${POST\_ESCAPED\_TITLE}: Titre de l'article sans espace ni caractères spéciaux. Par exemple : *mon_premier_article*.
   * ${POWERED\_BY} : Nom affiché pour la mention *Propulsé par* sur toutes les pages.
   * ${READ\_MORE} : Nom affiché pour le lien *Lire la suite* sur chaque article (si activé dans le fichier de configuration)
   * ${RSS\_FEED\_NAME} : Nom pour votre flux RSS. Ceci sera montré aux utilisateurs qui souscrivent à votre RSS. Par exemple *Flux RSS de mon premier blog*.
