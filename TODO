@@ -48,8 +48,6 @@ IDEAS:
 - sitemap (xml/html)
 - fortunes
 - identica'status (via ELI, Expression Libre Identica on github)
-- find a logo
-- do a favicon with logo
 - template:
   - permit template like Nanoblogger or Utterson. For an example with m4 or with this:
     eval "cat << ___EOF___
@@ -126,3 +124,5 @@ DONE:
 - Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
 - create a POST_ESCAPED_TITLE which is the post title without any whitespace, etc. Same as POST_FILE but without ".html" string (change doc)
 - add POST_ESCAPED_TITLE in minisch theme for article id="${POST_ESCAPED_TITLE}"
+- find a logo
+- do a favicon with logo
