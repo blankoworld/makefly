@@ -208,3 +208,14 @@ text-align: center;
 font-size: 70%;
 border-top: thin solid #000000;
 }
+
+p img#logo {
+position: absolute;
+display: block;
+top: 2ex;
+left: 2em;
+height: 64px;
+width: 64px;
+margin: 0 auto;
+text-align: center;
+}
