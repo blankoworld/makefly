@@ -14,48 +14,51 @@
 
 <head>
   <meta charset="${BLOG_CHARSET}">
-	<meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width">
   <title>${BLOG_TITLE} - ${TITLE}</title>
   <meta name="description" content="${BLOG_DESCRIPTION}">
-	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 
-	<!-- Styles -->
+  <!-- Styles -->
   <link rel="stylesheet" type="text/css" media="all" href="${BASE_URL}/${CSS_FILE}">
 
-		<style type="text/css">
-			header#joliebarre a.accueil {
-				display: block;
-			}
-		</style>
+    <style type="text/css">
+      header#joliebarre a.accueil {
+        display: block;
+      }
+    </style>
 
-		<style type="text/css">
-			body.single aside#laterale,
-			body.page aside#laterale {
-			    padding-top: 26px;
-			}
-		@media screen and (min-width:850px) {
-			body.single aside#laterale,
-			body.page aside#laterale {
-			    width: 21%; }
+    <style type="text/css">
+      body.single aside#laterale,
+      body.page aside#laterale {
+          padding-top: 26px;
+      }
+    @media screen and (min-width:850px) {
+      body.single aside#laterale,
+      body.page aside#laterale {
+          width: 21%; }
 
-			body.single section#flux,
-			body.page section#flux {
-			    display: inline-block;
-			    float: right;
-			    width: 74%;
-			    margin: 5.5px auto;
-		} }
-			body.page-template-archives-php section#flux { width: 100%; float: none; }
-		</style>
+      body.single section#flux,
+      body.page section#flux {
+          display: inline-block;
+          float: right;
+          width: 74%;
+          margin: 5.5px auto;
+    } }
+      body.page-template-archives-php section#flux { width: 100%; float: none; }
+    </style>
 
-		<style type="text/css">
-			li.bypostauthor > article.comment .comment-author cite:after {
-			    content: "Minischauthor";
-			}
-		</style>
+    <style type="text/css">
+      li.bypostauthor > article.comment .comment-author cite:after {
+          content: "Minischauthor";
+      }
+    </style>
 
-	<!-- Script JQuery -->
-	<script src="jquery.js" type="text/javascript"></script>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="${BASE_URL}/favicon.ico">
+
+  <!-- Script JQuery -->
+  <script src="jquery.js" type="text/javascript"></script>
 
 <!--[if lt IE 9]>
 <script src="html5.js" type="text/javascript"></script>
@@ -65,27 +68,25 @@
 </head>
 
 <body class="${BODY_CLASS}">
-	<header id="joliebarre">
-		<section>
-
+  <header id="joliebarre">
+    <section>
       <a class="accueil" href="${BASE_URL}">${BLOG_TITLE}</a>
+      <nav>${SEARCHBAR}
+        <ul>
+          <li class="home">
+            <a class="home" href="${BASE_URL}"><span></span></a>
+          </li>
+          <li><a href="${BASE_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
+          <li><a href="${BASE_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
+          <li>
+            <a href="${BASE_URL}/rss.xml" class="follow rss"><span></span>RSS</a>
+          </li>
+        </ul>
+      </nav>
+    </section>
+  </header>
 
-			<nav>${SEARCHBAR}
-        <li class="home">
-          <a class="home" href="${BASE_URL}"><span></span></a>
-				</li>
-        <li><a href="${BASE_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
-        <li><a href="${BASE_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
-				<li>
-          <a href="${BASE_URL}/rss.xml" class="follow rss"><span></span>RSS</a>
-				</li>
-			</nav>
-		</section>
-	</header>
-
-<div id="conteneur">
-    
-	 ${SIDEBAR}
-
-   <section id="flux">
+  <div id="conteneur">
+${SIDEBAR}
+    <section id="flux">
 

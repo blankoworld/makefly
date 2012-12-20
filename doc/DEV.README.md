@@ -293,6 +293,8 @@ Available variables:
   * ${CONTENT}: Content of page/post. It often looks like a post content. But it could be another kind of content as a tag list, a post list, etc. This depends on the page you're editing.
   * ${CSS\_FILE}: Name of CSS file. For an example *simple.css*.
   * ${CSS\_NAME}: Name that will appears to user when it selects your CSS theme. For an example *default theme*.
+  * ${DATE}: Date using ${DATE\_FORMAT} format.
+  * ${DATETIME}: Date using ISO8601 format to be compatible with HTML5 *time* tag.
   * ${HOME\_TITLE}: Title that will appears on the link that redirect to homepage. For an example *Home*.
   * ${LANG}: Country code used in HTML's page to define a language. For an example *en* for english, *fr* for *french*, etc.
   * ${POSTDIR\_INDEX}: Exact name of postdir's index page. For an example *index.html*.
@@ -300,7 +302,8 @@ Available variables:
   * ${POST\_AUTHOR}: Post's author
   * ${POST\_LIST\_TITLE}: Name that will appears on the link to go to Post's list. For an example *Post List*.
   * ${POST\_FILE}: Exact name of the post file. For an example with a post which title is *My first post*, the POST\_FILE would be *my_first_post*. This also permits a better web indexation.
-  * ${POST\_TITLE}: Title of the post. For an example: *My fist post*.
+  * ${POST\_TITLE}: Title of the post. For an example: *My first post*.
+  * ${POST\_ESCAPED\_TITLE}: Title of the post without whitespace. For an example: *my_first_post*.
   * ${POWERED\_BY}: Name displayed for the *Powered by* mention on all pages.
   * ${READ\_MORE}: Name displayed for the *Read more* link on each post (if activated in the configuration file)
   * ${RSS\_FEED\_NAME}: Name of your RSS feed. This will be shown for users that subscribe to your RSS. For an example *My first blog RSS feed*.

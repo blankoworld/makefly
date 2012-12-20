@@ -292,6 +292,8 @@ Variables disponibles :
   * ${CONTENT} : Contenu de la page / de l'article. Cela ressemble souvent au contenu d'un article. Mais cela peut être un autre type de contenu comme une liste de mots-clés, une liste d'articles, etc. Ceci dépend de la page que vous éditez.
   * ${CSS\_FILE} : Nom du fichier CSS. Par exemple *simple.css*.
   * ${CSS\_NAME} : Nom qui apparaîtra à l'utilisateur quand il choisira votre thème CSS. Par exemple le thème *défaut*.
+  * ${DATE}: Date utilisant le format de ${DATE\_FORMAT}.
+  * ${DATETIME}: Date utilisant le format ISO8601 pour être compatible avec la balise HTML5 *time*.
   * ${HOME\_TITLE} : Titre qui apparaîtra sur le lien qui redirige vers la page d'accueil. Par exemple *Accueil*.
   * ${LANG} : Code pays utilisé dans les pages HTML pour définir une langue. Par exemple *fr* pour français, *en* pour anglais, etc.
   * ${POSTDIR\_INDEX} : Nom exact de la page d'index des articles. Par exemple *index.html*.
@@ -300,6 +302,7 @@ Variables disponibles :
   * ${POST\_LIST\_TITLE} : Nom qui apparaîtra sur le lien pour aller sur la liste des articles. Par exemple *Liste des articles*.
   * ${POST\_FILE} : Nom exact du fichier article. Par exemple pour un article dont le nom est *Mon premier article*, la variable POST\_FILE devrait être *mon_premier_article*. Ceci permet également un meilleur référencement.
   * ${POST\_TITLE} : Titre de l'article. Par exemple : *Mon premier article*.
+  * ${POST\_ESCAPED\_TITLE}: Titre de l'article sans espace ni caractères spéciaux. Par exemple : *mon_premier_article*.
   * ${POWERED\_BY} : Nom affiché pour la mention *Propulsé par* sur toutes les pages.
   * ${READ\_MORE} : Nom affiché pour le lien *Lire la suite* sur chaque article (si activé dans le fichier de configuration)
   * ${RSS\_FEED\_NAME} : Nom pour votre flux RSS. Ceci sera montré aux utilisateurs qui souscrivent à votre RSS. Par exemple *Flux RSS de mon premier blog*.
