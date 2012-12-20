@@ -90,7 +90,7 @@ nav form#search {
 display: block;
 position: absolute;
 top: 0;
-left: 0;
+left: 100px;
 width: auto;
 margin: 1% 0 0 1%;
 }
