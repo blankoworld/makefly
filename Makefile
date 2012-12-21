@@ -105,6 +105,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"LANG=${BLOG_LANG}"                      \
 		"BLOG_CHARSET=${BLOG_CHARSET}"           \
 		"POWERED_BY=${POWERED_BY}"               \
+		"LOGO_AVAILABLE=${LOGO_AVAILABLE}"       \
 		"POSTED=${POSTED}"                       \
 		"AUTHOR_LABEL=${AUTHOR_LABEL}"           \
 		"PERMALINK_TITLE=${PERMALINK_TITLE}"     \

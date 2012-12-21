@@ -14,3 +14,4 @@ READ_MORE = Lire la suite
 SEARCH_BAR_CONTENT = Recherche
 SEARCH_BAR_BUTTON_NAME = Rechercher
 AUTHOR_LABEL = Rédacteur
+LOGO_AVAILABLE = Le logo est disponible sous 'Licence Art Libre' par Ines ECK : 
