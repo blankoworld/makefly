@@ -180,13 +180,15 @@ parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
 ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
 	$Q{ \
 		{ \
-			cat ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" && \
-			${markdown} ${ABOUTFILE} && \
-			cat ${footer} | ${parser} ${parser_opts}; \
-		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || { \
-			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ; \
+			cat ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" &&  \
+			${markdown} ${ABOUTFILE} > ${TMPDIR}/${ABOUT_FILENAME}.about &&     \
+			cat ${TMPDIR}/${ABOUT_FILENAME}.about |${parser} ${parser_opts} &&  \
+			rm ${TMPDIR}/${ABOUT_FILENAME}.about &&                             \
+			cat ${footer} | ${parser} ${parser_opts};                           \
+		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || {                      \
+			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ;                  \
 			echo "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
-			false                                             ; \
+			false                                             ;                 \
 		} ; \
 	} && echo "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
 
