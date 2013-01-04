@@ -171,27 +171,6 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 
 .endfor
 
-# ABOUT PAGE
-.if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
-
-ABOUT_LINK != cat ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
-parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
-
-${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
-	$Q{ \
-		{ \
-			cat ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" && \
-			${markdown} ${ABOUTFILE} && \
-			cat ${footer} | ${parser} ${parser_opts}; \
-		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || { \
-			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ; \
-			echo "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
-			false                                             ; \
-		} ; \
-	} && echo "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
-
-.endif
-
 # SEARCH BAR
 .if defined(SEARCH_BAR) && $(SEARCH_BAR)
 
@@ -228,10 +207,32 @@ sidebar_tpl = 'empty.file'
 
 sidebar: ${TMPDIR}
 	$Qcat ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
-
-sidebar_tmp_file = ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
-parser_opts += "SIDEBAR=`cat ${sidebar_tmp_file}`"
 # end of SIDEBAR
+
+# ABOUT PAGE
+.if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
+
+ABOUT_LINK != cat ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
+parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
+
+${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
+	$Q{ \
+		{ \
+			cat ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" &&  \
+			${markdown} ${ABOUTFILE} > ${TMPDIR}/${ABOUT_FILENAME}.about &&     \
+			cat ${TMPDIR}/${ABOUT_FILENAME}.about |${parser} ${parser_opts}     \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"        &&  \
+			rm ${TMPDIR}/${ABOUT_FILENAME}.about &&                             \
+			cat ${footer} | ${parser} ${parser_opts}                            \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" ;          \
+		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || {                      \
+			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ;                  \
+			echo "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
+			false                                             ;                 \
+		} ; \
+	} && echo "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
+
+.endif
 
 # BEGIN
 all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
@@ -418,6 +419,7 @@ ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TM
 		cat ${TMPDIR}/index${PAGE_EXT} |${parser} ${parser_opts}                     \
 			"TITLE=${HOME_TITLE}"                                                         \
 			"BODY_CLASS=home"                                                             \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"                      \
 			> ${TMPDIR}/index${PAGE_EXT}.tmp &&                                           \
 		${mv} ${TMPDIR}/index${PAGE_EXT}.tmp ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
 		${rm} ${TMPDIR}/index${PAGE_EXT} || {                                           \
@@ -450,6 +452,7 @@ ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
 		cat ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
 			"TITLE=${POST_LIST_TITLE}"                                                  \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"                    \
 			> ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                                \
     ${rm} ${TMPDIR}/list${PAGE_EXT} || {                                          \
 			echo "-- Could not build list page: $@" ;                           \
@@ -470,6 +473,7 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${TMPDIR}/taglist${PAGE_EXT} | ${parser} ${parser_opts} \
 		  "BODY_CLASS=tags"                                            \
 			"TITLE=${TAG_LIST_TITLE}"                                    \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"     \
 		> ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                    \
 		${rm} ${TMPDIR}/tags.list &&                                   \
 		${rm} ${TMPDIR}/taglist${PAGE_EXT} ||                          \
