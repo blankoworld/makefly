@@ -171,29 +171,6 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 
 .endfor
 
-# ABOUT PAGE
-.if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
-
-ABOUT_LINK != cat ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
-parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
-
-${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR}
-	$Q{ \
-		{ \
-			cat ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" &&  \
-			${markdown} ${ABOUTFILE} > ${TMPDIR}/${ABOUT_FILENAME}.about &&     \
-			cat ${TMPDIR}/${ABOUT_FILENAME}.about |${parser} ${parser_opts} &&  \
-			rm ${TMPDIR}/${ABOUT_FILENAME}.about &&                             \
-			cat ${footer} | ${parser} ${parser_opts};                           \
-		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || {                      \
-			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ;                  \
-			echo "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
-			false                                             ;                 \
-		} ; \
-	} && echo "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
-
-.endif
-
 # SEARCH BAR
 .if defined(SEARCH_BAR) && $(SEARCH_BAR)
 
@@ -231,6 +208,31 @@ sidebar_tpl = 'empty.file'
 sidebar: ${TMPDIR}
 	$Qcat ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
 # end of SIDEBAR
+
+# ABOUT PAGE
+.if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
+
+ABOUT_LINK != cat ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
+parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
+
+${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
+	$Q{ \
+		{ \
+			cat ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" &&  \
+			${markdown} ${ABOUTFILE} > ${TMPDIR}/${ABOUT_FILENAME}.about &&     \
+			cat ${TMPDIR}/${ABOUT_FILENAME}.about |${parser} ${parser_opts}     \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"        &&  \
+			rm ${TMPDIR}/${ABOUT_FILENAME}.about &&                             \
+			cat ${footer} | ${parser} ${parser_opts}                            \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" ;          \
+		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || {                      \
+			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ;                  \
+			echo "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
+			false                                             ;                 \
+		} ; \
+	} && echo "-- Page built: ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}."
+
+.endif
 
 # BEGIN
 all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
