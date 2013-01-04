@@ -17,3 +17,4 @@ MAX_RSS = 8
 THEME = minisch
 TAGDIR_NAME = motcle
 POSTDIR_NAME = article
+markdown = ${BINDIR}/lunamark
