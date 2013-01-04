@@ -1,0 +1,3 @@
+Mon voyage à Hambourg était très intéressant j'ai pu découvrir la ville, ses environs, et des paysages magnifiques, grandiose pourrait on dire ! J'y ai même découvert ma classe et des étudiants allemands. C'est fou ce qu'un pays étranger renferme comme trésor.<br /><br />
+J'ai donc, après le voyage, mis mes photos sur l'ordinateur et crée un site Web entre le 7 et le 9 Mai 2005. Il comporte plusieurs galeries et le programme du voyage, j'ai aussi mis des liens vers les sites qui méritent de figurer sur le net. Je vous souhaite une bonne navigation sur ce site.<br />
+Aller, je ne vous laisse plus languir voici l'adresse du site : <a href="http://hambourg.free.fr" title="Site de Hambourg !">http://hambourg.fr.st</a><br />

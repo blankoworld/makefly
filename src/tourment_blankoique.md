@@ -1,0 +1,16 @@
+Il y a des choses à l'encontre desquelles nous ne pouvons combattre indéfiniement. L'une de ces choses est la nature humaine. On a beau passé sa vie à la combattre, la guerre n'est jamais finie.
+
+J'ai passé ma vie à observer la nature humaine, à tenter d'en comprendre les rouages, à essayer de pouvoir m'intégrer dans cette société. Mais au bout du compte, le résultat est là : je ne comprends toujours pas le mode de fonctionnement et je ne suis pas intégré correctement. Dire le contraire serait mensonge. Nous nous voilons la face pour tenter de cacher la vérité, se sentir vivre, se sentir aimer.
+
+J'ai tenté d'encercler cette nature humaine, de la réduire à néant, de faire le ménage, supprimer le mauvais pour ne garder que le bon en moi. Mais elle remonte toujours à la surface, aussi destructrice qu'impitoyable, ma nature ne s'arrêtera que le jour de ma mort. Pour la réduire à néant il ne reste qu'une solution : se laisser mourrir le plus rapidement possible. Le monde n'en sera pas meilleur ou moins mal, mais il n'aura plus à subir le courroux de cet individu, de cet être pitoyable que je suis. Je suis un ensemble de petit tout qui font un grand rien.
+
+Au début on se dit que c'est normal. On grandit. On change. On combat les parties de nous que nous déprécions, peut être par égoïsme, peut être par volonté d'être toujours le meilleur pour les autres, être bien vu, mais avec lui - notre second moi - il ne sert à rien de mentir, de cacher, de voler, de tuer, il sera toujours là ; non pas pour nous soutenir, mais pour perturber notre environnement, nous rabaisser, nous blesser jusqu'à épuisement total. C'est là qu'on abandonne. Il y avait des hauts et des bas, mais là c'est terminé. Qu'importe si on doit finir seul, abandonné, sans amour ni tendresse, cela vaut mieux pour le reste du monde.
+
+Je suis seul, en mauvaise santé physique et possiblement morale, sans volonté de réussir, sans travail. Je n'ai probablement jamais voulu être dans cet état, j'ai toujours combattu ma **non volonté**, tenté d'avoir le moral, fait semblant d'aller bien, mais cela n'a pas suffit, mon second moi prend toujours le dessus. Je ne suis plus l'esclave que de moi - même. La nature humaine est ainsi, cela fait parti de moi, je suis ainsi. Je ne l'accepterais peut être jamais, mais je donne ma rémission.
+
+Je ne manque pourtant de rien, j'ai un toit, un lit confortable pour dormir, de quoi me nourrir, des ami(e)s, une future voie de travail. Peut être cela ne suffit - il pas, aurais je besoin de plus ? Ou faut il tout simplement se dire que ne manquer de rien c'est justement manquer de quelque chose ?
+
+Beaucoup disent, *boah tu changeras d'avis quand tu auras une petite amie*, mais est ce une compagne qui peut combler un vide ? Un enfant à s'occuper ? Ou encore autre chose ? Et si la solitude est une partie de soi, pourquoi ne serait elle pas une bonne cure ? Et pourquoi devoir toujours être entouré, cela est il une solution ? Si, contre toute attente, le temps serait un médicament ? Il faut simplement le laisser faire son travail. Le corps ne supporte certes pas le temps, mais l'esprit en a besoin.
+
+Laissons donc à la fois ce corps et cet esprit de côté. Ne vous en occupez plus.
+

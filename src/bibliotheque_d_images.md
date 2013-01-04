@@ -1,0 +1,3 @@
+<p>Petite nouvelle concernant le site de <a href=http://portedesetoiles.net alt="Site de la porte des étoiles" target=_blank><br />
+portedesetoiles.net</a> : <br /><br />
+Une nouvelle rubrique un peu plus évoluée est actuellement disponible : <a href=http://biblio.portedesetoiles.net alt="Bibliothèque d'images de Stargate SG-1">http://biblio.portedesetoiles.net</a>. Cette partie du site a pour but de mettre à disposition plusieurs images de la série de Stargate SG-1 et de permettre, par son interface simple, aux visiteurs de laisser leur propres images sur la série et le monde de Stargate. Pensez à y faire un tour ;)</p><br />

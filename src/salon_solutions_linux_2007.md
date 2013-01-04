@@ -1,0 +1,25 @@
+### Article de Linux+ DVD paru le 04/2007 (estimation)
+
+Nul question d'attendre le printemps pour sortir de sa tanière ! Ce sont là les maîtres mots du Salon Solutions Libres dites Open Source qui s'est déroulé du 30 janvier au 1er février.
+
+Comme tout les ans, à Paris la Défense, et plus particulièrement au C.N.I.T, se déroule un événement peu commun : une réunion de toutes les personnes travaillant ou étant intéressées / intriguées par les Solutions Open Source. Au total ce sont plus de 90 stands qui présentent leur passion pour l'informatique et leur volonté de faire connaître des alternatives plus qu'alléchantes. Etait de la partie Novell (partenaire officiel des Solutions Open Source 2007) qui avait un espace d'exposition énorme. A côté nous pouvions trouver diverses entreprises de Services, accompagnées des célèbres distributions focalisées entreprises telles que Mandriva, Red Hat, et – forcément - Suse, mais également ... Microsoft ! Le géant de l'informatique n'a pas résisté à venir pointer le bout de son nez, d'autant plus que le premier jour, au soir, un feu d'artifice était organisé pour la sortie de son nouveau système d'exploitation : Vista. Mais qu'à cela ne tienne, le libre a fait fureur, et quelques heures après l'ouverture, les stocks de CD des diverses distributions GNU / Linux étaient à secs.
+
+Bien que les trois quarts de l'espace d'exposition était occupé par des entreprises de services, le petit quart restant amenait tout autant de monde : je parle des Associations. Qu'elles soient de Paris ou d'ailleurs, toutes étaient occupés à débattre de quelconques sujets ou à présenter leur partie (but de l'association, moyens de financement, solutions proposées, communauté). Je vous conseille vivement d'aller faire un tour si vous en avez l'occasion, c'est très instructif et nous rencontrons des personnes d'un peu partout. Pour ma part, les échanges furent nombreux, rencontrer des personnes de manière physique est bien plus attrayant que de papoter sur un écran avec un clavier. Mais ce n'est pas tout, la rédaction de Linux + DVD était aussi présente. Un stand nous était réservé, et il faut dire que beaucoup furent intrigués que nous présentions autant de revues différentes axées sur des thèmes différents, tout en restant évidemment autour de l'informatique. A côté de ça la demoiselle de Diamonds Edition (Linux Pratique) devait se sentir bien seule ...
+
+Pour le reste, un espace de repos siégeait au fond du salon avec boisson et sandwich, de quoi se rassasier entre deux stands et permettre aux personnes de rester toute la journée, je vous assure il y a de quoi faire ! Et les exposants n'étaient pas les seuls centres d'intérêts. En effet tout les jours étaient organisées des conférences sur des thèmes comme la paravirtualisation ou l'évolution de l'environnement de bureau depuis l'année dernière. Malheureusement il faut faire la distinction entre conférences à entrées libres, et conférences privées ... Pour ces dernières, il faut payer un supplément. Pour donner un ordre de grandeur, le tarif étudiant, pour les 3 jours, permettant l'accès à toutes les conférences, s'élève à 175 euros. Ceci divise donc tout le monde en deux groupes : les véritables passionnés et les autres. Mais rassurez vous, l'entrée du Salon et l'accès aux stands est gratuit !
+
+En parlant de fanas et d'hurluberlus, nous avions la chance d'avoir une animation sympathique au Salon : le groupe des SWATS. Non ce n'est pas les membres de la police spécialisée américaine, mais les Secret Warrior Against The System, dont le principal but est de dénoncer la tyrannie des technologies auprès des entreprises et des utilisateurs. Ils vadrouillaient de gauche à droite dans le Salon, en vociférant des paroles de toutes sortes contre les systèmes libres. Ils avaient une cagoule verte et donnaient des prospectus.
+
+Finalement nous retenons de tout ceci le nombre important d'exposants, le nombre énorme de visiteurs, la qualité des personnes présentes, et la brièveté d'un tel événement. Notez sur votre calendrier de prévoir quelques jours l'année prochaine pour le Salon des Solutions Linux, un moment à ne pas manquer !
+
+### Avis personnel
+
+J'ai été très heureux de participer à ce Salon Solution Linux auquel mon ami [Bob6784.net](http://blog.bob6784.net "Blog de Bob6784") et moi avons rencontrés pas mal d'amis. J'ai été notamment bien accueilli au stand Python, Parinux, Linux+ DVD Magazine, etc. J'ai rencontré quelques connaissances de l'un ou l'autre forum internet.
+
+Le village des barbus est sympathique et cela fait toujours plaisir de discuter avec eux ! :cheesey:
+
+J'en ai aussi profité pour acheter *Python par l'exemple* aux **Éditions O'Reilly**. Bouquin très intéressant !
+
+### Visite de Paris
+
+Etant donné que j'ai crêché chez ma Marraine (que je remercie encore pour l'accueil), j'ai pu visiter Paris avec Bob6784 ('tention le premier qui dit entre amoureux :angry: je le tue !). Nous avons entre autre fait un détour par la Tour Eiffel ! Très jolie infrastructure ! Je vous invite à la visiter aussi. Et le prix ... pouah c'est bien pour les touristes hein !
