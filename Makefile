@@ -236,8 +236,6 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
 
 # BEGIN
 all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
-	@# Clean up tmp directory (because of persistent sidebar.md file)
-	$Q${rm} ${TMPDIR}/* -f
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -495,8 +493,15 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
 clean:
+	$Q${rm} -rf ${DESTDIR}/${POSTDIR_NAME}
+	$Q${rm} -rf ${DESTDIR}/${TAGDIR_NAME}
 	$Q${rm} -rf ${DESTDIR}/*
-	$Q${rm} -f ${TMPDIR}/*
+	$Qfind ${TMPDIR}/ -name '*.mk' -print0 |xargs -0 rm -f
+	$Qfind ${TMPDIR}/ -name '*.${PAGE_EXT}' -print0 |xargs -0 rm -f
+	$Qfind ${TMPDIR}/ -name '*.list' -print0 |xargs -0 rm -f
+	$Qfind ${TMPDIR}/ -name '*.rss' -print0 |xargs -0 rm -f
+	$Qfind ${TMPDIR}/ -name '*.about' -print0 |xargs -0 rm -f
+	$Q${rm} -rf ${TMPDIR}/*
 	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT}
 
 # Create documentation
