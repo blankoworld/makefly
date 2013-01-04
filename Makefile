@@ -230,9 +230,6 @@ sidebar_tpl = 'empty.file'
 
 sidebar: ${TMPDIR}
 	$Qcat ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
-
-sidebar_tmp_file = ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
-parser_opts += "SIDEBAR=`cat ${sidebar_tmp_file}`"
 # end of SIDEBAR
 
 # BEGIN
@@ -420,6 +417,7 @@ ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TM
 		cat ${TMPDIR}/index${PAGE_EXT} |${parser} ${parser_opts}                     \
 			"TITLE=${HOME_TITLE}"                                                         \
 			"BODY_CLASS=home"                                                             \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"                      \
 			> ${TMPDIR}/index${PAGE_EXT}.tmp &&                                           \
 		${mv} ${TMPDIR}/index${PAGE_EXT}.tmp ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
 		${rm} ${TMPDIR}/index${PAGE_EXT} || {                                           \
@@ -452,6 +450,7 @@ ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
 		cat ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
 			"TITLE=${POST_LIST_TITLE}"                                                  \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"                    \
 			> ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                                \
     ${rm} ${TMPDIR}/list${PAGE_EXT} || {                                          \
 			echo "-- Could not build list page: $@" ;                           \
@@ -472,6 +471,7 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${TMPDIR}/taglist${PAGE_EXT} | ${parser} ${parser_opts} \
 		  "BODY_CLASS=tags"                                            \
 			"TITLE=${TAG_LIST_TITLE}"                                    \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"     \
 		> ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                    \
 		${rm} ${TMPDIR}/tags.list &&                                   \
 		${rm} ${TMPDIR}/taglist${PAGE_EXT} ||                          \
