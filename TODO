@@ -1,6 +1,8 @@
 TODO:
 -----
 
+- Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
+- Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
 - print.css
 - Problem with TAG_NAME and TAGNAME. And also TAGLINK.
 - Minisch theme update:
