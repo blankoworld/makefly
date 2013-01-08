@@ -20,3 +20,9 @@ or do some files. On for article content, one for some data. It would be simple 
 - archive page
 - how could we add comments on each post? Disqus @ begining, then which system? => Lua system with a DB?
 - comment system : http://code.google.com/p/jskomment/
+- talkatv as comment system
+- use more LUA to parse and create public files
+
+Some tests:
+- makefly v1.1-bêta: 3H47 for processing 18251 posts
+- makefly v1.1-bêta: 2min when using clean method
