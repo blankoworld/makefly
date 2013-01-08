@@ -347,7 +347,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
 		"POST_AUTHOR=${AUTHOR_${FILE}}"            \
 		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}" \
-		> ${TMPDIR}/${FILE}.list
+		>> ${TMPDIR}/posts.list
 	@# Template for Home page
 	$Qcat ${article_idx} | ${parser} ${parser_opts} \
 		"CONTENT=${CONTENT_${FILE}}"                  \
@@ -445,8 +445,8 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
-		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list${PAGE_EXT} && \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} &&                            \
+		cat ${TMPDIR}/posts.list >> ${TMPDIR}/list${PAGE_EXT} && \
+		${rm} -f ${TMPDIR}/posts.list &&                            \
 		cat ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
 		cat ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
 			"TITLE=${POST_LIST_TITLE}"                                                  \
