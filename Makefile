@@ -236,8 +236,6 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
 
 # BEGIN
 all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
-	@# Clean up tmp directory (because of persistent sidebar.md file)
-	$Q${rm} ${TMPDIR}/* -f
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -349,7 +347,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
 		"POST_AUTHOR=${AUTHOR_${FILE}}"            \
 		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}" \
-		> ${TMPDIR}/${FILE}.list
+		>> ${TMPDIR}/posts.list
 	@# Template for Home page
 	$Qcat ${article_idx} | ${parser} ${parser_opts} \
 		"CONTENT=${CONTENT_${FILE}}"                  \
@@ -414,7 +412,7 @@ ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TM
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
 		cat ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index${PAGE_EXT} &&         \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//} &&                                         \
+		find ${TMPDIR}/ -name '*.mk' -print0 |xargs -0 rm -f &&                      \
 		cat ${footer} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
 		cat ${TMPDIR}/index${PAGE_EXT} |${parser} ${parser_opts}                     \
 			"TITLE=${HOME_TITLE}"                                                         \
@@ -447,8 +445,8 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
-		cat ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} >> ${TMPDIR}/list${PAGE_EXT} && \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//:S/$/.list/} &&                            \
+		cat ${TMPDIR}/posts.list >> ${TMPDIR}/list${PAGE_EXT} && \
+		${rm} -f ${TMPDIR}/posts.list &&                            \
 		cat ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
 		cat ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
 			"TITLE=${POST_LIST_TITLE}"                                                  \
@@ -495,8 +493,15 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
 clean:
+	$Q${rm} -rf ${DESTDIR}/${POSTDIR_NAME}
+	$Q${rm} -rf ${DESTDIR}/${TAGDIR_NAME}
 	$Q${rm} -rf ${DESTDIR}/*
-	$Q${rm} -f ${TMPDIR}/*
+	$Qfind ${TMPDIR}/ -name '*.mk' -print0 |xargs -0 rm -f
+	$Qfind ${TMPDIR}/ -name '*.${PAGE_EXT}' -print0 |xargs -0 rm -f
+	$Qfind ${TMPDIR}/ -name '*.list' -print0 |xargs -0 rm -f
+	$Qfind ${TMPDIR}/ -name '*.rss' -print0 |xargs -0 rm -f
+	$Qfind ${TMPDIR}/ -name '*.about' -print0 |xargs -0 rm -f
+	$Q${rm} -rf ${TMPDIR}/*
 	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT}
 
 # Create documentation
