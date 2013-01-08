@@ -412,7 +412,7 @@ ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TM
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
 		cat ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index${PAGE_EXT} &&         \
-		${rm} -f ${DBFILES:S/^/${TMPDIR}\//} &&                                         \
+		find ${TMPDIR}/ -name '*.mk' -print0 |xargs -0 rm -f &&                      \
 		cat ${footer} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
 		cat ${TMPDIR}/index${PAGE_EXT} |${parser} ${parser_opts}                     \
 			"TITLE=${HOME_TITLE}"                                                         \
