@@ -279,18 +279,21 @@ TAGLIST_TMP_${FILE} += ${TAGLINK_${FILE}_${TAG}}
 
 TAGLIST_${FILE} != echo "${TAGLIST_TMP_${FILE}}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
 
-${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE}
+${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE} sidebar
 	$Q{ \
 		{ \
-			cat ${header} | ${parser} ${parser_opts} &&    \
+			cat ${header} | ${parser} ${parser_opts}       \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" && \
 			cat ${article} |${parser}                      \
 				"CONTENT=${CONTENT_TARGET_${FILE}}"          \
 				"POST_TITLE=${TITLE_${FILE}}"                \
 				"POST_ESCAPED_TITLE=${ESCAPED_TITLE_${FILE}}" \
 				"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
 				"POST_AUTHOR=${AUTHOR_${FILE}}"              \
+				"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" \
 				| sed -e "s|^|        |g" &&                 \
-			cat ${footer} | ${parser} ${parser_opts};      \
+			cat ${footer} | ${parser} ${parser_opts}       \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"; \
 		} > ${TARGET_${FILE}} || {                       \
 			${rm} -f ${TARGET_${FILE}};                    \
 			echo "-- Error while building ${TARGET_${FILE}}." ; \
@@ -487,6 +490,7 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${footer} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                     \
 		cat ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
 			"TITLE=$${TAG}"                                                           \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"       \
 			> ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
 			${rm} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
 		done
