@@ -14,3 +14,4 @@ PAGE_EXT = .html
 SIDEBAR = 0
 SEARCH_BAR = 1
 MAX_RSS = 8
+markdown = ${BINDIR}/lunamark
