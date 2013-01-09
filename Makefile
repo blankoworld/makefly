@@ -218,10 +218,11 @@ parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
 ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
 	$Q{ \
 		{ \
-			cat ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}" &&  \
-			${markdown} ${ABOUTFILE} > ${TMPDIR}/${ABOUT_FILENAME}.about &&     \
+			cat ${header} | ${parser} ${parser_opts} "TITLE=${ABOUT_TITLE}"     \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"         && \
+			${markdown} ${ABOUTFILE} > ${TMPDIR}/${ABOUT_FILENAME}.about     && \
 			cat ${TMPDIR}/${ABOUT_FILENAME}.about |${parser} ${parser_opts}     \
-			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"        &&  \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"         && \
 			rm ${TMPDIR}/${ABOUT_FILENAME}.about &&                             \
 			cat ${footer} | ${parser} ${parser_opts}                            \
 			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" ;          \
