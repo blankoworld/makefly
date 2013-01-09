@@ -490,6 +490,7 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${footer} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                     \
 		cat ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
 			"TITLE=$${TAG}"                                                           \
+			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"       \
 			> ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
 			${rm} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
 		done

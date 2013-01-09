@@ -1,6 +1,11 @@
 TODO:
 -----
 
+Next version (0.2):
+- comment system with disqus (with a param to activate/desactivate in RC file)
+- ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
+- Do some LUA tests to improve file generation
+
 - Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
 - Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
 - print.css
