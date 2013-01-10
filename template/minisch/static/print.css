@@ -11,11 +11,14 @@ img { max-width: 100% !important; }
 @page { margin: 0.5cm; }
 p, h2, h3 { orphans: 3; widows: 3; }
 h2, h3 { page-break-after: avoid; }
-nav { display: none; }
-header h1 { text-align: center; margin: 25px 0 0 0; padding: 0; }
-header p#subtitle { text-align: center; font-size: 70%; margin: 0 0 25px 0; padding: 0; }
-.articleinfo { border-bottom: thin solid black; }
-.articleinfo a[href]:after { content: ""; }
-aside#sidebar { display: none; }
+header#joliebarre nav { display: none; }
+div#conteneur { padding: 0; margin: 0; height: auto; width: auto; }
+section#flux { border: 0px; margin: 0; padding: 0; height: auto; width: auto; box-shadow: none; display: block; }
+body.home section#flux article.post { box-shadow: none; background-image: none; -webkit-box-shadow: none; -moz-box-shadow: none; -o-box-shadow: none;}
+article .post { border: 0; display: block ; vertical-align: top; box-shadow: none;}
+section#flux .entry-meta a[href]:after { content: ""; }
+section#flux .entry-meta > * a { text-decoration: none;  }
+#author-info { text-align: right; background: none; box-shadow: none; border: none; }
+aside#laterale { display: none; }
 footer { display: none; }
 }
