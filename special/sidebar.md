@@ -5,8 +5,10 @@
 ## Jouebs
 
   * [IRPDEV](http://irpdev.fr/ "Le blog d'IRPDEV")
+  * [mart-e](http://mart-e.be/ "about life, linux and everything")
   * [Postblue](http://postblue.info/ "Le blog de Postblue")
   * [Halpanet](http://halpanet.org/ "Découvrir la liberté informatique avec Halpanet")
+  * [Schoewilliam](http://schoewilliam.legtux.org/ "Carnet web d'un habitant de la banquise GNU/Linuxienne.")
   * [L'antre de Lenezir](http://blog.lenezir.fr/ "Les péripéties d'un linuxien sur frugalware")
 
 <!-- Useless links
