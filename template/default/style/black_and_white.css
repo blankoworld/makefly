@@ -155,6 +155,16 @@ padding-left: 30px;
 /*color: #F1E5A5;*/
 }
 
+#content article h1.title a {
+color: #000;
+text-decoration: none;
+}
+
+#content article h1.title a:hover {
+text-decoration: underline;
+}
+
+
 #content article div.read_more {
 width: auto;
 text-align: right;
@@ -179,7 +189,7 @@ box-shadow: 2px 1px 4px #999999;
 box-shadow: 2px 1px 4px #999999;
 }
 
-aside {
+aside#sidebar {
 width: 90%;
 margin: 0 auto 25px auto;
 color: #000000;
@@ -187,16 +197,16 @@ font-size: 8pt;
 border-top: thin solid #000000;
 }
 
-aside > * {
+aside#sidebar > * {
 margin-left: 10%;
 }
 
-aside ul {
+aside#sidebar ul {
 list-style-type: none;
 margin-left: 5%;
 }
 
-aside ul li a {
+aside#sidebar ul li a {
 text-decoration: none;
 }
 
