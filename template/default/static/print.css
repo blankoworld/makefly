@@ -16,5 +16,6 @@ header h1 { text-align: center; margin: 25px 0 0 0; padding: 0; }
 header p#subtitle { text-align: center; font-size: 70%; margin: 0 0 25px 0; padding: 0; }
 .articleinfo { border-bottom: thin solid black; }
 .articleinfo a[href]:after { content: ""; }
-footer { display:none; }
+aside#sidebar { display: none; }
+footer { display: none; }
 }
