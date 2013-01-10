@@ -157,6 +157,11 @@ color: #ccc;
 text-decoration: none;
 }
 
+#content article h1.title a:visited {
+color: #ccc;
+text-decoration: none;
+}
+
 #content article h1.title a:hover {
 text-decoration: underline;
 }
