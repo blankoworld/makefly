@@ -160,10 +160,14 @@ color: #000;
 text-decoration: none;
 }
 
+#content article h1.title a:visited {
+color: #000;
+text-decoration: none;
+}
+
 #content article h1.title a:hover {
 text-decoration: underline;
 }
-
 
 #content article div.read_more {
 width: auto;

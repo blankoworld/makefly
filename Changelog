@@ -37,6 +37,7 @@ Current (0.1.1-beta)
 	- Add datetime as new value
 	- Add CSS that permit to define a printing version of the weblog (for
 	  default theme and minisch theme)
+	- Add link to post title on homepage for default theme
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed
