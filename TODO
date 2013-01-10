@@ -11,7 +11,6 @@ Next version (0.2):
 - Problem with accentued chars in create_post.sh for TITLE
 - Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
 - Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
-- print.css
 - Problem with TAG_NAME and TAGNAME. And also TAGLINK.
 - Minisch theme update:
   - add author (search in CSS to find it)
@@ -136,3 +135,4 @@ DONE:
 - add POST_ESCAPED_TITLE in minisch theme for article id="${POST_ESCAPED_TITLE}"
 - find a logo
 - do a favicon with logo
+- print.css
