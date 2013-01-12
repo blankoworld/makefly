@@ -4,7 +4,7 @@ Vous connaissez twitter ? Non ? Si ?
 
 Bon, disons pour faire simple que twitter est un outil très utilisé dans le monde pour le phénomène de [microblogging](http://fr.wikipedia.org/wiki/Microblogging "Définition de MicroBlogging selon Wikipédia"). Évidemment, comme tout outil clinquant, formidable, trop **de la mort qui tue**, bah ... cépalibr sapu (N.d.T: ce n'est pas libre, ça pue).
 
-Du coup figurez vous que la communauté - du - libre a crée ce qu'on appelle l'**OpenMicroBlogging**. Et accroché à cette théorie, ils ont même fait un programme pour prouver qu'ils ne parlaient pas dans le vent : [Laconica](http://laconi.ca "Se rendre sur la page d'accueil du projet Laconica").
+Du coup figurez vous que la communauté - du - libre a crée ce qu'on appelle l'**OpenMicroBlogging**. Et accroché à cette théorie, ils ont même fait un programme pour prouver qu'ils ne parlaient pas dans le vent : [Laconica](http://status.net "Se rendre sur la page d'accueil du projet Laconica").
 
 Ils sont pas forts ces libristes ? Tu inventes quelque chose, ils appliquent une étiquette avec le mot **libre** dessus, et paf ils ont tout le mérite !
 
@@ -32,7 +32,7 @@ Je me suis posé cette question, et pour seule réponse mon cerveau a dit : fait
 
 ### identica.sh, un plugin pour Nanoblogger
 
-Ainsi je suis fier - peut être plus pour longtemps - de vous présenter le [plugin identica.sh](ftp://portedesetoiles.net/scripts/nanoblogger/plugins/ "Se rendre sur portedesetoiles pour télécharger le plugin identica.sh") qui permet d'intégrer son statut identi.ca !
+Ainsi je suis fier - peut être plus pour longtemps - de vous présenter le [plugin identica.sh](http://nb.vampiris.me/plugins/identica/ "Se rendre sur portedesetoiles pour télécharger le plugin identica.sh") qui permet d'intégrer son statut identi.ca !
 
 Quelques options sont à ajouter dans le fichier de configuration, quelques lignes dans votre fichier de *template*, et ce devrait aller, vous serez prêt à évoluer sur le web avec un microblog intégré à votre propre blog !
 
@@ -51,7 +51,7 @@ Que dire si ce n'est :
 
 * [microblogging, selon Wikipédia](http://fr.wikipedia.org/wiki/Microblogging "Définition de MicroBlogging selon Wikipédia")
 * [identi.ca](http://identi.ca "Découvrir le service identi.ca sur le site officiel")
-* [Laconica](http://laconi.ca "Se rendre sur la page d'accueil du projet Laconica")
-* [télécharger le plugin identica.sh pour Nanoblogger](ftp://portedesetoiles.net/scripts/nanoblogger/plugins/identica.sh "Descendre le plugin identica.sh pour Nanoblogger")
-* [Page d'aide à l'installation, configuration et utilisation du plugin identica.sh pour Nanoblogger](http://nb.homelinux.com/astuces/identicaPlugin/index.html "Se rendre sur la page d'aide à l'installation du plugin identica.sh pour Nanoblogger")
+* [Laconica](http://status.net "Se rendre sur la page d'accueil du projet Laconica")
+* [télécharger le plugin identica.sh pour Nanoblogger](http://nb.vampiris.me/plugins/identica/identica.sh "Descendre le plugin identica.sh pour Nanoblogger")
+* [Page d'aide à l'installation, configuration et utilisation du plugin identica.sh pour Nanoblogger](http://nb.dossmann.net/astuces/identicaPlugin/index.html "Se rendre sur la page d'aide à l'installation du plugin identica.sh pour Nanoblogger")
 

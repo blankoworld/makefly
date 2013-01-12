@@ -1,4 +1,4 @@
-Connaissez vous le très célèbre site [del.icio.us](http://del.icio.us/ "Visiter le site 
+Connaissez vous le très célèbre site [del.icio.us](https://delicious.com/ "Visiter le site 
 del.icio.us") ? Si non, c'est désormais chose faite !   
 Si vous dédaignez la langue de Shakespeare, pourquoi ne pas voir un peu ce qu'en font les français 
 sur [blogmarks.net](http://blogmarks.net/ "Se rendre à Blogmarks.NET").
@@ -62,7 +62,7 @@ pas *visiblement* compatible avec tout les navigateurs :'( . En effet les naviga
 à tout montrer car ils possèdent XSLT, mais tentez d'ouvrir la page avec elinks, links, w3m, et c'est 
 le fiasco total ! :huh:
 
-Je vous laisse avoir un aperçu sur le [Blankoworld](http://blankoworld.homelinux.com/sitebar/).
+Je vous laisse avoir un aperçu sur le [Blankoworld](#).
 
 Dommage, car je ne suis pas toujours sur le même navigateur, parfois j'apprécie aussi de pouvoir 
 accéder à mes marques - pages par elinks, voire w3m, je prefère donc perdre une fonctionnalité ou 
@@ -97,7 +97,7 @@ que j'ai su trouver c'est de ne pas pouvoir ajouter de notions de dossiers, tout
 Par contre il est compatible avec l'ensemble des navigateurs, et c'est la chose la plus importante 
 selon moi. Voilà pourquoi je n'avais pas de choix autres. D'ailleurs profitez de l'expérience, car 
 j'ai ajouté une page à mon Wiki dont vous me direz des nouvelles : [installation et astuce sur Semantic 
-Scuttle](http://blankoworld.homelinux.com/wiki/doku.php?id=configurations:semanticscuttle:index "Découvrir 
+Scuttle](https://olivier.dossmann.net/wiki/configurations/semanticscuttle/index "Découvrir 
 les explications de Blanko sur Semantic Scuttle au travers du Blankoworld").
 
 ### Conclusion

@@ -1,4 +1,4 @@
-Il y a environ 2 semaines, un membre de la famille d'un [ami à moi, Irpdev](http://irpdev.net/ "Se rendre sur le blog d'Irpdev") a eu un souci d'ordinateur. Un souci matériel. Figurez-vous qu'en ce moment j'ai un problème similaire !
+Il y a environ 2 semaines, un membre de la famille d'un [ami à moi, Irpdev](http://www.irpdev.fr/ "Se rendre sur le blog d'Irpdev") a eu un souci d'ordinateur. Un souci matériel. Figurez-vous qu'en ce moment j'ai un problème similaire !
 
 > Blanko ? On s'en bat les ieuxes de ton souci d'ordinateur.
 

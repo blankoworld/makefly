@@ -32,11 +32,11 @@ Récemment plusieurs autres projets à l'Université m'ont été confiés, vous 
 
 Ce joueb étant construit à l'aide de Nanoblogger, et [ma participation à Nanoblogger Francophone n'étant plus un secret](${BASE_URL}/archives/2008/10/25/un_wiki_plein_dastuces_sur_nanoblogger/index.html "Lire le billet concernant le fait que Blanko rejoingne la communauté française de Nanoblogger"), je dois avouer que ces deux derniers mois ont ajouté leur lot de changements !
 
-Ainsi nous accueillons deux nouveaux utilisateurs de Nanoblogger : [Gab](http://gab.homelinux.com/blog/ "Se rendre sur la page d'accueil de Blog-Notes, le bloc notes de Gab") et [Haltux](http://haltux.homelinux.org/blog/ "Se rendre sur la page d'accueil d'Haltux, la découverte de l'informatique libre") ! Je vous invite à visiter leurs jouebs/blogs.
+Ainsi nous accueillons deux nouveaux utilisateurs de Nanoblogger : [Gab.homelinux.net](# "Se rendre sur la page d'accueil de Blog-Notes, le bloc notes de Gab") et [Haltux](http://halpanet.org/ "Se rendre sur la page d'accueil d'Haltux, la découverte de l'informatique libre") ! Je vous invite à visiter leurs jouebs/blogs.
 
 Avec leur arrivée et leurs multiples questions pour faire fonctionner Nanoblogger selon leurs envies/besoins, je m'y suis également remis, et vous devriez actuellement observer - plus ou moins - la nouvelle mouture du BlankoJoueb en version [NB 3.4 RC2 doté de nouvelles fonctionnalités et améliorations](http://nanoblogger.sourceforge.net/archives/2008/09/13/nanoblogger_3_4_rc2/ "Découvrir l'ensemble des nouvelles fonctionnalités de Nanoblogger 3.4RC2"). Le BlankoJoueb apporte quelques modifications mineures à NB3.4RC2, notamment des attributs **title** dans les liens (pour être plus accessible), des suppressions d'attributs qui ne sont pas aux [normes RGAA](http://fr.wikipedia.org/wiki/R%C3%A9f%C3%A9rentiel_g%C3%A9n%C3%A9ral_d%27accessibilit%C3%A9_des_administrations "Découvrir les normes RGAA et leur utilité") (bien que je n'ai fait que des modifications mineures), et des changements de scripts markdown pour tout simplement fonctionner au mieux. Si vous désirez que je vous en fasse part plus en détail, veuillez [m'envoyer un courriel](mailto:olivier[AT]dossmann[DOT]net "Écrire un courriel à Olivier DOSSMANN") et je vous renverrais quelques patchs pour Nanoblogger.
 
-J'en ai également profité pour vous faire un [tutoriel sur Syntax Highlighter](http://nb.homelinux.com/astuces/syntaxhilighter/index.html "Lire le tutoriel sur Syntax Highlighter"), un projet Javascript qui permet d'ajouter une mise en forme sympathique aux morceaux de code que nous voulons afficher dans un billet. Vous trouverez d'autres tutoriels sur [la page wiki de Nanoblogger Francophone prévue à cet effet](http://nb.homelinux.com/astuces/ "Atteindre la page d'astuces et tutoriels de Nanoblogger Francophone[wiki]"), notamment l'astuce que j'ai utilisé pour [rendre Markdown fonctionnel dans la version 3.4RC2 de Nanoblogger](http://nb.homelinux.com/configurer/blogConf/#index51h2 "Lire l'astuce pour rendre Markdown fonctionnel sur Nanoblogger 3.4RC2").
+J'en ai également profité pour vous faire un [tutoriel sur Syntax Highlighter](http://nb.dossmann.net/astuces/syntaxhilighter/index.html "Lire le tutoriel sur Syntax Highlighter"), un projet Javascript qui permet d'ajouter une mise en forme sympathique aux morceaux de code que nous voulons afficher dans un billet. Vous trouverez d'autres tutoriels sur [la page wiki de Nanoblogger Francophone prévue à cet effet](http://nb.dossmann.net/astuces/ "Atteindre la page d'astuces et tutoriels de Nanoblogger Francophone[wiki]"), notamment l'astuce que j'ai utilisé pour [rendre Markdown fonctionnel dans la version 3.4RC2 de Nanoblogger](http://nb.dossmann.net/configurer/blogConf/#index51h2 "Lire l'astuce pour rendre Markdown fonctionnel sur Nanoblogger 3.4RC2").
 
 Et si la communauté Francophone se voyait offrir un hébergement gratuit avec un nom de domaine en .com ou en .fr ? Qu'en diriez vous ? Un fervent utilisateur de Nanoblogger nous propose de faire comme cité, rien n'est décidé, il faut encore en discuter, mais je vous sonde déjà pour savoir ce que vous en pensez ;)
 
@@ -47,7 +47,7 @@ Figurez vous qu'on ne se balade pas sur le net ni dans les groupes d'individus h
 Ainsi j'ai découvert : 
 
   * [Rassmalog](http://snk.tuxfamily.org/lib/rassmalog/output/about.html "Aller sur la page officielle de Rassmalog") : un moteur de joueb/blog statique comme Nanoblogger, mais écrit en Ruby ! Il m'intrigue et je vais creuser un peu plus pour en faire le tour.
-<a href="http://haltux.homelinux.org/blog/" title="Découvrir la liberté informatique avec Haltux">Haltux</a><br />
+<a href="http://halpanet.org/" title="Découvrir la liberté informatique avec Haltux">Haltux</a><br />
   * Sous OpenOffice Impress, on peut faire des éléments 3D ! Pour en savoir plus je vous invite à lire le document suivant : [la 3D sous OpenOffice](http://fr.wikipedia.org/wiki/OpenOffice.org_Draw#La_3D "Lire le document concernant la 3D sous OpenOffice")
   * Comment faire un fichier de patch sous GNU / Linux pour un programme dont nous avons les sources. C'est tout bête, mais jusqu'ici je n'y avais jamais prêté attention. => rappelez moi de CRÉER UNE PAGE WIKI SUR LA MANIÈRE DE PATCHER UN PROGRAMME.
 
@@ -61,7 +61,7 @@ Courant décembre, le Père Noël est passé (pour ainsi dire) et j'ai eu la joi
 
 Cet ordinateur était surtout une contre - partie pour services rendus, il va falloir désormais utiliser ledit portable pour rendre bien d'autres services. Et il rend effectivement des services à son propriétaire (l'auteur de ce billet), comme de permettre le contrôle des serveurs à distance, prendre des notes pour les études, consulter des pages webs ou même écouter de la musique à mes temps perdus (autant dire jamais mdr).
 
-Ah oui, pendant que j'y suis, j'ai affublé ce petit bijou (un des moins chers du marché d'ailleurs, mais pas forcément moins bien), d'une distribution GNU / Linux nommée [Foresight Linux Mobile](http://www.foresightlinux.org/mobile.html "Se rendre sur la page officielle de Foresight Linux Mobile"), très bien adaptée à ce genre de petits ordinateurs. C'est un délice !
+Ah oui, pendant que j'y suis, j'ai affublé ce petit bijou (un des moins chers du marché d'ailleurs, mais pas forcément moins bien), d'une distribution GNU / Linux nommée [Foresight Linux Mobile](http://www.foresightlinux.org/release/foresight-1-0-mobile-edition-release-notes/ "Se rendre sur la page officielle de Foresight Linux Mobile"), très bien adaptée à ce genre de petits ordinateurs. C'est un délice !
 
 #### Divertissement
 
@@ -71,7 +71,7 @@ Après Noël, et quelques économies faites depuis Juin, je me devais de trouver
 
 J'ai eu un pack avec un jeu nommé [Roco Loco](http://www.locoroco.com/ "Découvrir le jeu Roco Loco"). Ce qui faisait un peu *pauvre* pour jouer réellement. J'ai donc pris un jeu plus adapté à mes envies : [Wipeout Pulse](http://www.wipeoutpulse.com/fr_FR/index.html "Se rendre sur la page officielle de Wipeout") qui, je dois le dire, est bien plus intéressant et enivrant que Roco Loco.
 
-Récemment, ma soeur m'a amené un jeu nommé [Crach Génération Mutant](http://village.crashbandicoot.com/fr/index.php "Découvrir le jeu Crash Génération Mutant") qui est plus décevant qu'autre chose. C'est tellement long de charger entre deux niveaux et/ou espaces de jeu, qu'on passe plus de temps à patienter qu'à jouer ...
+Récemment, ma soeur m'a amené un jeu nommé [Crach Génération Mutant](http://www.jeuxvideo.com/jeux/xbox-360/00022289-crash-generation-mutant.htm "Découvrir le jeu Crash Génération Mutant") qui est plus décevant qu'autre chose. C'est tellement long de charger entre deux niveaux et/ou espaces de jeu, qu'on passe plus de temps à patienter qu'à jouer ...
 
 #### Confort
 

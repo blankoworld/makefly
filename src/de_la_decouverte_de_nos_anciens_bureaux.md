@@ -3,6 +3,6 @@ Il y a moins de 20 minutes j'écrivais l'[article sur awesome](${BASE_URL}/archi
 Voici donc deux liens qui vous intéresseront (ou pas!) : 
 
   * [Mes bureaux postés sous Lynucs.org](http://www.lynucs.org/?&Blankoworld "Afficher les bureaux de Blankoworld sur Lynucs.org")
-  * [Les mêmes avec un de plus (awesome) sur mon FTP](ftp://portedesetoiles.net/images/captures/bureaux/ "Visiter le FTP de Blanko") : je mettrais peut être plus tard un site proposant mes images (il existe déjà mais vous n'allez sûrement pas aimer : [images du Blankoworld](http://blankoworld.free.fr/images/ "Visiter la galerie de Blankoworld"))
+  * [Les mêmes avec un de plus (awesome) sur mon FTP](http://vampiris.me/fichiers/images/captures/bureaux/ "Visiter le FTP de Blanko") : je mettrais peut être plus tard un site proposant mes images (il existe déjà mais vous n'allez sûrement pas aimer : [images du Blankoworld](http://blankoworld.free.fr/images/ "Visiter la galerie de Blankoworld"))
 
 Je pense qu'il est pas mal, au moins pour se souvenir par la suite, de capturer l'écran de ses bureaux à un moment précis, mais aussi d'en noter la date. Je vous invite à en faire de même ;) !

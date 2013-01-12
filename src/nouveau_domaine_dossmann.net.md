@@ -7,7 +7,7 @@ Ce nom de domaine est mon nom de famille (pour ceux qui ne le sauraient pas). Et
 Bien que ce fut long à mettre en place, je suis heureux de pouvoir proposer 3 principaux liens d'accès : 
 
   * [Famille DOSSMANN](http://www.dossmann.net "Accéder à la page de la famille DOSSMANN")
-  * [Filledou](http://filledou.dossmann.net "Visiter le site de Filledou, soeur de Blanko") : Soeur de Blanko
+  * [Filledou](http://celine.dossmann.net "Visiter le site de Filledou, soeur de Blanko") : Soeur de Blanko
   * [Blankoworld](http://blankoworld.dossmann.net "Visiter le Blankoworld") : Lui
 
 Éspérons que la famille s'aggrandira de jolis sites tout beaux et tout mignons :kiss: .
@@ -34,7 +34,7 @@ Ainsi je récapitule quelques conseils pour rester sur un Internet Libre :
 
   * Décentraliser le plus possible les choses (Cf. points suivants)
   * Choisir un serveur de messagerie instantanée dont nous avons le contrôle ou des possibilités rapides de changer, comme par exemple Jabber dont les informations sont disponibles sur [JabberFR](http://www.jabberfr.org/) notamment sur leur Wiki
-  * Hébergez vos sites webs non pas dans des salles machines dont vous n'avez AUCUN accès, mais chez vous, chez vos amis, chez des associations là pour défendre l'internet libre, tels que [rhien.org](http://www.rhien.org/wakka.php?wiki=Accueil), [ouvaton.org](http://www.ouvaton.coop/), [lautre.net](http://www.lautre.net/) ou [tuxfamily.org](http://www.tuxfamily.org/).
+  * Hébergez vos sites webs non pas dans des salles machines dont vous n'avez AUCUN accès, mais chez vous, chez vos amis, chez des associations là pour défendre l'internet libre, tels que [rhien.org](http://www.rhien.org/), [ouvaton.org](http://www.ouvaton.coop/), [lautre.net](http://www.lautre.net/) ou [tuxfamily.org](http://www.tuxfamily.org/).
   * NE PAS UTILISER les services d'hébergements et de centralisation de vos FAI, car ce sont eux qui détiennent alors tout
   * NE PAS UTILISER de services internets tels que youtube ou dailymotion (site de vidéos), vos fichiers, vos vidéos, vos données doivent être CHEZ VOUS, et pas sur un site autre que le vôtre ! En donnant vos fichiers à youtube, vous leur faites gagner un fric monstre, on vous EXPLOITE.
   
