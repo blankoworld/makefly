@@ -39,7 +39,7 @@ Bravo, vous avez deviné, c'est bien de l'informatique dont je voulais parler. M
 
 Désormais je pratique parfois du patin à glace le dimanche matin, et je continue sans relâche la passion informatique, devenue plus un train de vie qu'une passion. J'en ai d'ailleurs fait un métier.
 
-Vous pouvez visualiser quelques vidéos de ma façon particulière de patiner sur [la porte des étoiles](ftp://portedesetoiles.net/videos/blanko/patinoire/ "Visualiser des vidéos de patinage de Blanko").
+Vous pouvez visualiser quelques vidéos de ma façon particulière de patiner sur [la porte des étoiles](http://vampiris.me/fichiers/videos/blanko/patinoire/ "Visualiser des vidéos de patinage de Blanko").
 
 ### Blanko, informaticien de métier
 
@@ -60,7 +60,7 @@ Si l'un d'entre vous voudrait me joindre malgré mes pics de folies aiguës et m
   * Par adresse courriel : olivier+joueb CHEZ dossmann POINT net (remplacez CHEZ par un arobase, et POINT par un point)
   * Par messagerie instantanée Jabber : blankoworld@jabber.dk
 
-Vous trouverez de brèves explications sur Jabber et sur l'état de ma connexion en temps quasi réel sur le site [Blanko4never](http://bl4n.free.fr/ "Visiter le site Blanko4never pour aperçevoir l'état de connexion de Blanko").
+Vous trouverez de brèves explications sur Jabber et sur l'état de ma connexion en temps quasi réel sur le site [Blanko4never](http://m.b4n.fr/a.php "Visiter le site Blanko4never pour aperçevoir l'état de connexion de Blanko").
 
 ### Portedesetoiles.NET
 
@@ -72,7 +72,7 @@ ATTENTION, **le but n'est pas de remplir** la base de données, **mais de la cr�
 
 Il faut savoir que je possède une bonne quantité de données au travers divers magazines, et que j'ai déjà procédé à diverses choses pour l'organisation du site internet. Simplement le temps me manque.
 
-J'invite tout ceux qui seraient intéressés de me joindre via l'adresse courriel citée plus haut, mais également à visionner l'ancien site : [Portedesetoiles.NET, ancienne mouture](http://blankoworld.homelinux.com/dev/portedesetoiles/ "Visiter l'ancien site Portedesetoiles.NET").
+J'invite tout ceux qui seraient intéressés de me joindre via l'adresse courriel citée plus haut, mais également à visionner l'ancien site : [Portedesetoiles.NET, ancienne mouture](http://sitealpha.portedesetoiles.net/ "Visiter l'ancien site Portedesetoiles.NET").
 
 ### Conclusion
 
