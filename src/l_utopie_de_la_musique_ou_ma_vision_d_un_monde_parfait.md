@@ -1,6 +1,6 @@
 ### Introduction
 
-[Je parlais déjà de ma responsabilité de la mort des artistes dans le domaine de la muisque](${BASE_URL}/archives/2012/09/27/je_suis_responsable_de_la_mort_des_artistes_dans_le_domaine_de_la_musique/index.html "Lire l'article de Blanko sur la mort des artistes") il y a quelques articles. Ce sujet semble me travailler quelque peu et je me suis demandé comment je verrais un monde *idéal* dans le domaine de la musique. Et vous, comment verriez-vous un monde idéal dans le domaine de la musique ? Le modèle actuel vous convient-il ?
+[Je parlais déjà de ma responsabilité de la mort des artistes dans le domaine de la musique](${BASE_URL}/archives/2012/09/27/je_suis_responsable_de_la_mort_des_artistes_dans_le_domaine_de_la_musique/index.html "Lire l'article de Blanko sur la mort des artistes") il y a quelques articles. Ce sujet semble me travailler quelque peu et je me suis demandé comment je verrais un monde *idéal* dans le domaine de la musique. Et vous, comment verriez-vous un monde idéal dans le domaine de la musique ? Le modèle actuel vous convient-il ?
 
 ### Point de départ : ma passion
 
