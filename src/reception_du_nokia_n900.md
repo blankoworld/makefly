@@ -2,7 +2,7 @@ Si vous avez lu [le billet identica de ce jour 30 novembre 2009](http://identi.c
 
 ### Présentation
 
-Le Nokia N900 est le dernier [ordiphone](http://www.pcinpact.com/actu/news/54731-vocabulaire-france-informatique-neologisme-commission.htm "Découvrir avec terreur les nouvelles terminologie française sur des produits informatiques au 27 décembre 2009") du moment, possédant tout ce qu'il faut pour réussir : 
+Le Nokia N900 est le dernier [ordiphone](http://www.pcinpact.com/news/54731-vocabulaire-france-informatique-neologisme-commission.htm "Découvrir avec terreur les nouvelles terminologie française sur des produits informatiques au 27 décembre 2009") du moment, possédant tout ce qu'il faut pour réussir : 
 
   * processeur ARM Cortex A8, tournant à 600Mhz
   * 256 Mb de RAM, extensible à 1Gb à l'aide de la mémoire virtuelle
@@ -32,11 +32,11 @@ Au niveau logiciel : bizarrement aussi cela répond mieux. Les applications prop
 
 On notera que tout a été étudié et orienté pour le grand public, trop habitué aux concurrents directs du Nokia N900 : l'iPhone et les HTC possédant Windows Mobile. Je crois que pour faire connaître un produit, il faut d'abord penser au grand public, afin qu'il permette, en achetant, les entreprises vendant le produit à continuer leur activité sur le projet. Ensuite nous, développeurs et bidouilleurs du dimanche, pouvons nous amuser sur un bijou tel que celui-ci.
 
-Je vous conseille de passer souvent sur la [page du Quicky Blanko consacrée au Nokia N900](/wiki/doku.php?id=materiel:nokia_n900 "Découvrir quelques informations supplémentaires sur le Nokia N900, en allant sur le Quicky Blanko, le wiki du Blankoworld"), peut être ferez vous quelques découvertes sympathiques.
+Je vous conseille de passer souvent sur la [page du Quicky Blanko consacrée au Nokia N900](https://olivier.dossmann.net/wiki/materiel/nokia_n900 "Découvrir quelques informations supplémentaires sur le Nokia N900, en allant sur le Quicky Blanko, le wiki du Blankoworld"), peut être ferez vous quelques découvertes sympathiques.
 
 ### Liens utiles
 
-  * [Maemo chez Nokia](http://maemo.nokia.com/ "Visiter le site de Maemo chez Nokia")
+  * [Maemo chez Nokia](http://swipe.nokia.com/ "Visiter le site de Maemo chez Nokia")
   * [Maemo](http://maemo.org/ "Se rendre sur le site officiel de Maemo")
-  * [Page du Quicky Blanko sur le Nokia N900](/wiki/doku.php?id=materiel:nokia_n900 "Découvrir quelques informations supplémentaires provenant du Quicky Blanko, le wiki du Blankoworld")
+  * [Page du Quicky Blanko sur le Nokia N900](http://olivier.dossmann.net/wiki/materiel/nokia_n900 "Découvrir quelques informations supplémentaires provenant du Quicky Blanko, le wiki du Blankoworld")
 

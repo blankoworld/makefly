@@ -1,4 +1,4 @@
-Ces derniers jours ont été mouvementés ! En effet une nouvelle des plus ennuyante a été publiée chez [Debian](http://debian.org "Visiter le site officiel de Debian") concernant un [problème de sécurité sur openssl/openssh spécifique à Debian et dérivée](http://article.gmane.org/gmane.linux.debian.security.announce/1614 "Se rendre sur la nouvelle concernant le souci de sécurité de openssl/openssh").
+Ces derniers jours ont été mouvementés ! En effet une nouvelle des plus ennuyante a été publiée chez [Debian](http://www.debian.org "Visiter le site officiel de Debian") concernant un [problème de sécurité sur openssl/openssh spécifique à Debian et dérivée](http://article.gmane.org/gmane.linux.debian.security.announce/1614 "Se rendre sur la nouvelle concernant le souci de sécurité de openssl/openssh").
 
 ### Résultats
 
@@ -22,7 +22,7 @@ Et finalement j'ai remis les clés publiques sur le serveur en copiant les id_rs
 
 ### Et les clés à Blanko dans tout ça ?
 
-Il pense qu'il serait intéressant de vous donner ses clés publiques, à tout hasard, voici un lieu où vous pourrez en disposer sans commune mesure : [Portedesetoiles, l'espace de stockage de Blanko](ftp://portedesetoiles.net/cles/blanko "Découvrir les clés publiques de Blanko").
+Il pense qu'il serait intéressant de vous donner ses clés publiques, à tout hasard, voici un lieu où vous pourrez en disposer sans commune mesure : [Portedesetoiles, l'espace de stockage de Blanko](http://vampiris.me/fichiers/cles/blanko/ "Découvrir les clés publiques de Blanko").
 
 Prenez en soin, et ne faites pas de bêtises !
 

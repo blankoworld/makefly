@@ -10,7 +10,7 @@ Quoi de plus beau que de voyage avec les éléments forts utiles de son entrepri
 
 Chose nouvelle en Alsace, le train ne mets **que** 02H30 pour arriver à Paris. C'est peu pour faire plus ample connaissance avec mes collègues, mais suffisant. Ainsi j'ai eu la joie de papoter un peu plus avec :
 
-  * [Fabrice](http://www.mananosekai.com/manablog/index.php) (étudiant de ma promo)
+  * [Fabrice](http://fabseven.free.fr/) (étudiant de ma promo)
   * Gabriel (chargé de la téléphonie)
   * [Alexandre](http://alexandrefranke.com/) (étudiant de ma promo)
   * Aurélien (administrateur système)
@@ -36,4 +36,4 @@ J'ai rencontré aussi quelques personnes, comme Antoine par exemple (je n'en sai
 
 Je dois avouer que le Salon n'a pas répondu à mes attentes, je n'ai pas vu tout ceux que j'aurais voulu voir, ni les conférences auxquelles j'aurai aimé assister. Je dirais donc que le résultat est médiocre, pour pas dire à chier. Mes attentes sont de plus en plus importantes sûrement.
 
-Pour finir, voici le lien officiel du salon solutions linux : [Site officiel](http://www.solutionslinux.fr/fr/index.php) au cas où cela vous intéresserait.
+Pour finir, voici le lien officiel du salon solutions linux : [Site officiel](http://www.solutionslinux.fr/) au cas où cela vous intéresserait.

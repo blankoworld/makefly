@@ -147,7 +147,7 @@ Attention à ne pas être dans un lieu ayant beaucoup de poussière ni de couran
 
 C'était long ? Certe mais instructif et intéressant non ?
 
-**Astuce** : Lorsque j'ai remonté ma nouvelle carte mère ainsi que tout mes périphériques, j'ai eu un problème : l'ordinateur tournait mais rien à l'écran. Avec l'aide d'[IRPDEV](http://irpdev.net "Se rendre sur la page d'accueil d'IRPDEV"), je me suis souvenu qu'il faut toujours mettre les périphériques au minimum, notamment pour la mémoire vive : ne mettre qu'une seule barette. Démarrer. Puis si ça fonctionne, rajouter une barette, etc. jusqu'à ce que cela fonctionnement complètement. Vérifiez donc de n'avoir qu'une seule barette de mémoire vive, allumez, puis rajoutez au fur et à mesure.
+**Astuce** : Lorsque j'ai remonté ma nouvelle carte mère ainsi que tout mes périphériques, j'ai eu un problème : l'ordinateur tournait mais rien à l'écran. Avec l'aide d'[IRPDEV](http://www.irpdev.fr/ "Se rendre sur la page d'accueil d'IRPDEV"), je me suis souvenu qu'il faut toujours mettre les périphériques au minimum, notamment pour la mémoire vive : ne mettre qu'une seule barette. Démarrer. Puis si ça fonctionne, rajouter une barette, etc. jusqu'à ce que cela fonctionnement complètement. Vérifiez donc de n'avoir qu'une seule barette de mémoire vive, allumez, puis rajoutez au fur et à mesure.
 
 ### Conclusion
 

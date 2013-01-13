@@ -88,10 +88,10 @@ Le maître mot en informatique est de se renseigner, apprendre et PARTAGER ! Ce 
 ### Liens utiles
 
   * [Ubuntu Linux](http://ubuntu-fr.org/ "Site non officiel, français, de la distribution Ubuntu Linux") : la distribution généralement donnée aux utilisateurs débutants
-  * [Xchat pour Windows](http://www.pcinpact.com/forum/sujet_61993.htm "Tutoriel d'installation et configuration d'Xchat sur Microsoft Windows") : Logiciel de discussion sur des salons de discussion, très utile pour trouver de l'aide, notamment sur irc.freenode.net ou encore irc.oftc.net
+  * [Xchat pour Windows](http://forum.pcinpact.com/topic/61993-logiciel-tuto-x-chat-installation-et-configuration/ "Tutoriel d'installation et configuration d'Xchat sur Microsoft Windows") : Logiciel de discussion sur des salons de discussion, très utile pour trouver de l'aide, notamment sur irc.freenode.net ou encore irc.oftc.net
   * Sur IRC, serveur : irc.evolu.net, canal : #ordinatueur, pour trouver de l'aide en général
   * Encore sur IRC, pour ceux qui utilise(ront) Debian Linux, serveur : irc.freenode.net, canal : #generation-debian
-  * Et leur site associé : [http://www.generation-debian.org/](http://www.generation-debian.org/ "Site d'aide informatique sur Debian, Génération - Debian.org !")
+  * Et leur site associé : [http://www.generation-debian.org/](# "Site d'aide informatique sur Debian, Génération - Debian.org !") MÀJ du 13/01/2012, site apparemment mort.
   * GUL (Groupes d'Utilisateurs Linux) de France : vous trouverez peut être de l'aide locale sur [le site de l'AFUL](http://www.aful.org/gul "Liste des GUL de France sur le site de l'AFUL")
 
 Pour d'autres renseignements, laissez un commentaire ici ou bien écrivez moi à l'adresse olivier[CHEZ]dossmann[POINT]net ;)
