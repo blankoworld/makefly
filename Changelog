@@ -39,6 +39,20 @@ Current (0.1.1-beta)
 	  default theme and minisch theme)
 	- Add link to post title on homepage for default theme
 	- Fix bug: missing jquery.js on single post page
+	- Developer documentation in english and french
+	- Add some tools for developer like flushing DB and SRC directories
+	- Add new CSS for default theme in black and white (but you have to redefine
+	  config.mk file in default theme)
+	- Fix bug that appears with sidebar
+	- Add a favicon for default theme and minisch theme
+	- Add Makefly's logo thanks to ECK Ine
+	- Sidebar appears now on about's page
+	- Improvements on Makefile when deleting enormously directories like tmp or
+	  pub directories. This permit now to create a blog with more than 2000
+	  posts.
+	- Create a tool that permits to create a lot of post (for testing)
+	- Add lua markdown binaries to improve Makefly's generation
+	- Add URL on post's title for default theme
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed
