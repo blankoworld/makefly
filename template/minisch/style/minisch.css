@@ -163,14 +163,14 @@ a.accueil {
     	   -moz-transition: all 0.2s ease 0s;
     	     -o-transition: all 0.2s ease 0s;
     	    -ms-transition: all 0.2s ease 0s;
-    background: center center no-repeat;
+    background: url("logodefault.png") right center no-repeat;
     color: #666666;
     display: block;
     font-size: 28px;
     font-weight: bold;
-    height: 60px;
+    height: 80px;
     letter-spacing: -1px;
-    line-height: 59px;
+    line-height: 79px;
     padding: 0;
     margin: 0 0 6px;
     text-align: center;
