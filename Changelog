@@ -53,6 +53,7 @@ Current (0.1.1-beta)
 	- Create a tool that permits to create a lot of post (for testing)
 	- Add lua markdown binaries to improve Makefly's generation
 	- Add URL on post's title for default theme
+	- Add logo to Minisch theme
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed
