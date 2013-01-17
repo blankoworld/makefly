@@ -163,7 +163,7 @@ a.accueil {
     	   -moz-transition: all 0.2s ease 0s;
     	     -o-transition: all 0.2s ease 0s;
     	    -ms-transition: all 0.2s ease 0s;
-    background: url("logodefault.png") right center no-repeat;
+    background: url("${BASE_URL}/logodefault.png") right center no-repeat;
     color: #666666;
     display: block;
     font-size: 28px;
