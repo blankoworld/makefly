@@ -62,6 +62,8 @@ PUBLISH_SCRIPT_NAME = publish.sh
 
 # include some VARIABLES
 BODY_CLASS = single
+JSKOMMENT_MAX = 2
+JSKOMMENT_URL = http://jskomment.appspot.com
 # first main variables
 .include "makefly.rc"
 # then translation variables
@@ -250,9 +252,20 @@ JSKOMMENT_SCRIPT != cat ${jskom_html}|${parser} ${parser_opts}
 ${jskom_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${jskom_file}
 	$Q{ \
 		{ \
-			cat ${jskom_file} |${parser} ${parser_opts} ;         \
+			cat ${jskom_file} |${parser} ${parser_opts}            \
+			"JSKOMMENT_PSEUDO=${JSKOMMENT_PSEUDO}"                 \
+			"JSKOMMENT_ADD_COMMENT=${JSKOMMENT_ADD_COMMENT}"       \
+			"JSKOMMENT_COMMENTS=${JSKOMMENT_COMMENTS}"             \
+			"JSKOMMENT_POWERED=${JSKOMMENT_POWERED}"               \
+			"JSKOMMENT_SUBMIT=${JSKOMMENT_SUBMIT}"                 \
+			"JSKOMMENT_YOUR=${JSKOMMENT_YOUR}"                     \
+			"JSKOMMENT_LABEL=${JSKOMMENT_LABEL}"                   \
+			"JSKOMMENT_CAPTCHA_ERROR=${JSKOMMENT_CAPTCHA_ERROR}"   \
+			"JSKOMMENT_CAPTCHA_THEME=${JSKOMMENT_CAPTCHA_THEME}"   \
+			"JSKOMMENT_URL=${JSKOMMENT_URL}"                       \
+			"JSKOMMENT_MAX=${JSKOMMENT_MAX}" ;                     \
 		} > ${jskom_file:S/${TMPLDIR}/${DESTDIR}/} || {          \
-			echo "-- Error while copying ${jskom_name} script." ; \
+			echo "-- Error while copying ${jskom_name} script." ;  \
 		} ; \
 	} && echo "-- Script added: ${jskom_name}."
 
