@@ -255,6 +255,7 @@ Chaque thème a son propre répertoire. Ainsi pour le thème *défaut*, un dossi
   * un **config.mk** dans lequel vous avez des détails à propos du thème : 
     * CSS\_NAME : Nom qui apparaîtra dans le joueb avec `${CSS_NAME}`
     * CSS\_FILE : le nom de fichier du CSS choisi pour un thème spécifique
+    * JSKOMMENT\_CAPTCHA\_THEME: nom du theme que reCaptcha propose. Plus d'infos sur [https://developers.google.com/recaptcha/docs/customization](https://developers.google.com/recaptcha/docs/customization "Plus d'infos &agrave; propos des th&egrave;mes reCaptcha").
 
 ### Fichiers obligatoires
 
@@ -373,6 +374,15 @@ Au moment où j'écrivais cette documentation, voici les mots disponible à la t
   * SEARCH\_BAR\_CONTENT (Recherche)
   * SEARCH\_BAR\_BUTTON\_NAME (Rechercher)
   * AUTHOR\_LABEL (Rédacteur)
+  * LOGO_AVAILABLE (Le logo est disponible sous 'Licence Art Libre' par Ines ECK : )
+  * JSKOMMENT_PSEUDO (Votre pseudonyme)
+  * JSKOMMENT_ADD_COMMENT (Laisser un commentaire)
+  * JSKOMMENT_COMMENTS (Commentaire(s))
+  * JSKOMMENT_POWERED (Système de commentaire propulsé par)
+  * JSKOMMENT_SUBMIT (Soumettre)
+  * JSKOMMENT_YOUR (Votre commentaire)
+  * JSKOMMENT_LABEL (Pseudonyme : )
+  * JSKOMMENT_CAPTCHA_ERROR (erreur d\'utilisation de l\'API)
 
 En utilisant les templates, vous pouvez facilement ajouter du texte et leur traduction dans plusieurs thèmes.
 

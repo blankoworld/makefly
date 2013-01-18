@@ -518,7 +518,7 @@ if (!JSON) {
 var JSKOMMENT = {}
 
 /** The URL of the commenting system */
-JSKOMMENT.url = 'http://jskomment.appspot.com';
+JSKOMMENT.url = '${JSKOMMENT_URL}';
 
 /** The method to use with the server 
  * GUESS: auto-detection based on heuristics (recommended)
@@ -539,7 +539,7 @@ JSKOMMENT.protocol = 'GUESS';
 JSKOMMENT.recaptchaPublicKey = "6LerC70SAAAAAEwc4QsuoWncVQvKsB2RndBI7CY4";
 
 /** The max number of comments before folding them */
-JSKOMMENT.maxComments = 7;
+JSKOMMENT.maxComments = ${JSKOMMENT_MAX};
 
 /** The possible protocols, see JSKOMMENT.protocol, set by testConnection */
 JSKOMMENT.supportedProtocols = {};
@@ -587,7 +587,7 @@ JSKOMMENT.ajax = function (ajaxParams, preferredMethod, protocol) {
 JSKOMMENT.send = function (elem, options) {
   
   if (!$(elem).hasClass('jskomment')) {
-    var msg = 'error in API usage';
+    var msg = '${JSKOMMENT_CAPTCHA_ERROR}';
     window.console.log(msg);
     throw msg;
   }
@@ -638,7 +638,7 @@ JSKOMMENT.display = function (array /* array of comment objects */) {
   var title = array[0].title;
   var elem = $('[_title="'+title+'"]');
   
-  elem.find('.jskomment_header').html($('<a href="javascript:void(0)">Discussion ('+len+')</a>'));
+  elem.find('.jskomment_header').html($('<a href="javascript:void(0)">${JSKOMMENT_COMMENTS} ('+len+')</a>'));
   
   // if there are too may comments and we are not redrawing after having added a comment
   if (len>JSKOMMENT.maxComments && !elem.find('.jskomment_previous').attr('add_comment')) {
@@ -695,7 +695,7 @@ JSKOMMENT.multiload = function(request) {
 /** loads comments from the server and display them */
 JSKOMMENT.load = function (elem) {
   if (!$(elem).hasClass('jskomment')) {
-    var msg = 'error in API usage';
+    var msg = '${JSKOMMENT_CAPTCHA_ERROR}';
     window.console.log(msg);
     throw msg;
   }
@@ -713,7 +713,7 @@ JSKOMMENT.createAddCommentElement = function () {
   var addCommentLink = $(document.createElement('a'));
   addCommentLink.attr('href','javascript:void(0)');
   addCommentLink.attr('class','jskomment_add_comment');
-  addCommentLink.text('Click to leave a comment');
+  addCommentLink.text('${JSKOMMENT_ADD_COMMENT}');
   
   addCommentLink.click(function() {
     var clicked = this; // this is bound by click
@@ -722,14 +722,14 @@ JSKOMMENT.createAddCommentElement = function () {
     elem.find('.jskomment_previous').show();
     elem.find('.jskomment_previous').attr('add_comment', true);
     var title = elem.attr('_title');
-    var name='your name';
+    var name='${JSKOMMENT_PSEUDO}';
     try { name = localStorage.getItem('jskomment_username') || name; } catch (e) {}
     var form = $('<form class="jskomment_form jskomment_add_comment">'
     +'<input id="title" type="hidden" name="title" value="'+title+'"/>'
-    +'<div class="jskomment_input1">New comment from <input type="text" name="name" size="10"  value="'+name+'"/>: </div>'
-    +'<div class="jskomment_commentval"><textarea class="jskomment_input2" rows="6" cols="32" name="comment" value="your comment"/></div>'
-    +'<div class="jskomment_submit"><input class="jskomment_button" name="submit" type="submit" value="submit"/></div>'
-    +'</form>');   
+    +'<div class="jskomment_input1">${JSKOMMENT_LABEL}<input type="text" name="name" size="10" value="'+name+'"/> </div>'
+    +'<div class="jskomment_commentval"><textarea class="jskomment_input2" rows="6" cols="32" name="comment" value="${JSKOMMENT_YOUR}"/></div>'
+    +'<div class="jskomment_submit"><input class="jskomment_button" name="submit" type="submit" value="${JSKOMMENT_SUBMIT}"/></div>'
+    +'</form>');
     
     form.submit(
       function (ev) {
@@ -749,7 +749,7 @@ JSKOMMENT.createAddCommentElement = function () {
 JSKOMMENT.init = function (elem) {
   
   if (!$(elem).hasClass('jskomment')) {
-    var msg = 'error in API usage';
+    var msg = '${JSKOMMENT_CAPTCHA_ERROR}';
     window.console.log(msg);
     throw msg;
   }
@@ -761,7 +761,7 @@ JSKOMMENT.init = function (elem) {
   // setting the title in _title
   // because the browser uses this field as tooltip
   $(elem).attr('_title',title);
-  $(elem).attr('title','Commenting area powered by jskomment');
+  $(elem).attr('title','${JSKOMMENT_POWERED} jskomment');
   
   var jskomment_header = $('<div class="jskomment_header"></div>');
   jskomment_header.click(function() {$(elem).find('.jskomment_previous, .jskomment_add_comment').toggle();});
@@ -985,7 +985,7 @@ JSKOMMENT.mainContinue = function () {
   JSKOMMENT.captcha = function (elem) {
     
     if (!$(elem).hasClass('jskomment')) {
-    var msg = 'error in API usage';
+    var msg = '${JSKOMMENT_CAPTCHA_ERROR}';
     throw msg;
     }
     
@@ -995,7 +995,7 @@ JSKOMMENT.mainContinue = function () {
   Recaptcha.create(JSKOMMENT.recaptchaPublicKey,
                    id,
                    {
-                     theme: "red",
+                     theme: "${JSKOMMENT_CAPTCHA_THEME}",
                    callback: 
                    function() {
                      var form = $(elem).find('.jskomment_form');
@@ -1013,8 +1013,5 @@ JSKOMMENT.mainContinue = function () {
   );
   return false;
   }
-  
-  
-  
   
 JSKOMMENT.main();
