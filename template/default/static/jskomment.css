@@ -1,0 +1,68 @@
+.jskomment_header {
+  font-weight: bold;
+}
+
+.jskomment_newcomment {
+  padding-top: 5px;
+  font-weight: bold;
+  width: 600px;
+}
+
+.jskomment_commentval {
+}
+
+.jskomment_comment {
+  color:#999999;
+  margin:4px;
+  margin-left:10px;
+  padding:4px;
+}
+
+.jskomment {
+  padding: 0 0 0 5px;
+  margin-top:7px;
+  margin-bottom:20px;
+  border-left: medium solid #FFD700;
+}
+
+.jskomment_header a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.jskomment_header a:visited {
+  color: #ffffff;
+  text-decoration: inherit;
+}
+
+.jskomment_header a:hover {
+  text-decoration: underline;
+}
+
+.jskomment_user {
+  color: #F1E5A5;
+}
+
+.jskomment_input2 {
+  vertical-align:top;
+  width: 608px;/* 500 + 4*2 (related to jskomment.width*/
+  margin:4px;
+  margin-left:10px;
+}
+
+
+.jskomment_form {
+}
+
+.jskomment_submit {
+	text-align:right;
+}
+
+#jskomment_flash {
+  visibility: hidden;
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+}
+
+

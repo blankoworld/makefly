@@ -7,6 +7,9 @@ Next version (0.2):
 - Do some LUA tests to improve file generation
 
 
+- For jskomment.css => Change url into jskomment.css to have it from Makefly.
+- Permit to choose a color for a theme
+
 - Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
 - Problem with accentued chars in create_post.sh for TITLE
 - Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
