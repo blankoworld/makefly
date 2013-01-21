@@ -882,7 +882,9 @@ JSKOMMENT.main = function () {
     css.attr({
       rel:  "stylesheet",
       type: "text/css",
-      href: "${BASE_URL}/${JSKOMMENT_CSS}"
+      href: "",
+      // Desactivate HREF comment file in order to permit each THEME to add its own CSS FILE for JSKOMMENT
+      // href: "${BASE_URL}/${JSKOMMENT_CSS}"
     });
     css.appendTo($('head'));
   }); // end DOM ready
