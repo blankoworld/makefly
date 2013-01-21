@@ -6,9 +6,8 @@ Next version (0.2):
 - ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
 - Do some LUA tests to improve file generation
 
-
-- For jskomment.css => Change url into jskomment.css to have it from Makefly.
 - Permit to choose a color for a theme
+- Readapt print.css to have comments?
 
 - Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
 - Problem with accentued chars in create_post.sh for TITLE
@@ -139,3 +138,4 @@ DONE:
 - find a logo
 - do a favicon with logo
 - print.css
+- For jskomment.css => Change url into jskomment.css to have it from Makefly.
