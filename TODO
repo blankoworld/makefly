@@ -6,7 +6,6 @@ Next version (0.2):
 - ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
 - Do some LUA tests to improve file generation
 
-- Permit to choose a color for a theme
 - Readapt print.css to have comments?
 
 - Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
@@ -17,8 +16,6 @@ Next version (0.2):
 - Minisch theme update:
   - add author (search in CSS to find it)
   - add subtitle (BLOG_SHORT_DESC)
-- Find a way to make more than 1 CSS for 1 theme and choose CSS by user without changing config.mk (or make all CSS as alternative and define one as DEFAULT)
-- Multiple CSS => so permit user to define WHICH CSS it wants for a theme.
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
 - Only permit to publish current post (if post have a date in the future, so don't take it)
@@ -139,3 +136,6 @@ DONE:
 - do a favicon with logo
 - print.css
 - For jskomment.css => Change url into jskomment.css to have it from Makefly.
+- Find a way to make more than 1 CSS for 1 theme and choose CSS by user without changing config.mk (or make all CSS as alternative and define one as DEFAULT)
+- Multiple CSS => so permit user to define WHICH CSS it wants for a theme.
+- Permit to choose a color for a theme

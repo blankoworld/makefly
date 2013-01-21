@@ -255,8 +255,9 @@ Chaque thème a son propre répertoire. Ainsi pour le thème *défaut*, un dossi
   * un **config.mk** dans lequel vous avez des détails à propos du thème : 
     * CSS\_NAME : Nom qui apparaîtra dans le joueb avec `${CSS_NAME}`
     * CSS\_FILE : le nom de fichier du CSS choisi pour un thème spécifique
+    * CSS\_COLOR\_FILE: le nom du fichier utilisé pour colorier votre thème
     * JSKOMMENT\_CAPTCHA\_THEME: nom du theme que reCaptcha propose. Plus d'infos sur [https://developers.google.com/recaptcha/docs/customization](https://developers.google.com/recaptcha/docs/customization "Plus d'infos &agrave; propos des th&egrave;mes reCaptcha").
-    * JSKOMMENT_CSS: nom du fichier CSS utilisé pour l'application JSKOMMENT. Devrait &ecirc;tre dans le répertoire du thème. Si non défini, un fichier par défaut sera utilisé.
+    * JSKOMMENT\_CSS: nom du fichier CSS utilisé pour l'application JSKOMMENT. Devrait &ecirc;tre dans le répertoire du thème. Si non défini, un fichier par défaut sera utilisé.
 
 ### Fichiers obligatoires
 
