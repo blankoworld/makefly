@@ -64,6 +64,12 @@ PUBLISH_SCRIPT_NAME = publish.sh
 BODY_CLASS = single
 JSKOMMENT_MAX = 2
 JSKOMMENT_URL = http://jskomment.appspot.com
+# jskomment files
+jskom_name  ?= jskomment.js
+jskom_file  ?= ${TMPLDIR}/${jskom_name}
+jskom_html  ?= ${TMPLDIR}/jskomment_declaration.xhtml
+jskom_cont  ?= ${TMPLDIR}/jskomment.article.xhtml
+jskom_css   ?= ${TMPLDIR}/jskomment.css
 # first main variables
 .include "makefly.rc"
 # then translation variables
@@ -85,12 +91,6 @@ aboutlink   ?= ${THEMEDIR}/menu.about.xhtml
 sidebar_tpl ?= ${THEMEDIR}/sidebar.xhtml
 read_more   ?= ${THEMEDIR}/read_more_link.xhtml
 searchbar   ?= ${THEMEDIR}/menu.search_bar.xhtml
-
-# jskomment files
-jskom_name  ?= jskomment.js
-jskom_file  ?= ${TMPLDIR}/${jskom_name}
-jskom_html  ?= ${TMPLDIR}/jskomment_declaration.xhtml
-jskom_cont  ?= ${TMPLDIR}/jskomment.article.xhtml
 
 # Create postdir and tagdir index's filenames
 POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
@@ -249,7 +249,22 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
 .if defined(JSKOMMENT) && ${JSKOMMENT}
 JSKOMMENT_SCRIPT != cat ${jskom_html}|${parser} ${parser_opts}
 
-${jskom_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${jskom_file}
+.if defined(JSKOMMENT_CSS) && ${JSKOMMENT_CSS}:
+jskom_css = ${THEMEDIR}/${JSKOMMENT_CSS}
+.else
+JSKOMMENT_CSS = ${jskom_css:S/${TMPLDIR}\///}
+.endif
+
+parser_opts += "JSKOMMENT_CSS=${JSKOMMENT_CSS}"
+
+${jskom_css:S/^/${DESTDIR}/}: ${DESTDIR}
+	$Q{ \
+			cp ${jskom_css} ${JSKOMMENT_CSS:S/^/${DESTDIR}\//} || {  \
+			echo "-- Error while copying ${JSKOMMENT_CSS}." ; \
+		} ; \
+	} && echo "-- CSS copied: ${JSKOMMENT_CSS}."
+
+${jskom_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${jskom_file} ${jskom_css:S/^/${DESTDIR}/}
 	$Q{ \
 		{ \
 			cat ${jskom_file} |${parser} ${parser_opts}            \
