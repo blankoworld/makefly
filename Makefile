@@ -124,6 +124,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"SOURCE_LINK_TITLE=${SOURCE_LINK_TITLE}" \
 		"CSS_NAME=${CSS_NAME}"                   \
 		"CSS_FILE=${CSS_FILE}"                   \
+		"CSS_COLOR_FILE=${CSS_COLOR_FILE}"       \
 		"THEME_IS=${THEME_IS}"                   \
 		"BODY_CLASS=${BODY_CLASS}"               \
 		"LINKS_TITLE=${LINKS_TITLE}"             \
@@ -474,7 +475,22 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 .endfor
 
 # Do CSS file
-${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE}
+
+.if defined(CSS_COLOR_FILE) && ${CSS_COLOR_FILE}
+
+${DESTDIR}/${CSS_COLOR_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_COLOR_FILE}
+	$Qcat ${STYLEDIR}/${CSS_COLOR_FILE} |${parser} ${parser_opts} \
+		> ${DESTDIR}/${CSS_COLOR_FILE} && \
+		echo "-- CSS (colour) copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
+
+.else
+
+${DESTDIR}/${CSS_COLOR_FILE}:
+	$Qecho "-- No CSS (colour) file found."
+
+.endif
+
+${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE} ${DESTDIR}/${CSS_COLOR_FILE}
 	$Qcat ${STYLEDIR}/${CSS_FILE} |${parser} ${parser_opts} \
 		> ${DESTDIR}/${CSS_FILE} && \
 		echo "-- CSS copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
