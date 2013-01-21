@@ -133,7 +133,8 @@ Voici quelques options que vous pouvez changer :
   * PUBLISH\_DESTINATION : Adresse compl&egrave;te du lieu o&ugrave; envoyer les fichiers afin de les publier.
   * PUBLISH\_SCRIPT\_NAME : Nom du fichier script utilis&eacute; pour envoyer les fichiers du dossier **pub** vers une destination renseign&eacute;e dans la variable *PUBLISH\_DESTINATION*.
   * SEARCH\_BAR : Mis &agrave; 1 permet d'activer une barre de recherche sur Makefly. &Agrave; noter que votre th&egrave;me doit supporter la barre de recherche.
-  * MAX\_RSS: Nombre d'articles RSS maximum qui sera récupéré par vos utilisateurs.
+  * MAX\_RSS : Nombre d'articles RSS maximum qui sera récupéré par vos utilisateurs.
+  * JSKOMMENT : Mis &agrave; 1 permet d'activer un syst&eacute;me de commentaires pour Makefly. &Agrave; noter que votre th&egrave;me doit supporter le syst&eacute;me de commentaires. Attention, par d&eacute;faut cela utiliser jskomment.appspot.com en tant que serveur, il ne garantit pas un archivage &agrave; long terme des commentaires. Plus d'informations sont disponibles [sur la page d'installation du projet jskomment](http://code.google.com/p/jskomment/wiki/Installation "Se rendre sur la page du projet pour en savoir plus").
 
 ## Publier le r&eacute;sultat sur le web
 
