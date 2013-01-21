@@ -167,14 +167,32 @@ border-left: medium solid #FFD700;
 }
 
 .jskomment_header a {
-color: #ffffff;
+color: #999999;
+  display: inline-block;
+  margin: 0;
+  text-align: center;
+  border-radius: 10px;
 }
 
 .jskomment_header a:visited {
-color: #ffffff;
+color: #999999;
 }
 
 .jskomment_header a:hover {
+color: #ffffff;
+}
+
+.jskomment_header a span {
+  color: #000000;
+  background-color: #999999;
+  display: inline-block;
+  border-radius: 10px;
+  width: 2em;
+}
+
+.jskomment_header a span:hover {
+  color: #000000;
+  background-color: #ffffff;
 }
 
 .jskomment_user {
@@ -193,5 +211,7 @@ color: #F1E5A5;
 
 #jskomment_flash {
 }
+
+
 
 

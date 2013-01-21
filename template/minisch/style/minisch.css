@@ -1198,17 +1198,22 @@ article.post .wp-caption .wp-caption-text:before {
 /* =Comments
 -------------------------------------------------------------- */
 
-.comments-link {
+.jskomment_header a {
+color: #525252;
+font-size: 22px;
+line-height: 40px;
+font-weight: normal;
+}
+
+.jskomment_header span {
     display: inline-block;
-    position: relative;
-    z-index: 20;
     float: right;
     margin: 3px 0 10px 8px;
 }
-.comments-link a {
+
+.jskomment_header span {
     background-color: #555;
     color: #FFFFFF;
-    display: block;
     height: 31px;
     min-width: 40px;
     border-radius: 3px;
@@ -1227,7 +1232,8 @@ article.post .wp-caption .wp-caption-text:before {
              -o-transition: all .3s;
             -ms-transition: all .3s;
 }
-.comments-link a:after {
+
+.jskomment_header span:after {
     border-bottom: 9px solid transparent;
     border-bottom-right-radius: 20px 8px;
     border-right: 9px solid #555555;
@@ -1245,56 +1251,35 @@ article.post .wp-caption .wp-caption-text:before {
              -o-transition: all .3s;
             -ms-transition: all .3s;
 }
-.comments-link a:hover {
+
+.jskomment_header span:hover {
     background-color: #4183C4;
 }
-.comments-link a:hover:after {
+
+.jskomment_header span:hover:after {
     border-right-color: #4183C4;
 }
-body.single .comments-link,
-body.page .comments-link {
+
+body.single .jskomment_header,
+body.page .jskomment_header {
     float: none;
-    margin: 0;
     position: inherit;
     vertical-align: middle;
 }
 
-#comments {
+body.home .jskomment {
+  text-align: left;
 }
 
-h2#comments-title {
-    color: #525252;
-    font-size: 27px;
-    font-weight: normal;
-    margin: 0 0 25px;
+.jskomment {
+padding: 15px 20px 10px;
+background-color: rgba(100, 100, 100, 0.1);
+border: 1px solid rgba(0, 0, 0, 0.1);
+border-radius: 3px;
+margin: 0 0 20px;
 }
-li.comment.depth-1 {
-    padding: 15px 20px 5px;
-    background-color: rgba(100, 100, 100, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 3px;
-    margin: 0 0 20px;
-}
-article.comment {
-    position: relative;
-    margin: 0 0 25px;
-}
-article.comment header {
-    margin: 0 0 7px;
-}
-li.comment ul.children {
-	border-left: 4px solid #777777;
-	margin: 0;
-	padding: 0 0 0 26px;
-}
-@media screen and (min-width:850px) {
-	li.comment ul.children {
-	    margin: 0 0 0 25px;
-	}
-}
-article.comment header div { display: inline;}
-article.comment .comment-meta a { color: #444 !important;}
-article.comment .comment-content {
+
+.jskomment_commentval {
     background-color: #FFFFFF;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 -2px 0 rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(255, 255, 255, 0.5) inset, 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
     	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 -2px 0 rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(255, 255, 255, 0.5) inset, 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -1305,64 +1290,33 @@ article.comment .comment-content {
     display: inline-block;
     font-size: 15px;
     line-height: 1.6;
-    margin: 0;
-    padding: 14px 20px;
+    margin: 10px 0;
+    padding: 2% 1%;
+    width: 98%;
 }
-article.comment .comment-content a {}
-article.comment .comment-content p {
-    margin: 0;
-    padding: 0 0 16px;
-}
-article.comment .comment-content p:last-of-type {
-    padding: 0;
-}
+
 @media screen and (max-width:850px) {
-	article.comment .comment-author {
+	.jskomment_user {
 		display: block;
 	}
 }
-article.comment .comment-author img {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 3px 3px 3px 3px;
-    margin: 3px 15px 0 0;
-    vertical-align: middle;
-    z-index: 10;
-    float: left;
-}
-@media screen and (min-width:850px) {
-	article.comment .comment-author img {
-	    float: none;
-	    margin: 0 15px 0 0;
-	}
-}
-article.comment .comment-author cite {
-    color: #1C1C1C;
-    font-size: large;
-    font-style: normal;
-    font-weight: bold;
-}
-li.bypostauthor > article.comment .comment-author cite:after {
-    content: "auteur";
-    display: inline-block;
-    background: linear-gradient(#565C61, #32373C) repeat center top #32373C;
-    	background:     -webkit-linear-gradient(#565C61, #32373C) repeat center top #32373C;
-    	background:        -moz-linear-gradient(#565C61, #32373C) repeat center top #32373C;
-    	background:          -o-linear-gradient(#565C61, #32373C) repeat center top #32373C;
-    	background:         -ms-linear-gradient(#565C61, #32373C) repeat center top #32373C;
-    background-color: #32373C;
-    color: #FFF;
-    border-radius: 3px;
+
+.jskomment_user {
+    display: block;
+    color: #32373C;
     line-height: 1.2;
     font-size: 17px;
     margin: 0 5px;
     padding: 0 6px;
+    font-weight: bold;
 }
-article.comment .reply a:before {
-	content: "• ";
+
+.jskomment_add_comment:before {
+	content: "→ ";
 }
-article.comment .reply a {
+
+.jskomment_add_comment {
     border-radius: 3px 3px 3px 3px;
-    display: inline-block;
     font-weight: bold;
     padding: 0 5px;
     transition: all .1s;
@@ -1371,7 +1325,8 @@ article.comment .reply a {
              -o-transition: all .1s;
             -ms-transition: all .1s;
 }
-article.comment .reply a:hover {
+
+.jskomment_add_comment:hover {
     background-color: #4183C4;
     color: #FFF;
     text-decoration: none;
