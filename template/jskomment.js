@@ -882,7 +882,7 @@ JSKOMMENT.main = function () {
     css.attr({
       rel:  "stylesheet",
       type: "text/css",
-      href: JSKOMMENT.url+"/jskomment.css"
+      href: "${BASE_URL}/${JSKOMMENT_CSS}"
     });
     css.appendTo($('head'));
   }); // end DOM ready

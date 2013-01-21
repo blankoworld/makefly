@@ -257,6 +257,7 @@ Each theme have its own directory. So for *default* theme, a **default** directo
     * CSS\_NAME: Name that will appear on the weblog with `${CSS_NAME}`
     * CSS\_FILE: the filename of choosen CSS for a defined theme
     * JSKOMMENT\_CAPTCHA\_THEME: the name of the theme that reCaptcha have. More info on [https://developers.google.com/recaptcha/docs/customization](https://developers.google.com/recaptcha/docs/customization "More info about reCaptcha themes").
+    * JSKOMMENT_CSS: name of CSS file to used for JSKOMMENT application. Should be in theme directory. If not defined, a default one would be used.
 
 ### Mandatory files
 
