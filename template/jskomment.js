@@ -638,7 +638,7 @@ JSKOMMENT.display = function (array /* array of comment objects */) {
   var title = array[0].title;
   var elem = $('[_title="'+title+'"]');
   
-  elem.find('.jskomment_header').html($('<a href="javascript:void(0)">${JSKOMMENT_COMMENTS} ('+len+')</a>'));
+  elem.find('.jskomment_header').html($('<a href="javascript:void(0)">${JSKOMMENT_COMMENTS} <span class="jskomment_number">'+len+'</span></a>'));
   
   // if there are too may comments and we are not redrawing after having added a comment
   if (len>JSKOMMENT.maxComments && !elem.find('.jskomment_previous').attr('add_comment')) {
