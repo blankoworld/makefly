@@ -18,3 +18,4 @@ THEME = minisch
 TAGDIR_NAME = motcle
 POSTDIR_NAME = article
 markdown = ${BINDIR}/lunamark
+JSKOMMENT = 1
