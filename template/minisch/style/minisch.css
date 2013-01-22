@@ -1205,13 +1205,10 @@ line-height: 40px;
 font-weight: normal;
 }
 
-.jskomment_header span {
+.jskomment_number {
     display: inline-block;
     float: right;
     margin: 3px 0 10px 8px;
-}
-
-.jskomment_header span {
     background-color: #555;
     color: #FFFFFF;
     height: 31px;
@@ -1233,14 +1230,14 @@ font-weight: normal;
             -ms-transition: all .3s;
 }
 
-.jskomment_header span:after {
+.jskomment_number:after {
     border-bottom: 9px solid transparent;
     border-bottom-right-radius: 20px 8px;
     border-right: 9px solid #555555;
     content: " ";
     display: block;
     left: 5px;
-    margin: 0 auto;
+    margin: -1px auto;
     position: relative;
     top: -2.5px;
     width: 0;
@@ -1252,11 +1249,11 @@ font-weight: normal;
             -ms-transition: all .3s;
 }
 
-.jskomment_header span:hover {
+.jskomment_number:hover {
     background-color: #4183C4;
 }
 
-.jskomment_header span:hover:after {
+.jskomment_number:hover:after {
     border-right-color: #4183C4;
 }
 
@@ -1269,6 +1266,8 @@ body.page .jskomment_header {
 
 body.home .jskomment {
   text-align: left;
+  width: 90%;
+  margin: -20px auto 0 auto;
 }
 
 .jskomment {
