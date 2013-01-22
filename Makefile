@@ -481,7 +481,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 ${DESTDIR}/${CSS_COLOR_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_COLOR_FILE}
 	$Qcat ${STYLEDIR}/${CSS_COLOR_FILE} |${parser} ${parser_opts} \
 		> ${DESTDIR}/${CSS_COLOR_FILE} && \
-		echo "-- CSS (colour) copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
+		echo "-- CSS (colour) copied from ${THEME} theme: ${DESTDIR}/${CSS_COLOR_FILE}"
 
 .else
 
