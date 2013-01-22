@@ -134,6 +134,10 @@ Here is some options you can change:
   * PUBLISH\_SCRIPT\_NAME: script filename used to send files from **pub** directory to a destination filled in *PUBLISH\_DESTINATION* variable.
   * SEARCH\_BAR: If set to 1, activate a search bar on Makefly. Note that your theme should support search bar!
   * MAX\_RSS: Max RSS posts that would be fetch from your users.
+  * JSKOMMENT : If set to 1, this activate a comment system on Makefly. Note that your theme should support comment system. Warning: default server is jskomment.appspot.com which doesn't guarantee a long backup of your comments. More info are available [on jskomment project installation page](http://code.google.com/p/jskomment/wiki/Installation "Go to jskomment webpage for more information") (fr).
+  * JSKOMMENT\_CAPTCHA\_THEME (optional): Define a theme regarding [reCaptcha page](https://developers.google.com/recaptcha/docs/customization "More info about reCaptcha themes") for Catpcha in JSKOMMENT comment system
+  * JSKOMMENT\_URL (optional): Define a JSKOMMENT server on which send comments. By default **http://jskomment.appspot.com/**.
+  * JSKOMMENT\_MAX (optional): Define a limit for displayed comments for JSKOMMENT comment system. By default **2**.
 
 ## Publish result to the web
 

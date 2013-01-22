@@ -256,6 +256,9 @@ Each theme have its own directory. So for *default* theme, a **default** directo
   * a **config.mk** in which you have some details about the theme:
     * CSS\_NAME: Name that will appear on the weblog with `${CSS_NAME}`
     * CSS\_FILE: the filename of choosen CSS for a defined theme
+    * CSS\_COLOR\_FILE: the filename used to colour your theme
+    * JSKOMMENT\_CAPTCHA\_THEME: the name of the theme that reCaptcha have. More info on [https://developers.google.com/recaptcha/docs/customization](https://developers.google.com/recaptcha/docs/customization "More info about reCaptcha themes").
+    * JSKOMMENT\_CSS: name of CSS file to used for JSKOMMENT application. Should be in theme directory. If not defined, a default one would be used.
 
 ### Mandatory files
 
@@ -374,6 +377,15 @@ At the time I write this documentation, here is the available words to translate
   * SEARCH\_BAR\_CONTENT (Search)
   * SEARCH\_BAR\_BUTTON\_NAME (Search)
   * AUTHOR\_LABEL (Author)
+  * LOGO_AVAILABLE (Logo is under 'Licence Art Libre' conditions by ECK Ines)
+  * JSKOMMENT_PSEUDO (Your nickname)
+  * JSKOMMENT_ADD_COMMENT (Leave a comment)
+  * JSKOMMENT_COMMENTS (Comment(s))
+  * JSKOMMENT_POWERED (Commenting area powered by)
+  * JSKOMMENT_SUBMIT (Submit)
+  * JSKOMMENT_YOUR (Your comment)
+  * JSKOMMENT_LABEL (Nickname: )
+  * JSKOMMENT_CAPTCHA_ERROR (error in API usage)
 
 By using templates, you can easily add some texts and their translations in some themes.
 

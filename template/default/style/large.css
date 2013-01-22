@@ -1,31 +1,22 @@
 html, body {
-background-color: #fff;
 font-family: Georgia, Palatino, serif;
-color: #000;
 margin: 0;
 }
 
 a {
-color: #0000ff;
 }
 
 a:hover {
-color: #9834b5;
 }
 
 h1 {
 text-align: center;
-color: #000;
 }
 
 blockquote {
-color: #9834b5;
-border-left: medium solid #9834b5;
 }
 
 pre {
-color: #000;
-background-color: #ccc;
 width: 90%;
 margin: 0 auto;
 padding: 5px 0;
@@ -51,7 +42,6 @@ nav {
 display: block;
 width: 90%;
 margin: 0 auto 15px auto;
-border-bottom: 1px solid #000;
 }
 
 nav ul {
@@ -74,19 +64,13 @@ padding: 2px;
 -moz-border-radius: 6px;
 border-radius: 6px;
 text-decoration: none;
-border: 1px solid #000;
-color: #000;
 }
 
 nav ul a:hover {
 text-decoration: none;
-color: #fff;
-background-color: #000;
 padding: 2px;
 -moz-border-radius: 6px;
 border-radius: 6px;
-border: 1px solid #999;
-box-shadow: 2px 1px 4px #000000;
 }
 
 nav form#search {
@@ -101,7 +85,6 @@ margin: 1% 1% 0 0;
 nav form#search input {
 margin-left: auto;
 margin-right: auto;
-border: thin inset black;
 text-align: left;
 padding: 2px;
 -moz-border-radius: 5px;
@@ -109,17 +92,11 @@ border-radius: 5px;
 }
 
 nav form#search input#text {
-background-color: #000000;
-color: #999;
-border-color: #999;
 }
 
 nav form#search input#validate_button {
 width: 0;
 display: none;
-background-color: #000000;
-color: #999;
-border-color: #999;
 }
 
 #content {
@@ -129,18 +106,14 @@ padding: 0 15px;
 }
 
 #content h1 {
-color: #000000;
 }
 
 #content article {
 display: block;
-color: #000000;
 width: 100%;
 height: 100%;
 -moz-border-radius: 6px;
 border-radius: 6px;
-border: 1px solid #ccc;
-box-shadow: 2px 1px 4px #999999;
 }
 
 #content article > * {
@@ -156,12 +129,10 @@ padding-left: 30px;
 }
 
 #content article h1.title a {
-color: #000;
 text-decoration: none;
 }
 
 #content article h1.title a:visited {
-color: #000;
 text-decoration: none;
 }
 
@@ -186,19 +157,15 @@ margin: 2px 0 15px 0;
 }
 
 #content article.special {
-box-shadow: 2px 1px 4px #999999;
 }
 
 #content article.news {
-box-shadow: 2px 1px 4px #999999;
 }
 
 aside#sidebar {
 width: 90%;
 margin: 0 auto 25px auto;
-color: #000000;
 font-size: 8pt;
-border-top: thin solid #000000;
 }
 
 aside#sidebar > * {
@@ -220,7 +187,6 @@ margin: 15px auto;
 padding: 10px 0;
 text-align: center;
 font-size: 70%;
-border-top: thin solid #000000;
 }
 
 p img#logo {

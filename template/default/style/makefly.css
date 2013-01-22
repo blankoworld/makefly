@@ -1,0 +1,198 @@
+html, body {
+}
+
+a {
+}
+
+a:hover {
+}
+
+h1 {
+text-align: center;
+}
+
+blockquote {
+}
+
+pre {
+width: 90%;
+margin: 0 auto;
+padding: 5px 0;
+}
+
+pre code {
+padding: 5px;
+}
+
+header h1 {
+margin: 25px 0 0 0;
+padding: 0;
+}
+
+#subtitle {
+text-align: center;
+margin: 0 0 25px 0;
+padding: 0;
+font-size: 70%;
+}
+
+nav {
+display: block;
+width: 80%;
+margin: 0 auto 15px auto;
+}
+
+nav ul {
+list-style-type: none;
+height: 20px;
+text-align: center;
+}
+
+nav ul li {
+}
+
+nav ul li a {
+display: block;
+float: left;
+margin-right: 9px;
+}
+
+nav ul a {
+padding: 2px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+text-decoration: none;
+}
+
+nav ul a:hover {
+text-decoration: none;
+padding: 2px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+}
+
+nav form#search {
+display: block;
+position: absolute;
+top: 0;
+left: 100px;
+width: auto;
+margin: 1% 0 0 1%;
+}
+
+nav form#search input {
+margin-left: auto;
+margin-right: auto;
+text-align: left;
+padding: 2px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+nav form#search input#text {
+}
+
+nav form#search input#validate_button {
+width: 0;
+display: none;
+}
+
+#content {
+width: 80%;
+margin: 0 auto;
+padding: 0 15px;
+}
+
+#content h1 {
+}
+
+#content article {
+display: block;
+width: 100%;
+height: 100%;
+-moz-border-radius: 6px;
+border-radius: 6px;
+}
+
+#content article > * {
+padding: 0 10px;
+}
+
+#content article ul {
+padding-left: 30px;
+}
+
+#content article a {
+}
+
+#content article h1.title a {
+text-decoration: none;
+}
+
+#content article h1.title a:visited {
+text-decoration: none;
+}
+
+#content article h1.title a:hover {
+text-decoration: underline;
+}
+
+#content article div.read_more {
+width: auto;
+text-align: right;
+margin: 0 1% 1% 0;
+}
+
+#content .articleinfo {
+padding-top: 15px;
+font-size: 70%;
+text-align: right;
+}
+
+#content .articleinfo p {
+margin: 2px 0 15px 0;
+}
+
+#content article.special {
+}
+
+#content article.news {
+}
+
+aside#sidebar {
+width: 80%;
+margin: 0 auto;
+font-size: 8pt;
+}
+
+aside#sidebar > * {
+margin-left: 10%;
+}
+
+aside#sidebar ul {
+list-style-type: none;
+margin-left: 5%;
+}
+
+aside#sidebar ul li a {
+text-decoration: none;
+}
+
+footer p {
+width: 80%;
+margin: 0 auto;
+padding: 5px 0 0 0;
+text-align: center;
+font-size: 70%;
+}
+
+p img#logo {
+position: absolute;
+display: block;
+top: 2ex;
+left: 2em;
+height: 64px;
+width: 64px;
+margin: 0 auto;
+text-align: center;
+}

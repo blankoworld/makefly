@@ -62,6 +62,14 @@ PUBLISH_SCRIPT_NAME = publish.sh
 
 # include some VARIABLES
 BODY_CLASS = single
+JSKOMMENT_MAX = 2
+JSKOMMENT_URL = http://jskomment.appspot.com
+# jskomment files
+jskom_name  ?= jskomment.js
+jskom_file  ?= ${TMPLDIR}/${jskom_name}
+jskom_html  ?= ${TMPLDIR}/jskomment_declaration.xhtml
+jskom_cont  ?= ${TMPLDIR}/jskomment.article.xhtml
+jskom_css   ?= ${TMPLDIR}/jskomment.css
 # first main variables
 .include "makefly.rc"
 # then translation variables
@@ -116,12 +124,15 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"SOURCE_LINK_TITLE=${SOURCE_LINK_TITLE}" \
 		"CSS_NAME=${CSS_NAME}"                   \
 		"CSS_FILE=${CSS_FILE}"                   \
+		"CSS_COLOR_FILE=${CSS_COLOR_FILE}"       \
 		"THEME_IS=${THEME_IS}"                   \
 		"BODY_CLASS=${BODY_CLASS}"               \
 		"LINKS_TITLE=${LINKS_TITLE}"             \
 		"SIDEBAR="                               \
 		"ARTICLE_CLASS_TYPE=normal"              \
 		"SEARCHBAR="                             \
+		"JSKOMMENT_SCRIPT="                      \
+		"JSKOMMENT_CONTENT="                     \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -235,8 +246,57 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
 
 .endif
 
+# JSKOMMENT SYSTEM
+.if defined(JSKOMMENT) && ${JSKOMMENT}
+JSKOMMENT_SCRIPT != cat ${jskom_html}|${parser} ${parser_opts}
+
+.if defined(JSKOMMENT_CSS) && ${JSKOMMENT_CSS}:
+jskom_css = ${THEMEDIR}/${JSKOMMENT_CSS}
+.else
+JSKOMMENT_CSS = ${jskom_css:S/${TMPLDIR}\///}
+.endif
+
+parser_opts += "JSKOMMENT_CSS=${JSKOMMENT_CSS}"
+
+${jskom_css:S/^/${DESTDIR}/}: ${DESTDIR}
+	$Q{ \
+			cp ${jskom_css} ${JSKOMMENT_CSS:S/^/${DESTDIR}\//} || {  \
+			echo "-- Error while copying ${JSKOMMENT_CSS}." ; \
+		} ; \
+	} && echo "-- CSS copied: ${JSKOMMENT_CSS}."
+
+${jskom_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${jskom_file} ${jskom_css:S/^/${DESTDIR}/}
+	$Q{ \
+		{ \
+			cat ${jskom_file} |${parser} ${parser_opts}            \
+			"JSKOMMENT_PSEUDO=${JSKOMMENT_PSEUDO}"                 \
+			"JSKOMMENT_ADD_COMMENT=${JSKOMMENT_ADD_COMMENT}"       \
+			"JSKOMMENT_COMMENTS=${JSKOMMENT_COMMENTS}"             \
+			"JSKOMMENT_POWERED=${JSKOMMENT_POWERED}"               \
+			"JSKOMMENT_SUBMIT=${JSKOMMENT_SUBMIT}"                 \
+			"JSKOMMENT_YOUR=${JSKOMMENT_YOUR}"                     \
+			"JSKOMMENT_LABEL=${JSKOMMENT_LABEL}"                   \
+			"JSKOMMENT_CAPTCHA_ERROR=${JSKOMMENT_CAPTCHA_ERROR}"   \
+			"JSKOMMENT_CAPTCHA_THEME=${JSKOMMENT_CAPTCHA_THEME}"   \
+			"JSKOMMENT_URL=${JSKOMMENT_URL}"                       \
+			"JSKOMMENT_MAX=${JSKOMMENT_MAX}" ;                     \
+		} > ${jskom_file:S/${TMPLDIR}/${DESTDIR}/} || {          \
+			echo "-- Error while copying ${jskom_name} script." ;  \
+		} ; \
+	} && echo "-- Script added: ${jskom_name}."
+
+.else
+JSKOMMENT_SCRIPT = 
+
+${jskom_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${jskom_file}
+	$Qecho "-- Comments: desactivated."
+
+.endif
+
+parser_opts += "JSKOMMENT_SCRIPT=${JSKOMMENT_SCRIPT}"
+
 # BEGIN
-all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
+all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//} ${jskom_file:S/${TMPLDIR}/${DESTDIR}/}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -269,6 +329,10 @@ DESC_${FILE}       != echo "${DESCRIPTION:S/'/\'/}" |sed -e 's|</a> <a|</a>, <a|
 TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
 CLASS_TYPE_${FILE} != echo ${TYPE}
 AUTHOR_${FILE}     != echo ${AUTHOR}
+JSKOMMENT_CONTENT_${FILE} = 
+.if defined(JSKOMMENT) && ${JSKOMMENT}
+JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "POST_ESCAPED_TITLE=${ESCAPED_TITLE_${FILE}}"
+.endif
 
 .for TAG in ${TAGS_${FILE}}
 TAGLINK_${FILE}_${TAG} != cat "${taglink}" |${parser} \
@@ -290,6 +354,7 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE} sidebar
 				"POST_ESCAPED_TITLE=${ESCAPED_TITLE_${FILE}}" \
 				"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
 				"POST_AUTHOR=${AUTHOR_${FILE}}"              \
+				"JSKOMMENT_CONTENT=${JSKOMMENT_CONTENT_${FILE}}" \
 				"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" \
 				| sed -e "s|^|        |g" &&                 \
 			cat ${footer} | ${parser} ${parser_opts}       \
@@ -329,6 +394,10 @@ CONTENT_${FILE}  != head -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_
 TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
 CLASS_TYPE_${FILE} != echo ${TYPE}
 AUTHOR_${FILE}     != echo ${AUTHOR}
+JSKOMMENT_CONTENT_${FILE} = 
+.if defined(JSKOMMENT) && ${JSKOMMENT}
+JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "POST_ESCAPED_TITLE=${ESCAPED_NAME_${FILE}}"
+.endif
 
 .for TAG in ${TAGS_${FILE}}
 TAGLINK_${FILE}_${TAG} != cat "${taglink}" |${parser} \
@@ -364,6 +433,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"POST_TITLE=${TITLE_${FILE}}"                 \
 		"POST_AUTHOR=${AUTHOR_${FILE}}"               \
 		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"    \
+		"JSKOMMENT_CONTENT=${JSKOMMENT_CONTENT_${FILE}}" \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
 	$Qcat ${POSTDIR}/${NAME_${FILE}} | ${parser} ${parser_opts} \
@@ -405,7 +475,22 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 .endfor
 
 # Do CSS file
-${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE}
+
+.if defined(CSS_COLOR_FILE) && ${CSS_COLOR_FILE}
+
+${DESTDIR}/${CSS_COLOR_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_COLOR_FILE}
+	$Qcat ${STYLEDIR}/${CSS_COLOR_FILE} |${parser} ${parser_opts} \
+		> ${DESTDIR}/${CSS_COLOR_FILE} && \
+		echo "-- CSS (colour) copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
+
+.else
+
+${DESTDIR}/${CSS_COLOR_FILE}:
+	$Qecho "-- No CSS (colour) file found."
+
+.endif
+
+${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE} ${DESTDIR}/${CSS_COLOR_FILE}
 	$Qcat ${STYLEDIR}/${CSS_FILE} |${parser} ${parser_opts} \
 		> ${DESTDIR}/${CSS_FILE} && \
 		echo "-- CSS copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
