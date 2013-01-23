@@ -17,5 +17,6 @@ header p#subtitle { text-align: center; font-size: 70%; margin: 0 0 25px 0; padd
 .articleinfo { border-bottom: thin solid black; }
 .articleinfo a[href]:after { content: ""; }
 aside#sidebar { display: none; }
+.jskomment { display: none; }
 footer { display: none; }
 }

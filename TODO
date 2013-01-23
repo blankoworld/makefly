@@ -6,7 +6,6 @@ Next version (0.2):
 - ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
 - Do some LUA tests to improve file generation
 
-- Readapt print.css to have comments?
 
 - Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
 - Problem with accentued chars in create_post.sh for TITLE
@@ -139,3 +138,4 @@ DONE:
 - Multiple CSS => so permit user to define WHICH CSS it wants for a theme.
 - Permit to choose a color for a theme
 - Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
+- Readapt print.css to NOT have comments
