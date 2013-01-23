@@ -190,6 +190,20 @@ Some things you have to know about the Makefile:
 
 For other info, I suggest you to read comments in the *Makefile* file. If you have any question, ask me (`olivier+makeflydoc[AT]dossmann[DOT]net`).
 
+### How to debug Makefile file?
+
+The Makefile file have an option that permit it to be more verbose. This option is at file beginning and look likes this:
+
+    Q='@'
+
+You can display commands that Makefile launches by changing this option:
+
+    Q=
+
+In this way you will see **all** launched commands.
+
+Note : to only display some commands, you can delete the `$Q` in front of command lines. Pay attention to add it after debugging!
+
 ## The makefly.rc file
 
 This file is needed by user to configure Makefly. User have to create it for Makefly to work.

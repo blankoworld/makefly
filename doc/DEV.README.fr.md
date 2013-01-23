@@ -189,6 +189,20 @@ Ce que vous devriez savoir à propos du Makefile :
 
 Pour d'autres information, je vous suggère de lire les commentaires dans le fichier *Makefile*. Si vous avez une question, demandez-moi (`olivier+makeflydoc[AT]dossmann[DOT]net`).
 
+### Comment débogguer le fichier Makefile ?
+
+Le fichier Makefile possède une option qui lui permet d'être plus verbeux. Cette option est en début de fichier et ressemble à ceci : 
+
+    Q='@'
+
+Pour permettre au fichier Makefile d'afficher les commandes qu'il lance, il suffit alors de changer cette option en :
+
+    Q=
+
+De cette manière vous verrez **absolument toutes** les commandes lancées.
+
+Note : pour n'afficher que certaines commandes, vous pouvez supprimer le `$Q` devant la commande que vous voulez afficher. Pensez à remettre l'option devant la ligne après le déboggage.
+
 ## Le fichier makefly.rc
 
 Le fichier est nécessaire pour l'utilisateur afin de configurer Makefly. L'utilisateur doit le créer pour que Makefly fonctionne.

@@ -10,7 +10,6 @@ Next version (0.2):
 
 - Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
 - Problem with accentued chars in create_post.sh for TITLE
-- Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
 - Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
 - Problem with TAG_NAME and TAGNAME. And also TAGLINK.
 - Minisch theme update:
@@ -139,3 +138,4 @@ DONE:
 - Find a way to make more than 1 CSS for 1 theme and choose CSS by user without changing config.mk (or make all CSS as alternative and define one as DEFAULT)
 - Multiple CSS => so permit user to define WHICH CSS it wants for a theme.
 - Permit to choose a color for a theme
+- Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
