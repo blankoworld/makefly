@@ -456,8 +456,8 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	@# Prepare TAGS
 	$Qfor TAG in ${TAGS_${FILE}}; do                             \
 		cat ${tagelement} | ${parser}                              \
-			"TAGLINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}${PAGE_EXT}"  \
-			"TAGNAME=$${TAG}"                                        \
+			"TAG_LINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}${PAGE_EXT}"  \
+			"TAG_NAME=$${TAG}"                                        \
 		>> ${TMPDIR}/tags.list;                                    \
 	done
 	$Qfor TAG in ${TAGS_${FILE}}; do               \

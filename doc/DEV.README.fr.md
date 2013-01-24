@@ -331,11 +331,10 @@ Variables disponibles :
   * ${SIDEBAR\_CONTENT} : Le contenu du panneau latéral sera affiché ici.
   * ${TAGDIR\_NAME} : Nom du répertoire de mots-clés. Par exemple *motscles*. Ceci permet un meilleur référencement.
   * ${TAGDIR\_INDEX} : Nom du fichier index pour les mots-clés. Exemple : *index.html*.
-  * ${TAGLINK} : Lien absolu vers un mot-clé. Par exemple : *http://mon.domaine.tld/motscles/mon_mot_cle.html*.
   * ${TAGLIST\_CONTENT} : Contenu de la liste des mots-clés. Une liste de mots-clés.
-  * ${TAGNAME} : Nom d'un mot-clé donné. Par exemple *mon_mot_cle*.
+  * ${TAG\_LINK} : Lien absolu vers un mot-clé. Par exemple : *http://mon.domaine.tld/motscles/mon_mot_cle.html*.
   * ${TAG\_LIST\_TITLE} : Titre de la liste des mots-clés. Ceci est le nom affiché sur le lien qui redirige vers la liste des mots-clés. Par exemple *Liste de mots-clés*.
-  * ${TAG\_NAME} : Nom d'un mot-clé. Identique à la variable TAGNAME (FIXME: WTF?)
+  * ${TAG\_NAME} : Nom d'un mot-clé donné. Par exemple *mon_mot_cle*.
   * ${TAG\_PAGE} : Nom réel d'une page. Par exemple avec un mot-clé nommé *Mon mot clé*, cela sera *mon_mot_cle.html*.
   * ${TAG\_TITLE} : Titre du mot-clé. Par exemple *mon_mot_cle*.
   * ${TITLE} : Titre de la page courante. Par exemple *Accueil*, *Liste des mots-clés*, *Mon premier article*, etc.
