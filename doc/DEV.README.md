@@ -305,22 +305,26 @@ Available variables:
   * ${ARTICLE\_CLASS\_TYPE}: Class of article that user have filled in. For an example: news. This permit to adapt a stylesheet for each type of article.
   * ${BASE\_URL}: Your website address. For an example: http://my.weblog.com The user give it in the configuration file.
   * ${BLOG\_CHARSET}: Blog charset as *UTF-8* or *ISO-8859-15*. This is for HTML pages **and** RSS feeds.
+  * ${BLOG\_SHORT\_DESC}: Short description of your blog. For an example *A static makefly weblog engine*.
   * ${BLOG\_TITLE}: Title of the blog. For an example *My first weblog*.
   * ${BODY\_CLASS}: Name of class defined for current *body*'s page tag. For an example, on home page, the body class is *home*. This is useful for CascadingStyleSheets.
   * ${CONTENT}: Content of page/post. It often looks like a post content. But it could be another kind of content as a tag list, a post list, etc. This depends on the page you're editing.
-  * ${CSS\_FILE}: Name of CSS file. For an example *simple.css*.
+  * ${CSS\_COLOR\_FILE}: Name of CSS file used to colorize the choosen theme. For an example *makefly_light.css*.
+  * ${CSS\_FILE}: Name of CSS file. For an example *makefly.css*.
   * ${CSS\_NAME}: Name that will appears to user when it selects your CSS theme. For an example *default theme*.
   * ${DATE}: Date using ${DATE\_FORMAT} format.
   * ${DATETIME}: Date using ISO8601 format to be compatible with HTML5 *time* tag.
   * ${HOME\_TITLE}: Title that will appears on the link that redirect to homepage. For an example *Home*.
+  * ${JSKOMMENT\_CONTENT}: Content of the JSKOMMENT comment system will be displayed here. It would be adapted for each post on home page and for each single post page.
+  * ${JSKOMMENT\_SCRIPT}: JSKOMMENT script declaration. Should be done before the `</body>` tag.
   * ${LANG}: Country code used in HTML's page to define a language. For an example *en* for english, *fr* for *french*, etc.
   * ${POSTDIR\_INDEX}: Exact name of postdir's index page. For an example *index.html*.
   * ${POSTDIR\_NAME}: Name of posts directory. For an example *posts*. That permit to have a better indexation on the Internet.
   * ${POST\_AUTHOR}: Post's author
-  * ${POST\_LIST\_TITLE}: Name that will appears on the link to go to Post's list. For an example *Post List*.
-  * ${POST\_FILE}: Exact name of the post file. For an example with a post which title is *My first post*, the POST\_FILE would be *my_first_post*. This also permits a better web indexation.
-  * ${POST\_TITLE}: Title of the post. For an example: *My first post*.
   * ${POST\_ESCAPED\_TITLE}: Title of the post without whitespace. For an example: *my_first_post*.
+  * ${POST\_FILE}: Exact name of the post file. For an example with a post which title is *My first post*, the POST\_FILE would be *my_first_post*. This also permits a better web indexation.
+  * ${POST\_LIST\_TITLE}: Name that will appears on the link to go to Post's list. For an example *Post List*.
+  * ${POST\_TITLE}: Title of the post. For an example: *My first post*.
   * ${POWERED\_BY}: Name displayed for the *Powered by* mention on all pages.
   * ${READ\_MORE}: Name displayed for the *Read more* link on each post (if activated in the configuration file)
   * ${RSS\_FEED\_NAME}: Name of your RSS feed. This will be shown for users that subscribe to your RSS. For an example *My first blog RSS feed*.
@@ -342,6 +346,8 @@ Available variables:
   * ${THEME\_IS}: Sentence that is used to explain which theme have been choosed. For an example *The theme of this page is: *.
 
 These variables are given by the **Makefile** file in some sections. So you probably have to update the Makefile in order to add some other ones.
+
+WARNING: Another list of variable could be found in **Language files** section. Have a look to find words that would be translated into your templates.
 
 ## Language files
 
