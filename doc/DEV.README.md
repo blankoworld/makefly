@@ -332,11 +332,10 @@ Available variables:
   * ${SIDEBAR\_CONTENT}: Content of the sidebar will be displayed here.
   * ${TAGDIR\_NAME}: Name of tags directory. For an example *tags*. This permits a better web indexation.
   * ${TAGDIR\_INDEX}: Name of index file for tags. Example: *index.html*.
-  * ${TAGLINK}: Absolute link to a tag. For an example: *http://my.domain.com/tags/my_tag.html*.
   * ${TAGLIST\_CONTENT}: Content of tag list. A list of tags.
-  * ${TAGNAME}: Name of a given tag. For an example *my_first_tag*.
+  * ${TAG\_LINK}: Absolute link to a tag. For an example: *http://my.domain.com/tags/my_tag.html*.
   * ${TAG\_LIST\_TITLE}: Title of the list of tags. This is the name displayed on the link that redirect to tag's list. For an example *Tag list*.
-  * ${TAG\_NAME}: Name of a tag. Same as TAGNAME (FIXME: WTF?)
+  * ${TAG\_NAME}: Name of a given tag. For an example *my_first_tag*.
   * ${TAG\_PAGE}: Real name of the page. For an example with a tag named *My tag*, it would be *my_tag.html*.
   * ${TAG\_TITLE}: Title of the tag. For an example *my_tag*.
   * ${TITLE}: Title of the current page. For an example *Homepage*, *Tags List*, *My first post*, etc.

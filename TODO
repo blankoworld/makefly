@@ -10,7 +10,6 @@ Next version (0.2):
 - Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
 - Problem with accentued chars in create_post.sh for TITLE
 - Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
-- Problem with TAG_NAME and TAGNAME. And also TAGLINK.
 - Minisch theme update:
   - add author (search in CSS to find it)
   - add subtitle (BLOG_SHORT_DESC)
@@ -26,7 +25,6 @@ Next version (0.2):
 - Other import script? From Wordpress to Makefly?
 - Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
-- change all variable to be UNIQUE in TEMPLATES
 - Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
 - create a Makefile that permit user to setup and install makefly (this permit to return an error if a program is missing)
   - permit to change language regarding LOCALE (makefly.rc.example configuration)
@@ -139,3 +137,5 @@ DONE:
 - Permit to choose a color for a theme
 - Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
 - Readapt print.css to NOT have comments
+- Problem with TAG_NAME and TAGNAME. And also TAGLINK.
+- change all variable to be UNIQUE in TEMPLATES
