@@ -127,3 +127,37 @@ aside ul li a {
 footer p {
 border-top: 1px solid #dc9900;
 }
+
+.jskomment {
+border-color: #dc9900;
+}
+
+.jskomment_header a {
+color: #F1E5A5;
+}
+
+.jskomment_header a:visited {
+color: #F1E5A5;
+}
+
+.jskomment_header a:hove {
+color: #F1E5A5;
+}
+
+.jskomment_commentval {
+color: #F1E5A5;
+}
+
+.jskomment_add_comment {
+color: #F1E5A5;
+text-decoration: none;
+}
+
+.jskomment_add_comment:visited {
+color: #F1E5A5;
+}
+
+.jskomment_add_comment:hover {
+color: #F1E5A5;
+text-decoration: underline;
+}
