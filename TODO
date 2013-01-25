@@ -6,7 +6,15 @@ Next version (0.2):
 - ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
 - Do some LUA tests to improve file generation
 
+Tests:
+- Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
+- Create some unit test on pmake doc, pmake clean, etc.
+- Create some more check with/without sidebar, with/without search bar, etc.
+
 Templates:
+- Clean UP templates code! Delete useless CSS, etc.
+  - Delete useless CSS in minisch.css
+  - Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
 - Minisch theme update:
   - add author (search in CSS to find it)
   - add subtitle (BLOG_SHORT_DESC)
@@ -31,6 +39,7 @@ Multimedia:
     }
 
 Other functionnalities:
+- Delete the double point from JSKOMMENT after username/pseudo (it's useless)
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Create a [b|p]make refreshall to clean all files, recompile them and publish blog
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
