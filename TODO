@@ -36,7 +36,6 @@ Multimedia:
     }
 
 Other functionnalities:
-- Delete the double point from JSKOMMENT after username/pseudo (it's useless)
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Create a [b|p]make refreshall to clean all files, recompile them and publish blog
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
@@ -164,3 +163,4 @@ DONE:
 - change all variable to be UNIQUE in TEMPLATES
 - Clean UP templates code! Delete useless CSS, etc.
   - Delete useless CSS in minisch.css
+- Delete the double point from JSKOMMENT after username/pseudo (it's useless)
