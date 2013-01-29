@@ -12,9 +12,6 @@ Tests:
 - Create some more check with/without sidebar, with/without search bar, etc.
 
 Templates:
-- Clean UP templates code! Delete useless CSS, etc.
-  - Delete useless CSS in minisch.css
-  - Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
 - Minisch theme update:
   - add author (search in CSS to find it)
   - add subtitle (BLOG_SHORT_DESC)
@@ -80,6 +77,11 @@ IDEAS:
     ___EOF___"
     This permit to replace some variables. It's seems to be not valid without zsh.
   - templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
+
+ABANDON:
+--------
+
+- Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
 
 DONE:
 -----
@@ -160,3 +162,5 @@ DONE:
 - Readapt print.css to NOT have comments
 - Problem with TAG_NAME and TAGNAME. And also TAGLINK.
 - change all variable to be UNIQUE in TEMPLATES
+- Clean UP templates code! Delete useless CSS, etc.
+  - Delete useless CSS in minisch.css
