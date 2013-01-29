@@ -189,6 +189,20 @@ Ce que vous devriez savoir à propos du Makefile :
 
 Pour d'autres information, je vous suggère de lire les commentaires dans le fichier *Makefile*. Si vous avez une question, demandez-moi (`olivier+makeflydoc[AT]dossmann[DOT]net`).
 
+### Comment débogguer le fichier Makefile ?
+
+Le fichier Makefile possède une option qui lui permet d'être plus verbeux. Cette option est en début de fichier et ressemble à ceci : 
+
+    Q='@'
+
+Pour permettre au fichier Makefile d'afficher les commandes qu'il lance, il suffit alors de changer cette option en :
+
+    Q=
+
+De cette manière vous verrez **absolument toutes** les commandes lancées.
+
+Note : pour n'afficher que certaines commandes, vous pouvez supprimer le `$Q` devant la commande que vous voulez afficher. Pensez à remettre l'option devant la ligne après le déboggage.
+
 ## Le fichier makefly.rc
 
 Le fichier est nécessaire pour l'utilisateur afin de configurer Makefly. L'utilisateur doit le créer pour que Makefly fonctionne.
@@ -290,22 +304,26 @@ Variables disponibles :
   * ${ARTICLE\_CLASS\_TYPE} : Classe de l'article que l'utilisateur a rempli. Par exemple : news. Ceci permit d'adapter la feuille de style pour chaque type d'article.
   * ${BASE\_URL} : L'adresse de votre site web. Par exemple : http://mon.blog L'utilisateur le renseigne dans le fichier de configuration.
   * ${BLOG\_CHARSET} : Encodage du blog, comme *UTF-8* ou *ISO-8859-15*. Ceci est pour les pages HTML **et** les flux RSS.
+  * ${BLOG\_SHORT\_DESC} : Courte description de votre joueb (blog). Par exemple *Un moteur de blog statique makefly*.
   * ${BLOG\_TITLE} : Titre du blog. Par exemple *Mon premier joueb*.
   * ${BODY\_CLASS} : Nom de la classe définie pour la balise *body* de la page courante. Par exemple, sur la page d'accueil, la classe *body* est *home*. Ceci est utile pour les feuilles de style en cascade.
   * ${CONTENT} : Contenu de la page / de l'article. Cela ressemble souvent au contenu d'un article. Mais cela peut être un autre type de contenu comme une liste de mots-clés, une liste d'articles, etc. Ceci dépend de la page que vous éditez.
-  * ${CSS\_FILE} : Nom du fichier CSS. Par exemple *simple.css*.
+  * ${CSS\_COLOR\_FILE} : Nom du fichier CSS utilisé pour colorer le thème choisi. Par exemple *makefly_light.css*.
+  * ${CSS\_FILE} : Nom du fichier CSS. Par exemple *makefly.css*.
   * ${CSS\_NAME} : Nom qui apparaîtra à l'utilisateur quand il choisira votre thème CSS. Par exemple le thème *défaut*.
   * ${DATE}: Date utilisant le format de ${DATE\_FORMAT}.
   * ${DATETIME}: Date utilisant le format ISO8601 pour être compatible avec la balise HTML5 *time*.
   * ${HOME\_TITLE} : Titre qui apparaîtra sur le lien qui redirige vers la page d'accueil. Par exemple *Accueil*.
+  * ${JSKOMMENT\_CONTENT} : Contenu du système de commentaires JSKOMMENT sera affiché ici. Il devrait être adapté pour chaque article de la page principale et sur chaque page d'article seul.
+  * ${JSKOMMENT\_SCRIPT} : Déclaration du script JSKOMMENT. Devrait être fait avant la balise `</body>`.
   * ${LANG} : Code pays utilisé dans les pages HTML pour définir une langue. Par exemple *fr* pour français, *en* pour anglais, etc.
   * ${POSTDIR\_INDEX} : Nom exact de la page d'index des articles. Par exemple *index.html*.
   * ${POSTDIR\_NAME} : Nom du répertoire des articles. Par exemple *articles*. Ceci permet d'avoir un meilleur référencement sur Internet.
   * ${POST\_AUTHOR}: Rédacteur de l'article
-  * ${POST\_LIST\_TITLE} : Nom qui apparaîtra sur le lien pour aller sur la liste des articles. Par exemple *Liste des articles*.
-  * ${POST\_FILE} : Nom exact du fichier article. Par exemple pour un article dont le nom est *Mon premier article*, la variable POST\_FILE devrait être *mon_premier_article*. Ceci permet également un meilleur référencement.
-  * ${POST\_TITLE} : Titre de l'article. Par exemple : *Mon premier article*.
   * ${POST\_ESCAPED\_TITLE}: Titre de l'article sans espace ni caractères spéciaux. Par exemple : *mon_premier_article*.
+  * ${POST\_FILE} : Nom exact du fichier article. Par exemple pour un article dont le nom est *Mon premier article*, la variable POST\_FILE devrait être *mon_premier_article*. Ceci permet également un meilleur référencement.
+  * ${POST\_LIST\_TITLE} : Nom qui apparaîtra sur le lien pour aller sur la liste des articles. Par exemple *Liste des articles*.
+  * ${POST\_TITLE} : Titre de l'article. Par exemple : *Mon premier article*.
   * ${POWERED\_BY} : Nom affiché pour la mention *Propulsé par* sur toutes les pages.
   * ${READ\_MORE} : Nom affiché pour le lien *Lire la suite* sur chaque article (si activé dans le fichier de configuration)
   * ${RSS\_FEED\_NAME} : Nom pour votre flux RSS. Ceci sera montré aux utilisateurs qui souscrivent à votre RSS. Par exemple *Flux RSS de mon premier blog*.
@@ -317,17 +335,18 @@ Variables disponibles :
   * ${SIDEBAR\_CONTENT} : Le contenu du panneau latéral sera affiché ici.
   * ${TAGDIR\_NAME} : Nom du répertoire de mots-clés. Par exemple *motscles*. Ceci permet un meilleur référencement.
   * ${TAGDIR\_INDEX} : Nom du fichier index pour les mots-clés. Exemple : *index.html*.
-  * ${TAGLINK} : Lien absolu vers un mot-clé. Par exemple : *http://mon.domaine.tld/motscles/mon_mot_cle.html*.
   * ${TAGLIST\_CONTENT} : Contenu de la liste des mots-clés. Une liste de mots-clés.
-  * ${TAGNAME} : Nom d'un mot-clé donné. Par exemple *mon_mot_cle*.
+  * ${TAG\_LINK} : Lien absolu vers un mot-clé. Par exemple : *http://mon.domaine.tld/motscles/mon_mot_cle.html*.
   * ${TAG\_LIST\_TITLE} : Titre de la liste des mots-clés. Ceci est le nom affiché sur le lien qui redirige vers la liste des mots-clés. Par exemple *Liste de mots-clés*.
-  * ${TAG\_NAME} : Nom d'un mot-clé. Identique à la variable TAGNAME (FIXME: WTF?)
+  * ${TAG\_NAME} : Nom d'un mot-clé donné. Par exemple *mon_mot_cle*.
   * ${TAG\_PAGE} : Nom réel d'une page. Par exemple avec un mot-clé nommé *Mon mot clé*, cela sera *mon_mot_cle.html*.
   * ${TAG\_TITLE} : Titre du mot-clé. Par exemple *mon_mot_cle*.
   * ${TITLE} : Titre de la page courante. Par exemple *Accueil*, *Liste des mots-clés*, *Mon premier article*, etc.
   * ${THEME\_IS} : Phrase qui est utilisée pour expliquer le thème choisi. Par exemple *Le thème de cette page est : *.
 
 Ces variables sont données dans le fichier **Makefile** dans plusieurs sections. Donc vous avez probablement à mettre à jour le Makefile pour en ajouter plusieurs autres.
+
+ATTENTION : Une autre liste de variable se trouver dans la section **Les fichiers de langue**. Jetez un œil pour trouver des mots qui seront traduits dans vos templates.
 
 ## Les fichiers de langue
 

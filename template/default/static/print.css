@@ -18,5 +18,6 @@ header p#subtitle { text-align: center; font-size: 70%; margin: 0 0 25px 0; padd
 .articleinfo a[href]:after { content: ""; }
 aside#sidebar { display: none; }
 p#github_ribbon { display: none; }
+.jskomment { display: none; }
 footer { display: none; }
 }
