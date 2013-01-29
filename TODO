@@ -6,45 +6,62 @@ Next version (0.2):
 - ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
 - Do some LUA tests to improve file generation
 
-- Readapt print.css to have comments?
+Tests:
+- Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
+- Create some unit test on pmake doc, pmake clean, etc.
+- Create some more check with/without sidebar, with/without search bar, etc.
 
-- Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
-- Problem with accentued chars in create_post.sh for TITLE
-- Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
-- Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
-- Problem with TAG_NAME and TAGNAME. And also TAGLINK.
+Templates:
+- Clean UP templates code! Delete useless CSS, etc.
+  - Delete useless CSS in minisch.css
+  - Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
 - Minisch theme update:
   - add author (search in CSS to find it)
   - add subtitle (BLOG_SHORT_DESC)
-- Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
-- permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
-- Only permit to publish current post (if post have a date in the future, so don't take it)
-- Permit user to create a cron that publish posts each day?
-- Create a [b|p]make refreshall to clean all files, recompile them and publish blog
-- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
-- Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
 - Create a command that generate a full template in order it to be customized by a user
+- Add HTML keywords/meta on each post's page?
+- Add possibility to choose which meta/keywords add to each post?
+- Add HTML keywords/meta on main page regarding posts
+
+Meta functionnality:
+- permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
+
+Import:
 - Create a nanoblogger import script to migrate from Nanoblogger to Makefly
 - Other import script? From Wordpress to Makefly?
-- Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
-- Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
-- change all variable to be UNIQUE in TEMPLATES
-- Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
-- create a Makefile that permit user to setup and install makefly (this permit to return an error if a program is missing)
-  - permit to change language regarding LOCALE (makefly.rc.example configuration)
-  - permit to setup programs like sed, bash/zsh, etc. or return an error if no one exists
+
+Multimedia:
 - Permit user to integrate multimedia files as video, images, flash animation, etc.
 - For youtube iframe, do this:
     iframe {
       margin: 15px auto;
       display: block;
     }
-- Add HTML keywords/meta on each post's page?
-- Add possibility to choose which meta/keywords add to each post?
-- Add HTML keywords/meta on main page regarding posts
+
+Other functionnalities:
+- Delete the double point from JSKOMMENT after username/pseudo (it's useless)
+- Only permit to publish current post (if post have a date in the future, so don't take it)
+- Create a [b|p]make refreshall to clean all files, recompile them and publish blog
+- Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
+- Add author URL that permit to each author to add a URL/link (this is not mandatory for posts, but could be useful for a UI
+
+Bugs:
+- Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
+- Problem with accentued chars in create_post.sh for TITLE
+
+Others:
+- Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
+- Permit user to create a cron that publish posts each day?
+- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
+- Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
+- Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
+- Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
+- Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
+- create a Makefile that permit user to setup and install makefly (this permit to return an error if a program is missing)
+  - permit to change language regarding LOCALE (makefly.rc.example configuration)
+  - permit to setup programs like sed, bash/zsh, etc. or return an error if no one exists
 - Add in a post some anchor on each title in order to make a link with the URL. For an example in post "the_super_post" with a H3 title to 'my h3 title', permit to add an anchor named "my_h3_title", so user give "the_super_post#my_h3_title" and he go to the h3 title in the page.
 - Permit HTTPS on links
-- Add author URL that permit to each author to add a URL/link (this is not mandatory for posts, but could be useful for a UI
 
 IDEAS:
 ------
@@ -139,3 +156,7 @@ DONE:
 - Find a way to make more than 1 CSS for 1 theme and choose CSS by user without changing config.mk (or make all CSS as alternative and define one as DEFAULT)
 - Multiple CSS => so permit user to define WHICH CSS it wants for a theme.
 - Permit to choose a color for a theme
+- Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
+- Readapt print.css to NOT have comments
+- Problem with TAG_NAME and TAGNAME. And also TAGLINK.
+- change all variable to be UNIQUE in TEMPLATES
