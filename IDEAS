@@ -13,7 +13,7 @@ or do some files. On for article content, one for some data. It would be simple 
 - permit to add an introduction
 - add categories for all articles (or tags?)
 - permit to add plugins?
-- permit to add last identica ' status
+- permit to add last identica ' status with this: curl -s http://identi.ca/api/users/show/USER.xml |grep -E "<statusnet:html>(.+)</statusnet:html>"|sed "s/<[/]*statusnet:html>//g"
 - rss feeds
 - atom feeds
 - HTML verification?
