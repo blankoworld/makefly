@@ -8,3 +8,5 @@ KNOWN_ISSUES.html
 DEV.README.html
 DEV.README.fr.html
 tools/depends.png
+bin/lunamark
+bin/markdown.lua
