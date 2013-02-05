@@ -31,4 +31,4 @@ Here is some ideas that I have during project's development.
 - atom feeds
 - HTML verification?
 - use more LUA to parse and create public files
-
+- generate a xml.gz for web robots
