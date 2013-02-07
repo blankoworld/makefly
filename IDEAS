@@ -27,7 +27,6 @@ Here is some ideas that I have during project's development.
 - For geek or console user, we could do an interface to simplify files creation. With Lua, lambda users could create files quickly and without any knowledge.
 - permit to add an introduction
 - permit to add plugins?
-- permit to add last identica ' status with this: curl -s http://identi.ca/api/users/show/USER.xml |grep -E "<statusnet:html>(.+)</statusnet:html>"|sed "s/<[/]*statusnet:html>//g"
 - atom feeds
 - HTML verification?
 - use more LUA to parse and create public files

@@ -138,6 +138,9 @@ Here is some options you can change:
   * JSKOMMENT\_CAPTCHA\_THEME (optional): Define a theme regarding [reCaptcha page](https://developers.google.com/recaptcha/docs/customization "More info about reCaptcha themes") for Catpcha in JSKOMMENT comment system
   * JSKOMMENT\_URL (optional): Define a JSKOMMENT server on which send comments. By default **http://jskomment.appspot.com/**.
   * JSKOMMENT\_MAX (optional): Define a limit for displayed comments for JSKOMMENT comment system. By default **2**.
+  * ELI\_USER: If set, this activate a badge for identica. Note that your theme should support ELI widget. By default this functionality use IDENTICA's API.
+  * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on IDENTICA. By default "user".
+  * ELI\_MAX (optional): Permit to choose how many statuses to display. On identica, this couldn't bypass the default 20 items. Default value: 5.
 
 ## Publish result to the web
 
