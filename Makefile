@@ -144,6 +144,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"JSKOMMENT_CONTENT="                     \
 		"ELI_SCRIPT="                            \
 		"ELI_CONTENT="                           \
+		"ELI_TITLE=${ELI_TITLE}"                 \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
