@@ -161,3 +161,31 @@ color: #F1E5A5;
 color: #F1E5A5;
 text-decoration: underline;
 }
+
+/* Expression Libre Identica */
+
+#eli_widget {
+border-color: #dc9900;
+}
+
+#eli_widget header {
+background-color: #000000;
+color: #F1E5A5;
+border-bottom: thin solid #dc9900;
+}
+
+#eli_widget article {
+border-color: #dc9900;
+}
+
+#eli_widget article a {
+color: #F1E5A5;
+}
+
+#eli_widget article a:visited {
+color: #F1E5A5;
+}
+
+#eli_widget article a:hover {
+color: #F1E5A5;
+}
