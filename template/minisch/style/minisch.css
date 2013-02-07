@@ -1218,3 +1218,9 @@ body.page ul.children, body.error404 ul.children {
 0% { opacity: 0; }
 100% { opacity: 1; }
 }
+
+/* Expression Libre Identica */
+#eli_widget {
+width: auto;
+margin: 5px;
+}

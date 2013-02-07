@@ -4,6 +4,8 @@ TODO:
 Next version (0.2):
 - comment system with disqus (with a param to activate/desactivate in RC file)
 - ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
+  - complete doc for user with ELI_USER/TYPE/etc.
+  - add a H2 name with "ELI" on it
 - Do some LUA tests to improve file generation
 
 Tests:
