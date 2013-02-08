@@ -43,6 +43,7 @@ POSTDIR_NAME     = posts
 STATICDIR        = ./static
 SPECIALDIR       = ./special
 ABOUT_FILENAME   = about
+INTRO_FILENAME   = introduction
 THEME            = default
 BACKUPDIR        = ./mbackup
 SIDEBAR_FILENAME = sidebar
@@ -145,6 +146,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"ELI_SCRIPT="                            \
 		"ELI_CONTENT="                           \
 		"ELI_TITLE=${ELI_TITLE}"                 \
+		"INTRO_CONTENT="                         \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -166,6 +168,8 @@ THEMESTATICFILES := ${THEMEDIR}/static/*
 THEMEMEDIAFILES != echo ${THEMESTATICFILES}
 DOCFILES := ${DOCDIR}/*.md
 DOCFILESRESULT != echo ${DOCFILES}
+INTROFILE := ${SPECIALDIR}/${INTRO_FILENAME}*
+INTROFILERESULT != echo ${INTROFILE}
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR DOCDIR
@@ -281,6 +285,24 @@ sidebar_tpl = 'empty.file'
 sidebar: ${TMPDIR}
 	$Qcat ${sidebar_tpl} |${parser} ${parser_opts} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
 # end of SIDEBAR
+
+# INTRODUCTION
+.if defined(INTROFILERESULT) && $(INTROFILERESULT) != ${SPECIALDIR}/${INTRO_FILENAME}*
+INTRO_FILE = ${SPECIALDIR}/${INTRO_FILENAME}.md
+.else
+INTRO_FILE = 'empty.file'
+.endif
+
+${TMPDIR}/${INTRO_FILENAME}${PAGE_EXT}: ${TMPDIR}
+	$Q{ \
+		{ \
+			cat ${INTRO_FILE} |${markdown} ; \
+		} > ${TMPDIR}/${INTRO_FILENAME}${PAGE_EXT} || { \
+			echo "-- Error while building introduction."; \
+			false ; \
+		} ; \
+	} && echo "-- Introduction: done."
+# end of INTRODUCTION
 
 # ABOUT PAGE
 .if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
@@ -559,9 +581,10 @@ ${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE} ${DESTDIR}/${CSS_COLO
 
 # Do Homepage
 # EXAMPLE: pub/index.xhtml
-${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
+${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//} ${TMPDIR}/${INTRO_FILENAME}${PAGE_EXT}
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
+		cat ${TMPDIR}/${INTRO_FILENAME}${PAGE_EXT} >> ${TMPDIR}/index${PAGE_EXT} &&  \
 		cat ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index${PAGE_EXT} &&         \
 		find ${TMPDIR}/ -name '*.mk' -print0 |xargs -0 rm -f &&                      \
 		cat ${footer} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
