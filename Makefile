@@ -226,7 +226,7 @@ ${THEME_MEDIA_TARGET_${FILE}}: ${DESTDIR}
 .if ${ELI_TYPE} == group
 ELI_STATUS = Timeline activity...
 .else
-ELI_STATUS != curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<statusnet:html>(.+)</statusnet:html>"|sed "s/<[/]*statusnet:html>//g"
+ELI_STATUS != curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g"
 .endif
 ELI_SCRIPT != cat ${eli_html}
 ELI_CONTENT != cat ${eli_cont}| ${parser} ${parser_opts} "ELI_STATUS=${ELI_STATUS}"
