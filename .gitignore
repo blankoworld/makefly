@@ -7,3 +7,12 @@ KNOWN_ISSUES.html
 DEV.README.html
 DEV.README.fr.html
 tools/depends.png
+bin/lunamark
+bin/markdown.lua
+doc/DEV.README.*
+tools/depends.png
+tools/flush.sh
+tools/ltpg.sh
+tools/ng_depends.dot
+tools/populate_makefly.sh
+tools/view_depends.sh

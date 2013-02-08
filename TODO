@@ -3,7 +3,6 @@ TODO:
 
 Next version (0.2):
 - comment system with disqus (with a param to activate/desactivate in RC file)
-- ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
 - Do some LUA tests to improve file generation
 
 Tests:
@@ -12,9 +11,6 @@ Tests:
 - Create some more check with/without sidebar, with/without search bar, etc.
 
 Templates:
-- Clean UP templates code! Delete useless CSS, etc.
-  - Delete useless CSS in minisch.css
-  - Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
 - Minisch theme update:
   - add author (search in CSS to find it)
   - add subtitle (BLOG_SHORT_DESC)
@@ -39,11 +35,13 @@ Multimedia:
     }
 
 Other functionnalities:
-- Delete the double point from JSKOMMENT after username/pseudo (it's useless)
 - Only permit to publish current post (if post have a date in the future, so don't take it)
 - Create a [b|p]make refreshall to clean all files, recompile them and publish blog
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
 - Add author URL that permit to each author to add a URL/link (this is not mandatory for posts, but could be useful for a UI
+- Permit to include an introduction in the page with a variable (in special/intro.md for an example) (as sidebar)
+- Permit to include a footer in the page with a variable (in special/footer.md for an example) (as sidebar)
+- Add a license to perso branch for Creative commons license
 
 Bugs:
 - Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
@@ -72,7 +70,6 @@ IDEAS:
 - smileys
 - sitemap (xml/html)
 - fortunes
-- identica'status (via ELI, Expression Libre Identica on github)
 - template:
   - permit template like Nanoblogger or Utterson. For an example with m4 or with this:
     eval "cat << ___EOF___
@@ -80,6 +77,11 @@ IDEAS:
     ___EOF___"
     This permit to replace some variables. It's seems to be not valid without zsh.
   - templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
+
+ABANDON:
+--------
+
+- Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
 
 DONE:
 -----
@@ -160,3 +162,9 @@ DONE:
 - Readapt print.css to NOT have comments
 - Problem with TAG_NAME and TAGNAME. And also TAGLINK.
 - change all variable to be UNIQUE in TEMPLATES
+- Clean UP templates code! Delete useless CSS, etc.
+  - Delete useless CSS in minisch.css
+- Delete the double point from JSKOMMENT after username/pseudo (it's useless)
+- ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
+  - complete doc for user with ELI_USER/TYPE/etc.
+  - add a H2 name with "ELI" on it

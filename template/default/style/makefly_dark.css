@@ -212,6 +212,8 @@ color: #F1E5A5;
 #jskomment_flash {
 }
 
-
-
-
+/* Expression Libre Identica */
+#eli_widget header {
+background-color: #000;
+border-bottom: thin solid #fff;
+}
