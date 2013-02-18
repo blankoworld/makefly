@@ -69,3 +69,4 @@ For developers, it exists [a Makefly's developers documentation on github](https
   * [Makefly_v0.1.1-beta](/makefly_0.1.1-beta.zip)
   * [Makefly_v0.1.1-alpha](/makefly_0.1.1-alpha.zip)
   * [Makefly v0.1](/makefly_0.1.zip)
+

@@ -70,6 +70,15 @@ jskom_file  ?= ${TMPLDIR}/${jskom_name}
 jskom_html  ?= ${TMPLDIR}/jskomment_declaration.xhtml
 jskom_cont  ?= ${TMPLDIR}/jskomment.article.xhtml
 jskom_css   ?= ${TMPLDIR}/jskomment.css
+# eli functionnality (statusnet)
+ELI_API     = http://identi.ca/api/
+ELI_TYPE    = user
+ELI_MAX     = 5
+eli_html    ?= ${TMPLDIR}/eli_declaration.xhtml
+eli_name    ?= eli.js
+eli_file    ?= ${TMPLDIR}/${eli_name}
+eli_cont    ?= ${TMPLDIR}/eli_content.xhtml
+eli_css     ?= ${TMPLDIR}/eli.css
 # first main variables
 .include "makefly.rc"
 # then translation variables
@@ -133,6 +142,9 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"SEARCHBAR="                             \
 		"JSKOMMENT_SCRIPT="                      \
 		"JSKOMMENT_CONTENT="                     \
+		"ELI_SCRIPT="                            \
+		"ELI_CONTENT="                           \
+		"ELI_TITLE=${ELI_TITLE}"                 \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -208,6 +220,56 @@ ${THEME_MEDIA_TARGET_${FILE}}: ${DESTDIR}
 
 .endfor
 
+# Status
+.if defined(ELI_USER) && ${ELI_USER} && defined(ELI_API) && ${ELI_API} && defined(ELI_TYPE) && ${ELI_TYPE}:
+
+.if ${ELI_TYPE} == group
+ELI_STATUS = Timeline activity...
+.else
+ELI_STATUS != curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g"
+.endif
+ELI_SCRIPT != cat ${eli_html}
+ELI_CONTENT != cat ${eli_cont}| ${parser} ${parser_opts} "ELI_STATUS=${ELI_STATUS}"
+
+.if defined(ELI_CSS) && ${ELI_CSS}:
+eli_css = ${THEMEDIR}/${ELI_CSS}
+.else
+ELI_CSS = ${eli_css:S/${TMPLDIR}\///}
+.endif
+
+parser_opts += "ELI_CSS=${ELI_CSS}"
+
+${eli_css:S/^/${DESTDIR}/}: ${DESTDIR}
+	$Q{ \
+			cp ${eli_css} ${ELI_CSS:S/^/${DESTDIR}\//} || {  \
+			echo "-- Error while copying ${ELI_CSS}." ; \
+		} ; \
+	} && echo "-- CSS copied: ${ELI_CSS}."
+
+${eli_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${eli_file} ${eli_css:S/^/${DESTDIR}/}
+	$Q{ \
+		{ \
+			cat ${eli_file} |${parser} ${parser_opts}            \
+			"ELI_MAX=${ELI_MAX}"                                 \
+			"ELI_TYPE=${ELI_TYPE}"                               \
+			"ELI_USER=${ELI_USER}" ;                             \
+		} > ${eli_file:S/${TMPLDIR}/${DESTDIR}/} || {          \
+			echo "-- Error while copying ${eli_name} script." ;  \
+		} ; \
+	} && echo "-- Script added: ${eli_name}."
+
+.else
+ELI_CONTENT = 
+ELI_SCRIPT = 
+
+${eli_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${eli_file}
+	$Qecho "-- ELI: desactivated."
+
+.endif
+
+parser_opts += "ELI_SCRIPT=${ELI_SCRIPT}"
+parser_opts += "ELI_CONTENT=${ELI_CONTENT}"
+
 # SIDEBAR
 .if defined(SIDEBAR) && $(SIDEBAR) && defined(SIDEBARRESULT) && $(SIDEBARRESULT) != ${SPECIALDIR}/${SIDEBARFILE}*
 SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |sed -e 's|\"|\\"|g'
@@ -217,7 +279,7 @@ sidebar_tpl = 'empty.file'
 .endif
 
 sidebar: ${TMPDIR}
-	$Qcat ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
+	$Qcat ${sidebar_tpl} |${parser} ${parser_opts} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
 # end of SIDEBAR
 
 # ABOUT PAGE
@@ -296,7 +358,7 @@ ${jskom_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${jskom_file}
 parser_opts += "JSKOMMENT_SCRIPT=${JSKOMMENT_SCRIPT}"
 
 # BEGIN
-all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//} ${jskom_file:S/${TMPLDIR}/${DESTDIR}/}
+all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//} ${jskom_file:S/${TMPLDIR}/${DESTDIR}/} ${eli_file:S/${TMPLDIR}/${DESTDIR}/}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
