@@ -15,3 +15,5 @@ SIDEBAR = 0
 SEARCH_BAR = 1
 MAX_RSS = 8
 markdown = ${BINDIR}/lunamark
+JSKOMMENT = 1
+JSKOMMENT_URL = http://jskomment.e-mergence.org
