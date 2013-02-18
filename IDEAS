@@ -29,5 +29,5 @@ Here is some ideas that I have during project's development.
 - permit to add plugins?
 - atom feeds
 - HTML verification?
-- use more LUA to parse and create public files
+- use more LUA to parse and create public files. Use ROPE: http://lua-users.org/wiki/LuaRopes and http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/lrope.tar.gz
 - generate a xml.gz for web robots
