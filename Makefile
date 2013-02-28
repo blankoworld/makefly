@@ -44,6 +44,7 @@ STATICDIR        = ./static
 SPECIALDIR       = ./special
 ABOUT_FILENAME   = about
 INTRO_FILENAME   = introduction
+FOOTER_FILENAME  = footer
 THEME            = default
 BACKUPDIR        = ./mbackup
 SIDEBAR_FILENAME = sidebar
@@ -147,6 +148,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"ELI_CONTENT="                           \
 		"ELI_TITLE=${ELI_TITLE}"                 \
 		"INTRO_CONTENT="                         \
+		"FOOTER_CONTENT="                        \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -170,6 +172,8 @@ DOCFILES := ${DOCDIR}/*.md
 DOCFILESRESULT != echo ${DOCFILES}
 INTROFILE := ${SPECIALDIR}/${INTRO_FILENAME}*
 INTROFILERESULT != echo ${INTROFILE}
+FOOTERFILE := ${SPECIALDIR}/${FOOTER_FILENAME}*
+FOOTERFILERESULT != echo ${FOOTERFILE}
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR DOCDIR
@@ -303,6 +307,15 @@ ${TMPDIR}/${INTRO_FILENAME}${PAGE_EXT}: ${TMPDIR}
 		} ; \
 	} && echo "-- Introduction: done."
 # end of INTRODUCTION
+
+# FOOTER
+.if defined(FOOTERFILERESULT) && $(FOOTERFILERESULT) != ${SPECIALDIR}/${FOOTER_FILENAME}*
+FOOTER_CONTENT != ${markdown} ${SPECIALDIR}/${FOOTER_FILENAME}* |sed -e 's|\"|\\"|g' |${parser} ${parser_opts}
+.else
+FOOTER_CONTENT = 
+.endif
+parser_opts += "FOOTER_CONTENT=${FOOTER_CONTENT}"
+# end of FOOTER
 
 # ABOUT PAGE
 .if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
