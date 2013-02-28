@@ -144,12 +144,13 @@ Voici quelques options que vous pouvez changer :
   * SEARCH\_BAR : Mis &agrave; 1 permet d'activer une barre de recherche sur Makefly. &Agrave; noter que votre th&egrave;me doit supporter la barre de recherche.
   * MAX\_RSS : Nombre d'articles RSS maximum qui sera récupéré par vos utilisateurs.
   * JSKOMMENT : Mis &agrave; 1 permet d'activer un syst&eacute;me de commentaires pour Makefly. &Agrave; noter que votre th&egrave;me doit supporter le syst&eacute;me de commentaires. Attention, par d&eacute;faut cela utiliser jskomment.appspot.com en tant que serveur, il ne garantit pas un archivage &agrave; long terme des commentaires. Plus d'informations sont disponibles [sur la page d'installation du projet jskomment](http://code.google.com/p/jskomment/wiki/Installation "Se rendre sur la page du projet pour en savoir plus").
-  * JSKOMMENT\_CAPTCHA\_THEME (optionnel): Définissez un thème suivant la [page reCaptcha](https://developers.google.com/recaptcha/docs/customization "Plus d'infos sur les thèmes reCaptcha") pour les Catpcha dans le système de commentaires JSKOMMENT.
-  * JSKOMMENT\_URL (optionnel): Définit un serveur JSKOMMENT sur lequel envoyer les commentaires. Par défaut **http://jskomment.appspot.com/**.
-  * JSKOMMENT\_MAX (optionnel): Définit une limite de commentaires à afficher pour le système de commentaire JSKOMMENT. Par défaut **2**.
+  * JSKOMMENT\_CAPTCHA\_THEME (optionnel) : Définissez un thème suivant la [page reCaptcha](https://developers.google.com/recaptcha/docs/customization "Plus d'infos sur les thèmes reCaptcha") pour les Catpcha dans le système de commentaires JSKOMMENT.
+  * JSKOMMENT\_URL (optionnel) : Définit un serveur JSKOMMENT sur lequel envoyer les commentaires. Par défaut **http://jskomment.appspot.com/**.
+  * JSKOMMENT\_MAX (optionnel) : Définit une limite de commentaires à afficher pour le système de commentaire JSKOMMENT. Par défaut **2**.
   * ELI\_USER: Si utilisé, ceci active un cadre pour identica. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utiliser l'API d'IDENTICA.
-  * ELI\_TYPE (optionel): Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur d'IDENTICA. Par d&eacute;faut "user".
-  * ELI\_MAX (optionel): Permer de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
+  * ELI\_TYPE (optionel) : Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur d'IDENTICA. Par d&eacute;faut "user".
+  * ELI\_MAX (optionel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
+  * INSTALLDIR : Permet de choisir le dossier de destination lors de l'utilisation du script **install.sh** (Cf. Chapitre Publier le résultat sur le web).
 
 ## Publier le r&eacute;sultat sur le web
 
