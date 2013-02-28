@@ -96,6 +96,14 @@ Il est &agrave; noter que Makefly utilise [le format markdown](http://daringfire
 
 Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans le dossier *static*. Ils seront copier dans le dossier de destination.
 
+### Le dossier 'special'
+
+Ce dossier nommé **special** peut contenir certains fichiers que vous devrez créer pour activer une fonctionnalité : 
+
+  * //about.md// : Contient le contenu d'une page d'à propos au sujet de votre site. Cela va ajouter une entrée dans le menu principal du site (si votre thème le supporte).
+  * //sidebar.md// : Ajoute une barre latérale sur votre site. Le thème doit supporter cette fonction.
+  * //introduction.md// : Affiche le contenu de ce fichier comme introduction de votre page d'accueil. Varie selon le thème choisi.
+
 ## Utilisez le !
 
 Apr&egrave;s avoir cr&eacute;e le fichier *makefly.rc* (depuis le fichier makefly.rc.example) et avoir cr&eacute;e quelques articles, faites simplement : 

@@ -25,7 +25,6 @@ Here is some ideas that I have during project's development.
 ## Others
 
 - For geek or console user, we could do an interface to simplify files creation. With Lua, lambda users could create files quickly and without any knowledge.
-- permit to add an introduction
 - permit to add plugins?
 - atom feeds
 - HTML verification?
