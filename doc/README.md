@@ -100,9 +100,10 @@ If you want to add some static files, just add them to the *static* directory. T
 
 This one is named **special** because it can contain some file you have to create in order to activate a functionality:
 
-  * //about.md// : Is the content of an about's page about your website. It will add an item in the website main menu (If your theme support it.)
-  * //sidebar.md// : Add a sidebar on your website. The theme have to support this function.
-  * //introduction.md// : Display this file's content as an introduction to your website homepage. This could change regarding the choosen theme.
+  * *about.md* : Is the content of an about's page about your website. It will add an item in the website main menu (If your theme support it.)
+  * *sidebar.md* : Add a sidebar on your website. The theme have to support this function.
+  * *introduction.md* : Display this file's content as an introduction to your website homepage. This could change regarding the choosen theme.
+  * *footer.md* : Display this file's content as a footer on all your website's pages. This could change regarding the choosen theme.
 
 ## Use it!
 
