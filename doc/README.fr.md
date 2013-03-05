@@ -149,8 +149,10 @@ Voici quelques options que vous pouvez changer :
   * JSKOMMENT\_MAX (optionnel) : Définit une limite de commentaires à afficher pour le système de commentaire JSKOMMENT. Par défaut **2**.
   * ELI\_USER: Si utilisé, ceci active un cadre pour identica. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utiliser l'API d'IDENTICA.
   * ELI\_TYPE (optionel) : Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur d'IDENTICA. Par d&eacute;faut "user".
-  * ELI\_MAX (optionel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
+  * ELI\_MAX (optionnel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
   * INSTALLDIR : Permet de choisir le dossier de destination lors de l'utilisation du script **install.sh** (Cf. Chapitre Publier le résultat sur le web).
+  * COMPRESS_TOOL (optionnel) : Outil console utilisé pour la compression lors des sauvegardes via la commande *backup* (Cf. Chapitre *Sauvegardes*). Exemple : **gzip**.
+  * COMPRESS_EXT (optionnel) : Extension des fichiers de sauvegarde. Attention à ne pas oublier le caractère point. Exemple : **.gz**.
 
 ## Publier le r&eacute;sultat sur le web
 
