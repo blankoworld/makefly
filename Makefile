@@ -157,9 +157,9 @@ POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 
 # some files'list
 FILES != cd ${SRCDIR}; ls
-DBFILES != cd ${DBDIR}; ls|${sort} -r
-MAINDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_POST}
-RSSDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_RSS} 
+DBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r
+MAINDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_POST}
+RSSDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_RSS} 
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != echo ${STATICFILES}
 ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*

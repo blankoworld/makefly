@@ -35,8 +35,6 @@ Multimedia:
     }
 
 Other functionnalities:
-- Only permit to publish current post (if post have a date in the future, so don't take it). With this:
-  for i in `ls db| cut -d ',' -f 1`; do if test "$(( 5 < `date +'%s'` ))" -eq "1"; then echo $i; fi; done
 - Create a [b|p]make refreshall to clean all files, recompile them and publish blog
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c some_files | gzip > file.tar.gz
 - Add author URL that permit to each author to add a URL/link (this is not mandatory for posts, but could be useful for a UI
@@ -169,3 +167,5 @@ DONE:
   - add a H2 name with "ELI" on it
 - Permit to include an introduction in the page with a variable (in special/intro.md for an example) (as sidebar)
 - Permit to include a footer in the page with a variable (in special/footer.md for an example) (as sidebar)
+- Only permit to publish current post (if post have a date in the future, so don't take it). With this:
+  for i in `ls db| cut -d ',' -f 1`; do if test "$(( 5 < `date +'%s'` ))" -eq "1"; then echo $i; fi; done

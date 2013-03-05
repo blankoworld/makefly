@@ -240,3 +240,11 @@ Ce fichier est la documentation. Vous pouvez [le lire sur github](https://github
     pmake doc
 
 Note: La commande pmake command est pour Debian et d&eacute;riv&eacute;s. Pour les autres distributions, utilisez **bmake** au lieu de pmake.
+
+## Astuces
+
+### Écrire des billets en avance
+
+Dans Makefly vous pouvez écrire des billets en avance. Il suffit pour cela que le fichier de méta-données de votre billet possède un timestamp supérieur à celui du moment où est généré le blog.
+
+Par exemple nous sommes le 6 mars 2013, à 12:30, le timestamp est : 1362569400. Il faut que dans le dossier **db**, votre article ait un timestamp inférieur à celui d'aujourd'hui.

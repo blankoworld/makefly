@@ -9,6 +9,8 @@ Current (0.2-dev)
 	- Introduction: permit a user to add an introduction to its website
 	- Kind of conclusion/credits/licence: permit a user to add a footer to its
 	website with all text it wants. Example: add credits to its website
+	- Only publish posts with a timestamp inferior to current's one (permit to
+	create posts ahead of current datetime)
 
 Version 0.1.1 (release 2013-01-17)
 	- Permit user to choose page ' suffix
