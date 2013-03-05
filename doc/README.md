@@ -222,10 +222,17 @@ Files saved:
   * special directory
   * db directory
   * src directory
+  * the directory that contains the choosen theme (for an example *templates/default/*)
 
 Result: This will create a *tarball* named *YYYYMMDD\_makefly.tar.gz* in **mbackup** directory (for an example 20120823\_makefly.tar.gz). You can so backup your Makefly each day for an example.
 
-Tip: You can customize backup directory by using **BACKUPDIR** option in your **makfley.rc** file.
+### Tips
+
+You can customize (in your **makefly.rc** file):
+
+  * the backup directory by using **BACKUPDIR** option
+  * the compression tool by using **COMPRESS_TOOL** option. For an example with **gzip**.
+  * the backup file extension by using **COMPRESS_EXT**. For an example with **.gz** (don't forget the point char).
 
 ## Sources
 

@@ -713,12 +713,12 @@ doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
 TODAY != date '+%Y%m%d'
 backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
-		${tar} cf - makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
+		${tar} cf - makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} ${THEMEDIR} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
 		{ \
 			echo "-- Backup failed!" ; \
 			false ; \
 		} ; \
-	} && echo "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR} and ${SPECIALDIR}."
+	} && echo "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR}, ${SPECIALDIR} and ${THEMEDIR}."
 
 # Publish: send files out
 publish_script = ${TOOLSDIR}/${PUBLISH_SCRIPT_NAME}

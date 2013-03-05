@@ -222,10 +222,17 @@ Fichiers sauv&eacute;s :
   * le r&eacute;pertoire special
   * le r&eacute;pertoire db
   * le r&eacute;pertoire src
+  * le r&eacute;pertoire contenant le th&egrave;me choisi (par exemple *templates/default/*)
 
 R&eacute;sultat : Ceci cr&eacute;era une *archive* nomm&eacute;e *YYYYMMDD\_makefly.tar.gz* (20120823\_makefly.tar.gz par exemple) dans le dossier **mbackup**. Vous pouvez ainsi sauvegarder votre Makefly chaque jour.
 
-Astuce : Vous pouvez personnaliser le dossier de sauvegarde en utilisant l'option **BACKUPDIR** dans votre fichier **makfley.rc**.
+### Astuces
+
+Vous pouvez personnaliser (dans votre fichier **makefly.rc**) :
+
+  * le dossier de sauvegarde en utilisant l'option **BACKUPDIR**
+  * l'outil de compression en utilisant l'option **COMPRESS_TOOL**, par exemple avec **gzip**
+  * l'extension du fichier de sauvegarde en utilisant l'option **COMPRESS_EXT**, par exemple avec **.gz** (ne pas oublier le point)
 
 ## Sources
 

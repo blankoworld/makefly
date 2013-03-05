@@ -13,6 +13,7 @@ Current (0.2-dev)
 	create posts ahead of current datetime)
 	- Permit user to choose a compression tool and a compression extension for
 	backups
+	- Also backup theme choosen by the user in the makefly.rc file
 
 Version 0.1.1 (release 2013-01-17)
 	- Permit user to choose page ' suffix
