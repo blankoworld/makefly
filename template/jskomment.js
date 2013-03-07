@@ -377,7 +377,7 @@ JSKOMMENT.url = '${JSKOMMENT_URL}';
 JSKOMMENT.protocol = 'GUESS';
 
 /** The public key of recaptcha */
-JSKOMMENT.recaptchaPublicKey = "6LerC70SAAAAAEwc4QsuoWncVQvKsB2RndBI7CY4";
+JSKOMMENT.recaptchaPublicKey = "6Lfu-d0SAAAAAAwv15vNxDalA-4zqmNqFC3ib_bP";
 
 /** The max number of comments before folding them */
 JSKOMMENT.maxComments = ${JSKOMMENT_MAX};
