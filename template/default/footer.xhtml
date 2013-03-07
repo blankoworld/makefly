@@ -5,9 +5,19 @@
     <footer>
       <p>${POWERED_BY} <a href="http://makefly.e-mergence.org/" title="Makefly">Makefly</a> (<a href="http://gitorious.org/makefly/" title="${SOURCE_LINK_TITLE}">${SOURCE_LINK_NAME} gitorious</a>)<br />
       ${THEME_IS} Makefly Base</p>
-      <p>${LOGO_AVAILABLE} <a href="${BASE_URL}/makefly.svg">Logo sources</a></p>
+      <div id="special_footer">
+          ${FOOTER_CONTENT}
+      </div>
       <p><img id="logo" src="${BASE_URL}/logo.gif" alt="Logo" title="Logo"/></p>
     </footer>
+  
+    <!-- Script JQuery -->
+    <script src="${BASE_URL}/jquery.js" type="text/javascript"></script>
+
+    ${JSKOMMENT_SCRIPT}
+
+    ${ELI_SCRIPT}
+
   </body>
 </html>
 

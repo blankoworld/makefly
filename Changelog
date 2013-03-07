@@ -1,4 +1,21 @@
-Current (0.1.1-beta)
+Current (0.2-dev)
+	- Add jskomment as optional comment system
+	- Permit to customize jskomment comment system content
+	- Permit to choose for each theme an optional CSS color file. This permit to
+	  have a CSS to place all elements, then another one to adapt colors.
+	- Check variable to be unique in templates
+	- Update documentation
+	- Statuses from identica
+	- Introduction: permit a user to add an introduction to its website
+	- Kind of conclusion/credits/licence: permit a user to add a footer to its
+	website with all text it wants. Example: add credits to its website
+	- Only publish posts with a timestamp inferior to current's one (permit to
+	create posts ahead of current datetime)
+	- Permit user to choose a compression tool and a compression extension for
+	backups
+	- Also backup theme choosen by the user in the makefly.rc file
+
+Version 0.1.1 (release 2013-01-17)
 	- Permit user to choose page ' suffix
 	- Permit user to choose index filenames
 	- Complete README file
@@ -38,6 +55,22 @@ Current (0.1.1-beta)
 	- Add CSS that permit to define a printing version of the weblog (for
 	  default theme and minisch theme)
 	- Add link to post title on homepage for default theme
+	- Fix bug: missing jquery.js on single post page
+	- Developer documentation in english and french
+	- Add some tools for developer like flushing DB and SRC directories
+	- Add new CSS for default theme in black and white (but you have to redefine
+	  config.mk file in default theme)
+	- Fix bug that appears with sidebar
+	- Add a favicon for default theme and minisch theme
+	- Add Makefly's logo thanks to ECK Ine
+	- Sidebar appears now on about's page
+	- Improvements on Makefile when deleting enormously directories like tmp or
+	  pub directories. This permit now to create a blog with more than 2000
+	  posts.
+	- Create a tool that permits to create a lot of post (for testing)
+	- Add lua markdown binaries to improve Makefly's generation
+	- Add URL on post's title for default theme
+	- Add logo to Minisch theme
 
 Version 0.1 (released 2012-07-17)
 	- RSS feed

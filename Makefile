@@ -43,6 +43,8 @@ POSTDIR_NAME     = posts
 STATICDIR        = ./static
 SPECIALDIR       = ./special
 ABOUT_FILENAME   = about
+INTRO_FILENAME   = introduction
+FOOTER_FILENAME  = footer
 THEME            = default
 BACKUPDIR        = ./mbackup
 SIDEBAR_FILENAME = sidebar
@@ -59,9 +61,28 @@ sort     ?= sort
 date     ?= date
 tar      ?= tar
 PUBLISH_SCRIPT_NAME = publish.sh
+COMPRESS_TOOL ?= gzip
+COMPRESS_EXT = .gz
 
 # include some VARIABLES
 BODY_CLASS = single
+JSKOMMENT_MAX = 2
+JSKOMMENT_URL = http://jskomment.appspot.com
+# jskomment files
+jskom_name  ?= jskomment.js
+jskom_file  ?= ${TMPLDIR}/${jskom_name}
+jskom_html  ?= ${TMPLDIR}/jskomment_declaration.xhtml
+jskom_cont  ?= ${TMPLDIR}/jskomment.article.xhtml
+jskom_css   ?= ${TMPLDIR}/jskomment.css
+# eli functionnality (statusnet)
+ELI_API     = http://identi.ca/api/
+ELI_TYPE    = user
+ELI_MAX     = 5
+eli_html    ?= ${TMPLDIR}/eli_declaration.xhtml
+eli_name    ?= eli.js
+eli_file    ?= ${TMPLDIR}/${eli_name}
+eli_cont    ?= ${TMPLDIR}/eli_content.xhtml
+eli_css     ?= ${TMPLDIR}/eli.css
 # first main variables
 .include "makefly.rc"
 # then translation variables
@@ -116,12 +137,20 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"SOURCE_LINK_TITLE=${SOURCE_LINK_TITLE}" \
 		"CSS_NAME=${CSS_NAME}"                   \
 		"CSS_FILE=${CSS_FILE}"                   \
+		"CSS_COLOR_FILE=${CSS_COLOR_FILE}"       \
 		"THEME_IS=${THEME_IS}"                   \
 		"BODY_CLASS=${BODY_CLASS}"               \
 		"LINKS_TITLE=${LINKS_TITLE}"             \
 		"SIDEBAR="                               \
 		"ARTICLE_CLASS_TYPE=normal"              \
 		"SEARCHBAR="                             \
+		"JSKOMMENT_SCRIPT="                      \
+		"JSKOMMENT_CONTENT="                     \
+		"ELI_SCRIPT="                            \
+		"ELI_CONTENT="                           \
+		"ELI_TITLE=${ELI_TITLE}"                 \
+		"INTRO_CONTENT="                         \
+		"FOOTER_CONTENT="                        \
 		"ABOUT_LINK=" # set to nothing because of next process
 
 # Prepare some directory name
@@ -130,9 +159,9 @@ POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 
 # some files'list
 FILES != cd ${SRCDIR}; ls
-DBFILES != cd ${DBDIR}; ls|${sort} -r
-MAINDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_POST}
-RSSDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_RSS} 
+DBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r
+MAINDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_POST}
+RSSDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_RSS} 
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != echo ${STATICFILES}
 ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
@@ -143,6 +172,10 @@ THEMESTATICFILES := ${THEMEDIR}/static/*
 THEMEMEDIAFILES != echo ${THEMESTATICFILES}
 DOCFILES := ${DOCDIR}/*.md
 DOCFILESRESULT != echo ${DOCFILES}
+INTROFILE := ${SPECIALDIR}/${INTRO_FILENAME}*
+INTROFILERESULT != echo ${INTROFILE}
+FOOTERFILE := ${SPECIALDIR}/${FOOTER_FILENAME}*
+FOOTERFILERESULT != echo ${FOOTERFILE}
 
 # DIRECTORIES
 .for DIR in DESTDIR TMPDIR TAGDIR POSTDIR STATICDIR SPECIALDIR BACKUPDIR DOCDIR
@@ -197,6 +230,56 @@ ${THEME_MEDIA_TARGET_${FILE}}: ${DESTDIR}
 
 .endfor
 
+# Status
+.if defined(ELI_USER) && ${ELI_USER} && defined(ELI_API) && ${ELI_API} && defined(ELI_TYPE) && ${ELI_TYPE}:
+
+.if ${ELI_TYPE} == group
+ELI_STATUS = Timeline activity...
+.else
+ELI_STATUS != curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g"
+.endif
+ELI_SCRIPT != cat ${eli_html}
+ELI_CONTENT != cat ${eli_cont}| ${parser} ${parser_opts} "ELI_STATUS=${ELI_STATUS}"
+
+.if defined(ELI_CSS) && ${ELI_CSS}:
+eli_css = ${THEMEDIR}/${ELI_CSS}
+.else
+ELI_CSS = ${eli_css:S/${TMPLDIR}\///}
+.endif
+
+parser_opts += "ELI_CSS=${ELI_CSS}"
+
+${eli_css:S/^/${DESTDIR}/}: ${DESTDIR}
+	$Q{ \
+			cp ${eli_css} ${ELI_CSS:S/^/${DESTDIR}\//} || {  \
+			echo "-- Error while copying ${ELI_CSS}." ; \
+		} ; \
+	} && echo "-- CSS copied: ${ELI_CSS}."
+
+${eli_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${eli_file} ${eli_css:S/^/${DESTDIR}/}
+	$Q{ \
+		{ \
+			cat ${eli_file} |${parser} ${parser_opts}            \
+			"ELI_MAX=${ELI_MAX}"                                 \
+			"ELI_TYPE=${ELI_TYPE}"                               \
+			"ELI_USER=${ELI_USER}" ;                             \
+		} > ${eli_file:S/${TMPLDIR}/${DESTDIR}/} || {          \
+			echo "-- Error while copying ${eli_name} script." ;  \
+		} ; \
+	} && echo "-- Script added: ${eli_name}."
+
+.else
+ELI_CONTENT = 
+ELI_SCRIPT = 
+
+${eli_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${eli_file}
+	$Qecho "-- ELI: desactivated."
+
+.endif
+
+parser_opts += "ELI_SCRIPT=${ELI_SCRIPT}"
+parser_opts += "ELI_CONTENT=${ELI_CONTENT}"
+
 # SIDEBAR
 .if defined(SIDEBAR) && $(SIDEBAR) && defined(SIDEBARRESULT) && $(SIDEBARRESULT) != ${SPECIALDIR}/${SIDEBARFILE}*
 SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |sed -e 's|\"|\\"|g'
@@ -206,8 +289,35 @@ sidebar_tpl = 'empty.file'
 .endif
 
 sidebar: ${TMPDIR}
-	$Qcat ${sidebar_tpl} |${parser} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
+	$Qcat ${sidebar_tpl} |${parser} ${parser_opts} "SIDEBAR_CONTENT=${SIDEBAR_CONTENT}" > ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}
 # end of SIDEBAR
+
+# INTRODUCTION
+.if defined(INTROFILERESULT) && $(INTROFILERESULT) != ${SPECIALDIR}/${INTRO_FILENAME}*
+INTRO_FILE = ${SPECIALDIR}/${INTRO_FILENAME}.md
+.else
+INTRO_FILE = 'empty.file'
+.endif
+
+${TMPDIR}/${INTRO_FILENAME}${PAGE_EXT}: ${TMPDIR}
+	$Q{ \
+		{ \
+			cat ${INTRO_FILE} |${markdown} ; \
+		} > ${TMPDIR}/${INTRO_FILENAME}${PAGE_EXT} || { \
+			echo "-- Error while building introduction."; \
+			false ; \
+		} ; \
+	} && echo "-- Introduction: done."
+# end of INTRODUCTION
+
+# FOOTER
+.if defined(FOOTERFILERESULT) && $(FOOTERFILERESULT) != ${SPECIALDIR}/${FOOTER_FILENAME}*
+FOOTER_CONTENT != ${markdown} ${SPECIALDIR}/${FOOTER_FILENAME}* |sed -e 's|\"|\\"|g' |${parser} ${parser_opts}
+.else
+FOOTER_CONTENT = 
+.endif
+parser_opts += "FOOTER_CONTENT=${FOOTER_CONTENT}"
+# end of FOOTER
 
 # ABOUT PAGE
 .if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
@@ -235,8 +345,57 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
 
 .endif
 
+# JSKOMMENT SYSTEM
+.if defined(JSKOMMENT) && ${JSKOMMENT}
+JSKOMMENT_SCRIPT != cat ${jskom_html}|${parser} ${parser_opts}
+
+.if defined(JSKOMMENT_CSS) && ${JSKOMMENT_CSS}:
+jskom_css = ${THEMEDIR}/${JSKOMMENT_CSS}
+.else
+JSKOMMENT_CSS = ${jskom_css:S/${TMPLDIR}\///}
+.endif
+
+parser_opts += "JSKOMMENT_CSS=${JSKOMMENT_CSS}"
+
+${jskom_css:S/^/${DESTDIR}/}: ${DESTDIR}
+	$Q{ \
+			cp ${jskom_css} ${JSKOMMENT_CSS:S/^/${DESTDIR}\//} || {  \
+			echo "-- Error while copying ${JSKOMMENT_CSS}." ; \
+		} ; \
+	} && echo "-- CSS copied: ${JSKOMMENT_CSS}."
+
+${jskom_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${jskom_file} ${jskom_css:S/^/${DESTDIR}/}
+	$Q{ \
+		{ \
+			cat ${jskom_file} |${parser} ${parser_opts}            \
+			"JSKOMMENT_PSEUDO=${JSKOMMENT_PSEUDO}"                 \
+			"JSKOMMENT_ADD_COMMENT=${JSKOMMENT_ADD_COMMENT}"       \
+			"JSKOMMENT_COMMENTS=${JSKOMMENT_COMMENTS}"             \
+			"JSKOMMENT_POWERED=${JSKOMMENT_POWERED}"               \
+			"JSKOMMENT_SUBMIT=${JSKOMMENT_SUBMIT}"                 \
+			"JSKOMMENT_YOUR=${JSKOMMENT_YOUR}"                     \
+			"JSKOMMENT_LABEL=${JSKOMMENT_LABEL}"                   \
+			"JSKOMMENT_CAPTCHA_ERROR=${JSKOMMENT_CAPTCHA_ERROR}"   \
+			"JSKOMMENT_CAPTCHA_THEME=${JSKOMMENT_CAPTCHA_THEME}"   \
+			"JSKOMMENT_URL=${JSKOMMENT_URL}"                       \
+			"JSKOMMENT_MAX=${JSKOMMENT_MAX}" ;                     \
+		} > ${jskom_file:S/${TMPLDIR}/${DESTDIR}/} || {          \
+			echo "-- Error while copying ${jskom_name} script." ;  \
+		} ; \
+	} && echo "-- Script added: ${jskom_name}."
+
+.else
+JSKOMMENT_SCRIPT = 
+
+${jskom_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${jskom_file}
+	$Qecho "-- Comments: desactivated."
+
+.endif
+
+parser_opts += "JSKOMMENT_SCRIPT=${JSKOMMENT_SCRIPT}"
+
 # BEGIN
-all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//}
+all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//} ${jskom_file:S/${TMPLDIR}/${DESTDIR}/} ${eli_file:S/${TMPLDIR}/${DESTDIR}/}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -269,6 +428,10 @@ DESC_${FILE}       != echo "${DESCRIPTION:S/'/\'/}" |sed -e 's|</a> <a|</a>, <a|
 TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
 CLASS_TYPE_${FILE} != echo ${TYPE}
 AUTHOR_${FILE}     != echo ${AUTHOR}
+JSKOMMENT_CONTENT_${FILE} = 
+.if defined(JSKOMMENT) && ${JSKOMMENT}
+JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "POST_ESCAPED_TITLE=${ESCAPED_TITLE_${FILE}}"
+.endif
 
 .for TAG in ${TAGS_${FILE}}
 TAGLINK_${FILE}_${TAG} != cat "${taglink}" |${parser} \
@@ -290,6 +453,7 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE} sidebar
 				"POST_ESCAPED_TITLE=${ESCAPED_TITLE_${FILE}}" \
 				"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
 				"POST_AUTHOR=${AUTHOR_${FILE}}"              \
+				"JSKOMMENT_CONTENT=${JSKOMMENT_CONTENT_${FILE}}" \
 				"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" \
 				| sed -e "s|^|        |g" &&                 \
 			cat ${footer} | ${parser} ${parser_opts}       \
@@ -329,6 +493,10 @@ CONTENT_${FILE}  != head -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_
 TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
 CLASS_TYPE_${FILE} != echo ${TYPE}
 AUTHOR_${FILE}     != echo ${AUTHOR}
+JSKOMMENT_CONTENT_${FILE} = 
+.if defined(JSKOMMENT) && ${JSKOMMENT}
+JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "POST_ESCAPED_TITLE=${ESCAPED_NAME_${FILE}}"
+.endif
 
 .for TAG in ${TAGS_${FILE}}
 TAGLINK_${FILE}_${TAG} != cat "${taglink}" |${parser} \
@@ -364,6 +532,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"POST_TITLE=${TITLE_${FILE}}"                 \
 		"POST_AUTHOR=${AUTHOR_${FILE}}"               \
 		"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"    \
+		"JSKOMMENT_CONTENT=${JSKOMMENT_CONTENT_${FILE}}" \
 		> ${TMPDIR}/${FILE}
 	@# Add article's title to page's header
 	$Qcat ${POSTDIR}/${NAME_${FILE}} | ${parser} ${parser_opts} \
@@ -386,8 +555,8 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	@# Prepare TAGS
 	$Qfor TAG in ${TAGS_${FILE}}; do                             \
 		cat ${tagelement} | ${parser}                              \
-			"TAGLINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}${PAGE_EXT}"  \
-			"TAGNAME=$${TAG}"                                        \
+			"TAG_LINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}${PAGE_EXT}"  \
+			"TAG_NAME=$${TAG}"                                        \
 		>> ${TMPDIR}/tags.list;                                    \
 	done
 	$Qfor TAG in ${TAGS_${FILE}}; do               \
@@ -405,16 +574,32 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 .endfor
 
 # Do CSS file
-${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE}
+
+.if defined(CSS_COLOR_FILE) && ${CSS_COLOR_FILE}
+
+${DESTDIR}/${CSS_COLOR_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_COLOR_FILE}
+	$Qcat ${STYLEDIR}/${CSS_COLOR_FILE} |${parser} ${parser_opts} \
+		> ${DESTDIR}/${CSS_COLOR_FILE} && \
+		echo "-- CSS (colour) copied from ${THEME} theme: ${DESTDIR}/${CSS_COLOR_FILE}"
+
+.else
+
+${DESTDIR}/${CSS_COLOR_FILE}:
+	$Qecho "-- No CSS (colour) file found."
+
+.endif
+
+${DESTDIR}/${CSS_FILE}: ${DESTDIR} ${STYLEDIR}/${CSS_FILE} ${DESTDIR}/${CSS_COLOR_FILE}
 	$Qcat ${STYLEDIR}/${CSS_FILE} |${parser} ${parser_opts} \
 		> ${DESTDIR}/${CSS_FILE} && \
 		echo "-- CSS copied from ${THEME} theme: ${DESTDIR}/${CSS_FILE}"
 
 # Do Homepage
 # EXAMPLE: pub/index.xhtml
-${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//}
+${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TMPDIR}\//} ${TMPDIR}/${INTRO_FILENAME}${PAGE_EXT}
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
+		cat ${TMPDIR}/${INTRO_FILENAME}${PAGE_EXT} >> ${TMPDIR}/index${PAGE_EXT} &&  \
 		cat ${MAINDBFILES:S/^/${TMPDIR}\//} >> ${TMPDIR}/index${PAGE_EXT} &&         \
 		find ${TMPDIR}/ -name '*.mk' -print0 |xargs -0 rm -f &&                      \
 		cat ${footer} >> ${TMPDIR}/index${PAGE_EXT} &&                               \
@@ -528,12 +713,12 @@ doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
 TODAY != date '+%Y%m%d'
 backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
-		${tar} cfz ${BACKUPDIR}/${TODAY}_makefly.tar.gz makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} || \
+		${tar} cf - makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} ${THEMEDIR} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
 		{ \
 			echo "-- Backup failed!" ; \
 			false ; \
 		} ; \
-	} && echo "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR} and ${SPECIALDIR}."
+	} && echo "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR}, ${SPECIALDIR} and ${THEMEDIR}."
 
 # Publish: send files out
 publish_script = ${TOOLSDIR}/${PUBLISH_SCRIPT_NAME}

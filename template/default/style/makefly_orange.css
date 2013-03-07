@@ -1,0 +1,191 @@
+html, body {
+background-color: #000;
+color: #dc9900;
+}
+
+a {
+color: #dc9900;
+}
+
+a:hover {
+color: #dc9900;
+}
+
+h1 {
+color: #0064dc;
+}
+
+blockquote {
+color: #fff;
+border-left: medium solid #FFD700;
+}
+
+pre {
+color: #000;
+background-color: #ccc;
+}
+
+pre code {
+}
+
+nav {
+border-bottom: 1px solid #dc9900;
+}
+
+nav ul {
+}
+
+nav ul li {
+}
+
+nav ul li a {
+}
+
+nav ul a {
+border: 1px solid #dc9900;
+color: #dc9900;
+}
+
+nav ul a:hover {
+color: #000;
+background-color: #dc9900;
+border: 1px solid #dc9900;
+}
+
+nav form#search {
+}
+
+nav form#search input {
+border: thin inset black;
+}
+
+nav form#search input#text {
+background-color: #000000;
+color: #dc9900;
+border-color: #dc9900;
+}
+
+nav form#search input#validate_button {
+background-color: #000000;
+color: #dc9900;
+border-color: #dc9900;
+}
+
+#content {
+}
+
+#content h1 {
+color: #ccc;
+}
+
+#content article {
+color: #dc9900;
+border: 1px solid #dc9900;
+box-shadow: 1px 1px 15px #dc9900;
+}
+
+#content article > * {
+}
+
+#content article ul {
+}
+
+#content article a {
+color: #F1E5A5;
+}
+
+#content article div.read_more {
+}
+
+#content .articleinfo {
+}
+
+#content .articleinfo p {
+}
+
+#content article.special {
+box-shadow: 1px 1px 15px #dc9900;
+}
+
+#content article.news {
+box-shadow: 1px 1px 15px #dc9900;
+}
+
+aside {
+border-top: 1px solid #dc9900;
+}
+
+aside > * {
+}
+
+aside ul {
+}
+
+aside ul li a {
+}
+
+footer p {
+border-top: 1px solid #dc9900;
+}
+
+.jskomment {
+border-color: #dc9900;
+}
+
+.jskomment_header a {
+color: #F1E5A5;
+}
+
+.jskomment_header a:visited {
+color: #F1E5A5;
+}
+
+.jskomment_header a:hove {
+color: #F1E5A5;
+}
+
+.jskomment_commentval {
+color: #F1E5A5;
+}
+
+.jskomment_add_comment {
+color: #F1E5A5;
+text-decoration: none;
+}
+
+.jskomment_add_comment:visited {
+color: #F1E5A5;
+}
+
+.jskomment_add_comment:hover {
+color: #F1E5A5;
+text-decoration: underline;
+}
+
+/* Expression Libre Identica */
+
+#eli_widget {
+border-color: #dc9900;
+}
+
+#eli_widget header {
+background-color: #000000;
+color: #F1E5A5;
+border-bottom: thin solid #dc9900;
+}
+
+#eli_widget article {
+border-color: #dc9900;
+}
+
+#eli_widget article a {
+color: #F1E5A5;
+}
+
+#eli_widget article a:visited {
+color: #F1E5A5;
+}
+
+#eli_widget article a:hover {
+color: #F1E5A5;
+}

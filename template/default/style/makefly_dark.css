@@ -1,0 +1,272 @@
+html, body {
+background-color: #000;
+color: #999;
+}
+
+a {
+color: #999;
+}
+
+a:hover {
+color: #eee;
+}
+
+h1 {
+color: #FFD700;
+}
+
+blockquote {
+color: #fff;
+border-left: medium solid #FFD700;
+}
+
+pre {
+color: #000;
+background-color: #ccc;
+}
+
+pre code {
+}
+
+header h1 {
+}
+
+#subtitle {
+}
+
+header h1 {
+margin: 25px 0 0 0;
+padding: 0;
+}
+
+#subtitle {
+text-align: center;
+margin: 0 0 25px 0;
+padding: 0;
+font-size: 70%;
+}
+
+nav {
+border-bottom: 1px solid #999;
+}
+
+nav ul {
+}
+
+nav ul li {
+}
+
+nav ul li a {
+}
+
+nav ul a {
+border: 1px solid #999;
+color: #999;
+}
+
+nav ul a:hover {
+color: #000;
+background-color: #999;
+border: 1px solid #999;
+}
+
+nav form#search {
+}
+
+nav form#search input {
+border: thin inset black;
+}
+
+nav form#search input#text {
+background-color: #000000;
+color: #999;
+border-color: #999;
+}
+
+nav form#search input#validate_button {
+background-color: #000000;
+color: #999;
+border-color: #999;
+}
+
+#content {
+}
+
+#content h1 {
+color: #ccc;
+}
+
+#content article {
+color: #999;
+border: 1px solid #ccc;
+box-shadow: 1px 1px 15px #ccc;
+}
+
+#content article > * {
+}
+
+#content article ul {
+}
+
+#content article a {
+color: #F1E5A5;
+}
+
+#content article h1.title a {
+color: #ccc;
+<<<<<<< HEAD:template/default/style/simple.css
+text-decoration: none;
+=======
+>>>>>>> 9e088009ca8409667e74ef52e881cad5b9ffce0f:template/default/style/makefly_dark.css
+}
+
+#content article h1.title a:visited {
+color: #ccc;
+<<<<<<< HEAD:template/default/style/simple.css
+text-decoration: none;
+}
+
+#content article h1.title a:hover {
+text-decoration: underline;
+=======
+}
+
+#content article h1.title a:hover {
+>>>>>>> 9e088009ca8409667e74ef52e881cad5b9ffce0f:template/default/style/makefly_dark.css
+}
+
+#content article div.read_more {
+}
+
+#content .articleinfo {
+}
+
+#content .articleinfo p {
+}
+
+#content article.special {
+box-shadow: 1px 1px 15px #FFD700;
+}
+
+#content article.news {
+box-shadow: 1px 1px 15px #0000c1;
+}
+
+aside#sidebar {
+<<<<<<< HEAD:template/default/style/simple.css
+width: 80%;
+margin: 0 auto;
+=======
+>>>>>>> 9e088009ca8409667e74ef52e881cad5b9ffce0f:template/default/style/makefly_dark.css
+border-top: 1px solid #999;
+}
+
+aside#sidebar > * {
+<<<<<<< HEAD:template/default/style/simple.css
+margin-left: 10%;
+}
+
+aside#sidebar ul {
+list-style-type: none;
+margin-left: 5%;
+}
+
+aside#sidebar ul li a {
+text-decoration: none;
+=======
+}
+
+aside#sidebar ul {
+}
+
+aside#sidebar ul li a {
+>>>>>>> 9e088009ca8409667e74ef52e881cad5b9ffce0f:template/default/style/makefly_dark.css
+}
+
+footer p {
+border-top: 1px solid #999;
+}
+
+p img#logo {
+}
+
+/* COMMENTS (jskomment) */
+.jskomment_header {
+}
+
+.jskomment_newcomment {
+}
+
+.jskomment_commentval {
+}
+
+.jskomment_comment {
+color:#999999;
+}
+
+.jskomment {
+border-left: medium solid #FFD700;
+}
+
+.jskomment_header a {
+color: #999999;
+  display: inline-block;
+  margin: 0;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.jskomment_header a:visited {
+color: #999999;
+}
+
+.jskomment_header a:hover {
+color: #ffffff;
+}
+
+.jskomment_header a span {
+  color: #000000;
+  background-color: #999999;
+  display: inline-block;
+  border-radius: 10px;
+  width: 2em;
+}
+
+.jskomment_header a span:hover {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.jskomment_user {
+color: #F1E5A5;
+}
+
+.jskomment_input2 {
+}
+
+
+.jskomment_form {
+}
+
+.jskomment_submit {
+}
+
+#jskomment_flash {
+}
+
+/* Expression Libre Identica */
+#eli_widget header {
+background-color: #000;
+border-bottom: thin solid #fff;
+}
+
+p img#logo {
+position: absolute;
+display: block;
+top: 2ex;
+left: 2em;
+height: 64px;
+width: 64px;
+margin: 0 auto;
+text-align: center;
+}

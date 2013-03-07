@@ -96,6 +96,15 @@ Note that Makefly use the [markdown format](http://daringfireball.net/projects/m
 
 If you want to add some static files, just add them to the *static* directory. They will be copied in destination directory.
 
+### The 'special' directory
+
+This one is named **special** because it can contain some file you have to create in order to activate a functionality:
+
+  * *about.md* : Is the content of an about's page about your website. It will add an item in the website main menu (If your theme support it.)
+  * *sidebar.md* : Add a sidebar on your website. The theme have to support this function.
+  * *introduction.md* : Display this file's content as an introduction to your website homepage. This could change regarding the choosen theme.
+  * *footer.md* : Display this file's content as a footer on all your website's pages. This could change regarding the choosen theme.
+
 ## Use it!
 
 After having created *makefly.rc* (from makefly.rc.example) and having created some posts, just do this:
@@ -134,6 +143,16 @@ Here is some options you can change:
   * PUBLISH\_SCRIPT\_NAME: script filename used to send files from **pub** directory to a destination filled in *PUBLISH\_DESTINATION* variable.
   * SEARCH\_BAR: If set to 1, activate a search bar on Makefly. Note that your theme should support search bar!
   * MAX\_RSS: Max RSS posts that would be fetch from your users.
+  * JSKOMMENT : If set to 1, this activate a comment system on Makefly. Note that your theme should support comment system. Warning: default server is jskomment.appspot.com which doesn't guarantee a long backup of your comments. More info are available [on jskomment project installation page](http://code.google.com/p/jskomment/wiki/Installation "Go to jskomment webpage for more information") (fr).
+  * JSKOMMENT\_CAPTCHA\_THEME (optional): Define a theme regarding [reCaptcha page](https://developers.google.com/recaptcha/docs/customization "More info about reCaptcha themes") for Catpcha in JSKOMMENT comment system
+  * JSKOMMENT\_URL (optional): Define a JSKOMMENT server on which send comments. By default **http://jskomment.appspot.com/**.
+  * JSKOMMENT\_MAX (optional): Define a limit for displayed comments for JSKOMMENT comment system. By default **2**.
+  * ELI\_USER: If set, this activate a badge for identica. Note that your theme should support ELI widget. By default this functionality use IDENTICA's API.
+  * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on IDENTICA. By default "user".
+  * ELI\_MAX (optional): Permit to choose how many statuses to display. On identica, this couldn't bypass the default 20 items. Default value: 5.
+  * INSTALLDIR : Permit to choose a target directory when using **install.sh** script (Read more in *Publish result to the web* chapter)
+  * COMPRESS_TOOL (optional) : Shell tool used for backup compression via *backup* command (Cf. *Backup* section). Example : **gzip**.
+  * COMPRESS_EXT (optional) : Backup file extension. Warning: do not forget the point char. Example: **.gz**.
 
 ## Publish result to the web
 
@@ -203,10 +222,17 @@ Files saved:
   * special directory
   * db directory
   * src directory
+  * the directory that contains the choosen theme (for an example *templates/default/*)
 
 Result: This will create a *tarball* named *YYYYMMDD\_makefly.tar.gz* in **mbackup** directory (for an example 20120823\_makefly.tar.gz). You can so backup your Makefly each day for an example.
 
-Tip: You can customize backup directory by using **BACKUPDIR** option in your **makfley.rc** file.
+### Tips
+
+You can customize (in your **makefly.rc** file):
+
+  * the backup directory by using **BACKUPDIR** option
+  * the compression tool by using **COMPRESS_TOOL** option. For an example with **gzip**.
+  * the backup file extension by using **COMPRESS_EXT**. For an example with **.gz** (don't forget the point char).
 
 ## Sources
 
@@ -223,3 +249,11 @@ This file is the documentation. You can [read it on github](https://github.com/b
     pmake doc
 
 Note: pmake command is for Debian like. For other distribution, use **bmake** instead of pmake.
+
+## Tips
+
+### Write post ahead of current's datetime
+
+In Makefly you can publish early posts. To do that metadata file should have a timestamp superior to current's one when you generate the weblog. 
+
+For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 1362569400. Your post (situated in the **db** directory) have to have a timestamp inferior to current's one (1362569400).

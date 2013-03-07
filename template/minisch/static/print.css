@@ -20,5 +20,6 @@ section#flux .entry-meta a[href]:after { content: ""; }
 section#flux .entry-meta > * a { text-decoration: none;  }
 #author-info { text-align: right; background: none; box-shadow: none; border: none; }
 aside#laterale { display: none; }
+.jskomment { display: none; }
 footer { display: none; }
 }
