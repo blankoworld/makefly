@@ -151,6 +151,8 @@ Here is some options you can change:
   * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on IDENTICA. By default "user".
   * ELI\_MAX (optional): Permit to choose how many statuses to display. On identica, this couldn't bypass the default 20 items. Default value: 5.
   * INSTALLDIR : Permit to choose a target directory when using **install.sh** script (Read more in *Publish result to the web* chapter)
+  * COMPRESS_TOOL (optional) : Shell tool used for backup compression via *backup* command (Cf. *Backup* section). Example : **gzip**.
+  * COMPRESS_EXT (optional) : Backup file extension. Warning: do not forget the point char. Example: **.gz**.
 
 ## Publish result to the web
 
@@ -220,10 +222,17 @@ Files saved:
   * special directory
   * db directory
   * src directory
+  * the directory that contains the choosen theme (for an example *templates/default/*)
 
 Result: This will create a *tarball* named *YYYYMMDD\_makefly.tar.gz* in **mbackup** directory (for an example 20120823\_makefly.tar.gz). You can so backup your Makefly each day for an example.
 
-Tip: You can customize backup directory by using **BACKUPDIR** option in your **makfley.rc** file.
+### Tips
+
+You can customize (in your **makefly.rc** file):
+
+  * the backup directory by using **BACKUPDIR** option
+  * the compression tool by using **COMPRESS_TOOL** option. For an example with **gzip**.
+  * the backup file extension by using **COMPRESS_EXT**. For an example with **.gz** (don't forget the point char).
 
 ## Sources
 
@@ -240,3 +249,11 @@ This file is the documentation. You can [read it on github](https://github.com/b
     pmake doc
 
 Note: pmake command is for Debian like. For other distribution, use **bmake** instead of pmake.
+
+## Tips
+
+### Write post ahead of current's datetime
+
+In Makefly you can publish early posts. To do that metadata file should have a timestamp superior to current's one when you generate the weblog. 
+
+For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 1362569400. Your post (situated in the **db** directory) have to have a timestamp inferior to current's one (1362569400).

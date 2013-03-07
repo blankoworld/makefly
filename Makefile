@@ -61,6 +61,8 @@ sort     ?= sort
 date     ?= date
 tar      ?= tar
 PUBLISH_SCRIPT_NAME = publish.sh
+COMPRESS_TOOL ?= gzip
+COMPRESS_EXT = .gz
 
 # include some VARIABLES
 BODY_CLASS = single
@@ -157,9 +159,9 @@ POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 
 # some files'list
 FILES != cd ${SRCDIR}; ls
-DBFILES != cd ${DBDIR}; ls|${sort} -r
-MAINDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_POST}
-RSSDBFILES != cd ${DBDIR}; ls|${sort} -r|head -n ${MAX_RSS} 
+DBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r
+MAINDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_POST}
+RSSDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_RSS} 
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != echo ${STATICFILES}
 ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
@@ -711,12 +713,12 @@ doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
 TODAY != date '+%Y%m%d'
 backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
-		${tar} cfz ${BACKUPDIR}/${TODAY}_makefly.tar.gz makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} || \
+		${tar} cf - makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} ${THEMEDIR} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
 		{ \
 			echo "-- Backup failed!" ; \
 			false ; \
 		} ; \
-	} && echo "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR} and ${SPECIALDIR}."
+	} && echo "-- Files successfully saved in ${BACKUPDIR}: makefly.rc, ${STATICDIR}, ${DBDIR}, ${SRCDIR}, ${SPECIALDIR} and ${THEMEDIR}."
 
 # Publish: send files out
 publish_script = ${TOOLSDIR}/${PUBLISH_SCRIPT_NAME}
