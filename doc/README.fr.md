@@ -144,12 +144,15 @@ Voici quelques options que vous pouvez changer :
   * SEARCH\_BAR : Mis &agrave; 1 permet d'activer une barre de recherche sur Makefly. &Agrave; noter que votre th&egrave;me doit supporter la barre de recherche.
   * MAX\_RSS : Nombre d'articles RSS maximum qui sera récupéré par vos utilisateurs.
   * JSKOMMENT : Mis &agrave; 1 permet d'activer un syst&eacute;me de commentaires pour Makefly. &Agrave; noter que votre th&egrave;me doit supporter le syst&eacute;me de commentaires. Attention, par d&eacute;faut cela utiliser jskomment.appspot.com en tant que serveur, il ne garantit pas un archivage &agrave; long terme des commentaires. Plus d'informations sont disponibles [sur la page d'installation du projet jskomment](http://code.google.com/p/jskomment/wiki/Installation "Se rendre sur la page du projet pour en savoir plus").
-  * JSKOMMENT\_CAPTCHA\_THEME (optionnel): Définissez un thème suivant la [page reCaptcha](https://developers.google.com/recaptcha/docs/customization "Plus d'infos sur les thèmes reCaptcha") pour les Catpcha dans le système de commentaires JSKOMMENT.
-  * JSKOMMENT\_URL (optionnel): Définit un serveur JSKOMMENT sur lequel envoyer les commentaires. Par défaut **http://jskomment.appspot.com/**.
-  * JSKOMMENT\_MAX (optionnel): Définit une limite de commentaires à afficher pour le système de commentaire JSKOMMENT. Par défaut **2**.
+  * JSKOMMENT\_CAPTCHA\_THEME (optionnel) : Définissez un thème suivant la [page reCaptcha](https://developers.google.com/recaptcha/docs/customization "Plus d'infos sur les thèmes reCaptcha") pour les Catpcha dans le système de commentaires JSKOMMENT.
+  * JSKOMMENT\_URL (optionnel) : Définit un serveur JSKOMMENT sur lequel envoyer les commentaires. Par défaut **http://jskomment.appspot.com/**.
+  * JSKOMMENT\_MAX (optionnel) : Définit une limite de commentaires à afficher pour le système de commentaire JSKOMMENT. Par défaut **2**.
   * ELI\_USER: Si utilisé, ceci active un cadre pour identica. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utiliser l'API d'IDENTICA.
-  * ELI\_TYPE (optionel): Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur d'IDENTICA. Par d&eacute;faut "user".
-  * ELI\_MAX (optionel): Permer de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
+  * ELI\_TYPE (optionel) : Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur d'IDENTICA. Par d&eacute;faut "user".
+  * ELI\_MAX (optionnel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
+  * INSTALLDIR : Permet de choisir le dossier de destination lors de l'utilisation du script **install.sh** (Cf. Chapitre Publier le résultat sur le web).
+  * COMPRESS_TOOL (optionnel) : Outil console utilisé pour la compression lors des sauvegardes via la commande *backup* (Cf. Chapitre *Sauvegardes*). Exemple : **gzip**.
+  * COMPRESS_EXT (optionnel) : Extension des fichiers de sauvegarde. Attention à ne pas oublier le caractère point. Exemple : **.gz**.
 
 ## Publier le r&eacute;sultat sur le web
 
@@ -219,10 +222,17 @@ Fichiers sauv&eacute;s :
   * le r&eacute;pertoire special
   * le r&eacute;pertoire db
   * le r&eacute;pertoire src
+  * le r&eacute;pertoire contenant le th&egrave;me choisi (par exemple *templates/default/*)
 
 R&eacute;sultat : Ceci cr&eacute;era une *archive* nomm&eacute;e *YYYYMMDD\_makefly.tar.gz* (20120823\_makefly.tar.gz par exemple) dans le dossier **mbackup**. Vous pouvez ainsi sauvegarder votre Makefly chaque jour.
 
-Astuce : Vous pouvez personnaliser le dossier de sauvegarde en utilisant l'option **BACKUPDIR** dans votre fichier **makfley.rc**.
+### Astuces
+
+Vous pouvez personnaliser (dans votre fichier **makefly.rc**) :
+
+  * le dossier de sauvegarde en utilisant l'option **BACKUPDIR**
+  * l'outil de compression en utilisant l'option **COMPRESS_TOOL**, par exemple avec **gzip**
+  * l'extension du fichier de sauvegarde en utilisant l'option **COMPRESS_EXT**, par exemple avec **.gz** (ne pas oublier le point)
 
 ## Sources
 
@@ -239,3 +249,11 @@ Ce fichier est la documentation. Vous pouvez [le lire sur github](https://github
     pmake doc
 
 Note: La commande pmake command est pour Debian et d&eacute;riv&eacute;s. Pour les autres distributions, utilisez **bmake** au lieu de pmake.
+
+## Astuces
+
+### Écrire des billets en avance
+
+Dans Makefly vous pouvez écrire des billets en avance. Il suffit pour cela que le fichier de méta-données de votre billet possède un timestamp supérieur à celui du moment où est généré le blog.
+
+Par exemple nous sommes le 6 mars 2013, à 12:30, le timestamp est : 1362569400. Il faut que dans le dossier **db**, votre article ait un timestamp inférieur à celui d'aujourd'hui.
