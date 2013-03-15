@@ -210,7 +210,7 @@ ${MEDIA_TARGET_${FILE}}: ${DESTDIR} ${STATICDIR}
 SEARCHBAR != cat ${searchbar} |${parser} \
 	"SEARCH_BAR_BUTTON_NAME=${SEARCH_BAR_BUTTON_NAME}" \
 	"SEARCH_BAR_CONTENT=${SEARCH_BAR_CONTENT}" \
-	|sed -e 's|\"|\\"|g'
+	|sed -e 's|\"|\\"|g' |sed ':a;N;$$!ba;s/\n/\r\n /g'
 parser_opts += "SEARCHBAR=${SEARCHBAR}"
 
 .endif
@@ -282,7 +282,7 @@ parser_opts += "ELI_CONTENT=${ELI_CONTENT}"
 
 # SIDEBAR
 .if defined(SIDEBAR) && $(SIDEBAR) && defined(SIDEBARRESULT) && $(SIDEBARRESULT) != ${SPECIALDIR}/${SIDEBARFILE}*
-SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |sed -e 's|\"|\\"|g'
+SIDEBAR_CONTENT != ${markdown} ${SIDEBARRESULT} |sed -e 's|\"|\\"|g' |sed ':a;N;$$!ba;s/\n/\r\n /g'
 .else
 SIDEBAR_CONTENT = ""
 sidebar_tpl = 'empty.file'
@@ -322,7 +322,7 @@ parser_opts += "FOOTER_CONTENT=${FOOTER_CONTENT}"
 # ABOUT PAGE
 .if defined(ABOUTRESULT) && ${ABOUTRESULT} != ${SPECIALDIR}/${ABOUT_FILENAME}*
 
-ABOUT_LINK != cat ${aboutlink} |${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
+ABOUT_LINK != cat ${aboutlink} |sed ':a;N;$$!ba;s/\n/\r\n /g'|${parser} "ABOUT_TITLE=${ABOUT_TITLE}"
 parser_opts += "ABOUT_LINK=${ABOUT_LINK}"
 
 ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
@@ -412,7 +412,7 @@ TMP_${FILE} = ${FILE:S/^/${TMPDIR}\//}
 # Do each FINAL post file
 # EXAMPLE: pub/article1.xhtml
 .for FILE in ${FILES}
-CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |sed -e 's|\"|\\"|g' -e 's|`|``\\`|g'
+CONTENT_TARGET_${FILE} != ${markdown} ${SRCDIR}/${FILE} |sed -e 's|\"|\\"|g' -e 's|`|``\\`|g' |sed ':a;N;$$!ba;s/\n/\r\n /g'
 # Linked DB file (that contains metadata)
 DB_${FILE} != find ${DBDIR} -name "*,${FILE:S/.md$/.mk/}"
 # Include it
@@ -454,8 +454,7 @@ ${TARGET_${FILE}}: ${DESTDIR} ${POSTDIR} ${SRCDIR}/${FILE} sidebar
 				"ARTICLE_CLASS_TYPE=${CLASS_TYPE_${FILE}}"   \
 				"POST_AUTHOR=${AUTHOR_${FILE}}"              \
 				"JSKOMMENT_CONTENT=${JSKOMMENT_CONTENT_${FILE}}" \
-				"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" \
-				| sed -e "s|^|        |g" &&                 \
+				"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" && \
 			cat ${footer} | ${parser} ${parser_opts}       \
 			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"; \
 		} > ${TARGET_${FILE}} || {                       \
@@ -480,14 +479,14 @@ DATETIME_${FILE}   != ${date} -d "@${TMSTMP_${FILE}}" +'%Y-%m-%dT%H:%M'
 ESCAPED_NAME_${FILE} != echo ${FILE}| sed -e 's|.mk$$||' -e 's|^.*,||'
 NAME_${FILE}       != echo ${FILE}| sed -e 's|.mk$$|${PAGE_EXT}|' -e 's|^.*,||'
 DESC_${FILE}       != echo "${DESCRIPTION:S/'/\'/}" |sed -e 's|</a> <a|</a>, <a|g' -e 's/\"/\\"/g'
-CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |sed -e 's/\"/\\"/g' -e 's|`|``\\`|g'
+CONTENT_${FILE}    != ${markdown} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |sed -e 's/\"/\\"/g' -e 's|`|``\\`|g' |sed ':a;N;$$!ba;s/\n/\r\n /g'
 # Change content if MAX_POST_LINES is defined
 .if defined(MAX_POST_LINES) && $(MAX_POST_LINES)
 READ_MORE_LINK_${FILE} != cat ${read_more}| ${parser} ${parser_opts} "POST_FILE=${NAME_${FILE}}" |sed -e 's/\"/\\"/g'
 SIZE_${FILE} != cat ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |wc -l
 # Add a "Read more" link but only if post is more tall than MAX_POST_LINES
 .if ${SIZE_${FILE}} > ${MAX_POST_LINES}
-CONTENT_${FILE}  != head -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${markdown} |sed -e 's/\"/\\"/g' && echo "${READ_MORE_LINK_${FILE}}"
+CONTENT_${FILE}  != head -n ${MAX_POST_LINES} ${SRCDIR}/${NAME_${FILE}:S/${PAGE_EXT}$/.md/} |${markdown} |sed -e 's/\"/\\"/g' -e 's|`|``\\`|g' |sed ':a;N;$$!ba;s/\n/\r\n /g' && echo "${READ_MORE_LINK_${FILE}}"
 .endif
 .endif
 TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/\1_\2/g' -e 's/^_//g' -e 's/_$$//g' -e 's/,_/, /g' -e 's/_,/ ,/g' -e 's/,/ /g'
