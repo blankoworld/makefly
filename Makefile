@@ -336,7 +336,7 @@ ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT}: ${DESTDIR} ${SPECIALDIR} sidebar
 			rm ${TMPDIR}/${ABOUT_FILENAME}.about &&                             \
 			cat ${footer} | ${parser} ${parser_opts}                            \
 			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`" ;          \
-		} > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || {                      \
+		} |sed ':a;N;$$!ba;s//\n/g' > ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} || { \
 			${rm} -f ${DESTDIR}/${ABOUT_FILENAME}${PAGE_EXT} ;                  \
 			echo "-- Error while building ${ABOUT_FILENAME}${PAGE_EXT} page." ; \
 			false                                             ;                 \
@@ -541,7 +541,7 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 		"POST_ESCAPED_TITLE=${ESCAPED_NAME_${FILE}}" \
 		"POST_FILE=${NAME_${FILE}}"                \
 		"TAG_LINKS_LIST=${TAGLIST_${FILE}}"        \
-		> ${TMPDIR}/${NAME_${FILE}}
+		|sed ':a;N;$$!ba;s//\n/g' > ${TMPDIR}/${NAME_${FILE}}
 	@# Move temporary file to pub
 	$Q${mv} ${TMPDIR}/${NAME_${FILE}} ${POSTDIR}/${NAME_${FILE}}
 	@# Template for RSS Feed
@@ -606,7 +606,7 @@ ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${DESTDIR} ${TMPDIR} ${DBFILES:S/^/${TM
 			"TITLE=${HOME_TITLE}"                                                         \
 			"BODY_CLASS=home"                                                             \
 			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"                      \
-			> ${TMPDIR}/index${PAGE_EXT}.tmp &&                                           \
+			|sed ':a;N;$$!ba;s//\n/g' > ${TMPDIR}/index${PAGE_EXT}.tmp &&               \
 		${mv} ${TMPDIR}/index${PAGE_EXT}.tmp ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
 		${rm} ${TMPDIR}/index${PAGE_EXT} || {                                           \
 			echo "-- Could not build index page: $@" ;                    \
@@ -620,7 +620,7 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${TMPLDIR}/feed.header.rss | ${parser} ${parser_opts} \
 			> ${DESTDIR}/rss.xml &&                \
-		cat ${RSSDBFILES:S/^/${TMPDIR}\//:S/$/.rss/} >> ${DESTDIR}/rss.xml && \
+		cat ${RSSDBFILES:S/^/${TMPDIR}\//:S/$/.rss/} |sed ':a;N;$$!ba;s//\n/g' >> ${DESTDIR}/rss.xml && \
 		${rm} -f ${RSSDBFILES:S/^/${TMPDIR}\//:S/$/.rss/} && \
 		cat ${TMPLDIR}/feed.footer.rss >> ${DESTDIR}/rss.xml || { \
 			echo "-- Could not build RSS page: $@" ; \
@@ -629,7 +629,7 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	} && echo "-- RSS page built: $@"
 
 # Do Post List page
-# EXAMPLE: pub/list.xhtml
+# EXAMPLE: posts/index.html
 ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
@@ -639,7 +639,7 @@ ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
 			"TITLE=${POST_LIST_TITLE}"                                                  \
 			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"                    \
-			> ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                                \
+			|sed ':a;N;$$!ba;s//\n/g' > ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT} &&    \
     ${rm} ${TMPDIR}/list${PAGE_EXT} || {                                          \
 			echo "-- Could not build list page: $@" ;                           \
 			false ;                                                                \
@@ -660,7 +660,7 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		  "BODY_CLASS=tags"                                            \
 			"TITLE=${TAG_LIST_TITLE}"                                    \
 			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"     \
-		> ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} &&                    \
+		|sed ':a;N;$$!ba;s//\n/g' > ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
 		${rm} ${TMPDIR}/tags.list &&                                   \
 		${rm} ${TMPDIR}/taglist${PAGE_EXT} ||                          \
 		{                                                              \
@@ -675,7 +675,7 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		cat ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
 			"TITLE=$${TAG}"                                                           \
 			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"       \
-			> ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
+			|sed ':a;N;$$!ba;s//\n/g' > ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
 			${rm} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
 		done
 
