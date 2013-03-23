@@ -223,7 +223,7 @@ THEME_MEDIA_TARGET_${FILE} = ${FILE}
 .if defined(THEMEMEDIAFILES) && ${THEMEMEDIAFILES} != ${THEMEDIR}/static/*
 
 ${THEME_MEDIA_TARGET_${FILE}}: ${DESTDIR}
-	$Qcp ${FILE:S/^${DESTDIR}\//${THEMEDIR}\/static\//} ${THEME_MEDIA_TARGET_${FILE}} && \
+	$Qcp -r ${FILE:S/^${DESTDIR}\//${THEMEDIR}\/static\//} ${THEME_MEDIA_TARGET_${FILE}} && \
 		echo "-- New theme static file: ${FILE:S/\/\//\//}"
 
 .endif
