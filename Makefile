@@ -28,6 +28,8 @@
 
 # use make Q= to enable the debug mode.
 Q ?= @
+# use conf= to change configuration file
+conf ?= makefly.rc
 
 # directories
 TMPLDIR          = ./template
@@ -84,7 +86,7 @@ eli_file    ?= ${TMPLDIR}/${eli_name}
 eli_cont    ?= ${TMPLDIR}/eli_content.xhtml
 eli_css     ?= ${TMPLDIR}/eli.css
 # first main variables
-.include "makefly.rc"
+.include "${conf}"
 # then translation variables
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # finally theme VARIABLES
