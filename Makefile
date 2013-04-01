@@ -99,6 +99,7 @@ footer      ?= ${THEMEDIR}/footer.xhtml
 element     ?= ${THEMEDIR}/element.xhtml
 article     ?= ${THEMEDIR}/article.xhtml
 article_idx ?= ${THEMEDIR}/article.index.xhtml
+post_idx    ?= ${THEMEDIR}/post.index.xhtml
 taglink     ?= ${THEMEDIR}/taglink.xhtml
 tagelement  ?= ${THEMEDIR}/tagelement.xhtml
 tags        ?= ${THEMEDIR}/tags.xhtml
@@ -635,6 +636,7 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
+		cat ${post_idx} >> ${TMPDIR}/list${PAGE_EXT} && \
 		cat ${TMPDIR}/posts.list >> ${TMPDIR}/list${PAGE_EXT} && \
 		${rm} -f ${TMPDIR}/posts.list &&                            \
 		cat ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
