@@ -20,6 +20,9 @@ and includes somes functionalities like:
 * translation: English, French
 * static files
 * templates
+* comment system
+* identica badge (to display twitter/identica statuses)
+* backup command
 
 You can so:
 
@@ -30,6 +33,11 @@ You can so:
 * give some static files (for an example to share PDF)
 * have your own template
 * translate Makefly in your language
+* prepare some post and publish them in the future
+* add comments on each post
+* add an about page, an introduction on main page and/or a specific footer content
+* display your identica statuses in sidebar
+* backup your configuration file, theme, static files and some important files for your Makefile blog
 
 In fact, it's a lightweight weblog engine that generates some HTML static files.
 
@@ -61,12 +69,12 @@ For those who likes statistics, you can find [Makefly on ohloh](http://www.ohloh
 
 You can find [Makefly's documentation on github](https://github.com/blankoworld/makefly/blob/master/doc/README.md "Learn more about Makefly").
 
-For developers, it exists [a Makefly's developers documentation on github](https://github.com/blankoworld/makefly/blob/master/doc/DEV.README.md "Learn more about Makefly for developers").
+For developers, it exists [a Makefly's developers documentation on github](https://github.com/blankoworld/makefly-devtools/blob/master/doc/DEV.README.md "Learn more about Makefly for developers").
 
 ## Archives
 
-  * [Makefly_v0.1.1](/makefly_0.1.1.zip)
-  * [Makefly_v0.1.1-beta](/makefly_0.1.1-beta.zip)
-  * [Makefly_v0.1.1-alpha](/makefly_0.1.1-alpha.zip)
-  * [Makefly v0.1](/makefly_0.1.zip)
-
+  * [Makefly_v0.2-alpha](${BASE_URL}/makefly_0.2-alpha.zip)
+  * [Makefly v0.1.1](${BASE_URL}/makefly_0.1.1.zip)
+  * [Makefly v0.1.1-beta](${BASE_URL}/makefly_0.1.1-beta.zip)
+  * [Makefly v0.1.1-alpha](${BASE_URL}/makefly_0.1.1-alpha.zip)
+  * [Makefly v0.1](${BASE_URL}/makefly_0.1.zip)
