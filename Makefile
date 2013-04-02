@@ -28,6 +28,8 @@
 
 # use make Q= to enable the debug mode.
 Q ?= @
+# use conf= to change configuration file
+conf ?= makefly.rc
 
 # directories
 TMPLDIR          = ./template
@@ -84,7 +86,7 @@ eli_file    ?= ${TMPLDIR}/${eli_name}
 eli_cont    ?= ${TMPLDIR}/eli_content.xhtml
 eli_css     ?= ${TMPLDIR}/eli.css
 # first main variables
-.include "makefly.rc"
+.include "${conf}"
 # then translation variables
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # finally theme VARIABLES
@@ -97,6 +99,7 @@ footer      ?= ${THEMEDIR}/footer.xhtml
 element     ?= ${THEMEDIR}/element.xhtml
 article     ?= ${THEMEDIR}/article.xhtml
 article_idx ?= ${THEMEDIR}/article.index.xhtml
+post_idx    ?= ${THEMEDIR}/post.index.xhtml
 taglink     ?= ${THEMEDIR}/taglink.xhtml
 tagelement  ?= ${THEMEDIR}/tagelement.xhtml
 tags        ?= ${THEMEDIR}/tags.xhtml
@@ -633,6 +636,7 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 	$Q{ \
 		cat ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
+		cat ${post_idx} >> ${TMPDIR}/list${PAGE_EXT} && \
 		cat ${TMPDIR}/posts.list >> ${TMPDIR}/list${PAGE_EXT} && \
 		${rm} -f ${TMPDIR}/posts.list &&                            \
 		cat ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
@@ -682,16 +686,16 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
 clean:
-	$Q${rm} -rf ${DESTDIR}/${POSTDIR_NAME}
-	$Q${rm} -rf ${DESTDIR}/${TAGDIR_NAME}
-	$Q${rm} -rf ${DESTDIR}/*
-	$Qfind ${TMPDIR}/ -name '*.mk' -print0 |xargs -0 rm -f
-	$Qfind ${TMPDIR}/ -name '*.${PAGE_EXT}' -print0 |xargs -0 rm -f
-	$Qfind ${TMPDIR}/ -name '*.list' -print0 |xargs -0 rm -f
-	$Qfind ${TMPDIR}/ -name '*.rss' -print0 |xargs -0 rm -f
-	$Qfind ${TMPDIR}/ -name '*.about' -print0 |xargs -0 rm -f
-	$Q${rm} -rf ${TMPDIR}/*
-	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT}
+	$Q${rm} -rf ${DESTDIR}/${POSTDIR_NAME} && echo "-- Removed: ${DESTDIR}/${POSTDIR_NAME} directory"
+	$Q${rm} -rf ${DESTDIR}/${TAGDIR_NAME} && echo "-- Removed: ${DESTDIR}/${TAGDIR_NAME} directory"
+	$Q${rm} -rf ${DESTDIR}/* && echo "-- Removed: ${DESTDIR} directory"
+	$Qfind ${TMPDIR}/ -name '*.mk' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*.mk files"
+	$Qfind ${TMPDIR}/ -name '*${PAGE_EXT}' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*${PAGE_EXT} files"
+	$Qfind ${TMPDIR}/ -name '*.list' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*.list files"
+	$Qfind ${TMPDIR}/ -name '*.rss' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*.rss files"
+	$Qfind ${TMPDIR}/ -name '*.about' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*.about files"
+	$Q${rm} -rf ${TMPDIR}/* && echo "-- Removed: ${TMPDIR}/* remaining files"
+	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT} && echo "-- Removed: ${DOCDIR}/*${PAGE_EXT} files"
 
 # Create documentation
 .for FILE in ${DOCFILESRESULT}

@@ -3,3 +3,4 @@ CSS_FILE = minisch.css
 CSS_COLOR_FILE = minisch_normal.css
 JSKOMMENT_CAPTCHA_THEME = clean
 JSKOMMENT_CSS = jskomment.css
+SIDEBAR = 1 # force theme to have a sidebar (this is because it only works with sidebar)
