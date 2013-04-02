@@ -11,9 +11,6 @@ Tests:
 - Create some more check with/without sidebar, with/without search bar, etc.
 
 Templates:
-- Minisch theme update:
-  - add author (search in CSS to find it)
-  - add subtitle (BLOG_SHORT_DESC)
 - Create a command that generate a full template in order it to be customized by a user
 - Add HTML keywords/meta on each post's page?
 - Add possibility to choose which meta/keywords add to each post?
@@ -169,3 +166,6 @@ DONE:
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c - some_files | gzip > file.tar.gz
 - Create a nanoblogger import script to migrate from Nanoblogger to Makefly
 - Add a license to perso branch for Creative commons license
+- Minisch theme update:
+  - add author (search in CSS to find it)
+  - add subtitle (BLOG_SHORT_DESC)
