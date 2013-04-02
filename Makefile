@@ -30,6 +30,8 @@
 Q ?= @
 # use conf= to change configuration file
 conf ?= makefly.rc
+# Makefly version
+VERSION = 0.2-alpha
 
 # directories
 TMPLDIR          = ./template
@@ -116,7 +118,8 @@ ABOUT_INDEX   = ${ABOUT_FILENAME}${PAGE_EXT}
 STYLEDIR      = ${THEMEDIR}/style
 
 # Prepare parser options
-parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
+parser_opts = "VERSION=${VERSION}"           \
+		"BLOG_TITLE=${BLOG_TITLE}"               \
 		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"   \
 		"BLOG_SHORT_DESC=${BLOG_SHORT_DESC}"     \
 		"BASE_URL=${BASE_URL}"                   \
