@@ -152,6 +152,7 @@ parser_opts = "VERSION=${VERSION}"           \
 		"SEARCHBAR="                             \
 		"JSKOMMENT_SCRIPT="                      \
 		"JSKOMMENT_CONTENT="                     \
+		"JSKOMMENT_COMMENTS=${JSKOMMENT_COMMENTS}" \
 		"ELI_SCRIPT="                            \
 		"ELI_CONTENT="                           \
 		"ELI_TITLE=${ELI_TITLE}"                 \
