@@ -16,11 +16,6 @@ Here is some ideas that I have during project's development.
 - makefly v1.1-bêta: 3H47 for processing 18251 posts
 - makefly v1.1-bêta: 2min when using clean method
 
-## Branchs
-
-- DONE | devtools: with /tools and /tests to give developers some tools to recreate posts, and some tests to see if nothing is broken. Give also DEV documentation contained in doc/DEV.README.*
-- DONE | extras: with /templates (more templates than default one) and /bin with lunamark and markdown.md
-
 ## Others
 
 - For geek or console user, we could do an interface to simplify files creation. With Lua, lambda users could create files quickly and without any knowledge.
@@ -32,4 +27,10 @@ Here is some ideas that I have during project's development.
 
 ## Old ones
 
-- talkatv as comment system
+- ABANDON | talkatv as comment system
+
+### Branchs
+
+- DONE | devtools: with /tools and /tests to give developers some tools to recreate posts, and some tests to see if nothing is broken. Give also DEV documentation contained in doc/DEV.README.*
+- DONE | extras: with /templates (more templates than default one) and /bin with lunamark and markdown.md
+
