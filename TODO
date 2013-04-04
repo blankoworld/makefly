@@ -5,6 +5,9 @@ Next version (0.3):
 - Do some LUA tests to improve file generation
 - Slowly migrate to LUA (for an example for file generation)
 
+Scripts:
+- Generate a webpage containing a preview of all themes for official weblog
+
 Tests:
 - Do some tests with image comparison of all themes
 
