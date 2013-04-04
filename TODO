@@ -6,7 +6,7 @@ Next version (0.2):
 - Do some LUA tests to improve file generation
 
 Tests:
-Nothing
+- Do some tests with image comparison of all themes
 
 Templates:
 - Create a command that generate a full template in order it to be customized by a user
