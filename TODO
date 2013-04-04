@@ -3,7 +3,7 @@ TODO:
 
 Next version (0.3):
 - Do some LUA tests to improve file generation
-- Slowly migrate to LUA
+- Slowly migrate to LUA (for an example for file generation)
 
 Tests:
 - Do some tests with image comparison of all themes
