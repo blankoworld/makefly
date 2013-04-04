@@ -54,11 +54,16 @@ IDEAS:
 ------
 
 - plugins
-- comments
 - rss/atom feeds
 - smileys
 - sitemap (xml/html)
 - fortunes
+
+ABANDON:
+--------
+
+- Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
+- comment system with disqus (with a param to activate/desactivate in RC file)
 - template:
   - permit template like Nanoblogger or Utterson. For an example with m4 or with this:
     eval "cat << ___EOF___
@@ -66,12 +71,6 @@ IDEAS:
     ___EOF___"
     This permit to replace some variables. It's seems to be not valid without zsh.
   - templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
-
-ABANDON:
---------
-
-- Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
-- comment system with disqus (with a param to activate/desactivate in RC file)
 
 DONE:
 -----
