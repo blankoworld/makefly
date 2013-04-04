@@ -10,7 +10,6 @@ Here is some ideas that I have during project's development.
 ## Comment system
 
 - how could we add comments on each post? Disqus @ begining, then which system? => Lua system with a DB?
-- talkatv as comment system
 
 ## Tests results
 
@@ -30,3 +29,7 @@ Here is some ideas that I have during project's development.
 - HTML verification?
 - use more LUA to parse and create public files. Use ROPE: http://lua-users.org/wiki/LuaRopes and http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/lrope.tar.gz
 - generate a xml.gz for web robots
+
+## Old ones
+
+- talkatv as comment system
