@@ -13,6 +13,7 @@ Templates:
 - Add HTML keywords/meta on each post's page?
 - Add possibility to choose which meta/keywords add to each post?
 - Add HTML keywords/meta on main page regarding posts
+- Create a template for tests
 
 Meta functionnality:
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
