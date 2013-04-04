@@ -1,8 +1,7 @@
 TODO:
 -----
 
-Next version (0.2):
-- comment system with disqus (with a param to activate/desactivate in RC file)
+Next version (0.3):
 - Do some LUA tests to improve file generation
 
 Tests:
@@ -71,6 +70,7 @@ ABANDON:
 --------
 
 - Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
+- comment system with disqus (with a param to activate/desactivate in RC file)
 
 DONE:
 -----
