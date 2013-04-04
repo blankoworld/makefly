@@ -19,8 +19,8 @@ Here is some ideas that I have during project's development.
 
 ## Branchs
 
-- devtools: with /tools and /tests to give developers some tools to recreate posts, and some tests to see if nothing is broken. Give also DEV documentation contained in doc/DEV.README.*
-- extras: with /templates (more templates than default one) and /bin with lunamark and markdown.md
+- DONE | devtools: with /tools and /tests to give developers some tools to recreate posts, and some tests to see if nothing is broken. Give also DEV documentation contained in doc/DEV.README.*
+- DONE | extras: with /templates (more templates than default one) and /bin with lunamark and markdown.md
 
 ## Others
 
