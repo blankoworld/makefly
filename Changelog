@@ -1,4 +1,4 @@
-Current (0.2-dev)
+Current (0.2-alpha)
 	- Add jskomment as optional comment system
 	- Permit to customize jskomment comment system content
 	- Permit to choose for each theme an optional CSS color file. This permit to
