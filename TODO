@@ -6,9 +6,7 @@ Next version (0.2):
 - Do some LUA tests to improve file generation
 
 Tests:
-- Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
-- Create some unit test on pmake doc, pmake clean, etc.
-- Create some more check with/without sidebar, with/without search bar, etc.
+Nothing
 
 Templates:
 - Create a command that generate a full template in order it to be customized by a user
@@ -169,3 +167,6 @@ DONE:
 - Minisch theme update:
   - add author (search in CSS to find it)
   - add subtitle (BLOG_SHORT_DESC)
+- Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
+- Create some unit test on pmake doc, pmake clean, etc.
+- Create some more check with/without sidebar, with/without search bar, etc.
