@@ -93,7 +93,8 @@ eli_css     ?= ${TMPLDIR}/eli.css
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # finally theme VARIABLES
 THEMEDIR = ${TMPLDIR}/${THEME}
-.include "${THEMEDIR}/config.mk"
+theme_config ?= ${THEMEDIR}/config.mk
+.include "${theme_config}"
 
 # template's files
 header      ?= ${THEMEDIR}/header.xhtml
