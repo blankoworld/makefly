@@ -5,7 +5,8 @@
 # Copy pub directory to user's public_html
 
 rc=${rc:-"../makefly.rc"}
-SRCDIR=../pub
+src=${src:-".."}
+SRCDIR="${src}/pub"
 DESTDIR=`grep INSTALLDIR ${rc}|cut -d'=' -f 2|sed -e "s/^ //g"`
 
 process() {
@@ -13,7 +14,7 @@ process() {
 }
 
 if [ -z "$DESTDIR" ]; then
-  echo "No DESTDIR found. Please add DESTDIR= in your makefly.rc"
+  echo "No INSTALLDIR found. Please add INSTALLDIR= in your makefly.rc"
   exit 1
 fi
 
