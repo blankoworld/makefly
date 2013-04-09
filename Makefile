@@ -747,6 +747,21 @@ publish: ${DESTDIR}
 		} ; \
 	} && echo "-- Publish ${DESTDIR} content with ${publish_script}: OK."
 
+# theme: create a new theme
+theme: ${TMPLDIR}
+.if ! defined(name)
+	$Qecho 'No name found. Launch command like this to create a new theme: \n\tpmake theme name="myTheme"' && exit 1
+.else
+	$Q{ \
+		cp -r ${TMPLDIR}/base ${TMPLDIR}/${name} && \
+		sed -i 's#\(CSS_NAME = \).*#\1${name}#g' ${TMPLDIR}/${name}/config.mk || \
+		{ \
+			echo "-- Theme creation for "${name}" failed!" ; \
+			false ; \
+		} ; \
+	} && echo "-- New theme '${name}' created!\nThis theme is available in '${TMPLDIR}/${name}' directory."
+.endif
+
 # END
 .MAIN: all
 

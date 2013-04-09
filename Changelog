@@ -21,6 +21,7 @@ Current (0.2-bêta)
 	- New theme: Responsive
 	- Add "generator" meta tag to all templates
 	- New theme: Base
+	- Theme generation by using "Base" theme to generate one.
 
 Version 0.1.1 (release 2013-01-17)
 	- Permit user to choose page ' suffix

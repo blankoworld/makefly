@@ -200,6 +200,16 @@ Une fois cette variable renseign&eacute;e dans le fichier **makefly.rc**, lancez
 
 Pour les d&eacute;velopeurs : Vous pouvez aussi modifier le fichier **tools/publish.sh** et changer le contenu du script par votre propre code.
 
+## Créer un nouveau thème
+
+Afin de vous faciliter la tâche de création d'un nouveau thème, vous pouvez utiliser la commande suivante :
+
+    pmake theme name="myTheme"
+
+où **myTheme** est à remplacer par le nom de votre thème.
+
+Note : Ceci utilise le thème nommé *Base* comme exemple.
+
 ## Traduction
 
 Une fa&ccedil;on simple de traduire Makefly dans votre langage est de copier le fichier **lang/translate.en** dans un autre fichier. Par exemple, pour le Fran&ccedil;ais (avec le code fr), vous pouvez copier **lang/translate.en** en **lang/translate.fr** et changez les valeurs. Puis changez simplement l'option *BLOG\_LANG* dans le fichier **makefly.rc**.

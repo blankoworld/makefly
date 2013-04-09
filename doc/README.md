@@ -200,6 +200,16 @@ Once having complete this variable in **makefly.rc** file, just launch:
 
 For developers: You can also edit **tools/publish.sh** file and change script content to you own code.
 
+## Create a new theme
+
+To make easier the theme creation you can use this command:
+
+    pmake theme name="myTheme"
+
+where **myTheme** is to replace by your own theme name.
+
+Note: This exploit a theme called *Base* as example.
+
 ## Translation
 
 A simple way to translate Makefly to your language is to copy the **lang/translate.en** file to another translation file. For an example, for french (with fr code), you can copy **lang/translate.en** to **lang/translate.fr** and change values. Then just change *BLOG\_LANG* option in **makefly.rc** file.
