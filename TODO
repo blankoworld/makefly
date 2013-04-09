@@ -1,20 +1,22 @@
 TODO:
 -----
 
-Next version (0.2):
-- comment system with disqus (with a param to activate/desactivate in RC file)
+Next version (0.3):
 - Do some LUA tests to improve file generation
+- Slowly migrate to LUA (for an example for file generation)
+
+Scripts:
+- Generate a webpage containing a preview of all themes for official weblog
 
 Tests:
-- Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
-- Create some unit test on pmake doc, pmake clean, etc.
-- Create some more check with/without sidebar, with/without search bar, etc.
+- Do some tests with image comparison of all themes
 
 Templates:
 - Create a command that generate a full template in order it to be customized by a user
 - Add HTML keywords/meta on each post's page?
 - Add possibility to choose which meta/keywords add to each post?
 - Add HTML keywords/meta on main page regarding posts
+- Create a template for tests
 
 Meta functionnality:
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
@@ -56,11 +58,16 @@ IDEAS:
 ------
 
 - plugins
-- comments
-- rss/atom feeds
+- atom feeds
 - smileys
 - sitemap (xml/html)
 - fortunes
+
+ABANDON:
+--------
+
+- Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
+- comment system with disqus (with a param to activate/desactivate in RC file)
 - template:
   - permit template like Nanoblogger or Utterson. For an example with m4 or with this:
     eval "cat << ___EOF___
@@ -68,11 +75,6 @@ IDEAS:
     ___EOF___"
     This permit to replace some variables. It's seems to be not valid without zsh.
   - templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
-
-ABANDON:
---------
-
-- Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
 
 DONE:
 -----
@@ -169,3 +171,6 @@ DONE:
 - Minisch theme update:
   - add author (search in CSS to find it)
   - add subtitle (BLOG_SHORT_DESC)
+- Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
+- Create some unit test on pmake doc, pmake clean, etc.
+- Create some more check with/without sidebar, with/without search bar, etc.

@@ -4,15 +4,17 @@
 
 # Copy pub directory to user's public_html
 
-SRCDIR=../pub
-DESTDIR=`grep INSTALLDIR ../makefly.rc|cut -d'=' -f 2|sed -e "s/^ //g"`
+rc=${rc:-"../makefly.rc"}
+src=${src:-".."}
+SRCDIR="${src}/pub"
+DESTDIR=`grep INSTALLDIR ${rc}|cut -d'=' -f 2|sed -e "s/^ //g"`
 
 process() {
   rm -rf ${DESTDIR}/* && cp -r ${SRCDIR}/* ${DESTDIR} && echo "...installed!"
 }
 
 if [ -z "$DESTDIR" ]; then
-  echo "No DESTDIR found. Please add DESTDIR= in your makefly.rc"
+  echo "No INSTALLDIR found. Please add INSTALLDIR= in your makefly.rc"
   exit 1
 fi
 
