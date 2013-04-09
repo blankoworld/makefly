@@ -1,0 +1,21 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+.header-container h1.title a {
+    color: white;
+}
+
+aside ul li a, aside ul li a:visited, aside ul li a:hover {
+    color: white;
+}
+
+article header h1 a, article header h1 a:visited, article header h1 a:hover {
+    color: black;
+}
+
+.footer-container footer a, .footer-container footer a:visited, .footer-container footer a:hover {
+    color: white;
+}

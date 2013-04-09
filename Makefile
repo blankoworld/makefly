@@ -30,6 +30,8 @@
 Q ?= @
 # use conf= to change configuration file
 conf ?= makefly.rc
+# Makefly version
+VERSION = 0.2-beta
 
 # directories
 TMPLDIR          = ./template
@@ -47,7 +49,7 @@ SPECIALDIR       = ./special
 ABOUT_FILENAME   = about
 INTRO_FILENAME   = introduction
 FOOTER_FILENAME  = footer
-THEME            = default
+THEME            = responsive
 BACKUPDIR        = ./mbackup
 SIDEBAR_FILENAME = sidebar
 TOOLSDIR         = ./tools
@@ -91,7 +93,8 @@ eli_css     ?= ${TMPLDIR}/eli.css
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # finally theme VARIABLES
 THEMEDIR = ${TMPLDIR}/${THEME}
-.include "${THEMEDIR}/config.mk"
+theme_config ?= ${THEMEDIR}/config.mk
+.include "${theme_config}"
 
 # template's files
 header      ?= ${THEMEDIR}/header.xhtml
@@ -116,7 +119,8 @@ ABOUT_INDEX   = ${ABOUT_FILENAME}${PAGE_EXT}
 STYLEDIR      = ${THEMEDIR}/style
 
 # Prepare parser options
-parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
+parser_opts = "VERSION=${VERSION}"           \
+		"BLOG_TITLE=${BLOG_TITLE}"               \
 		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"   \
 		"BLOG_SHORT_DESC=${BLOG_SHORT_DESC}"     \
 		"BASE_URL=${BASE_URL}"                   \
@@ -149,6 +153,7 @@ parser_opts = "BLOG_TITLE=${BLOG_TITLE}"     \
 		"SEARCHBAR="                             \
 		"JSKOMMENT_SCRIPT="                      \
 		"JSKOMMENT_CONTENT="                     \
+		"JSKOMMENT_COMMENTS=${JSKOMMENT_COMMENTS}" \
 		"ELI_SCRIPT="                            \
 		"ELI_CONTENT="                           \
 		"ELI_TITLE=${ELI_TITLE}"                 \

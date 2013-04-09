@@ -1,0 +1,230 @@
+html,
+button,
+input,
+select,
+textarea {
+    color: black;
+    background: #eee;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+}
+
+::selection {
+    background: #b3d4fc;
+}
+ 
+.chromeframe {
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+pre {
+    background: #c6c6c6;
+    color: black;
+}
+
+blockquote {
+    border-color: #006400;
+}
+
+a {
+    color: #006400;
+}
+
+a:visited {
+    color: #006400;
+}
+
+a:hover {
+    color: #006400;
+}
+
+.header-container {
+    color: black;
+    border-color: #006400;
+}
+
+.header-container h1.title a {
+    color: white;
+}
+
+.header-container p#subtitle {
+    color: white;
+} 
+
+.header-container form#search {
+}
+
+.header-container form#search input#text {
+    background: #eee;
+    border-color: #006400;
+}
+
+.header-container form#search input#validate_button {
+    background: #006400;
+    color: white;
+}
+
+.footer-container,
+.main aside {
+    border-color: #006400;
+}
+
+.header-container,
+.footer-container,
+.main aside {
+    background: #008000;
+}
+
+.title {
+    color: white;
+}
+
+aside#sidebar ul {
+}
+
+aside#sidebar a {
+    color: white;
+}
+
+article h1 a {
+}
+
+article h1 a:hover {
+}
+
+.read_more a {
+    color: white;
+    background: #006400;
+}
+
+article footer p span.label {
+    background: #006400;
+    color: white;
+}
+
+.footer-container footer a, .footer-container footer a:visited, .footer-container footer a:hover {
+    color: white;
+}
+
+/* ==============
+    MOBILE: Menu
+   ============== */
+
+nav ul {
+}
+
+nav a {
+    color: white;
+    background: #006400;
+}
+
+nav a:hover,
+nav a:visited {
+    color: white;
+}
+
+nav a:hover {
+}
+
+/* ==============
+    MOBILE: Main
+   ============== */
+
+.main {
+}
+
+.main article h1 {
+}
+
+.main aside {
+    color: white;
+}
+
+.footer-container footer {
+    color: white;
+}
+
+/* ===============
+    ALL: IE Fixes
+   =============== */
+
+.ie7 .title {
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+@media only screen and (max-width: 480px) {
+  form#search {
+  }
+}
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+@media only screen and (min-width: 768px) {
+
+/* ====================
+    WIDE: CSS3 Effects
+   ==================== */
+
+    .header-container,
+    .main aside {
+        -webkit-box-shadow: 0 5px 10px #008000;
+           -moz-box-shadow: 0 5px 10px #008000;
+                box-shadow: 0 5px 10px #008000;
+    }
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.ir {
+    background-color: transparent;
+}
+
+/* Expression Libre Identica */
+#eli_widget {
+    display: inline-block;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#eli_widget header {
+    background: 0;
+    border: 0;
+}
+
+#eli_widget article {
+    width: auto;
+}
+
+#eli_widget article a {
+    color: white;
+    text-decoration: underline;
+}
+
+/* JSKOMMENT comment system */
+.jskomment {
+border-color: #006400;
+}
+
+.jskomment a, .jskomment a:visited, .jskomment a:hover {
+color: #006400;
+}
+
+.jskomment_button {
+background: #006400;
+}
+
+.jskomment_user {
+background: #006400;
+}
