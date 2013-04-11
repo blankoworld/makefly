@@ -754,8 +754,10 @@ theme: ${TMPLDIR}
 .else
 	$Q{ \
 		cp -r ${TMPLDIR}/base ${TMPLDIR}/${name} && \
-		sed -i 's#\(CSS_NAME = \).*#\1${name}#g' ${TMPLDIR}/${name}/config.mk || \
+		cat ${TMPLDIR}/${name}/config.mk |sed -e 's#\(CSS_NAME = \).*#\1${name}#g' > ${TMPLDIR}/${name}/config.mk.new && \
+		mv ${TMPLDIR}/${name}/config.mk.new ${TMPLDIR}/${name}/config.mk || \
 		{ \
+			rm -rf ${TMPLDIR}/${name} && \
 			echo "-- Theme creation for "${name}" failed!" ; \
 			false ; \
 		} ; \
