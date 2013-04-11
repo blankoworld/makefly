@@ -167,9 +167,9 @@ POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 
 # some files'list
 FILES != cd ${SRCDIR}; ls
-DBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r
-MAINDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_POST}
-RSSDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_RSS} 
+DBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `${date} +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r
+MAINDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `${date} +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_POST}
+RSSDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `${date} +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_RSS} 
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != echo ${STATICFILES}
 ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
@@ -718,7 +718,7 @@ ${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
 doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
 
 # Backup: save important files
-TODAY != date '+%Y%m%d'
+TODAY != ${date} '+%Y%m%d'
 backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
 		${tar} cf - makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} ${THEMEDIR} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
