@@ -1,2 +1,0 @@
-AUTHOR="Anonymous"
-URL=""
