@@ -41,6 +41,10 @@ You can so:
 
 In fact, it's a lightweight weblog engine that generates some HTML static files.
 
+## Themes
+
+Have a look to [Themes list for v0.2](${BASE_URL}/${POSTDIR_NAME}/theme_list_v0_2.html). Hope you will find a theme you like.
+
 ## No UI?
 
 Makefly aims to do a thing and do it well. It's not user-friendly so you cannot easily add posts. To do this, you need a UI (User Interface) that Makefly's project don't get. But [BlogBox project (fr)](http://blogbox.e-mergence.org "Learn more on BlogBox project") wants to do this soon (approximatively 2013, March).
@@ -73,8 +77,8 @@ For developers, it exists [a Makefly's developers documentation on github](https
 
 ## Archives
 
-  * [Makefly_v0.2-beta](${BASE_URL}/makefly_0.2-beta.zip)
-  * [Makefly_v0.2-alpha](${BASE_URL}/makefly_0.2-alpha.zip)
+  * [Makefly v0.2-beta](${BASE_URL}/makefly_0.2-beta.zip)
+  * [Makefly v0.2-alpha](${BASE_URL}/makefly_0.2-alpha.zip)
   * [Makefly v0.1.1](${BASE_URL}/makefly_0.1.1.zip)
   * [Makefly v0.1.1-beta](${BASE_URL}/makefly_0.1.1-beta.zip)
   * [Makefly v0.1.1-alpha](${BASE_URL}/makefly_0.1.1-alpha.zip)
