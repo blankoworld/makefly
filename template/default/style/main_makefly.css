@@ -122,7 +122,18 @@ padding: 0 10px;
 padding-left: 30px;
 }
 
+#content article ol {
+padding-left: 30px;
+}
+
 #content article a {
+}
+
+#content article a img {
+width: auto;
+display: block;
+margin: 15px auto 100px auto;
+
 }
 
 #content article h1.title a {
