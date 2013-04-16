@@ -24,6 +24,7 @@ Current (0.2-bêta)
 	- Theme generation by using "Base" theme to generate one.
 	- Possibility to create its own theme with a command like `pmake theme
 	name='myThem'`
+	- New theme: Bootstrap
 
 Version 0.1.1 (release 2013-01-17)
 	- Permit user to choose page ' suffix
