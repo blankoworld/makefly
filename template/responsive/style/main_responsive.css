@@ -267,9 +267,10 @@ nav a:hover {
 
     nav a {
         float: left;
-        width: 27%;
-        margin: 0 1.7%;
-        padding: 25px 2%;
+        width: 10%;
+        min-width: 80px;
+        margin: 0 2px;
+        padding: 25px 1px;
         margin-bottom: 0;
     }
 
@@ -317,7 +318,8 @@ nav a:hover {
 
     nav {
         float: right;
-        width: 38%;
+        width: 50%;
+        min-width: 605px;
     }
 
 /* ============
