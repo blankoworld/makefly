@@ -5,18 +5,13 @@ Next version (0.3):
 - Do some LUA tests to improve file generation
 - Slowly migrate to LUA (for an example for file generation)
 
-Scripts:
-- Generate a webpage containing a preview of all themes for official weblog
-
 Tests:
 - Do some tests with image comparison of all themes
 
 Templates:
-- Create a command that generate a full template in order it to be customized by a user
 - Add HTML keywords/meta on each post's page?
 - Add possibility to choose which meta/keywords add to each post?
 - Add HTML keywords/meta on main page regarding posts
-- Create a template for tests
 
 Meta functionnality:
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
@@ -174,3 +169,6 @@ DONE:
 - Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
 - Create some unit test on pmake doc, pmake clean, etc.
 - Create some more check with/without sidebar, with/without search bar, etc.
+- Create a command that generate a full template in order it to be customized by a user
+- Generate a webpage containing a preview of all themes for official weblog
+- Create a template for tests
