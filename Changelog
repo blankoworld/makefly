@@ -1,4 +1,7 @@
-Current (0.2-bêta)
+Current (trunk)
+	- To be completed
+
+Version 0.2 (released 2013-04-17)
 	- Add jskomment as optional comment system
 	- Permit to customize jskomment comment system content
 	- Permit to choose for each theme an optional CSS color file. This permit to
