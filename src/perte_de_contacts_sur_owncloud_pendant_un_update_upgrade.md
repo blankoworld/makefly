@@ -1,6 +1,6 @@
 ### Introduction
 
-[Je vous parlais il y a plus d'un an une alternative à Dropbox : Owncloud](${BASE_URL}/archives/2012/03/12/owncloud_une_alternative_de_dropbox/index.html "Lire l'article sur l'alternative de Dropbox : Owncloud"). Pour un utilisateur lambda, ce n'est déjà pas facile de pouvoir l'installer, mais alors mettre à jour fait froid dans le dos ! Cet article explique une mise à jour de owncloud 4.0.5 vers la version 4.5.x.
+[Je vous parlais il y a plus d'un an d'une alternative à Dropbox : Owncloud](${BASE_URL}/archives/2012/03/12/owncloud_une_alternative_de_dropbox/index.html "Lire l'article sur l'alternative de Dropbox : Owncloud"). Pour un utilisateur lambda, ce n'est déjà pas facile de pouvoir l'installer, mais alors mettre à jour fait froid dans le dos ! Cet article explique une mise à jour de owncloud 4.0.5 vers la version 4.5.x.
 
 ![Logo d'owncloud](${BASE_URL}/images/logos/owncloud.png "Logo d'owncloud")
 

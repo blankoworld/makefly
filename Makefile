@@ -167,9 +167,9 @@ POSTDIR      = ${DESTDIR}/${POSTDIR_NAME}
 
 # some files'list
 FILES != cd ${SRCDIR}; ls
-DBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r
-MAINDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_POST}
-RSSDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `date +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_RSS} 
+DBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `${date} +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r
+MAINDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `${date} +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_POST}
+RSSDBFILES != cd ${DBDIR}; for i in `ls`; do if test "$$(( `echo $$i|cut -d ',' -f 1` < `${date} +'%s'` ))" -eq "1"; then echo $$i; fi; done|${sort} -r|head -n ${MAX_RSS} 
 STATICFILES := ${STATICDIR}/*
 MEDIAFILES != echo ${STATICFILES}
 ABOUTFILE := ${SPECIALDIR}/${ABOUT_FILENAME}*
@@ -718,7 +718,7 @@ ${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
 doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
 
 # Backup: save important files
-TODAY != date '+%Y%m%d'
+TODAY != ${date} '+%Y%m%d'
 backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
 		${tar} cf - makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} ${THEMEDIR} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
@@ -746,6 +746,23 @@ publish: ${DESTDIR}
 			false ; \
 		} ; \
 	} && echo "-- Publish ${DESTDIR} content with ${publish_script}: OK."
+
+# theme: create a new theme
+theme: ${TMPLDIR}
+.if ! defined(name)
+	$Qecho 'No name found. Launch command like this to create a new theme: \n\tpmake theme name="myTheme"' && exit 1
+.else
+	$Q{ \
+		cp -r ${TMPLDIR}/base ${TMPLDIR}/${name} && \
+		cat ${TMPLDIR}/${name}/config.mk |sed -e 's#\(CSS_NAME = \).*#\1${name}#g' > ${TMPLDIR}/${name}/config.mk.new && \
+		mv ${TMPLDIR}/${name}/config.mk.new ${TMPLDIR}/${name}/config.mk || \
+		{ \
+			rm -rf ${TMPLDIR}/${name} && \
+			echo "-- Theme creation for "${name}" failed!" ; \
+			false ; \
+		} ; \
+	} && echo "-- New theme '${name}' created!\nThis theme is available in '${TMPLDIR}/${name}' directory."
+.endif
 
 # END
 .MAIN: all
