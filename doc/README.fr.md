@@ -125,7 +125,7 @@ Note: *pmake* est sur les distributions Debian et d&eacute;riv&eacute;es. Pour l
 
 ## Publier le r&eacute;sultat sur le web
 
-Le r&eacute;sultat de Makefly est compatible avec tout le serveurs HTML. En effet vous pouvez probablement utiliser le r&eacute;sultat sur le site web de votre h&eacute;bergeur. Il suffit d'envoyer le contenu du r&eacute;pertoire **pub** dans celui de votre h&eacute;bergeur.
+Le r&eacute;sultat de Makefly est compatible avec tous le serveurs HTML. En effet vous pouvez probablement utiliser le r&eacute;sultat sur le site web de votre h&eacute;bergeur. Il suffit d'envoyer le contenu du r&eacute;pertoire **pub** dans celui de votre h&eacute;bergeur.
 
 ### Sur un serveur web
 
@@ -134,11 +134,11 @@ Si vous lancez Makefly sur votre propre serveur ou tr&egrave;s certainement sur 
     cd tools
     bash install.sh
 
-...et cela copiera tout les fichiers dans le r&eacute;pertoire **~/public\_html**.
+...et cela copiera tous les fichiers dans le r&eacute;pertoire **~/public\_html**.
 
-**ATTENTION**: Cela supprimera tout les fichiers contenus dans le dossier *public\_html* !
+**ATTENTION**: Cela supprimera tous les fichiers contenus dans le dossier *public\_html* !
 
-**Note**: Vous pouvez personnaliser le script pour copier tout les fichiers dans un autre r&eacute;pertoire que le *public\_html*. Pour cela, modifiez le script **install.sh** et changez cette variable : 
+**Note**: Vous pouvez personnaliser le script pour copier tous les fichiers dans un autre r&eacute;pertoire que le *public\_html*. Pour cela, modifiez le script **install.sh** et changez cette variable : 
 
     DESTDIR=${HOME}/public_html
 
