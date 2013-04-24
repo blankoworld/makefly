@@ -258,6 +258,7 @@ Here is some options you can change:
   * POSTDIR\_NAME: The name you want to be displayed in URL when a user go to post list. For an example, if you set it to "myposts": http://makefly.e-mergence.org/myposts/ will display all you posts. This is useful for others languages.
   * TAGDIR\_NAME: Same behaviour as POSTDIR\_NAME, but for tags. Change it to "mytags" for an example, and you will have URLs like this: http://makefly.e-mergence.org/mytags/ to display tag list.
   * THEME: Name of the theme you want to be used. All themes are available in **template** directory. Each theme have its own directory. For an example, "default" theme have its **template/default** directory.
+  * FLAVOR: This name will be used to select a color from your theme (if exists)
   * BACKUPDIR: Name of directory where *backup* command will save all files.
   * SIDEBAR\_FILENAME: As described, name of sidebar file that would be used to create a sidebar. If you set it to "sidebar" for an example, you have to create a "sidebar.md" file into **special** directory in order to have this sidebar. Note that your theme should support sidebars!
   * SIDEBAR: If set to 1, so activate a sidebar on Makefly. Note that your theme should support sidebars!

@@ -93,7 +93,14 @@ eli_css     ?= ${TMPLDIR}/eli.css
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # finally theme VARIABLES
 THEMEDIR = ${TMPLDIR}/${THEME}
+STYLEDIR      = ${THEMEDIR}/style
 theme_config ?= ${THEMEDIR}/config.mk
+# define FLAVOR before importing theme configuration
+.if defined(FLAVOR) && $(FLAVOR)
+FLAVOR_FILE = color_${THEME}_${FLAVOR}.css
+CSS_COLOR_FILE = ${FLAVOR_FILE}
+.endif
+
 .include "${theme_config}"
 
 # template's files
@@ -116,7 +123,6 @@ POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
 TAGDIR_INDEX  = ${INDEX_FILENAME}${PAGE_EXT}
 # Create about index filename
 ABOUT_INDEX   = ${ABOUT_FILENAME}${PAGE_EXT}
-STYLEDIR      = ${THEMEDIR}/style
 
 # Prepare parser options
 parser_opts = "VERSION=${VERSION}"           \
