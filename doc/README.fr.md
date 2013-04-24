@@ -77,7 +77,15 @@ mettra &agrave; jour Makefly.
 
 ## Configuration
 
+### Pour la version stable
+
+Aucune configuration particulière n'est requise. Vérifiez que le fichier **makefly.rc** existe bien. Le cas échéant copiez le fichier **makefly.rc.example** ou renommez le en **makefly.rc**.
+
+### Pour la version trunk
+
 La premi&egrave;re fois que vous utilisez Makefly vous n'avez aucun fichier de configuration. Un exemple de fichier de configuration est disponible dans **makefly.rc.example*. Copiez le vers **makefly.rc** pour permettre &agrave; Makefly de fonctionner.
+
+### Plus d'infos
 
 Pour plus d'informations, lisez la section **Le fichier de configuration makefly.rc**.
 

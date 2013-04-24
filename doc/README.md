@@ -77,7 +77,15 @@ will update your makefly.
 
 ## Configuration
 
+### Stable version
+
+No special configuration required. Check that **makefly.rc** file is present. Otherwise copy **makefly.rc.example** file or rename it to **makefly.rc**.
+
+### Trunk version
+
 The first time you use Makefly you don't have any configuration file. An example is available in *makefly.rc.example*. Copy it to **makefly.rc** to permit Makefly to work.
+
+### More info
 
 For more information please read **The makefly.rc configuration file** section.
 
