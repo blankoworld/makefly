@@ -31,7 +31,7 @@ Q ?= @
 # use conf= to change configuration file
 conf ?= makefly.rc
 # Makefly version
-VERSION = 0.2
+VERSION = 0.2.1-trunk
 
 # directories
 TMPLDIR          = ./template
@@ -93,7 +93,14 @@ eli_css     ?= ${TMPLDIR}/eli.css
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # finally theme VARIABLES
 THEMEDIR = ${TMPLDIR}/${THEME}
+STYLEDIR      = ${THEMEDIR}/style
 theme_config ?= ${THEMEDIR}/config.mk
+# define FLAVOR before importing theme configuration
+.if defined(FLAVOR) && $(FLAVOR)
+FLAVOR_FILE = color_${THEME}_${FLAVOR}.css
+CSS_COLOR_FILE = ${FLAVOR_FILE}
+.endif
+
 .include "${theme_config}"
 
 # template's files
@@ -116,7 +123,6 @@ POSTDIR_INDEX = ${INDEX_FILENAME}${PAGE_EXT}
 TAGDIR_INDEX  = ${INDEX_FILENAME}${PAGE_EXT}
 # Create about index filename
 ABOUT_INDEX   = ${ABOUT_FILENAME}${PAGE_EXT}
-STYLEDIR      = ${THEMEDIR}/style
 
 # Prepare parser options
 parser_opts = "VERSION=${VERSION}"           \
@@ -763,6 +769,38 @@ theme: ${TMPLDIR}
 		} ; \
 	} && echo "-- New theme '${name}' created!\nThis theme is available in '${TMPLDIR}/${name}' directory."
 .endif
+
+# Create post: simple post creation
+# note: create_post.sh -q 1 do not display any editor
+createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
+	$Q{ cat ${TOOLSDIR}/create_post.sh |${parser} \
+		"DBDIR=${DBDIR}" \
+		"SRCDIR=${SRCDIR}" > ${TMPDIR}/create_post.sh && \
+		chmod +x ${TMPDIR}/create_post.sh && \
+		${TMPDIR}/create_post.sh -q 0 || \
+		{ \
+			rm -rf ${TMPDIR}/create_post.sh && \
+			echo "-- New post failed!" ; \
+			false ; \
+		} ; \
+	} && echo "-- New post added successfully."
+
+add: createpost
+
+# list: list all available command as a help command
+list: 
+	$Qecho "List of available commands: \n \
+		list       list all available commands \n \
+		help       same as 'list' command \n \
+		clean      clean up current directory from generated files \n \
+		all        create all entire weblog \n \
+		createpost create a new post \n \
+		add        same as 'createpost' \n \
+		backup     make a backup from your current makefly directory \n \
+		publish    publish your weblog using tools/publish.sh script \n \
+		theme      copy 'base' theme to create a new one named using 'name' variable"
+
+help: list
 
 # END
 .MAIN: all
