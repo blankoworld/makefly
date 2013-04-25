@@ -91,12 +91,11 @@ Pour plus d'informations, lisez la section **Le fichier de configuration makefly
 
 ## Cr&eacute;er du contenu
 
-Un script shell bash est disponible dans le r&eacute;pertoire **tools**: **create\_post.sh**. Pour l'utiliser : 
+Utilisez la commande suivante :
 
-    cd tools
-    bash create_post.sh
+    pmake add
 
-Donnez au script toutes les informations n&eacute;cessaires. Cela g&eacute;n&egrave;rera les fichiers n&eacute;cessaires &agrave; Makefly.
+et répondez à toutes les questions posées. Cela g&eacute;n&egrave;rera les fichiers n&eacute;cessaires pour Makefly.
 
 Il est &agrave; noter que Makefly utilise [le format markdown](http://daringfireball.net/projects/markdown/ "En savoir plus sur le format Markdown") pour ses articles.
 

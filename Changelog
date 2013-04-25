@@ -1,7 +1,8 @@
 Current (trunk)
 	- Improve Bootstrap theme with glyphicons
 	- You can choose a "FLAVOR" for your theme in order to change colors
-	- Add new commands: help and list that give all available commands
+	- Add new commands: 'help' and 'list' that give all available commands
+	- Add new commands: 'createpost' and 'add' in order to create a new post
 
 Version 0.2 (released 2013-04-17)
 	- Add jskomment as optional comment system

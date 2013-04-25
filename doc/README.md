@@ -91,12 +91,11 @@ For more information please read **The makefly.rc configuration file** section.
 
 ## Create content
 
-A bash shell script is available in **tools** directory: **create\_post.sh**. To use it:
+Use this command:
 
-    cd tools
-    bash create_post.sh
+    pmake add
 
-Give script all information it needs. It will generate some files needed by Makefly.
+and answer to all given questions. It will generate some files needed by Makefly.
 
 Note that Makefly use the [markdown format](http://daringfireball.net/projects/markdown/ "Learn more about Markdown format") for its posts.
 
