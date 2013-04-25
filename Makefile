@@ -770,6 +770,19 @@ theme: ${TMPLDIR}
 	} && echo "-- New theme '${name}' created!\nThis theme is available in '${TMPLDIR}/${name}' directory."
 .endif
 
+# list: list all available command as a help command
+list: 
+	$Qecho "List of available commands: \n \
+		list     list all available commands \n \
+		help     same as 'list' command \n \
+		clean    clean up current directory from generated files \n \
+		all      create all entire weblog \n \
+		backup   make a backup from your current makefly directory \n \
+		publish  publish your weblog using tools/publish.sh script \n \
+		theme    copy 'base' theme to create a new one named using 'name' variable"
+
+help: list
+
 # END
 .MAIN: all
 
