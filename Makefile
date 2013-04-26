@@ -753,6 +753,22 @@ publish: ${DESTDIR}
 		} ; \
 	} && echo "-- Publish ${DESTDIR} content with ${publish_script}: OK."
 
+# Install: send files to INSTALLDIR variable
+install: ${DESTDIR} ${INSTALLDIR}
+	$Q{ \
+		cat ${TOOLSDIR}/install.sh |${parser} \
+		"SRCDIR=${DESTDIR}" \
+		"DESTDIR=${INSTALLDIR}" > ${TMPDIR}/install.sh && \
+		chmod +x ${TMPDIR}/install.sh && \
+		${TMPDIR}/install.sh && \
+		${rm} ${TMPDIR}/install.sh || \
+		{ \
+			${rm} -rf ${TMPDIR}/install.sh && \
+			echo "-- Installation failed!" ; \
+			false ; \
+		} ; \
+	} && echo "-- Installation achieved."
+
 # theme: create a new theme
 theme: ${TMPLDIR}
 .if ! defined(name)
@@ -797,6 +813,7 @@ list:
 		createpost create a new post \n \
 		add        same as 'createpost' \n \
 		backup     make a backup from your current makefly directory \n \
+		install    install 'pub' directory into INSTALLDIR directory (set in makefly.rc) \n \
 		publish    publish your weblog using tools/publish.sh script \n \
 		theme      copy 'base' theme to create a new one named using 'name' variable"
 
