@@ -779,7 +779,7 @@ theme: ${TMPLDIR}
 		cat ${TMPLDIR}/${name}/config.mk |sed -e 's#\(CSS_NAME = \).*#\1${name}#g' > ${TMPLDIR}/${name}/config.mk.new && \
 		mv ${TMPLDIR}/${name}/config.mk.new ${TMPLDIR}/${name}/config.mk || \
 		{ \
-			rm -rf ${TMPLDIR}/${name} && \
+			${rm} -rf ${TMPLDIR}/${name} && \
 			echo "-- Theme creation for "${name}" failed!" ; \
 			false ; \
 		} ; \
@@ -793,9 +793,10 @@ createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 		"DBDIR=${DBDIR}" \
 		"SRCDIR=${SRCDIR}" > ${TMPDIR}/create_post.sh && \
 		chmod +x ${TMPDIR}/create_post.sh && \
-		${TMPDIR}/create_post.sh -q 0 || \
+		${TMPDIR}/create_post.sh -q 0 && \
+		${rm} ${TMPDIR}/create_post.sh || \
 		{ \
-			rm -rf ${TMPDIR}/create_post.sh && \
+			${rm} -rf ${TMPDIR}/create_post.sh && \
 			echo "-- New post failed!" ; \
 			false ; \
 		} ; \
