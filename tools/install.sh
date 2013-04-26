@@ -4,10 +4,8 @@
 
 # Copy pub directory to user's public_html
 
-rc=${rc:-"../makefly.rc"}
-src=${src:-".."}
-SRCDIR="${src}/pub"
-DESTDIR=`grep INSTALLDIR ${rc}|cut -d'=' -f 2|sed -e "s/^ //g"`
+SRCDIR="${SRCDIR}"
+DESTDIR="${DESTDIR}"
 
 process() {
   rm -rf ${DESTDIR}/* && cp -r ${SRCDIR}/* ${DESTDIR} && echo "...installed!"
