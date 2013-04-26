@@ -753,6 +753,22 @@ publish: ${DESTDIR}
 		} ; \
 	} && echo "-- Publish ${DESTDIR} content with ${publish_script}: OK."
 
+# Install: send files to INSTALLDIR variable
+install: ${DESTDIR} ${INSTALLDIR}
+	$Q{ \
+		cat ${TOOLSDIR}/install.sh |${parser} \
+		"SRCDIR=${DESTDIR}" \
+		"DESTDIR=${INSTALLDIR}" > ${TMPDIR}/install.sh && \
+		chmod +x ${TMPDIR}/install.sh && \
+		${TMPDIR}/install.sh && \
+		${rm} ${TMPDIR}/install.sh || \
+		{ \
+			${rm} -rf ${TMPDIR}/install.sh && \
+			echo "-- Installation failed!" ; \
+			false ; \
+		} ; \
+	} && echo "-- Installation achieved."
+
 # theme: create a new theme
 theme: ${TMPLDIR}
 .if ! defined(name)
@@ -763,7 +779,7 @@ theme: ${TMPLDIR}
 		cat ${TMPLDIR}/${name}/config.mk |sed -e 's#\(CSS_NAME = \).*#\1${name}#g' > ${TMPLDIR}/${name}/config.mk.new && \
 		mv ${TMPLDIR}/${name}/config.mk.new ${TMPLDIR}/${name}/config.mk || \
 		{ \
-			rm -rf ${TMPLDIR}/${name} && \
+			${rm} -rf ${TMPLDIR}/${name} && \
 			echo "-- Theme creation for "${name}" failed!" ; \
 			false ; \
 		} ; \
@@ -777,9 +793,10 @@ createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 		"DBDIR=${DBDIR}" \
 		"SRCDIR=${SRCDIR}" > ${TMPDIR}/create_post.sh && \
 		chmod +x ${TMPDIR}/create_post.sh && \
-		${TMPDIR}/create_post.sh -q 0 || \
+		${TMPDIR}/create_post.sh -q 0 && \
+		${rm} ${TMPDIR}/create_post.sh || \
 		{ \
-			rm -rf ${TMPDIR}/create_post.sh && \
+			${rm} -rf ${TMPDIR}/create_post.sh && \
 			echo "-- New post failed!" ; \
 			false ; \
 		} ; \
@@ -797,6 +814,7 @@ list:
 		createpost create a new post \n \
 		add        same as 'createpost' \n \
 		backup     make a backup from your current makefly directory \n \
+		install    install 'pub' directory into INSTALLDIR directory (set in makefly.rc) \n \
 		publish    publish your weblog using tools/publish.sh script \n \
 		theme      copy 'base' theme to create a new one named using 'name' variable"
 
