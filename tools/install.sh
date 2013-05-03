@@ -8,7 +8,7 @@ SRCDIR="${SRCDIR}"
 DESTDIR="${DESTDIR}"
 
 process() {
-  rm -rf ${DESTDIR}/* && cp -r ${SRCDIR}/* ${DESTDIR} && echo "...installed!"
+  rm -rf ${DESTDIR}/* && cp -r ${SRCDIR}/* ${DESTDIR}
 }
 
 if [ -z "$DESTDIR" ]; then
