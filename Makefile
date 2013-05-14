@@ -89,6 +89,7 @@ eli_cont    ?= ${TMPLDIR}/eli_content.xhtml
 eli_css     ?= ${TMPLDIR}/eli.css
 # first main variables
 .include "${conf}"
+PAGE_EXT ?= .html
 # then translation variables
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # finally theme VARIABLES
@@ -697,15 +698,8 @@ ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
 clean:
-	$Q${rm} -rf ${DESTDIR}/${POSTDIR_NAME} && echo "-- Removed: ${DESTDIR}/${POSTDIR_NAME} directory"
-	$Q${rm} -rf ${DESTDIR}/${TAGDIR_NAME} && echo "-- Removed: ${DESTDIR}/${TAGDIR_NAME} directory"
-	$Q${rm} -rf ${DESTDIR}/* && echo "-- Removed: ${DESTDIR} directory"
-	$Qfind ${TMPDIR}/ -name '*.mk' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*.mk files"
-	$Qfind ${TMPDIR}/ -name '*${PAGE_EXT}' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*${PAGE_EXT} files"
-	$Qfind ${TMPDIR}/ -name '*.list' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*.list files"
-	$Qfind ${TMPDIR}/ -name '*.rss' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*.rss files"
-	$Qfind ${TMPDIR}/ -name '*.about' -print0 |xargs -0 rm -f && echo "-- Removed: ${TMPDIR}/*.about files"
-	$Q${rm} -rf ${TMPDIR}/* && echo "-- Removed: ${TMPDIR}/* remaining files"
+	$Q${rm} -rf ${DESTDIR}/ && echo "-- Removed: ${DESTDIR} directory"
+	$Q${rm} -rf ${TMPDIR}/ && echo "-- Removed: ${TMPDIR} directory"
 	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT} && echo "-- Removed: ${DOCDIR}/*${PAGE_EXT} files"
 
 # Create documentation
