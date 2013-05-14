@@ -115,7 +115,10 @@ function getConfig(file)
     if not line then break end
     local key = line:match('(.-)[ ]+=')
     local val = line:match('=[ ]+(.*)')
-    if key then
+    local comment = string.find(line, '^#+.*')
+    if comment then
+      -- do nothing with commented lines
+    elseif key then
       result[key] = val
     end
   end
