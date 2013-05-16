@@ -13,8 +13,11 @@ Here is some ideas that I have during project's development.
 
 ## Tests results
 
-- makefly v1.1-bêta: 3H47 for processing 18251 posts
-- makefly v1.1-bêta: 2min when using clean method
+- makefly v0.1.1-bêta: 3H47 for processing 18251 posts
+- makefly v0.1.1-bêta: 2min when using clean method
+- makefly v0.2-trunk: 6min21.71 sec for processing 1000 posts
+- makefly v0.2-luaversion: 1min50.74 for processing 1000 posts
+- makefly v0.2-luaversion: ~ 42min for processing 18251 posts
 
 ## Others
 
