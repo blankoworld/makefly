@@ -2,7 +2,7 @@
 
 # Makefly
 
-Une version fran&ccedil;aise de cette documentation est disponible dans le fichier **README.fr.md**.
+Une version fran&ccedil;aise de cette documentation est disponible dans le fichier **README.fr.md** (situé dans le répertoire **doc**).
 
 ## About
 
@@ -90,6 +90,21 @@ The first time you use Makefly you don't have any configuration file. An example
 For more information please read **The makefly.rc configuration file** section.
 
 ## Create content
+
+The way to create content depends on your version.
+
+### Version older than 0.2.1
+
+Go to **tools** directory and launch **create_post.sh** script like this: 
+
+    cd tools
+    ./create_post.sh
+
+and answer to all given questions. It will generate some files needed by Makefly.
+
+Note that Makefly use the [markdown format](http://daringfireball.net/projects/markdown/ "Learn more about Markdown format") for its posts.
+
+### Version equal or superior to 0.2.1
 
 Use this command:
 

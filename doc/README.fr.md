@@ -2,7 +2,7 @@
 
 # Makefly
 
-An english version of this documentation is available in **README.md** file.
+An english version of this documentation is available in **README.md** file (located in **doc** directory).
 
 ## &Agrave; propos
 
@@ -79,7 +79,7 @@ mettra &agrave; jour Makefly.
 
 ### Pour la version stable
 
-Aucune configuration particulière n'est requise. Vérifiez que le fichier **makefly.rc** existe bien. Le cas échéant copiez le fichier **makefly.rc.example** ou renommez le en **makefly.rc**.
+Aucune configuration particuli&egrave;re n'est requise. V&eacute;rifiez que le fichier **makefly.rc** existe bien. Le cas &eacute;ch&eacute;ant copiez le fichier **makefly.rc.example** ou renommez le en **makefly.rc**.
 
 ### Pour la version trunk
 
@@ -91,11 +91,26 @@ Pour plus d'informations, lisez la section **Le fichier de configuration makefly
 
 ## Cr&eacute;er du contenu
 
+La mani&egrave;re de cr&eacute;er du contenu d&eacute;pend de votre version.
+
+### Version ant&eacute;rieure &agrave; 0.2.1
+
+Rendez-vous dans le dossier **tools** puis lancez le script **create_post.sh** de la mani&egrave;re suivante : 
+
+    cd tools
+    ./create_post.sh
+
+et r&eacute;pondez &agrave; toutes les questions pos&eacute;es. Cela g&eacute;n&egrave;rera les fichiers n&eacute;cessaires pour Makefly.
+
+Il est &agrave; noter que Makefly utilise [le format markdown](http://daringfireball.net/projects/markdown/ "En savoir plus sur le format Markdown") pour ses articles.
+
+### Version sup&eacute;rieure ou &eacute;gale &agrave; 0.2.1 (version trunk)
+
 Utilisez la commande suivante :
 
     pmake add
 
-et répondez à toutes les questions posées. Cela g&eacute;n&egrave;rera les fichiers n&eacute;cessaires pour Makefly.
+et r&eacute;pondez &agrave; toutes les questions pos&eacute;es. Cela g&eacute;n&egrave;rera les fichiers n&eacute;cessaires pour Makefly.
 
 Il est &agrave; noter que Makefly utilise [le format markdown](http://daringfireball.net/projects/markdown/ "En savoir plus sur le format Markdown") pour ses articles.
 
@@ -105,12 +120,12 @@ Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans
 
 ### Le dossier 'special'
 
-Ce dossier nommé **special** peut contenir certains fichiers que vous devrez créer pour activer une fonctionnalité : 
+Ce dossier nomm&eacute; **special** peut contenir certains fichiers que vous devrez cr&eacute;er pour activer une fonctionnalit&eacute; : 
 
-  * *about.md* : Contient le contenu d'une page d'à propos au sujet de votre site. Cela va ajouter une entrée dans le menu principal du site (si votre thème le supporte).
-  * *sidebar.md* : Ajoute une barre latérale sur votre site. Le thème doit supporter cette fonction.
-  * *introduction.md* : Affiche le contenu de ce fichier comme introduction de votre page d'accueil. Varie selon le thème choisi.
-  * *footer.md* : Affiche le contenu de ce fichier comme d'un pied de page sur l'ensemble de vos pages. Varie selon le thème choisi.
+  * *about.md* : Contient le contenu d'une page d'&agrave; propos au sujet de votre site. Cela va ajouter une entr&eacute;e dans le menu principal du site (si votre th&egrave;me le supporte).
+  * *sidebar.md* : Ajoute une barre lat&eacute;rale sur votre site. Le th&egrave;me doit supporter cette fonction.
+  * *introduction.md* : Affiche le contenu de ce fichier comme introduction de votre page d'accueil. Varie selon le th&egrave;me choisi.
+  * *footer.md* : Affiche le contenu de ce fichier comme d'un pied de page sur l'ensemble de vos pages. Varie selon le th&egrave;me choisi.
 
 ## Utilisez le !
 
@@ -168,15 +183,15 @@ Une fois cette variable renseign&eacute;e dans le fichier **makefly.rc**, lancez
 
 Pour les d&eacute;velopeurs : Vous pouvez aussi modifier le fichier **tools/publish.sh** et changer le contenu du script par votre propre code.
 
-## Créer un nouveau thème
+## Cr&eacute;er un nouveau th&egrave;me
 
-Afin de vous faciliter la tâche de création d'un nouveau thème, vous pouvez utiliser la commande suivante :
+Afin de vous faciliter la tâche de cr&eacute;ation d'un nouveau th&egrave;me, vous pouvez utiliser la commande suivante :
 
     pmake theme name="myTheme"
 
-où **myTheme** est à remplacer par le nom de votre thème.
+o&ugrave; **myTheme** est &agrave; remplacer par le nom de votre th&egrave;me.
 
-Note : Ceci utilise le thème nommé *Base* comme exemple.
+Note : Ceci utilise le th&egrave;me nomm&eacute; *Base* comme exemple.
 
 ## Traduction
 
@@ -232,9 +247,9 @@ Note: La commande pmake command est pour Debian et d&eacute;riv&eacute;s. Pour l
 
 ### Écrire des billets en avance
 
-Dans Makefly vous pouvez écrire des billets en avance. Il suffit pour cela que le fichier de méta-données de votre billet possède un timestamp supérieur à celui du moment où est généré le blog.
+Dans Makefly vous pouvez &eacute;crire des billets en avance. Il suffit pour cela que le fichier de m&eacute;ta-donn&eacute;es de votre billet poss&egrave;de un timestamp sup&eacute;rieur &agrave; celui du moment o&ugrave; est g&eacute;n&eacute;r&eacute; le blog.
 
-Par exemple nous sommes le 6 mars 2013, à 12:30, le timestamp est : 1362569400. Il faut que dans le dossier **db**, votre article ait un timestamp inférieur à celui d'aujourd'hui.
+Par exemple nous sommes le 6 mars 2013, &agrave; 12:30, le timestamp est : 1362569400. Il faut que dans le dossier **db**, votre article ait un timestamp inf&eacute;rieur &agrave; celui d'aujourd'hui.
 
 ## Le fichier de configuration makefly.rc
 
@@ -257,22 +272,22 @@ Voici quelques options que vous pouvez changer :
   * POSTDIR\_NAME : Le nom que vous voudriez afficher dans l'URL quand un utilisateur se rend sur la page de la liste des articles. Par exemple, param&eacute;tr&eacute; &agrave; "mesarticles" : http://makefly.e-mergence.org/mesarticles/ affichera la liste de vos articles. Ceci est utile pour divers langages.
   * TAGDIR\_NAME : M&ecirc;me chose que pour le param&egrave;tre *POSTDIR\_NAME*, mais pour les mots-cl&eacute;s (tags) cette fois. Modifiez le en "motcle" par exemple et l'adresse suivante affichera la liste des mots-cl&eacute;s : http://makefly.e-mergence.org/motcle/.
   * THEME : Nom du th&egrave;me choisi. Les th&egrave;mes sont disponibles dans le dossier nomm&eacute; **template**. Chaque th&egrave;me poss&egrave;de son propre r&eacute;pertoire. Par exemple, le th&egrave;me *default* poss&egrave;de son propre r&eacute;pertoire **template/default**.
-  * FLAVOR: Ce nom sera utilisé pour choisir la couleur de votre thème (si elle existe)
+  * FLAVOR: Ce nom sera utilis&eacute; pour choisir la couleur de votre th&egrave;me (si elle existe)
   * BACKUPDIR : Nom du dossier o&ugrave; seront sauv&eacute;s les fichiers r&eacute;sultant de la commande *backup*.
   * SIDEBAR\_FILENAME : Comme d&eacute;crit, nom du fichier utilis&eacute; pour la barre lat&eacute;rale. Elle contient des liens et tout un tas d'autres choses. Si vous la param&eacute;trez &agrave; "sidebar.md", par exemple, vous devez cr&eacute;er le fichier dans le r&eacute;pertoire **special** pour obtenir cette barre. &Agrave; noter que votre th&egrave;me doit inclure les barres lat&eacute;rales !
   * SIDEBAR : Mis &agrave; 1 permet d'activer la barre lat&eacute;rale sur Makefly. &Agrave; noter que votre th&egrave;me doit inclure les barres lat&eacute;rales !
   * PUBLISH\_DESTINATION : Adresse compl&egrave;te du lieu o&ugrave; envoyer les fichiers afin de les publier.
   * PUBLISH\_SCRIPT\_NAME : Nom du fichier script utilis&eacute; pour envoyer les fichiers du dossier **pub** vers une destination renseign&eacute;e dans la variable *PUBLISH\_DESTINATION*.
   * SEARCH\_BAR : Mis &agrave; 1 permet d'activer une barre de recherche sur Makefly. &Agrave; noter que votre th&egrave;me doit supporter la barre de recherche.
-  * MAX\_RSS : Nombre d'articles RSS maximum qui sera récupéré par vos utilisateurs.
+  * MAX\_RSS : Nombre d'articles RSS maximum qui sera r&eacute;cup&eacute;r&eacute; par vos utilisateurs.
   * JSKOMMENT : Mis &agrave; 1 permet d'activer un syst&eacute;me de commentaires pour Makefly. &Agrave; noter que votre th&egrave;me doit supporter le syst&eacute;me de commentaires. Attention, par d&eacute;faut cela utiliser jskomment.appspot.com en tant que serveur, il ne garantit pas un archivage &agrave; long terme des commentaires. Plus d'informations sont disponibles [sur la page d'installation du projet jskomment](http://code.google.com/p/jskomment/wiki/Installation "Se rendre sur la page du projet pour en savoir plus").
-  * JSKOMMENT\_CAPTCHA\_THEME (optionnel) : Définissez un thème suivant la [page reCaptcha](https://developers.google.com/recaptcha/docs/customization "Plus d'infos sur les thèmes reCaptcha") pour les Catpcha dans le système de commentaires JSKOMMENT.
-  * JSKOMMENT\_URL (optionnel) : Définit un serveur JSKOMMENT sur lequel envoyer les commentaires. Par défaut **http://jskomment.appspot.com/**.
-  * JSKOMMENT\_MAX (optionnel) : Définit une limite de commentaires à afficher pour le système de commentaire JSKOMMENT. Par défaut **2**.
-  * ELI\_USER: Si utilisé, ceci active un cadre pour identica. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utiliser l'API d'IDENTICA.
+  * JSKOMMENT\_CAPTCHA\_THEME (optionnel) : D&eacute;finissez un th&egrave;me suivant la [page reCaptcha](https://developers.google.com/recaptcha/docs/customization "Plus d'infos sur les th&egrave;mes reCaptcha") pour les Catpcha dans le syst&egrave;me de commentaires JSKOMMENT.
+  * JSKOMMENT\_URL (optionnel) : D&eacute;finit un serveur JSKOMMENT sur lequel envoyer les commentaires. Par d&eacute;faut **http://jskomment.appspot.com/**.
+  * JSKOMMENT\_MAX (optionnel) : D&eacute;finit une limite de commentaires &agrave; afficher pour le syst&egrave;me de commentaire JSKOMMENT. Par d&eacute;faut **2**.
+  * ELI\_USER: Si utilis&eacute;, ceci active un cadre pour identica. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utiliser l'API d'IDENTICA.
   * ELI\_TYPE (optionel) : Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur d'IDENTICA. Par d&eacute;faut "user".
   * ELI\_MAX (optionnel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
-  * INSTALLDIR : Permet de choisir le dossier de destination lors de l'utilisation du script **install.sh** (Cf. Chapitre Publier le résultat sur le web).
-  * COMPRESS_TOOL (optionnel) : Outil console utilisé pour la compression lors des sauvegardes via la commande *backup* (Cf. Chapitre *Sauvegardes*). Exemple : **gzip**.
-  * COMPRESS_EXT (optionnel) : Extension des fichiers de sauvegarde. Attention à ne pas oublier le caractère point. Exemple : **.gz**.
+  * INSTALLDIR : Permet de choisir le dossier de destination lors de l'utilisation du script **install.sh** (Cf. Chapitre Publier le r&eacute;sultat sur le web).
+  * COMPRESS_TOOL (optionnel) : Outil console utilis&eacute; pour la compression lors des sauvegardes via la commande *backup* (Cf. Chapitre *Sauvegardes*). Exemple : **gzip**.
+  * COMPRESS_EXT (optionnel) : Extension des fichiers de sauvegarde. Attention &agrave; ne pas oublier le caract&egrave;re point. Exemple : **.gz**.
 
