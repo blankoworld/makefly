@@ -4,6 +4,7 @@ Current (trunk)
 	- Add new commands: 'help' and 'list' that give all available commands
 	- Add new commands: 'createpost' and 'add' in order to create a new post
 	- Add new command: 'install'
+	- Clean up meta data file (delete DATE useless field)
 
 Version 0.2 (released 2013-04-17)
 	- Add jskomment as optional comment system

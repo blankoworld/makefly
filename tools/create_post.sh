@@ -72,7 +72,6 @@ while [ -z "$title" ]; do
   read -p "Title: " title
 done
 read -p "Description: " desc
-read -p "Date: " date
 while [ -z "$tags" ]; do
   read -p "Tags (use comma as separator): " tags
 done
@@ -99,7 +98,6 @@ fi
 # create db file
 echo "TITLE = ${title}" > ${dbfile}
 echo "DESCRIPTION = ${desc}" >> ${dbfile}
-echo "DATE = ${date}" >> ${dbfile}
 echo "TAGS = ${tags}" >> ${dbfile}
 echo "TYPE = ${post_type}" >> ${dbfile}
 echo "AUTHOR = ${author}" >> ${dbfile}
