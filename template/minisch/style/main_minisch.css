@@ -1224,3 +1224,8 @@ body.page ul.children, body.error404 ul.children {
 width: auto;
 margin: 5px;
 }
+
+article.post img {
+  display: block;
+  margin: 15px auto;
+}
