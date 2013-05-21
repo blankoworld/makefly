@@ -18,5 +18,4 @@ MAX_RSS = 8
 markdown = ${BINDIR}/lunamark
 JSKOMMENT = 1
 JSKOMMENT_URL = http://jskomment.e-mergence.org
-THEME = responsive
-FLAVOR = dark
+THEME = minisch
