@@ -93,6 +93,12 @@ Pour plus d'informations, lisez la section **Le fichier de configuration makefly
 
 La mani&egrave;re de cr&eacute;er du contenu d&eacute;pend de votre version.
 
+Pour connaitre votre version, faites :
+
+    pmake version
+
+Si une erreur apparait comme : ``pmake: don't know how to make version. Stop``, alors vous avez une version ant&eacute;rieure &agrave; 0.2.1.
+
 ### Version ant&eacute;rieure &agrave; 0.2.1
 
 Rendez-vous dans le dossier **tools** puis lancez le script **create_post.sh** de la mani&egrave;re suivante : 
@@ -245,7 +251,7 @@ Note: La commande pmake command est pour Debian et d&eacute;riv&eacute;s. Pour l
 
 ## Astuces
 
-### Écrire des billets en avance
+### &Eacute;crire des billets en avance
 
 Dans Makefly vous pouvez &eacute;crire des billets en avance. Il suffit pour cela que le fichier de m&eacute;ta-donn&eacute;es de votre billet poss&egrave;de un timestamp sup&eacute;rieur &agrave; celui du moment o&ugrave; est g&eacute;n&eacute;r&eacute; le blog.
 

@@ -93,6 +93,12 @@ For more information please read **The makefly.rc configuration file** section.
 
 The way to create content depends on your version.
 
+To know your current version, just use this command:
+
+    pmake version
+
+If an error occured like ``pmake: don't know how to make version. Stop``, then you are under 0.2.1 version.
+
 ### Version older than 0.2.1
 
 Go to **tools** directory and launch **create_post.sh** script like this: 

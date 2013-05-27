@@ -805,6 +805,9 @@ createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 
 add: createpost
 
+version: 
+	$Qecho "${VERSION}"
+
 # list: list all available command as a help command
 list: 
 	$Qecho "List of available commands: \n \
@@ -817,7 +820,8 @@ list:
 		backup     make a backup from your current makefly directory \n \
 		install    install 'pub' directory into INSTALLDIR directory (set in makefly.rc) \n \
 		publish    publish your weblog using tools/publish.sh script \n \
-		theme      copy 'base' theme to create a new one named using 'name' variable"
+		theme      copy 'base' theme to create a new one named using 'name' variable \n \
+		version    give version of the current program"
 
 help: list
 
