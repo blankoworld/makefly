@@ -160,6 +160,7 @@ parser_opts = "VERSION=${VERSION}"           \
 		"JSKOMMENT_SCRIPT="                      \
 		"JSKOMMENT_CONTENT="                     \
 		"JSKOMMENT_COMMENTS=${JSKOMMENT_COMMENTS}" \
+		"JSKOMMENT_ID="                          \
 		"ELI_SCRIPT="                            \
 		"ELI_CONTENT="                           \
 		"ELI_TITLE=${ELI_TITLE}"                 \
@@ -443,8 +444,14 @@ TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/
 CLASS_TYPE_${FILE} != echo ${TYPE}
 AUTHOR_${FILE}     != echo ${AUTHOR}
 JSKOMMENT_CONTENT_${FILE} = 
+.if defined(JSKOMMENT_PREFIX) && ${JSKOMMENT_PREFIX}
+JSKOMMENT_PREFIX_${FILE} != echo "${JSKOMMENT_PREFIX}"
+.else
+JSKOMMENT_PREFIX_${FILE} != echo "${BASE_URL}/"
+.endif
+JSKOMMENT_ID_${FILE} != echo "${JSKOMMENT_PREFIX_${FILE}}${ESCAPED_TITLE_${FILE}}"
 .if defined(JSKOMMENT) && ${JSKOMMENT}
-JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "POST_ESCAPED_TITLE=${ESCAPED_TITLE_${FILE}}"
+JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "JSKOMMENT_ID=${JSKOMMENT_ID_${FILE}}"
 .endif
 
 .for TAG in ${TAGS_${FILE}}
@@ -507,8 +514,14 @@ TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/
 CLASS_TYPE_${FILE} != echo ${TYPE}
 AUTHOR_${FILE}     != echo ${AUTHOR}
 JSKOMMENT_CONTENT_${FILE} = 
+.if defined(JSKOMMENT_PREFIX) && ${JSKOMMENT_PREFIX}
+JSKOMMENT_PREFIX_${FILE} != echo "${JSKOMMENT_PREFIX}"
+.else
+JSKOMMENT_PREFIX_${FILE} != echo "${BASE_URL}/"
+.endif
+JSKOMMENT_ID_${FILE} != echo "${JSKOMMENT_PREFIX_${FILE}}${ESCAPED_NAME_${FILE}}"
 .if defined(JSKOMMENT) && ${JSKOMMENT}
-JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "POST_ESCAPED_TITLE=${ESCAPED_NAME_${FILE}}"
+JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "JSKOMMENT_ID=${JSKOMMENT_ID_${FILE}}"
 .endif
 
 .for TAG in ${TAGS_${FILE}}
