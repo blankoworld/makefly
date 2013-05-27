@@ -788,6 +788,7 @@ theme: ${TMPLDIR}
 
 # Create post: simple post creation
 # note: create_post.sh -q 1 do not display any editor
+# TODO: title="myTitle" tags="myTags" quiet="1" pmake add
 createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 	$Q{ cat ${TOOLSDIR}/create_post.sh |${parser} \
 		"DBDIR=${DBDIR}" \
