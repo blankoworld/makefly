@@ -277,6 +277,7 @@ ${eli_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${eli_file} ${eli_css:S/^/${DES
 			cat ${eli_file} |${parser} ${parser_opts}            \
 			"ELI_MAX=${ELI_MAX}"                                 \
 			"ELI_TYPE=${ELI_TYPE}"                               \
+			"ELI_API=${ELI_API}"                                 \
 			"ELI_USER=${ELI_USER}" ;                             \
 		} > ${eli_file:S/${TMPLDIR}/${DESTDIR}/} || {          \
 			echo "-- Error while copying ${eli_name} script." ;  \
