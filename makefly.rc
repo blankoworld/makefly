@@ -21,3 +21,4 @@ markdown = ${BINDIR}/lunamark
 JSKOMMENT = 1
 JSKOMMENT_URL = http://jskomment.e-mergence.org
 ELI_USER = bl4n
+ELI_API = http://status.vinilox.eu/api/
