@@ -1,6 +1,6 @@
 ## Download
 
-  * [0.2 stable](${BASE_URL}/makefly_0.2.zip)
+  * [0.2.1 stable](${BASE_URL}/makefly_0.2.1.zip)
   * [last version](https://github.com/blankoworld/makefly/archive/master.zip) (unstable)
 
 ## More info
