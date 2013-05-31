@@ -1,10 +1,17 @@
-Current (trunk)
+Version 0.2.1 (released 2013-05-31)
 	- Improve Bootstrap theme with glyphicons
 	- You can choose a "FLAVOR" for your theme in order to change colors
 	- Add new commands: 'help' and 'list' that give all available commands
 	- Add new commands: 'createpost' and 'add' in order to create a new post
 	- Add new command: 'install'
 	- Clean up meta data file (delete DATE useless field)
+	- Add new command: 'theme' to create your theme
+	- Add new command: 'version' to give your current version
+	- Improve documentation
+	- Permit to use a prefix for JSKOMMENT identification. If none, use default
+	BASE_URL
+	- Fix ELI to use ELI_API choosen by the user (if given)
+	- Display new created postname for user to edit it
 
 Version 0.2 (released 2013-04-17)
 	- Add jskomment as optional comment system

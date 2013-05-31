@@ -31,7 +31,7 @@ Q ?= @
 # use conf= to change configuration file
 conf ?= makefly.rc
 # Makefly version
-VERSION = 0.2.1-trunk
+VERSION = 0.2.1
 
 # directories
 TMPLDIR          = ./template
@@ -160,6 +160,7 @@ parser_opts = "VERSION=${VERSION}"           \
 		"JSKOMMENT_SCRIPT="                      \
 		"JSKOMMENT_CONTENT="                     \
 		"JSKOMMENT_COMMENTS=${JSKOMMENT_COMMENTS}" \
+		"JSKOMMENT_ID="                          \
 		"ELI_SCRIPT="                            \
 		"ELI_CONTENT="                           \
 		"ELI_TITLE=${ELI_TITLE}"                 \
@@ -276,6 +277,7 @@ ${eli_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${eli_file} ${eli_css:S/^/${DES
 			cat ${eli_file} |${parser} ${parser_opts}            \
 			"ELI_MAX=${ELI_MAX}"                                 \
 			"ELI_TYPE=${ELI_TYPE}"                               \
+			"ELI_API=${ELI_API}"                                 \
 			"ELI_USER=${ELI_USER}" ;                             \
 		} > ${eli_file:S/${TMPLDIR}/${DESTDIR}/} || {          \
 			echo "-- Error while copying ${eli_name} script." ;  \
@@ -443,8 +445,14 @@ TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/
 CLASS_TYPE_${FILE} != echo ${TYPE}
 AUTHOR_${FILE}     != echo ${AUTHOR}
 JSKOMMENT_CONTENT_${FILE} = 
+.if defined(JSKOMMENT_PREFIX) && ${JSKOMMENT_PREFIX}
+JSKOMMENT_PREFIX_${FILE} != echo "${JSKOMMENT_PREFIX}"
+.else
+JSKOMMENT_PREFIX_${FILE} != echo "${BASE_URL}/"
+.endif
+JSKOMMENT_ID_${FILE} != echo "${JSKOMMENT_PREFIX_${FILE}}${ESCAPED_TITLE_${FILE}}"
 .if defined(JSKOMMENT) && ${JSKOMMENT}
-JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "POST_ESCAPED_TITLE=${ESCAPED_TITLE_${FILE}}"
+JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "JSKOMMENT_ID=${JSKOMMENT_ID_${FILE}}"
 .endif
 
 .for TAG in ${TAGS_${FILE}}
@@ -507,8 +515,14 @@ TAGS_${FILE}       != echo ${TAGS} |sed -e 's/\([0-9a-zA-Z]*\) \([0-9a-zA-Z]*\)/
 CLASS_TYPE_${FILE} != echo ${TYPE}
 AUTHOR_${FILE}     != echo ${AUTHOR}
 JSKOMMENT_CONTENT_${FILE} = 
+.if defined(JSKOMMENT_PREFIX) && ${JSKOMMENT_PREFIX}
+JSKOMMENT_PREFIX_${FILE} != echo "${JSKOMMENT_PREFIX}"
+.else
+JSKOMMENT_PREFIX_${FILE} != echo "${BASE_URL}/"
+.endif
+JSKOMMENT_ID_${FILE} != echo "${JSKOMMENT_PREFIX_${FILE}}${ESCAPED_NAME_${FILE}}"
 .if defined(JSKOMMENT) && ${JSKOMMENT}
-JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "POST_ESCAPED_TITLE=${ESCAPED_NAME_${FILE}}"
+JSKOMMENT_CONTENT_${FILE} != cat ${jskom_cont} |sed -e 's|\"|\\"|g' |${parser} ${parser_opts} "JSKOMMENT_ID=${JSKOMMENT_ID_${FILE}}"
 .endif
 
 .for TAG in ${TAGS_${FILE}}
@@ -788,6 +802,7 @@ theme: ${TMPLDIR}
 
 # Create post: simple post creation
 # note: create_post.sh -q 1 do not display any editor
+# TODO: title="myTitle" tags="myTags" quiet="1" pmake add
 createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 	$Q{ cat ${TOOLSDIR}/create_post.sh |${parser} \
 		"DBDIR=${DBDIR}" \
@@ -804,6 +819,9 @@ createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 
 add: createpost
 
+version: 
+	$Qecho "${VERSION}"
+
 # list: list all available command as a help command
 list: 
 	$Qecho "List of available commands: \n \
@@ -816,7 +834,8 @@ list:
 		backup     make a backup from your current makefly directory \n \
 		install    install 'pub' directory into INSTALLDIR directory (set in makefly.rc) \n \
 		publish    publish your weblog using tools/publish.sh script \n \
-		theme      copy 'base' theme to create a new one named using 'name' variable"
+		theme      copy 'base' theme to create a new one named using 'name' variable \n \
+		version    give version of the current program"
 
 help: list
 

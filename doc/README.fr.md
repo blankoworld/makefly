@@ -53,7 +53,7 @@ Il y a deux mani&egrave;res d'installer Makefly sur votre ordinateur :
 
 R&eacute;cup&eacute;rez simplement la derni&egrave;re version sur le site officiel : [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Aller sur le site officiel de Makefly").
 
-Par exemple [la version 0.2](http://makefly.e-mergence.org/makefly_0.2.zip "T&eacute;l&eacute;charger Makefly 0.2").
+Par exemple [la version 0.2.1](http://makefly.e-mergence.org/makefly_0.2.1.zip "T&eacute;l&eacute;charger Makefly 0.2.1").
 
 Puis extraire le contenu de l'archive dans un dossier.
 
@@ -92,6 +92,12 @@ Pour plus d'informations, lisez la section **Le fichier de configuration makefly
 ## Cr&eacute;er du contenu
 
 La mani&egrave;re de cr&eacute;er du contenu d&eacute;pend de votre version.
+
+Pour connaitre votre version, faites :
+
+    pmake version
+
+Si une erreur apparait comme : ``pmake: don't know how to make version. Stop``, alors vous avez une version ant&eacute;rieure &agrave; 0.2.1.
 
 ### Version ant&eacute;rieure &agrave; 0.2.1
 
@@ -245,7 +251,7 @@ Note: La commande pmake command est pour Debian et d&eacute;riv&eacute;s. Pour l
 
 ## Astuces
 
-### Écrire des billets en avance
+### &Eacute;crire des billets en avance
 
 Dans Makefly vous pouvez &eacute;crire des billets en avance. Il suffit pour cela que le fichier de m&eacute;ta-donn&eacute;es de votre billet poss&egrave;de un timestamp sup&eacute;rieur &agrave; celui du moment o&ugrave; est g&eacute;n&eacute;r&eacute; le blog.
 
@@ -287,6 +293,7 @@ Voici quelques options que vous pouvez changer :
   * ELI\_USER: Si utilis&eacute;, ceci active un cadre pour identica. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utiliser l'API d'IDENTICA.
   * ELI\_TYPE (optionel) : Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur d'IDENTICA. Par d&eacute;faut "user".
   * ELI\_MAX (optionnel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
+  * ELI\_API (optionnel) : Acc&egrave;s &agrave; l'API de votre syst&egrave;me StatusNet.
   * INSTALLDIR : Permet de choisir le dossier de destination lors de l'utilisation du script **install.sh** (Cf. Chapitre Publier le r&eacute;sultat sur le web).
   * COMPRESS_TOOL (optionnel) : Outil console utilis&eacute; pour la compression lors des sauvegardes via la commande *backup* (Cf. Chapitre *Sauvegardes*). Exemple : **gzip**.
   * COMPRESS_EXT (optionnel) : Extension des fichiers de sauvegarde. Attention &agrave; ne pas oublier le caract&egrave;re point. Exemple : **.gz**.
