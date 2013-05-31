@@ -9,6 +9,7 @@ It's composed of:
 * home page
 * post's list
 * tag's list
+* [optional] about's page
 
 and includes somes functionalities like:
 
@@ -23,6 +24,8 @@ and includes somes functionalities like:
 * comment system
 * identica badge (to display twitter/identica statuses)
 * backup command
+* publish command
+* theme creation command
 
 You can so:
 
@@ -38,6 +41,8 @@ You can so:
 * add an about page, an introduction on main page and/or a specific footer content
 * display your identica statuses in sidebar
 * backup your configuration file, theme, static files and some important files for your Makefile blog
+* publish your blog on the web
+* create your own theme
 
 In fact, it's a lightweight weblog engine that generates some HTML static files.
 
@@ -77,6 +82,7 @@ For developers, it exists [a Makefly's developers documentation on github](https
 
 ## Archives
 
+  * [Makefly v0.2.1](${BASE_URL}/makefly_0.2.1.zip)
   * [Makefly v0.2](${BASE_URL}/makefly_0.2.zip)
   * [Makefly v0.2-beta](${BASE_URL}/makefly_0.2-beta.zip)
   * [Makefly v0.2-alpha](${BASE_URL}/makefly_0.2-alpha.zip)
