@@ -31,7 +31,7 @@ Q ?= @
 # use conf= to change configuration file
 conf ?= makefly.rc
 # Makefly version
-VERSION = 0.2.1-trunk
+VERSION = 0.2.1
 
 # directories
 TMPLDIR          = ./template

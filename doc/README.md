@@ -53,7 +53,7 @@ There is 2 ways to install Makefly on your computer:
 
 Just download last version on official website: [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Go to official makefly website").
 
-For an example [0.2 version](http://makefly.e-mergence.org/makefly_0.2.zip "Download Makefly 0.2").
+For an example [0.2.1 version](http://makefly.e-mergence.org/makefly_0.2.1.zip "Download Makefly 0.2.1").
 
 Then extract tarball's content into a directory.
 
