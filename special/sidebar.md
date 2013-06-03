@@ -1,14 +1,14 @@
-## ${LINKS_TITLE}
-
-  * [Blanko sur le Web](https://olivier.dossmann.net/wiki/blankoweb/index "Liste des sites du Blankoworld")
+## Mes liens
 
 ## Jouebs
 
+  * [Deber](http://oceamer.com/~interlude/ "Journal du projet de Deber")
   * [IRPDEV](http://www.irpdev.fr/ "Le blog d'IRPDEV")
   * [mart-e](http://mart-e.be/ "about life, linux and everything")
   * [Postblue](http://postblue.info/ "Le blog de Postblue")
   * [Halpanet](http://www.halpanet.org/ "Découvrir la liberté informatique avec Halpanet")
   * [Schoewilliam](http://schoewilliam.fr/ "Carnet web d'un habitant de la banquise GNU/Linuxienne.")
+  * [Porneia delights](http://porneia.free.fr/pub/ "I used to be schizophrenic but now we are going much better. We are the Porneia delights. We are persistent and reluctant. We also do not really come from outer space.")
   * [L'antre de Lenezir](http://blog.lenezir.fr/ "Les péripéties d'un linuxien sur frugalware")
 
 <!-- Useless links
@@ -21,7 +21,6 @@
 
 ## Nanoblogger préférés
 
-  * [Deber](http://oceamer.com/~interlude/ "Journal du projet de Deber")
   * [Nanoblogger FR](http://oceamer.com/~nanoblogger/ "Le site non officiel francophone du c&eacute;l&egrave;bre outil de publication en mode console : Nanoblogger")
   * [L'appel du Gnou](http://blog.wolf.am/ "Le blog d'un vadrouilleur libre, explorateur de gnu/linux et d'autres horizons")
 
@@ -33,12 +32,13 @@
   * [LUG de Strasbourg](http://tux.u-strasbg.fr/ "Site du groupe d'utilisateurs Linux de Strasbourg")
   * [OrdinaTueur, AideInfo](http://forums.ordinatueur.org/portal.php "Visiter le forum d'aide informatique nomm&eacute; Ordinatueur")
 
-## Blanko
+## Lui
 
-  * [Wiki](http://olivier.dossmann.net/wiki/ "Le Wiki de Blanko")
-  * [Liens](http://olivier.dossmann.net/liens/ "Les BlankoLiens")
-  * [Galerie](http://images.dossmann.net/ "D&eacute;couvrir la galerie Blankoesque")
-  * [Fichiers](http://vampiris.me/fichiers/ "Serveur de fichiers de Blanko")
+  * [Wiki](http://olivier.dossmann.net/wiki/ "Recueil d'astuces")
+  * [Liens](http://olivier.dossmann.net/liens/ "Quelques liens en vrac")
+  * [Galerie](http://images.dossmann.net/ "D&eacute;couvrir la galerie d'Olivier DOSSMANN")
+  * [Fichiers](http://vampiris.me/fichiers/ "Serveur de fichiers Vampirisme")
+  * [Son Oueb](https://olivier.dossmann.net/wiki/blankoweb/index "Liste des sites de son environnement Oueb")
 
 ## Divers
 
