@@ -4,3 +4,4 @@ DATE = 16/09/2008 15:54:00
 TAGS = materiel,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

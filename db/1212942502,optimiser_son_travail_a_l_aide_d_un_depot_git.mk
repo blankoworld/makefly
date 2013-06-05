@@ -4,3 +4,4 @@ DATE = 08/06/2008 18:28:22
 TAGS = developpement
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

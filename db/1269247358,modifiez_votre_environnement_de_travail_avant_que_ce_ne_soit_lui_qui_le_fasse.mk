@@ -4,3 +4,4 @@ DATE = 22/03/2010 09:42:38
 TAGS = fantasmablankoique,astuce
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

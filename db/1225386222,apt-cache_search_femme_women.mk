@@ -4,3 +4,4 @@ DATE = 30/10/2008 18:03:42
 TAGS = fantasmablankoique,lui
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

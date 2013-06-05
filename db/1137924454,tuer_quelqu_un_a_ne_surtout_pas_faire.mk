@@ -4,3 +4,4 @@ DATE = 22/01/2006 11:07:34
 TAGS = nouvelle,fantasmablankoique
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

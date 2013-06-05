@@ -4,3 +4,4 @@ DATE = 08/08/2008 23:26:28
 TAGS = logiciels,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

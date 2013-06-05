@@ -4,3 +4,4 @@ DATE = 03/10/2011 12:37:02
 TAGS = planet-gd,nouvelle
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

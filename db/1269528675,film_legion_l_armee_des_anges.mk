@@ -4,3 +4,4 @@ DATE = 25/03/2010 15:51:15
 TAGS = film
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

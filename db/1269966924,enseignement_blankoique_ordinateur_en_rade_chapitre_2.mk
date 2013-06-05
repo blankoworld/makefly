@@ -4,3 +4,4 @@ DATE = 30/03/2010 18:35:24
 TAGS = materiel,astuce,lui
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

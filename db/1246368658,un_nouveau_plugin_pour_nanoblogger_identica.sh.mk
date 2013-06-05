@@ -4,3 +4,4 @@ DATE = 30/06/2009 15:30:58
 TAGS = lui,web,logiciels,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

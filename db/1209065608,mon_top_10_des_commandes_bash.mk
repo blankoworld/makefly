@@ -4,3 +4,4 @@ DATE = 24/04/2008 21:33:28
 TAGS = lui
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

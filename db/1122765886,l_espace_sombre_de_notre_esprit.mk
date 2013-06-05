@@ -4,3 +4,4 @@ DATE = 31/07/2005 01:24:46
 TAGS = fantasmablankoique
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

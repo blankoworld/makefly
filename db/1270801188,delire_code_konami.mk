@@ -4,3 +4,4 @@ DATE = 09/04/2010 10:19:48
 TAGS = blankoweb,jeu,web
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

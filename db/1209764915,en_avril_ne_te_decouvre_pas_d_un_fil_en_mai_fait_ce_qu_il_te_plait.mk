@@ -4,3 +4,4 @@ DATE = 02/05/2008 23:48:35
 TAGS = astuce,logiciels,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

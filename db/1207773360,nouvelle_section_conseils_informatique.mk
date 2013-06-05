@@ -4,3 +4,4 @@ DATE = 09/04/2008 22:36:00
 TAGS = nouvelle,blankoweb,astuce
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

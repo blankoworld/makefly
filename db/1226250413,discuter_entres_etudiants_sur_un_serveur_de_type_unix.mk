@@ -4,3 +4,4 @@ DATE = 09/11/2008 18:06:53
 TAGS = planet-gd,fantasmablankoique,astuce,lui
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

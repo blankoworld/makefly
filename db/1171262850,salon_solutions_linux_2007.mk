@@ -4,3 +4,4 @@ DATE = 12/02/2007 07:47:30
 TAGS = lui,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

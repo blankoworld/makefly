@@ -4,3 +4,4 @@ DATE = 10/01/2010 21:45:06
 TAGS = planet-gd,web,logiciels,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

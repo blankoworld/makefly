@@ -4,3 +4,4 @@ DATE = 16/11/2011 12:43:59
 TAGS = envrac,nouvelle,astuce,lui,web
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

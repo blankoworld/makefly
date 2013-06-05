@@ -4,3 +4,4 @@ DATE = 21/11/2011 18:03:29
 TAGS = developpement,astuce,logiciels,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

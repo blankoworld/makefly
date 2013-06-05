@@ -4,3 +4,4 @@ DATE = 23/05/2013 21:12:05
 TAGS = blankoweb,fantasmablankoique,web,logiciels,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

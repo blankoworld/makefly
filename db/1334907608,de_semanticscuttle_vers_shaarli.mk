@@ -4,3 +4,4 @@ DATE = 20/04/2012 09:40:08
 TAGS = developpement,nouvelle,blankoweb,web,logiciels,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

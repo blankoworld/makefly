@@ -4,3 +4,4 @@ DATE = 30/06/2005 21:11:03
 TAGS = nouvelle
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

@@ -4,3 +4,4 @@ DATE = 09/01/2007 20:43:55
 TAGS = lui,jeu
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

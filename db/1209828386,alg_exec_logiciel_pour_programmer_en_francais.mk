@@ -4,3 +4,4 @@ DATE = 03/05/2008 17:26:26
 TAGS = developpement,logiciels,libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/

@@ -4,3 +4,4 @@ DATE = 05/07/2009 14:47:39
 TAGS = libre
 TYPE = news
 AUTHOR = Blankoworld
+JSKOMMENT_PREFIX = http://olivier.dossmann.net/
