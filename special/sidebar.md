@@ -1,3 +1,5 @@
+[Makefly's project homepage](http://makefly.e-mergence.org/)
+
 ## Download
 
   * [0.2.1 stable](${BASE_URL}/makefly_0.2.1.zip)
