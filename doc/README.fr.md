@@ -2,7 +2,9 @@
 
 # Makefly
 
-An english version of this documentation is available in **README.md** file (located in **doc** directory).
+[Original english documentation version](http://makefly.e-mergence.org/documentation.html) (version originale en anglais)
+
+[Aller sur le site web](http://makefly.e-mergence.org/)
 
 ## &Agrave; propos
 
@@ -10,7 +12,7 @@ Makefly est un moteur de blog statique qui utilise les fichiers Makefile BSD pou
 
 ### Site web
 
-Visitez fr&eacute;quemment le [blog de Makefly](http://makefly.e-mergence.org/ "Visiter le blog officiel de Makefly") (en) pour avoir des nouvelles du projet.
+Visitez fr&eacute;quemment le [blog de Makefly](http://makefly.e-mergence.org/blog/ "Visiter le blog officiel de Makefly") (en) pour avoir des nouvelles du projet.
 
 ### Contact
 

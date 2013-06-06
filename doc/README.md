@@ -2,7 +2,9 @@
 
 # Makefly
 
-Une version fran&ccedil;aise de cette documentation est disponible dans le fichier **README.fr.md** (situé dans le répertoire **doc**).
+[Version originale de la documentation](http://makefly.e-mergence.org/documentation.html) (French original version)
+
+[Go to the website](http://makefly.e-mergence.org/)
 
 ## About
 
@@ -10,7 +12,7 @@ Makefly is a static weblog engine that used a BSD Makefile to work.
 
 ### Website
 
-Stay tuned to [Makefly weblog](http://makefly.e-mergence.org/ "Visit Makefly official website").
+Stay tuned to [Makefly weblog](http://makefly.e-mergence.org/blog/ "Visit Makefly official website").
 
 ### Contact
 
