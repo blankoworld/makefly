@@ -104,6 +104,8 @@ end
 function checkDirectory(path)
   if lfs.attributes(path) == nil then
     assert(lfs.mkdir(path))
+    -- Display created directory
+    print ('-- Created folder: ' .. path .. ' ...')
   end
 end
 
@@ -361,6 +363,8 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   post_index:write(index_content)
   -- Close post's index
   post_index:close()
+  -- Display that post index was created
+  print ('-- Post list built.')
 end
 
 function createTag(filename, title, posts, header, footer, replacements)
@@ -382,6 +386,8 @@ function createTag(filename, title, posts, header, footer, replacements)
   local substitutions = getSubstitutions(replacements, {TITLE=title})
   page_file:write(replace(page:flatten(), substitutions))
   page_file:close()
+  -- Print tag title
+  print ("-- Tag successfully created: " .. title)
 end
 
 function createTagIndex(all_tags, tagpath, index_filename, header, footer, replacements, extension, template_index_filename, template_element_filename)
@@ -411,6 +417,8 @@ function createTagIndex(all_tags, tagpath, index_filename, header, footer, repla
   index_file:write(index_content)
   -- Close post's index
   assert(index_file:close())
+  -- Display that tag index was created
+  print ('-- Tag list built.')
 end
 
 --[[ MAIN ]]--
@@ -433,6 +441,8 @@ tagpath = publicpath .. '/' .. tagdir_name
 index_filename = index_name .. resultextension
 date_format_default = makeflyrc['DATE_FORMAT'] or '%Y-%m-%d at %H:%M'
 short_date_format_default = makeflyrc['SHORT_DATE'] or '%Y/%m'
+-- Display which theme the user have choosed
+print ('-- Choosen theme: ' .. theme)
 
 -- Get language configuration
 language = makeflyrc['BLOG_LANG'] or language_default
