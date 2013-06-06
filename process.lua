@@ -165,12 +165,12 @@ function copy(origin, destination)
     for element in lfs.dir(origin) do
       if element ~= '.' and element ~= '..' then
         local path = origin .. '/' .. element
-	-- launch copy directory if element is a directory, otherwise copy file
-	if lfs.attributes(path) and lfs.attributes(path).mode == 'directory' then
-	  copy(path, destination .. '/' .. element)
-	else
-	  copyFile(path, destination .. '/' .. element)
-	end
+  -- launch copy directory if element is a directory, otherwise copy file
+  if lfs.attributes(path) and lfs.attributes(path).mode == 'directory' then
+    copy(path, destination .. '/' .. element)
+  else
+    copyFile(path, destination .. '/' .. element)
+  end
       end
     end
   -- if origin is a file, just launch copyFile function
@@ -327,21 +327,21 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
       if post_conf_tags then
         local post_tags = {}
         for i, tag in pairs(post_conf_tags:split(',')) do
-	  tagname = deleteEndSpace(deleteBeginSpace(tag))
-	  -- remember the tagname to create tag links
-	  table.insert(post_tags, tagname)
-	  -- add tag to list of all tags
-	  if tags[tagname] == nil then
-	    tags[tagname] = {title}
-	  else
-	    table.insert(tags[tagname], title)
-	  end
-	end
-	-- create tag links
-	tag_links = createTagLinks(post_tags, tagpath, template_taglink_file, extension)
-	if tag_links then
-	  metadata['TAG_LINKS_LIST'] = tag_links
-	end
+    tagname = deleteEndSpace(deleteBeginSpace(tag))
+    -- remember the tagname to create tag links
+    table.insert(post_tags, tagname)
+    -- add tag to list of all tags
+    if tags[tagname] == nil then
+      tags[tagname] = {title}
+    else
+      table.insert(tags[tagname], title)
+    end
+  end
+  -- create tag links
+  tag_links = createTagLinks(post_tags, tagpath, template_taglink_file, extension)
+  if tag_links then
+    metadata['TAG_LINKS_LIST'] = tag_links
+  end
       end
       -- prepare substitutions for the post
       post_substitutions = getSubstitutions(v, metadata)
