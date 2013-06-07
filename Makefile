@@ -90,6 +90,7 @@ eli_css     ?= ${TMPLDIR}/eli.css
 # first main variables
 .include "${conf}"
 PAGE_EXT ?= .html
+INDEX_FILENAME ?= index
 # then translation variables
 .include "${LANGDIR}/translate.${BLOG_LANG}"
 # finally theme VARIABLES
@@ -411,8 +412,10 @@ ${jskom_file:S/${TMPLDIR}/${DESTDIR}/}: ${DESTDIR} ${jskom_file}
 
 parser_opts += "JSKOMMENT_SCRIPT=${JSKOMMENT_SCRIPT}"
 
+# OLD BEGIN
+#all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//} ${jskom_file:S/${TMPLDIR}/${DESTDIR}/} ${eli_file:S/${TMPLDIR}/${DESTDIR}/}
 # BEGIN
-all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${POSTDIR}/${POSTDIR_INDEX} ${TAGDIR}/${TAGDIR_INDEX} ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//} ${jskom_file:S/${TMPLDIR}/${DESTDIR}/} ${eli_file:S/${TMPLDIR}/${DESTDIR}/}
+all: sidebar ${FILES:S/.md/${PAGE_EXT}/g:S/^/${POSTDIR}\//} ${DESTDIR}/${CSS_FILE} ${DESTDIR}/${INDEX_FILENAME}${PAGE_EXT} ${DESTDIR}/rss.xml ${MEDIAFILES:S/^${STATICDIR}/${DESTDIR}\//} ${ABOUTRESULT:S/^${SPECIALDIR}/${DESTDIR}/:S/.md$/${PAGE_EXT}/} ${THEMEMEDIAFILES:S/^${THEMEDIR}\/static\//${DESTDIR}\//} ${jskom_file:S/${TMPLDIR}/${DESTDIR}/} ${eli_file:S/${TMPLDIR}/${DESTDIR}/}
 
 # Create target post file LIST
 # EXAMPLE: pub/article1.xhtml
@@ -657,57 +660,57 @@ ${DESTDIR}/rss.xml: ${DESTDIR} ${DBFILES:S/^/${TMPDIR}\//}
 		} ; \
 	} && echo "-- RSS page built: $@"
 
-# Do Post List page
-# EXAMPLE: posts/index.html
-${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
-	$Q{ \
-		cat ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
-		cat ${post_idx} >> ${TMPDIR}/list${PAGE_EXT} && \
-		cat ${TMPDIR}/posts.list >> ${TMPDIR}/list${PAGE_EXT} && \
-		${rm} -f ${TMPDIR}/posts.list &&                            \
-		cat ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
-		cat ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
-			"TITLE=${POST_LIST_TITLE}"                                                  \
-			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"                    \
-			|sed ':a;N;$$!ba;s//\n/g' > ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT} &&    \
-    ${rm} ${TMPDIR}/list${PAGE_EXT} || {                                          \
-			echo "-- Could not build list page: $@" ;                           \
-			false ;                                                                \
-		} ;                                                                      \
-	} && echo "-- List page built: $@"
-
-# Do Tag List page
-# EXAMPLE: pub/tags/index.xhtml
-${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
-	$Q{ \
-		cat ${header} > ${TMPDIR}/taglist${PAGE_EXT} &&             \
-		cat ${tags} | ${parser} ${parser_opts}                      \
-			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"                           \
-			"TAGLIST_CONTENT=`cat ${TMPDIR}/tags.list |${sort} -u`"   \
-			>> ${TMPDIR}/taglist${PAGE_EXT} &&                           \
-		cat ${footer} >> ${TMPDIR}/taglist${PAGE_EXT} &&            \
-		cat ${TMPDIR}/taglist${PAGE_EXT} | ${parser} ${parser_opts} \
-		  "BODY_CLASS=tags"                                            \
-			"TITLE=${TAG_LIST_TITLE}"                                    \
-			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"     \
-		|sed ':a;N;$$!ba;s//\n/g' > ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
-		${rm} ${TMPDIR}/tags.list &&                                   \
-		${rm} ${TMPDIR}/taglist${PAGE_EXT} ||                          \
-		{                                                              \
-			echo "-- Could not build tag list page: $@" ;             \
-			false ;                                                      \
-		} ;                                                            \
-	} && echo "-- Tag list built: $@"
-	$Qfor TAG in `cd ${TMPDIR};ls *.tag|sed -e 's|.tag$$||g'`; do        \
-		cat ${header} > ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                    \
-		cat ${TMPDIR}/$${TAG}.tag >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&        \
-		cat ${footer} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                     \
-		cat ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
-			"TITLE=$${TAG}"                                                           \
-			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"       \
-			|sed ':a;N;$$!ba;s//\n/g' > ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
-			${rm} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
-		done
+## Do Post List page
+## EXAMPLE: posts/index.html
+#${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${POSTDIR} ${DBFILES:S/^/${TMPDIR}\//}
+#	$Q{ \
+#		cat ${header} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
+#		cat ${post_idx} >> ${TMPDIR}/list${PAGE_EXT} && \
+#		cat ${TMPDIR}/posts.list >> ${TMPDIR}/list${PAGE_EXT} && \
+#		${rm} -f ${TMPDIR}/posts.list &&                            \
+#		cat ${footer} >> ${TMPDIR}/list${PAGE_EXT} &&                              \
+#		cat ${TMPDIR}/list${PAGE_EXT} | ${parser} ${parser_opts}                   \
+#			"TITLE=${POST_LIST_TITLE}"                                                  \
+#			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"                    \
+#			|sed ':a;N;$$!ba;s//\n/g' > ${POSTDIR}/${INDEX_FILENAME}${PAGE_EXT} &&    \
+#    ${rm} ${TMPDIR}/list${PAGE_EXT} || {                                          \
+#			echo "-- Could not build list page: $@" ;                           \
+#			false ;                                                                \
+#		} ;                                                                      \
+#	} && echo "-- List page built: $@"
+#
+## Do Tag List page
+## EXAMPLE: pub/tags/index.xhtml
+#${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT}: ${TAGDIR} ${DBFILES:S/^/${TMPDIR}\//}
+#	$Q{ \
+#		cat ${header} > ${TMPDIR}/taglist${PAGE_EXT} &&             \
+#		cat ${tags} | ${parser} ${parser_opts}                      \
+#			"TAG_LIST_TITLE=${TAG_LIST_TITLE}"                           \
+#			"TAGLIST_CONTENT=`cat ${TMPDIR}/tags.list |${sort} -u`"   \
+#			>> ${TMPDIR}/taglist${PAGE_EXT} &&                           \
+#		cat ${footer} >> ${TMPDIR}/taglist${PAGE_EXT} &&            \
+#		cat ${TMPDIR}/taglist${PAGE_EXT} | ${parser} ${parser_opts} \
+#		  "BODY_CLASS=tags"                                            \
+#			"TITLE=${TAG_LIST_TITLE}"                                    \
+#			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"     \
+#		|sed ':a;N;$$!ba;s//\n/g' > ${TAGDIR}/${INDEX_FILENAME}${PAGE_EXT} && \
+#		${rm} ${TMPDIR}/tags.list &&                                   \
+#		${rm} ${TMPDIR}/taglist${PAGE_EXT} ||                          \
+#		{                                                              \
+#			echo "-- Could not build tag list page: $@" ;             \
+#			false ;                                                      \
+#		} ;                                                            \
+#	} && echo "-- Tag list built: $@"
+#	$Qfor TAG in `cd ${TMPDIR};ls *.tag|sed -e 's|.tag$$||g'`; do        \
+#		cat ${header} > ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                    \
+#		cat ${TMPDIR}/$${TAG}.tag >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&        \
+#		cat ${footer} >> ${TMPDIR}/$${TAG}.tag${PAGE_EXT} &&                     \
+#		cat ${TMPDIR}/$${TAG}.tag${PAGE_EXT} | ${parser} ${parser_opts}         \
+#			"TITLE=$${TAG}"                                                           \
+#			"SIDEBAR=`cat ${TMPDIR}/${SIDEBAR_FILENAME}${PAGE_EXT}`"       \
+#			|sed ':a;N;$$!ba;s//\n/g' > ${TAGDIR}/$${TAG}${PAGE_EXT} &&                                       \
+#			${rm} ${TMPDIR}/$${TAG}.tag${PAGE_EXT} && ${rm} -f ${TMPDIR}/$${TAG}.tag; \
+#		done
 
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
