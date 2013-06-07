@@ -45,6 +45,7 @@ local page_post_element_name = 'element.xhtml'
 local page_tag_element_name = 'tagelement.xhtml'
 local page_tag_link_name = 'taglink.xhtml'
 local page_tag_index_name = 'tags.xhtml'
+local page_sidebar_name = 'sidebar.xhtml'
 -- others
 local version = os.getenv('VERSION') or 'L 0.2.1-trunk'
 local replacements = {} -- substitution table
@@ -481,6 +482,7 @@ local page_article_single = themepath .. '/' .. page_article_name
 local page_post_element = themepath .. '/' .. page_post_element_name
 local page_tag_element = themepath .. '/' .. page_tag_element_name
 local page_tag_link = themepath .. '/' .. page_tag_link_name
+local page_sidebar = themepath .. '/' .. page_sidebar_name
 
 -- Read template configuration file
 local themerc = getConfig(themepath .. '/' .. themercfile)
@@ -530,11 +532,25 @@ replacements = {
   TAGDIR_INDEX = index_filename, -- FIXME: delete these two var to add a new one: INDEX_FILENAME which is better for indexes.
 }
 
--- FIXME: COMPLETE here replacements for all kind of variables as ELI, SEARCH, about's page, special files, etc.
-
 -- Add language translation to replacements table
 for k, v in pairs(languagerc) do 
   replacements[k] = v
+end
+
+-- FIXME: COMPLETE here replacements for all kind of variables as ELI, SEARCH, about's page, special files, etc.
+-- Sidebar (display that's active/inactive)
+if makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1' then
+  print ('-- Sidebar: activated.')
+  local template_sidebar = readFile(page_sidebar, 'r')
+  local sidebar_content = readFile(specialpath .. '/' .. sidebar_default .. '.md', 'r')
+  if sidebar_content and template_sidebar then
+    local markdown_content = markdown(sidebar_content)
+    local sidebar_final_content = ''
+    sidebar_final_content = replace(template_sidebar, {SIDEBAR_CONTENT=markdown_content})
+    replacements['SIDEBAR'] = replace(sidebar_final_content, replacements)
+  end
+else
+  print ('-- Sidebar: desactivated.')
 end
 
 -- Browse DB files
