@@ -2,7 +2,9 @@
 
 # Makefly
 
-Une version fran&ccedil;aise de cette documentation est disponible dans le fichier **README.fr.md**.
+[Version originale de la documentation](http://makefly.e-mergence.org/documentation.html) (French original version)
+
+[Go to the website](http://makefly.e-mergence.org/)
 
 ## About
 
@@ -10,7 +12,7 @@ Makefly is a static weblog engine that used a BSD Makefile to work.
 
 ### Website
 
-Stay tuned to [Makefly weblog](http://makefly.e-mergence.org/ "Visit Makefly official website").
+Stay tuned to [Makefly weblog](http://makefly.e-mergence.org/blog/ "Visit Makefly official website").
 
 ### Contact
 
@@ -53,7 +55,7 @@ There is 2 ways to install Makefly on your computer:
 
 Just download last version on official website: [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Go to official makefly website").
 
-For an example [0.2 version](http://makefly.e-mergence.org/makefly_0.2.zip "Download Makefly 0.2").
+For an example [0.2.1 version](http://makefly.e-mergence.org/makefly_0.2.1.zip "Download Makefly 0.2.1").
 
 Then extract tarball's content into a directory.
 
@@ -90,6 +92,27 @@ The first time you use Makefly you don't have any configuration file. An example
 For more information please read **The makefly.rc configuration file** section.
 
 ## Create content
+
+The way to create content depends on your version.
+
+To know your current version, just use this command:
+
+    pmake version
+
+If an error occured like ``pmake: don't know how to make version. Stop``, then you are under 0.2.1 version.
+
+### Version older than 0.2.1
+
+Go to **tools** directory and launch **create_post.sh** script like this: 
+
+    cd tools
+    ./create_post.sh
+
+and answer to all given questions. It will generate some files needed by Makefly.
+
+Note that Makefly use the [markdown format](http://daringfireball.net/projects/markdown/ "Learn more about Markdown format") for its posts.
+
+### Version equal or superior to 0.2.1
 
 Use this command:
 
@@ -272,6 +295,7 @@ Here is some options you can change:
   * ELI\_USER: If set, this activate a badge for identica. Note that your theme should support ELI widget. By default this functionality use IDENTICA's API.
   * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on IDENTICA. By default "user".
   * ELI\_MAX (optional): Permit to choose how many statuses to display. On identica, this couldn't bypass the default 20 items. Default value: 5.
+  * ELI\_API (optional) : Access to your StatusNet API system.
   * INSTALLDIR : Permit to choose a target directory when using **install.sh** script (Read more in *Publish result to the web* chapter)
   * COMPRESS_TOOL (optional) : Shell tool used for backup compression via *backup* command (Cf. *Backup* section). Example : **gzip**.
   * COMPRESS_EXT (optional) : Backup file extension. Warning: do not forget the point char. Example: **.gz**.

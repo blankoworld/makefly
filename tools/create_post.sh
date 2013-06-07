@@ -110,6 +110,9 @@ if test "$QUIET" -eq 0;then
   ${edit} ${file}
 fi
 
+# confirm file creation
+echo "Post: ${file}"
+
 #####
 ## END
 ###
