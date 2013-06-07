@@ -46,7 +46,7 @@ local page_tag_element_name = 'tagelement.xhtml'
 local page_tag_link_name = 'taglink.xhtml'
 local page_tag_index_name = 'tags.xhtml'
 -- others
-local version = 'L 0.2.1a1-trunk'
+local version = os.getenv('VERSION') or 'L 0.2.1-trunk'
 local replacements = {} -- substitution table
 local today = os.time() -- today's timestamp
 local tags = {}
