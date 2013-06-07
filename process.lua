@@ -156,9 +156,7 @@ function copyFile(origin, destination, replacements)
   local content = ''
   if lfs.attributes(origin) and lfs.attributes(origin).mode == 'file' then
     -- open the file
-    local f = assert(io.open(origin, 'r'))
-    content = f:read('*a')
-    f:close()
+    content = readFile(origin, 'r')
   end
   -- write in destination
   local result = assert(io.open(destination, 'wb'))
@@ -225,7 +223,7 @@ function createPost(file, config, header, footer, tagpath, template_file, templa
     -- create a rope for post's result
     local post = rope()
     -- open content of post (SRC file)
-    local content = assert(io.open(srcpath .. "/" .. title .. ".md", 'r')):read("*a")
+    local content = readFile(srcpath .. "/" .. title .. ".md", 'r')
     -- markdown process on content
     local markdown_content = markdown(content)
     -- process tags
@@ -316,10 +314,8 @@ function createTagLinks(post_tags, tagpath, file, extension)
   -- prepare some values
   local result = ''
   -- get single tag element template
-  local template_file = assert(io.open(file, 'r'))
-  local template = assert(template_file:read('*a'))
+  local template = readFile(file, 'r')
   template = string.gsub(template, '\n$', '')
-  assert(template_file:close())
   -- add each tag
   for k, v in pairs(post_tags) do
     if k > 1 then
@@ -336,14 +332,10 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   local index = rope()
   index:push (header)
   -- get post index general content
-  local post_content_file = assert(io.open(template_index_file, 'r'))
-  local post_content = assert(post_content_file:read('*a'))
-  assert(post_content_file:close())
+  local post_content = readFile(template_index_file, 'r')
   index:push (post_content)
   -- get info for each post
-  local post_element_file = assert(io.open(template_element_file, 'r'))
-  local post_element = assert(post_element_file:read('*a'))
-  assert(post_element_file:close())
+  local post_element = readFile(template_element_file, 'r')
   table.sort(posts, compare_post)
   for k, v in pairs(posts) do
     -- get post's title
@@ -407,9 +399,7 @@ function createTag(filename, title, posts, header, footer, replacements)
   -- insert content (all posts linked to this tag)
   for k, post in pairs(posts) do
     local content = ''
-    local tmpfile = assert(io.open(tmppath .. '/' .. post))
-    local content = assert(tmpfile:read('*a'))
-    assert(tmpfile:close())
+    content = readFile(tmppath .. '/' .. post, 'r')
     if content then
       page:push(content)
     end
@@ -429,13 +419,9 @@ function createTagIndex(all_tags, tagpath, index_filename, header, footer, repla
   index:push(header)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
   -- read general tag index template file
-  local template_index_file = assert(io.open(template_index_filename, 'r'))
-  local template_index = assert(template_index_file:read('*a'))
-  template_index_file:close()
+  local template_index = readFile(template_index_filename, 'r')
   -- read tage element template file
-  local template_element_file = assert(io.open(template_element_filename, 'r'))
-  local template_element = assert(template_element_file:read('*a'))
-  assert(template_element_file:close())
+  local template_element = readFile(template_element_filename, 'r')
   -- browse all tags
   local taglist_content = ''
   for tag, posts in pairsByKeys(tags) do
@@ -500,8 +486,8 @@ local page_tag_link = themepath .. '/' .. page_tag_link_name
 local themerc = getConfig(themepath .. '/' .. themercfile)
 
 -- Read template's mandatory files
-local header = assert(io.open(page_header, 'r')):read("*a")
-local footer = assert(io.open(page_footer, 'r')):read("*a")
+local header = readFile(page_header, 'r')
+local footer = readFile(page_footer, 'r')
 
 -- Create CSS files
 css_file = themepath .. '/style/' .. themerc['CSS_FILE']
