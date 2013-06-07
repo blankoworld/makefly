@@ -83,13 +83,13 @@ function deleteEndSpace(string)
 end
 
 function listing (path, extension)
-  files = {}
+  local files = {}
   if lfs.attributes(path) then
     for file in lfs.dir(path) do
       if file ~= "." and file ~= ".." then
         local f = path..'/'..file
         local attr = lfs.attributes (f)
-        filext = (string.match(file, "[^\\/]-%.?([^%.\\/]*)$"))
+        local filext = (string.match(file, "[^\\/]-%.?([^%.\\/]*)$"))
         if attr.mode == 'file' and filext == extension then
           table.insert(files, f)
         end
@@ -110,10 +110,10 @@ function checkDirectory(path)
 end
 
 function getConfig(file)
-  result = {}
-  f = assert(io.open(file, 'r'))
+  local result = {}
+  local f = assert(io.open(file, 'r'))
   while true do
-    line = f.read(f)
+    local line = f.read(f)
     if not line then break end
     local key = line:match('(.-)[ ]+=')
     local val = line:match('=[ ]+(.*)')
@@ -134,16 +134,34 @@ function replace(string, table)
    end)
 end
 
+function readFile(path, mode)
+  local result = ''
+  if not mode then
+    local mode = 'r'
+  end
+  if mode ~= 'r' and mode ~= 'rb' then
+    print('Unknown read mode!')
+    os.exit(1)
+  end
+  local attr = lfs.attributes(path)
+  if attr and attr.mode == 'file' then
+    local f = assert(io.open(path, mode))
+    result = assert(f:read('*a'))
+    assert(f:close())
+  end
+  return result
+end
+
 function copyFile(origin, destination, replacements)
-  content = ''
+  local content = ''
   if lfs.attributes(origin) and lfs.attributes(origin).mode == 'file' then
     -- open the file
-    f = assert(io.open(origin, 'r'))
+    local f = assert(io.open(origin, 'r'))
     content = f:read('*a')
     f:close()
   end
   -- write in destination
-  result = assert(io.open(destination, 'wb'))
+  local result = assert(io.open(destination, 'wb'))
   if content == nil then
     result:close()
   else
@@ -157,7 +175,7 @@ function copyFile(origin, destination, replacements)
 end
 
 function copy(origin, destination)
-  attr = lfs.attributes(origin)
+  local attr = lfs.attributes(origin)
   if attr and attr.mode == 'directory' then
     -- create destination if no one exists
     if lfs.attributes(destination) == nil then
@@ -195,38 +213,54 @@ function getSubstitutions(replacements, local_replacements)
   return result
 end
 
-function createPost(file, config, header, footer)
-  -- get post's title
-  timestamp, title = string.match(file, "(%d+),(.+)%.mk")
+function createPost(file, config, header, footer, tagpath, template_file, template_tag_file, date_format)
+  -- get post's title and timestamp
+  local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
   if os.date('%s', today) > os.date('%s', timestamp) then
-
+    -- open template file
+    local template = readFile(template_file, 'r')
     -- open post output file
     local out = assert(io.open(postpath .. "/" .. title .. resultextension, 'wb'))
     -- create a rope for post's result
-    post = rope()
+    local post = rope()
     -- open content of post (SRC file)
     local content = assert(io.open(srcpath .. "/" .. title .. ".md", 'r')):read("*a")
     -- markdown process on content
-    markdown_content = markdown(content)
+    local markdown_content = markdown(content)
+    -- process tags
+    local post_tags = {}
+    for i, tag in pairs(config['TAGS']:split(',')) do
+      local post_tagname = deleteEndSpace(deleteBeginSpace(tag))
+      table.insert(post_tags, post_tagname)
+    end
+    -- create tag links
+    local post_tag_links = createTagLinks(post_tags, tagpath, template_tag_file, resultextension)
     -- concatenate all final post subelements
     post:push (header)
-    post:push (markdown_content)
+    post:push (template)
     post:push (footer)
     -- local replacements
-    local_replacements = {
-      TITLE = config['TITLE']
+    local post_replacements = {
+      TITLE = config['TITLE'],
+      POST_TITLE = config['TITLE'],
+      ARTICLE_CLASS_TYPE = config['TYPE'],
+      CONTENT = markdown_content,
+      POST_FILE = title .. resultextension,
+      TAG_LINKS_LIST = post_tag_links and replace(post_tag_links, replacements) or '',
+      DATE = os.date(date_format, timestamp) or '',
+      POST_AUTHOR = config['AUTHOR'],
     }
     -- create substitutions list
     local substitutions = {}
     for k, v in pairs(replacements) do 
       substitutions[k] = v
     end
-    for k, v in pairs(local_replacements) do 
+    for k, v in pairs(post_replacements) do 
       substitutions[k] = v
     end
     -- ${VARIABLES} substitution on markdown content
-    final_content = replace(post:flatten(), substitutions)
+    local final_content = replace(post:flatten(), substitutions)
     -- write result to output file
     out:write(final_content)
     -- close output file
@@ -251,7 +285,7 @@ function dispatcher ()
 end
 
 function compare_post(a, b, order)
-  r = a['file'] > b['file']
+  local r = a['file'] > b['file']
   if order == nil then
     r = a['file'] > b['file']
   elseif order == 'asc' then
@@ -280,10 +314,10 @@ end
 
 function createTagLinks(post_tags, tagpath, file, extension)
   -- prepare some values
-  result = ''
+  local result = ''
   -- get single tag element template
   local template_file = assert(io.open(file, 'r'))
-  template = assert(template_file:read('*a'))
+  local template = assert(template_file:read('*a'))
   template = string.gsub(template, '\n$', '')
   assert(template_file:close())
   -- add each tag
@@ -291,7 +325,7 @@ function createTagLinks(post_tags, tagpath, file, extension)
     if k > 1 then
       result = result .. ', '
     end
-    tag_page = string.gsub(v, '%s', '_') .. extension
+    local tag_page = string.gsub(v, '%s', '_') .. extension
     result = result .. replace(template, {TAG_PAGE=tag_page, TAG_NAME=v})
   end
   return result
@@ -299,21 +333,21 @@ end
 
 function createPostIndex(posts, index_file, header, footer, replacements, extension, template_index_file, template_element_file, short_date_format, tagpath, template_taglink_file)
   local post_index = io.open(index_file, 'wb')
-  index = rope()
+  local index = rope()
   index:push (header)
   -- get post index general content
   local post_content_file = assert(io.open(template_index_file, 'r'))
-  post_content = assert(post_content_file:read('*a'))
+  local post_content = assert(post_content_file:read('*a'))
   assert(post_content_file:close())
   index:push (post_content)
   -- get info for each post
   local post_element_file = assert(io.open(template_element_file, 'r'))
-  post_element = assert(post_element_file:read('*a'))
+  local post_element = assert(post_element_file:read('*a'))
   assert(post_element_file:close())
   table.sort(posts, compare_post)
   for k, v in pairs(posts) do
     -- get post's title
-    timestamp, title = string.match(v['file'], "(%d+),(.+)%.mk")
+    local timestamp, title = string.match(v['file'], "(%d+),(.+)%.mk")
     -- only add a link for post older than today
     if os.date('%s', today) > os.date('%s', timestamp) then
       -- local substitutions
@@ -325,11 +359,11 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
         SHORT_DATE = os.date(short_date_format_default, timestamp)
       }
       -- registering tags
-      post_conf_tags = v['conf']['TAGS'] or nil
+      local post_conf_tags = v['conf']['TAGS'] or nil
       if post_conf_tags then
         local post_tags = {}
         for i, tag in pairs(post_conf_tags:split(',')) do
-    tagname = deleteEndSpace(deleteBeginSpace(tag))
+    local tagname = deleteEndSpace(deleteBeginSpace(tag))
     -- remember the tagname to create tag links
     table.insert(post_tags, tagname)
     -- add tag to list of all tags
@@ -340,16 +374,16 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
     end
   end
   -- create tag links
-  tag_links = createTagLinks(post_tags, tagpath, template_taglink_file, extension)
+  local tag_links = createTagLinks(post_tags, tagpath, template_taglink_file, extension)
   if tag_links then
     metadata['TAG_LINKS_LIST'] = tag_links
   end
       end
       -- prepare substitutions for the post
-      post_substitutions = getSubstitutions(v, metadata)
+      local post_substitutions = getSubstitutions(v, metadata)
       -- remember this post's element
-      post_element_content = replace(post_element, post_substitutions)
-      remember_file = assert(io.open(tmppath .. '/' .. title, 'wb'))
+      local post_element_content = replace(post_element, post_substitutions)
+      local remember_file = assert(io.open(tmppath .. '/' .. title, 'wb'))
       assert(remember_file:write(post_element_content))
       assert(remember_file:close())
       -- push result into index
@@ -359,7 +393,7 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   index:push (footer)
   -- do substitutions on page
   local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE']})
-  index_content = replace(index:flatten(), index_substitutions)
+  local index_content = replace(index:flatten(), index_substitutions)
   post_index:write(index_content)
   -- Close post's index
   post_index:close()
@@ -368,20 +402,20 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
 end
 
 function createTag(filename, title, posts, header, footer, replacements)
-  page = rope()
+  local page = rope()
   page:push(header)
   -- insert content (all posts linked to this tag)
   for k, post in pairs(posts) do
     local content = ''
-    tmpfile = assert(io.open(tmppath .. '/' .. post))
-    content = assert(tmpfile:read('*a'))
+    local tmpfile = assert(io.open(tmppath .. '/' .. post))
+    local content = assert(tmpfile:read('*a'))
     assert(tmpfile:close())
     if content then
       page:push(content)
     end
   end
   page:push(footer)
-  page_file = assert(io.open(filename, 'wb'))
+  local page_file = assert(io.open(filename, 'wb'))
   -- do substitutions on page
   local substitutions = getSubstitutions(replacements, {TITLE=title})
   page_file:write(replace(page:flatten(), substitutions))
@@ -391,21 +425,21 @@ function createTag(filename, title, posts, header, footer, replacements)
 end
 
 function createTagIndex(all_tags, tagpath, index_filename, header, footer, replacements, extension, template_index_filename, template_element_filename)
-  index = rope()
+  local index = rope()
   index:push(header)
-  index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
+  local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
   -- read general tag index template file
-  template_index_file = assert(io.open(template_index_filename, 'r'))
-  template_index = assert(template_index_file:read('*a'))
+  local template_index_file = assert(io.open(template_index_filename, 'r'))
+  local template_index = assert(template_index_file:read('*a'))
   template_index_file:close()
   -- read tage element template file
-  template_element_file = assert(io.open(template_element_filename, 'r'))
-  template_element = assert(template_element_file:read('*a'))
+  local template_element_file = assert(io.open(template_element_filename, 'r'))
+  local template_element = assert(template_element_file:read('*a'))
   assert(template_element_file:close())
   -- browse all tags
-  taglist_content = ''
+  local taglist_content = ''
   for tag, posts in pairsByKeys(tags) do
-    tag_page = string.gsub(tag, '%s', '_') .. extension
+    local tag_page = string.gsub(tag, '%s', '_') .. extension
     taglist_content = taglist_content .. replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
     createTag(tagpath .. '/' .. tag_page, tag, posts, header, footer, replacements)
   end
@@ -413,7 +447,7 @@ function createTagIndex(all_tags, tagpath, index_filename, header, footer, repla
   index:push(footer)
   -- do substitutions on page
   local substitutions = getSubstitutions(replacements, {TITLE=replacements['TAG_LIST_TITLE']})
-  index_content = replace(index:flatten(), substitutions)
+  local index_content = replace(index:flatten(), substitutions)
   index_file:write(index_content)
   -- Close post's index
   assert(index_file:close())
@@ -495,6 +529,7 @@ replacements = {
   JSKOMMENT_CONTENT = '',
   ELI_SCRIPT = '',
   ELI_CONTENT = '',
+  ELI_CSS = '',
   INTRO_CONTENT = '',
   FOOTER_CONTENT = '',
   ABOUT_LINK = '',
@@ -509,6 +544,8 @@ replacements = {
   TAGDIR_INDEX = index_filename, -- FIXME: delete these two var to add a new one: INDEX_FILENAME which is better for indexes.
 }
 
+-- FIXME: COMPLETE here replacements for all kind of variables as ELI, SEARCH, about's page, special files, etc.
+
 -- Add language translation to replacements table
 for k, v in pairs(languagerc) do 
   replacements[k] = v
@@ -521,7 +558,7 @@ if dbresult then
   for k,v in pairs(dbresult) do
     -- parse DB files to get metadata and posts'title
     table.insert(post_files, {file=v, conf=getConfig(v)})
-    local co = coroutine.create(function () createPost(v, getConfig(v), header, footer) end)
+    local co = coroutine.create(function () createPost(v, getConfig(v), header, footer, tagpath, page_article_single, page_tag_link, date_format_default) end)
     table.insert(threads, co)
   end
 else
