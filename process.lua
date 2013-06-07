@@ -63,6 +63,7 @@ local bodyclass_default = 'single' -- body class for pages
 local index_name_default = 'index' -- index name
 local extension_default = '.html' -- file extension for HTML pages
 local language_default = 'en' -- language name
+local max_post_default = 3 -- number of posts displayed on homepage
 
 --[[ Methods ]]--
 
@@ -328,8 +329,10 @@ function createTagLinks(post_tags, tagpath, file, extension)
   return result
 end
 
-function createPostIndex(posts, index_file, header, footer, replacements, extension, template_index_file, template_element_file, short_date_format, tagpath, template_taglink_file)
+function createPostIndex(posts, index_file, header, footer, replacements, extension, template_index_file, template_element_file, short_date_format, tagpath, template_taglink_file, template_article_index_file, max_post)
+  -- open result file
   local post_index = io.open(index_file, 'wb')
+  -- create a rope to merge all text
   local index = rope()
   index:push (header)
   -- get post index general content
@@ -337,7 +340,15 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   index:push (post_content)
   -- get info for each post
   local post_element = readFile(template_element_file, 'r')
+  -- create temporary file with first posts
+  local first_posts_file = io.open(tmppath .. '/index.tmp', 'wb')
+  -- open template for posts that appears on index
+  local template_article_index = readFile(template_article_index_file, 'r')
+  -- sort posts in a given order
   table.sort(posts, compare_post)
+  -- prepare some values
+  index_nb = 0
+  -- process posts
   for k, v in pairs(posts) do
     -- get post's title
     local timestamp, title = string.match(v['file'], "(%d+),(.+)%.mk")
@@ -356,33 +367,48 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
       if post_conf_tags then
         local post_tags = {}
         for i, tag in pairs(post_conf_tags:split(',')) do
-    local tagname = deleteEndSpace(deleteBeginSpace(tag))
-    -- remember the tagname to create tag links
-    table.insert(post_tags, tagname)
-    -- add tag to list of all tags
-    if tags[tagname] == nil then
-      tags[tagname] = {title}
-    else
-      table.insert(tags[tagname], title)
-    end
-  end
-  -- create tag links
-  local tag_links = createTagLinks(post_tags, tagpath, template_taglink_file, extension)
-  if tag_links then
-    metadata['TAG_LINKS_LIST'] = tag_links
-  end
+          local tagname = deleteEndSpace(deleteBeginSpace(tag))
+          -- remember the tagname to create tag links
+          table.insert(post_tags, tagname)
+          -- add tag to list of all tags
+          if tags[tagname] == nil then
+            tags[tagname] = {title}
+          else
+            table.insert(tags[tagname], title)
+          end
+        end
+        -- create tag links
+        local tag_links = createTagLinks(post_tags, tagpath, template_taglink_file, extension)
+        if tag_links then
+          metadata['TAG_LINKS_LIST'] = tag_links
+        end
       end
       -- prepare substitutions for the post
       local post_substitutions = getSubstitutions(v, metadata)
-      -- remember this post's element
+      -- remember this post's element for each tag page
       local post_element_content = replace(post_element, post_substitutions)
       local remember_file = assert(io.open(tmppath .. '/' .. title, 'wb'))
       assert(remember_file:write(post_element_content))
       assert(remember_file:close())
       -- push result into index
       index:push(post_element_content)
+      -- process post to be displayed on HOMEPAGE
+      if index_nb < max_post then
+        -- read post real content
+        local real_post_content = readFile(srcpath .. '/' .. title .. '.md', 'r')
+        local post_content = replace(template_article_index, {CONTENT=markdown(real_post_content)})
+        -- complete missing info
+        post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE']
+        -- FIXME: Add here missing info for JSKOMMENT with unique identifier
+        local content4index = replace(post_content, post_substitutions)
+        assert(first_posts_file:write(content4index))
+      end
+      -- incrementation
+      index_nb = index_nb + 1
     end
   end
+  -- close first_posts file
+  assert(first_posts_file:close())
   index:push (footer)
   -- do substitutions on page
   local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE']})
@@ -433,13 +459,26 @@ function createTagIndex(all_tags, tagpath, index_filename, header, footer, repla
   index:push(replace(template_index, {TAGLIST_CONTENT=taglist_content}))
   index:push(footer)
   -- do substitutions on page
-  local substitutions = getSubstitutions(replacements, {TITLE=replacements['TAG_LIST_TITLE']})
+  local substitutions = getSubstitutions(replacements, {TITLE=replacements['TAG_LIST_TITLE'], BODY_CLASS='tags'})
   local index_content = replace(index:flatten(), substitutions)
   index_file:write(index_content)
   -- Close post's index
   assert(index_file:close())
   -- Display that tag index was created
   print ('-- Tag list built.')
+end
+
+function createHomepage(file, title, header, footer)
+  local index = rope()
+  local index_file = io.open(file, 'wb')
+  local content = readFile(tmppath .. '/' .. 'index.tmp', 'r')
+  index:push(header)
+  index:push(content)
+  index:push(footer)
+  local substitutions = getSubstitutions(replacements, {BODY_CLASS='home', TITLE=title})
+  local final_content = replace(index:flatten(), substitutions)
+  index_file:write(final_content)
+  assert(index_file:close())
 end
 
 --[[ MAIN ]]--
@@ -462,6 +501,7 @@ tagpath = publicpath .. '/' .. tagdir_name
 index_filename = index_name .. resultextension
 date_format_default = makeflyrc['DATE_FORMAT'] or '%Y-%m-%d at %H:%M'
 short_date_format_default = makeflyrc['SHORT_DATE'] or '%Y/%m'
+max_post = makeflyrc['MAX_POST'] and tonumber(makeflyrc['MAX_POST']) or max_post_default
 -- Display which theme the user have choosed
 print ('-- Choosen theme: ' .. theme)
 
@@ -483,6 +523,7 @@ local page_post_element = themepath .. '/' .. page_post_element_name
 local page_tag_element = themepath .. '/' .. page_tag_element_name
 local page_tag_link = themepath .. '/' .. page_tag_link_name
 local page_sidebar = themepath .. '/' .. page_sidebar_name
+local page_article_index = themepath .. '/' .. page_homepage_article_name
 
 -- Read template configuration file
 local themerc = getConfig(themepath .. '/' .. themercfile)
@@ -571,10 +612,13 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_posts_name, page_post_element, short_date_format_default, tagpath, page_tag_link)
+createPostIndex(post_files, postpath .. '/' .. index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_posts_name, page_post_element, short_date_format_default, tagpath, page_tag_link, page_article_index, max_post)
 
 -- Create tag's files: index and each tag's page
 createTagIndex(tags, tagpath, index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
+
+-- Create index
+createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'], header, footer)
 
 -- Delete temporary files
 for tag, posts in pairs(tags) do
@@ -582,6 +626,7 @@ for tag, posts in pairs(tags) do
     os.remove(tmppath .. '/' .. post)
   end
 end
+os.remove(tmppath .. '/' .. 'index.tmp') -- posts that appears on homepage
 
 --[[ END ]]--
 return 0
