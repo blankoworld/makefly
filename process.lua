@@ -494,7 +494,7 @@ local footer = readFile(page_footer, 'r')
 -- Create CSS files
 css_file = themepath .. '/style/' .. themerc['CSS_FILE']
 css_color_file = themepath .. '/style/' .. themerc['CSS_COLOR_FILE']
-table.insert(threads, coroutine.create(function () copyFile(css_file, publicpath .. '/' .. themerc['CSS_FILE'], { BASE_URL = makeflyrc['BASE_URL'] }) end))
+table.insert(threads, coroutine.create(function () copyFile(css_file, publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = makeflyrc['BLOG_URL'] }) end))
 table.insert(threads, coroutine.create(function () copyFile(css_color_file, publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
 -- Copy static theme directory
 theme_static_directory = themepath .. '/static'
@@ -506,7 +506,7 @@ replacements = {
   BLOG_TITLE = makeflyrc['BLOG_TITLE'],
   BLOG_DESCRIPTION = makeflyrc['BLOG_DESCRIPTION'],
   BLOG_SHORT_DESC = makeflyrc['BLOG_SHORT_DESC'],
-  BASE_URL = makeflyrc['BASE_URL'],
+  BLOG_URL = makeflyrc['BLOG_URL'],
   LANG = makeflyrc['BLOG_LANG'],
   BLOG_CHARSET = makeflyrc['BLOG_CHARSET'],
   RSS_FEED_NAME = makeflyrc['RSS_FEED_NAME'],

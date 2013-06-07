@@ -131,7 +131,7 @@ parser_opts = "VERSION=${VERSION}"           \
 		"BLOG_TITLE=${BLOG_TITLE}"               \
 		"BLOG_DESCRIPTION=${BLOG_DESCRIPTION}"   \
 		"BLOG_SHORT_DESC=${BLOG_SHORT_DESC}"     \
-		"BASE_URL=${BASE_URL}"                   \
+		"BLOG_URL=${BLOG_URL}"                   \
 		"HOME_TITLE=${HOME_TITLE}"               \
 		"POST_LIST_TITLE=${POST_LIST_TITLE}"     \
 		"POSTDIR_NAME=${POSTDIR_NAME}"           \
@@ -452,7 +452,7 @@ JSKOMMENT_CONTENT_${FILE} =
 .if defined(JSKOMMENT_PREFIX) && ${JSKOMMENT_PREFIX}
 JSKOMMENT_PREFIX_${FILE} != echo "${JSKOMMENT_PREFIX}"
 .else
-JSKOMMENT_PREFIX_${FILE} != echo "${BASE_URL}/"
+JSKOMMENT_PREFIX_${FILE} != echo "${BLOG_URL}/"
 .endif
 JSKOMMENT_ID_${FILE} != echo "${JSKOMMENT_PREFIX_${FILE}}${ESCAPED_TITLE_${FILE}}"
 .if defined(JSKOMMENT) && ${JSKOMMENT}
@@ -522,7 +522,7 @@ JSKOMMENT_CONTENT_${FILE} =
 .if defined(JSKOMMENT_PREFIX) && ${JSKOMMENT_PREFIX}
 JSKOMMENT_PREFIX_${FILE} != echo "${JSKOMMENT_PREFIX}"
 .else
-JSKOMMENT_PREFIX_${FILE} != echo "${BASE_URL}/"
+JSKOMMENT_PREFIX_${FILE} != echo "${BLOG_URL}/"
 .endif
 JSKOMMENT_ID_${FILE} != echo "${JSKOMMENT_PREFIX_${FILE}}${ESCAPED_NAME_${FILE}}"
 .if defined(JSKOMMENT) && ${JSKOMMENT}
@@ -580,13 +580,13 @@ ${TMP_${FILE}}: ${TMPDIR} ${POSTDIR} ${TARGET_${NAME_${FILE}}}
 	$Qcat ${TMPLDIR}/feed.element.rss | ${parser}        \
 		"TITLE=${TITLE_${FILE}}"                           \
 		"DESCRIPTION=${CONTENT_${FILE}}"                   \
-		"LINK=${BASE_URL}/${POSTDIR_NAME}/${NAME_${FILE}}" \
+		"LINK=${BLOG_URL}/${POSTDIR_NAME}/${NAME_${FILE}}" \
 		"POST_AUTHOR=${AUTHOR_${FILE}}"                    \
 	> ${TMPDIR}/${FILE}.rss
 	@# Prepare TAGS
 	$Qfor TAG in ${TAGS_${FILE}}; do                             \
 		cat ${tagelement} | ${parser}                              \
-			"TAG_LINK=${BASE_URL}/${TAGDIR_NAME}/$${TAG}${PAGE_EXT}"  \
+			"TAG_LINK=${BLOG_URL}/${TAGDIR_NAME}/$${TAG}${PAGE_EXT}"  \
 			"TAG_NAME=$${TAG}"                                        \
 		>> ${TMPDIR}/tags.list;                                    \
 	done

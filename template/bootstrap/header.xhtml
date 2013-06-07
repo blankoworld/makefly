@@ -17,13 +17,13 @@
                 padding-bottom: 40px;
             }
         </style>
-        <link rel="stylesheet" type="text/css" media="all" href="${BASE_URL}/${JSKOMMENT_CSS}">
-        <link rel="stylesheet" type="text/css" media="all" href="${BASE_URL}/${ELI_CSS}">
-        <link rel="stylesheet" href="${BASE_URL}/${CSS_FILE}" title="${CSS_NAME}">
-        <link type="text/css" rel="stylesheet" media="screen" href="${BASE_URL}/${CSS_COLOR_FILE}" title="${CSS_NAME}" />
-        <link rel="alternate" type="application/rss+xml" title="${RSS_FEED_NAME}" href="${BASE_URL}/rss.xml" />
+        <link rel="stylesheet" type="text/css" media="all" href="${BLOG_URL}/${JSKOMMENT_CSS}">
+        <link rel="stylesheet" type="text/css" media="all" href="${BLOG_URL}/${ELI_CSS}">
+        <link rel="stylesheet" href="${BLOG_URL}/${CSS_FILE}" title="${CSS_NAME}">
+        <link type="text/css" rel="stylesheet" media="screen" href="${BLOG_URL}/${CSS_COLOR_FILE}" title="${CSS_NAME}" />
+        <link rel="alternate" type="application/rss+xml" title="${RSS_FEED_NAME}" href="${BLOG_URL}/rss.xml" />
 
-        <script src="${BASE_URL}/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="${BLOG_URL}/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     <body class="${BODY_CLASS}">
         <!--[if lt IE 7]>
@@ -40,15 +40,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="brand" href="${BASE_URL}">${BLOG_TITLE}</a>
+                    <a class="brand" href="${BLOG_URL}">${BLOG_TITLE}</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li><a href="${BASE_URL}">${HOME_TITLE}</a></li>
+                            <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">${LINKS_TITLE} <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="${BASE_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
-                                    <li><a href="${BASE_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>
+                                    <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
+                                    <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>
                                 </ul>
                             </li>
                             ${ABOUT_LINK}

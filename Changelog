@@ -1,3 +1,7 @@
+Trunk
+	- Fix bug on tags that have space in their name
+	- Change BASE_URL to BLOG_URL
+
 Version 0.2.1 (released 2013-05-31)
 	- Improve Bootstrap theme with glyphicons
 	- You can choose a "FLAVOR" for your theme in order to change colors
