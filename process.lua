@@ -46,6 +46,7 @@ local page_tag_element_name = 'tagelement.xhtml'
 local page_tag_link_name = 'taglink.xhtml'
 local page_tag_index_name = 'tags.xhtml'
 local page_sidebar_name = 'sidebar.xhtml'
+local page_searchbar_name = 'menu.search_bar.xhtml'
 -- others
 local version = os.getenv('VERSION') or 'L 0.2.1-trunk'
 local replacements = {} -- substitution table
@@ -523,6 +524,7 @@ local page_post_element = themepath .. '/' .. page_post_element_name
 local page_tag_element = themepath .. '/' .. page_tag_element_name
 local page_tag_link = themepath .. '/' .. page_tag_link_name
 local page_sidebar = themepath .. '/' .. page_sidebar_name
+local page_searchbar = themepath .. '/' .. page_searchbar_name
 local page_article_index = themepath .. '/' .. page_homepage_article_name
 
 -- Read template configuration file
@@ -592,6 +594,18 @@ if makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1' then
   end
 else
   print ('-- Sidebar: desactivated.')
+end
+
+-- Search bar
+if makeflyrc['SEARCH_BAR'] and makeflyrc['SEARCH_BAR'] == '1' then
+  print ('-- Search bar: activated.')
+  local template_searchbar = readFile(page_searchbar, 'r')
+  if template_searchbar then
+    -- add searchbar content and translate some elements into (replacements table)
+    replacements['SEARCHBAR'] = replace(template_searchbar, replacements)
+  end
+else
+  print ('-- Search bar: desactivated.')
 end
 
 -- Browse DB files

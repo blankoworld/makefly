@@ -1,6 +1,13 @@
 TODO:
 -----
 
+Lua version:
+- MAX_POST_LINES (or similar) to add as last Makefly 0.2.1 version
+- JSKOMMENT with unique ID with/without BLOG_URL
+- about page
+- introduction.md
+- footer.md
+
 Next version (0.3):
 - Do some LUA tests to improve file generation
 - Slowly migrate to LUA (for an example for file generation)
