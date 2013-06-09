@@ -35,6 +35,7 @@ local publicpath = os.getenv('DESTDIR') or currentpath .. '/pub'
 -- default's files
 local makeflyrcfile = os.getenv('conf') or 'makefly.rc'
 local themercfile = 'config.mk'
+local jskomment_js_filename = 'jskomment.js'
 -- theme filenames
 local page_header_name = 'header.xhtml'
 local page_footer_name = 'footer.xhtml'
@@ -47,6 +48,10 @@ local page_tag_link_name = 'taglink.xhtml'
 local page_tag_index_name = 'tags.xhtml'
 local page_sidebar_name = 'sidebar.xhtml'
 local page_searchbar_name = 'menu.search_bar.xhtml'
+local page_jskomment = templatepath .. '/' .. 'jskomment.article.xhtml'
+local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration.xhtml'
+local page_jskomment_script = templatepath .. '/' .. jskomment_js_filename
+local page_jskomment_css_name = 'jskomment.css'
 -- others
 local version = os.getenv('VERSION') or 'L 0.2.1-trunk'
 local replacements = {} -- substitution table
@@ -538,6 +543,13 @@ local footer = readFile(page_footer, 'r')
 -- Create CSS files
 css_file = themepath .. '/style/' .. themerc['CSS_FILE']
 css_color_file = themepath .. '/style/' .. themerc['CSS_COLOR_FILE']
+if themerc['JSKOMMENT_CSS'] then
+  jskomment_css_file = themepath .. '/style/' .. themerc['JSKOMMENT_CSS']
+  jskomment_css_filename = themerc['JSKOMMENT_CSS']
+else
+  jskomment_css_file = templatepath .. '/' .. page_jskomment_css_name
+  jskomment_css_filename = page_jskomment_css_name
+end
 table.insert(threads, coroutine.create(function () copyFile(css_file, publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = makeflyrc['BLOG_URL'] }) end))
 table.insert(threads, coroutine.create(function () copyFile(css_color_file, publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
 -- Copy static theme directory
@@ -607,6 +619,23 @@ if makeflyrc['SEARCH_BAR'] and makeflyrc['SEARCH_BAR'] == '1' then
   end
 else
   print ('-- Search bar: desactivated.')
+end
+
+-- JSKOMMENT system
+if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
+  print ('-- Comment system: activated.')
+  -- copy jskomment css file
+  table.insert(threads, coroutine.create(function () copyFile(css_jskomment_file, publicpath .. '/' .. css_jskomment_filename) end))
+  replacements['JSKOMMENT_CSS'] = css_jskomment_filename
+  -- copy jskomment javascript
+  -- FIXME: do replacements on this file !!!
+  -- read different templates
+  local template_comment = readFile(page_jskomment, 'r')
+  -- FIXME: JSKOMMENT_CSS
+  -- FIXME: JSKOMMENT_SCRIPT
+  -- FIXME: JSKOMMENT_CONTENT for all single post
+else
+  print ('-- Comment system: desactivated.')
 end
 
 -- Browse DB files

@@ -2,7 +2,7 @@ TODO:
 -----
 
 Lua version:
-- MAX_POST_LINES (or similar) to add as last Makefly 0.2.1 version
+- MAX_POST_LINES (or similar) to add as last Makefly 0.2.1 version (with read_more link)
 - JSKOMMENT with unique ID with/without BLOG_URL
 - about page
 - introduction.md
