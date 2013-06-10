@@ -7,8 +7,8 @@
 
 ## More info
 
-  * [Themes](${BASE_URL}/${POSTDIR_NAME}/theme_list_v0_2.html)
-  * [Documentation](https://github.com/blankoworld/makefly/tree/master/doc#readme)
+  * [Themes](http://makefly.e-mergence.org/themes/index.html)
+  * [Documentation](http://makefly.e-mergence.org/documentation.html)
   * [Roadmap](http://forge.e-mergence.org/projects/makefly/roadmap)
 
 ## Community
