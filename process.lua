@@ -544,7 +544,7 @@ local footer = readFile(page_footer, 'r')
 css_file = themepath .. '/style/' .. themerc['CSS_FILE']
 css_color_file = themepath .. '/style/' .. themerc['CSS_COLOR_FILE']
 if themerc['JSKOMMENT_CSS'] then
-  jskomment_css_file = themepath .. '/style/' .. themerc['JSKOMMENT_CSS']
+  jskomment_css_file = themepath .. '/' .. themerc['JSKOMMENT_CSS']
   jskomment_css_filename = themerc['JSKOMMENT_CSS']
 else
   jskomment_css_file = templatepath .. '/' .. page_jskomment_css_name
@@ -625,8 +625,8 @@ end
 if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   print ('-- Comment system: activated.')
   -- copy jskomment css file
-  table.insert(threads, coroutine.create(function () copyFile(css_jskomment_file, publicpath .. '/' .. css_jskomment_filename) end))
-  replacements['JSKOMMENT_CSS'] = css_jskomment_filename
+  table.insert(threads, coroutine.create(function () copyFile(jskomment_css_file, publicpath .. '/' .. jskomment_css_filename) end))
+  replacements['JSKOMMENT_CSS'] = jskomment_css_filename
   -- copy jskomment javascript
   -- FIXME: do replacements on this file !!!
   -- read different templates
