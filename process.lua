@@ -70,6 +70,9 @@ local index_name_default = 'index' -- index name
 local extension_default = '.html' -- file extension for HTML pages
 local language_default = 'en' -- language name
 local max_post_default = 3 -- number of posts displayed on homepage
+local jskomment_max_default = 3 -- number of comments displayed by default for each post
+local jskomment_url_default = 'http://jskomment.appspot.com' -- default URL of JSKOMMENT comment system
+local jskomment_captcha_theme_default = 'white'
 
 --[[ Methods ]]--
 
@@ -264,6 +267,11 @@ function createPost(file, config, header, footer, tagpath, template_file, templa
     end
     for k, v in pairs(post_replacements) do 
       substitutions[k] = v
+    end
+    -- add comment block if comment system is activated
+    if template_comment then
+      local jskomment_id = config['JSKOMMENT_PREFIX'] or makeflyrc['BLOG_URL'] .. '/' .. title
+      substitutions['JSKOMMENT_CONTENT'] = replace(template_comment, {JSKOMMENT_ID=jskomment_id})
     end
     -- ${VARIABLES} substitution on markdown content
     local final_content = replace(post:flatten(), substitutions)
@@ -509,6 +517,8 @@ index_filename = index_name .. resultextension
 date_format_default = makeflyrc['DATE_FORMAT'] or '%Y-%m-%d at %H:%M'
 short_date_format_default = makeflyrc['SHORT_DATE'] or '%Y/%m'
 max_post = makeflyrc['MAX_POST'] and tonumber(makeflyrc['MAX_POST']) or max_post_default
+jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX']) or jskomment_max_default
+jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
 -- Display which theme the user have choosed
 print ('-- Choosen theme: ' .. theme)
 
@@ -518,8 +528,7 @@ languagerc = getConfig(langpath .. '/translate.' .. language)
 
 -- Check if needed directories exists. Otherwise create them
 for k,v in pairs({tmppath, publicpath, postpath, tagpath}) do
-  local co_directory = coroutine.create(function () checkDirectory(v) end)
-  table.insert(threads, co_directory)
+  checkDirectory(v)
 end
 
 -- Create path for template's files
@@ -535,6 +544,9 @@ local page_article_index = themepath .. '/' .. page_homepage_article_name
 
 -- Read template configuration file
 local themerc = getConfig(themepath .. '/' .. themercfile)
+
+-- Some values that comes from template configuration file
+local jskomment_captcha_theme = themerc['JSKOMMENT_CAPTCHA_THEME'] or jskomment_captcha_theme_default
 
 -- Read template's mandatory files
 local header = readFile(page_header, 'r')
@@ -628,12 +640,17 @@ if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   table.insert(threads, coroutine.create(function () copyFile(jskomment_css_file, publicpath .. '/' .. jskomment_css_filename) end))
   replacements['JSKOMMENT_CSS'] = jskomment_css_filename
   -- copy jskomment javascript
-  -- FIXME: do replacements on this file !!!
+  local template_jskomment_script = readFile(page_jskomment_script, 'r')
+  local jskomment_script = assert(io.open(publicpath .. '/' .. jskomment_js_filename, 'wb'))
+  jskomment_script_substitutions = getSubstitutions(replacements, {JSKOMMENT_URL=jskomment_url,JSKOMMENT_MAX=jskomment_max,JSKOMMENT_CAPTCHA_THEME=jskomment_captcha_theme})
+  jskomment_script:write(replace(template_jskomment_script, jskomment_script_substitutions))
+  assert(jskomment_script:close())
+  -- jskomment javascript declaration in all pages
+  -- replacements['jskom_name'] = jskomment_js_filename
+  local template_jskomment_declaration = readFile(page_jskomment_declaration, 'r')
+  replacements['JSKOMMENT_SCRIPT'] = replace(template_jskomment_declaration, {jskom_name=jskomment_js_filename, BLOG_URL=makeflyrc['BLOG_URL']})
   -- read different templates
-  local template_comment = readFile(page_jskomment, 'r')
-  -- FIXME: JSKOMMENT_CSS
-  -- FIXME: JSKOMMENT_SCRIPT
-  -- FIXME: JSKOMMENT_CONTENT for all single post
+  template_comment = readFile(page_jskomment, 'r')
 else
   print ('-- Comment system: desactivated.')
 end
@@ -675,4 +692,4 @@ os.remove(tmppath .. '/' .. 'index.tmp') -- posts that appears on homepage
 --[[ END ]]--
 return 0
 
-# vim:expandtab:smartindent:tabstop=2:softtabstop=2:shiftwidth=2:
+-- vim:expandtab:smartindent:tabstop=2:softtabstop=2:shiftwidth=2:
