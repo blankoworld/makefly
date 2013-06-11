@@ -367,7 +367,7 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
         POST_AUTHOR = v['conf']['AUTHOR'],
         POST_DESCRIPTION = v['conf']['DESCRIPTION'],
         SHORT_DATE = os.date(short_date_format_default, timestamp),
-	DATE = os.date(date_format_default, timestamp)
+        DATE = os.date(date_format_default, timestamp)
       }
       -- registering tags
       local post_conf_tags = v['conf']['TAGS'] or nil
@@ -674,3 +674,5 @@ os.remove(tmppath .. '/' .. 'index.tmp') -- posts that appears on homepage
 
 --[[ END ]]--
 return 0
+
+# vim:expandtab:smartindent:tabstop=2:softtabstop=2:shiftwidth=2:
