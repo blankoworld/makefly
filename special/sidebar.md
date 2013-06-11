@@ -2,8 +2,8 @@
 
 ## Jouebs
 
-  * [Deber](http://oceamer.com/~interlude/ "Journal du projet de Deber")
   * [IRPDEV](http://www.irpdev.fr/ "Le blog d'IRPDEV")
+  * [Deber](http://oceamer.com/~interlude/ "Journal du projet de Deber")
   * [mart-e](http://mart-e.be/ "about life, linux and everything")
   * [Postblue](http://postblue.info/ "Le blog de Postblue")
   * [Halpanet](http://www.halpanet.org/ "Découvrir la liberté informatique avec Halpanet")
