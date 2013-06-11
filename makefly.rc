@@ -1,6 +1,6 @@
-BLOG_TITLE = Le BlankoJoueb
-BLOG_SHORT_DESC = Le journal web de Blanko
-BLOG_DESCRIPTION = Le journal web de Blanko
+BLOG_TITLE = Joueb d'Olivier
+BLOG_SHORT_DESC = Le JOUrnal wEB d'Olivier
+BLOG_DESCRIPTION = Joueb d'Olivier : récits et nouvelles touchant de près ou de loin la vie d'un défenseur des libertés intellectuelles dans le monde informatique
 BLOG_LANG = fr
 BLOG_CHARSET = UTF-8
 BASE_URL = http://n.b4n.fr/makefly
