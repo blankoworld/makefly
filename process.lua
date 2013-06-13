@@ -460,7 +460,8 @@ function createTag(filename, title, posts, header, footer, replacements)
   local page_file = assert(io.open(filename, 'wb'))
   -- do substitutions on page
   local substitutions = getSubstitutions(replacements, {TITLE=title})
-  page_file:write(replace(page:flatten(), substitutions))
+  local final_content = replace(page:flatten(), substitutions)
+  page_file:write(final_content)
   page_file:close()
   -- Print tag title
   print ("-- Tag successfully created: " .. title)
