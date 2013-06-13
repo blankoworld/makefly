@@ -7,6 +7,7 @@ Lua version:
 - about page
 - introduction.md
 - footer.md
+- RSS feed
 
 Next version (0.3):
 - Do some LUA tests to improve file generation
