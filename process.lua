@@ -617,7 +617,7 @@ end
 
 -- FIXME: COMPLETE here replacements for all kind of variables as ELI, SEARCH, about's page, special files, etc.
 -- Sidebar (display that's active/inactive)
-if makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1' then
+if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
   print ('-- Sidebar: activated.')
   local template_sidebar = readFile(page_sidebar, 'r')
   local sidebar_content = readFile(specialpath .. '/' .. sidebar_default .. '.md', 'r')
