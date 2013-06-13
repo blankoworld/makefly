@@ -259,6 +259,7 @@ function createPost(file, config, header, footer, tagpath, template_file, templa
       TAG_LINKS_LIST = post_tag_links and replace(post_tag_links, replacements) or '',
       DATE = os.date(date_format, timestamp) or '',
       POST_AUTHOR = config['AUTHOR'],
+      POST_ESCAPED_TITLE = title,
     }
     -- create substitutions list
     local substitutions = {}
@@ -270,8 +271,10 @@ function createPost(file, config, header, footer, tagpath, template_file, templa
     end
     -- add comment block if comment system is activated
     if template_comment then
-      local jskomment_id = config['JSKOMMENT_PREFIX'] or makeflyrc['BLOG_URL'] .. '/' .. title
-      substitutions['JSKOMMENT_CONTENT'] = replace(template_comment, {JSKOMMENT_ID=jskomment_id})
+      local jskomment_prefix = config['JSKOMMENT_PREFIX'] and config['JSKOMMENT_PREFIX'] ~= '' and config['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
+      local jskomment_id = jskomment_prefix .. '/' .. title
+      local jskomment_content = replace(template_comment, {JSKOMMENT_ID=jskomment_id})
+      substitutions['JSKOMMENT_CONTENT'] = jskomment_content
     end
     -- ${VARIABLES} substitution on markdown content
     local final_content = replace(post:flatten(), substitutions)
@@ -414,7 +417,14 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
         local post_content = replace(template_article_index, {CONTENT=markdown(real_post_content)})
         -- complete missing info
         post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE']
-        -- FIXME: Add here missing info for JSKOMMENT with unique identifier
+        post_substitutions['POST_ESCAPED_TITLE'] = title
+        -- add comment block if comment system is activated
+        if template_comment then
+          local jskomment_prefix = v['conf']['JSKOMMENT_PREFIX'] and v['conf']['JSKOMMENT_PREFIX'] ~= '' and v['conf']['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
+          local jskomment_id = jskomment_prefix .. '/' .. title
+          local jskomment_content = replace(template_comment, {JSKOMMENT_ID=jskomment_id})
+          post_substitutions['JSKOMMENT_CONTENT'] = jskomment_content
+        end
         local content4index = replace(post_content, post_substitutions)
         assert(first_posts_file:write(content4index))
       end
