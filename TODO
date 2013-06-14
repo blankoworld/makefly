@@ -4,8 +4,6 @@ TODO:
 Lua version:
 - MAX_POST_LINES (or similar) to add as last Makefly 0.2.1 version (with read_more link)
 - about page
-- introduction.md
-- footer.md
 - RSS feed
 - Do a function that use a template, a markdown content and a table to create a new "mix" of all of that (to simplify code
 - fix problem with my ARM computer which block on dispatcher function

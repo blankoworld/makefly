@@ -36,6 +36,8 @@ local publicpath = os.getenv('DESTDIR') or currentpath .. '/pub'
 local makeflyrcfile = os.getenv('conf') or 'makefly.rc'
 local themercfile = 'config.mk'
 local jskomment_js_filename = 'jskomment.js'
+local introduction_filename = 'introduction'
+local footer_filename = 'footer'
 -- theme filenames
 local page_header_name = 'header.xhtml'
 local page_footer_name = 'footer.xhtml'
@@ -664,6 +666,26 @@ if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   template_comment = readFile(page_jskomment, 'r')
 else
   print ('-- Comment system: desactivated.')
+end
+
+-- Introduction / footer file
+-- prepare a list of special files
+special_files = {
+  INTRODUCTION = introduction_filename .. '.md',
+  FOOTER = footer_filename .. '.md',
+}
+-- browse them
+for i, j in pairs(special_files) do
+  -- read special file if exists
+  local special_file_path = specialpath .. '/' .. j
+  local special_file = readFile(special_file_path, 'r')
+  if special_file and special_file ~= '' then
+    print ('-- ' .. i .. ': activated.')
+    local special_file_final_content = replace(markdown(special_file), replacements)
+    replacements[i .. '_CONTENT'] = special_file_final_content
+  else
+    print ('-- ' .. i .. ': desactivated.')
+  end
 end
 
 -- Browse DB files
