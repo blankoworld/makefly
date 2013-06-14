@@ -671,7 +671,7 @@ end
 -- Introduction / footer file
 -- prepare a list of special files
 special_files = {
-  INTRODUCTION = introduction_filename .. '.md',
+  INTRO = introduction_filename .. '.md',
   FOOTER = footer_filename .. '.md',
 }
 -- browse them

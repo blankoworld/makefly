@@ -1224,3 +1224,7 @@ body.page ul.children, body.error404 ul.children {
 width: auto;
 margin: 5px;
 }
+
+#introduction {
+  word-spacing: 1px;
+}
