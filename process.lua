@@ -224,6 +224,29 @@ function getSubstitutions(replacements, local_replacements)
   return result
 end
 
+function stuffTemplate(filepath, content, variable, option)
+  -- default initialization
+  local result = ''
+  local markdown_content = ''
+  -- get markdown result of content if option is 'markdown'
+  if option and option == 'markdown' and content then
+    markdown_content = markdown(content)
+  end
+  -- get file content
+  file = readFile(filepath, 'r')
+  if file then
+    local template_table = {}
+    -- if no content or no variable, it's useless to complete template_table
+    if content and variable then
+      template_table[variable] = markdown_content
+    end
+    -- do replacements
+    local substitutions = getSubstitutions(replacements, template_table)
+    result = replace(file, substitutions)
+  end
+  return result
+end
+
 function createPost(file, config, header, footer, tagpath, template_file, template_tag_file, date_format)
   -- get post's title and timestamp
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
@@ -622,14 +645,17 @@ end
 -- Sidebar (display that's active/inactive)
 if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
   print ('-- Sidebar: activated.')
-  local template_sidebar = readFile(page_sidebar, 'r')
   local sidebar_content = readFile(specialpath .. '/' .. sidebar_default .. '.md', 'r')
-  if sidebar_content and template_sidebar then
-    local markdown_content = markdown(sidebar_content)
-    local sidebar_final_content = ''
-    sidebar_final_content = replace(template_sidebar, {SIDEBAR_CONTENT=markdown_content})
-    replacements['SIDEBAR'] = replace(sidebar_final_content, replacements)
-  end
+  local sidebar_replaced_content
+  replacements['SIDEBAR'] = stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown')
+--  local template_sidebar = readFile(page_sidebar, 'r')
+--  local sidebar_content = readFile(specialpath .. '/' .. sidebar_default .. '.md', 'r')
+--  if sidebar_content and template_sidebar then
+--    local markdown_content = markdown(sidebar_content)
+--    local sidebar_final_content = ''
+--    sidebar_final_content = replace(template_sidebar, {SIDEBAR_CONTENT=markdown_content})
+--    replacements['SIDEBAR'] = replace(sidebar_final_content, replacements)
+--  end
 else
   print ('-- Sidebar: desactivated.')
 end
@@ -637,11 +663,7 @@ end
 -- Search bar
 if makeflyrc['SEARCH_BAR'] and makeflyrc['SEARCH_BAR'] == '1' then
   print ('-- Search bar: activated.')
-  local template_searchbar = readFile(page_searchbar, 'r')
-  if template_searchbar then
-    -- add searchbar content and translate some elements into (replacements table)
-    replacements['SEARCHBAR'] = replace(template_searchbar, replacements)
-  end
+  replacements['SEARCHBAR'] = stuffTemplate(page_searchbar)
 else
   print ('-- Search bar: desactivated.')
 end
