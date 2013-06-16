@@ -224,13 +224,18 @@ function getSubstitutions(replacements, local_replacements)
   return result
 end
 
-function stuffTemplate(filepath, content, variable, option)
+function stuffTemplate(filepath, content, variable, option, double_replacement)
   -- default initialization
+  local double = nil
   local result = ''
   local markdown_content = ''
   -- get markdown result of content if option is 'markdown'
   if option and option == 'markdown' and content then
     markdown_content = markdown(content)
+  end
+  -- activate double replacement function if double_replacement not nil
+  if double_replacement then
+    double = true
   end
   -- get file content
   file = readFile(filepath, 'r')
@@ -242,7 +247,12 @@ function stuffTemplate(filepath, content, variable, option)
     end
     -- do replacements
     local substitutions = getSubstitutions(replacements, template_table)
-    result = replace(file, substitutions)
+    if double then
+      local tmp_result = replace(file, substitutions)
+      result = replace(tmp_result, replacements)
+    else
+      result = replace(file, substitutions)
+    end
   end
   return result
 end
@@ -641,21 +651,13 @@ for k, v in pairs(languagerc) do
   replacements[k] = v
 end
 
--- FIXME: COMPLETE here replacements for all kind of variables as ELI, SEARCH, about's page, special files, etc.
+-- FIXME: COMPLETE here replacements for all kind of variables as ELI, about's page, special files, etc.
 -- Sidebar (display that's active/inactive)
 if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
   print ('-- Sidebar: activated.')
   local sidebar_content = readFile(specialpath .. '/' .. sidebar_default .. '.md', 'r')
   local sidebar_replaced_content
-  replacements['SIDEBAR'] = stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown')
---  local template_sidebar = readFile(page_sidebar, 'r')
---  local sidebar_content = readFile(specialpath .. '/' .. sidebar_default .. '.md', 'r')
---  if sidebar_content and template_sidebar then
---    local markdown_content = markdown(sidebar_content)
---    local sidebar_final_content = ''
---    sidebar_final_content = replace(template_sidebar, {SIDEBAR_CONTENT=markdown_content})
---    replacements['SIDEBAR'] = replace(sidebar_final_content, replacements)
---  end
+  replacements['SIDEBAR'] = stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
 else
   print ('-- Sidebar: desactivated.')
 end
@@ -681,10 +683,9 @@ if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   jskomment_script:write(replace(template_jskomment_script, jskomment_script_substitutions))
   assert(jskomment_script:close())
   -- jskomment javascript declaration in all pages
-  -- replacements['jskom_name'] = jskomment_js_filename
   local template_jskomment_declaration = readFile(page_jskomment_declaration, 'r')
   replacements['JSKOMMENT_SCRIPT'] = replace(template_jskomment_declaration, {jskom_name=jskomment_js_filename, BLOG_URL=makeflyrc['BLOG_URL']})
-  -- read different templates
+  -- read different templates for next processes
   template_comment = readFile(page_jskomment, 'r')
 else
   print ('-- Comment system: desactivated.')

@@ -5,6 +5,7 @@ Lua version:
 - MAX_POST_LINES (or similar) to add as last Makefly 0.2.1 version (with read_more link)
 - about page
 - RSS feed
+- DATETIME variable to give for posts!
 - Do a function that use a template, a markdown content and a table to create a new "mix" of all of that (to simplify code. Add an ARGUMENT to permit a "double" markdown replacement of final content
 - fix problem with my ARM computer which block on dispatcher function
 - do translation of "print" (with function _ and xgettext/msgfmt)
