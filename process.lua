@@ -61,6 +61,7 @@ local replacements = {} -- substitution table
 local today = os.time() -- today's timestamp
 local tags = {}
 -- default values
+local datetime_format_default = '%Y-%m-%dT%H:%M'
 local theme_default = "responsive" -- theme
 local postdir_name_default = 'posts' -- name for posts directory
 local tagdir_name_default = 'tags' -- name for tags directory
@@ -294,6 +295,7 @@ function createPost(file, config, header, footer, tagpath, template_file, templa
       POST_FILE = title .. resultextension,
       TAG_LINKS_LIST = post_tag_links and replace(post_tag_links, replacements) or '',
       DATE = os.date(date_format, timestamp) or '',
+      DATETIME = os.date(datetime_format_default, timestamp) or '',
       POST_AUTHOR = config['AUTHOR'],
       POST_ESCAPED_TITLE = title,
     }
@@ -413,8 +415,9 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
         POST_FILE = title .. resultextension,
         POST_AUTHOR = v['conf']['AUTHOR'],
         POST_DESCRIPTION = v['conf']['DESCRIPTION'],
-        SHORT_DATE = os.date(short_date_format_default, timestamp),
-        DATE = os.date(date_format_default, timestamp)
+        SHORT_DATE = os.date(short_date_format_default, timestamp) or '',
+        DATE = os.date(date_format_default, timestamp) or '',
+        DATETIME = os.date(datetime_format_default, timestamp) or '',
       }
       -- registering tags
       local post_conf_tags = v['conf']['TAGS'] or nil
