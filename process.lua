@@ -50,6 +50,7 @@ local page_tag_link_name = 'taglink.xhtml'
 local page_tag_index_name = 'tags.xhtml'
 local page_sidebar_name = 'sidebar.xhtml'
 local page_searchbar_name = 'menu.search_bar.xhtml'
+local page_about_name = 'menu.about.xhtml'
 local page_jskomment = templatepath .. '/' .. 'jskomment.article.xhtml'
 local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration.xhtml'
 local page_jskomment_script = templatepath .. '/' .. jskomment_js_filename
@@ -635,6 +636,7 @@ replacements = {
   INTRO_CONTENT = '',
   FOOTER_CONTENT = '',
   ABOUT_LINK = '',
+  ABOUT_FILENAME = '',
   CSS_NAME = themerc['CSS_NAME'],
   CSS_FILE = themerc['CSS_FILE'],
   CSS_COLOR_FILE = themerc['CSS_COLOR_FILE'],
@@ -651,7 +653,15 @@ for k, v in pairs(languagerc) do
   replacements[k] = v
 end
 
--- FIXME: COMPLETE here replacements for all kind of variables as ELI, about's page, special files, etc.
+-- Check about's page presence
+about_file_path = specialpath .. '/' .. about_default .. '.md'
+about_file = readFile(about_file_path, 'r')
+if about_file then
+  replacements['ABOUT_INDEX'] = (makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default
+  replacements['ABOUT_LINK'] = stuffTemplate(themepath .. '/' .. page_about_name, '', '', '', false)
+end
+
+-- FIXME: COMPLETE here replacements for all kind of variables as ELI, special files, etc.
 -- Sidebar (display that's active/inactive)
 if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
   print ('-- Sidebar: activated.')
@@ -709,6 +719,25 @@ for i, j in pairs(special_files) do
   else
     print ('-- ' .. i .. ': desactivated.')
   end
+end
+
+-- Create about's page if exists
+if about_file then
+  -- create content
+  about_markdown = markdown(about_file)
+  about_replaced = replace(about_markdown, replacements)
+  -- construct about's page
+  about = rope()
+  about:push(header)
+  about:push(about_replaced)
+  about:push(footer)
+  -- do replacements
+  about_substitutions = getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE']})
+  about_content = replace(about:flatten(), about_substitutions)
+  -- write changes
+  about_file_result = assert(io.open(publicpath .. '/' .. (makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default, 'wb'))
+  about_file_result:write(about_content)
+  about_file_result:close()
 end
 
 -- Browse DB files
