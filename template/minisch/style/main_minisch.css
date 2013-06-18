@@ -1228,3 +1228,7 @@ margin: 5px;
 #introduction {
   word-spacing: 1px;
 }
+
+.read_more {
+text-align: right;
+}

@@ -51,6 +51,7 @@ local page_tag_index_name = 'tags.xhtml'
 local page_sidebar_name = 'sidebar.xhtml'
 local page_searchbar_name = 'menu.search_bar.xhtml'
 local page_about_name = 'menu.about.xhtml'
+local page_read_more_name = 'read_more_link.xhtml'
 local page_jskomment = templatepath .. '/' .. 'jskomment.article.xhtml'
 local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration.xhtml'
 local page_jskomment_script = templatepath .. '/' .. jskomment_js_filename
@@ -74,6 +75,7 @@ local index_name_default = 'index' -- index name
 local extension_default = '.html' -- file extension for HTML pages
 local language_default = 'en' -- language name
 local max_post_default = 3 -- number of posts displayed on homepage
+local max_post_lines_default = nil -- no post limitations
 local jskomment_max_default = 3 -- number of comments displayed by default for each post
 local jskomment_url_default = 'http://jskomment.appspot.com' -- default URL of JSKOMMENT comment system
 local jskomment_captcha_theme_default = 'white'
@@ -163,6 +165,25 @@ function readFile(path, mode)
     local f = assert(io.open(path, mode))
     result = assert(f:read('*a'))
     assert(f:close())
+  end
+  return result
+end
+
+function headFile(path, number)
+  local result = ''
+  if not number then
+    return readFile(path, 'r')
+  else
+    local attr = lfs.attributes(path)
+    if attr and attr.mode == 'file' then
+      local f = assert(io.open(path, mode))
+      i = 0
+      for line in f:lines() do
+        result = result .. line .. '\n'
+        i = i + 1
+        if i == number then break end
+      end
+    end
   end
   return result
 end
@@ -384,7 +405,7 @@ function createTagLinks(post_tags, tagpath, file, extension)
   return result
 end
 
-function createPostIndex(posts, index_file, header, footer, replacements, extension, template_index_file, template_element_file, short_date_format, tagpath, template_taglink_file, template_article_index_file, max_post)
+function createPostIndex(posts, index_file, header, footer, replacements, extension, template_index_file, template_element_file, short_date_format, tagpath, template_taglink_file, template_article_index_file, max_post, max_post_lines)
   -- open result file
   local post_index = io.open(index_file, 'wb')
   -- create a rope to merge all text
@@ -453,6 +474,15 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
       if index_nb < max_post then
         -- read post real content
         local real_post_content = readFile(srcpath .. '/' .. title .. '.md', 'r')
+        if max_post_lines then
+          local n = 0
+          for i in real_post_content:gmatch("\n") do n=n+1 end
+          real_post_content = headFile(srcpath .. '/' .. title .. '.md', max_post_lines)
+          if max_post_lines < n then
+            local page_read_more = readFile(themepath .. '/' .. page_read_more_name, 'r')
+            real_post_content = real_post_content .. page_read_more
+          end
+        end
         local post_content = replace(template_article_index, {CONTENT=markdown(real_post_content)})
         -- complete missing info
         post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE']
@@ -567,6 +597,7 @@ index_filename = index_name .. resultextension
 date_format_default = makeflyrc['DATE_FORMAT'] or '%Y-%m-%d at %H:%M'
 short_date_format_default = makeflyrc['SHORT_DATE'] or '%Y/%m'
 max_post = makeflyrc['MAX_POST'] and tonumber(makeflyrc['MAX_POST']) or max_post_default
+max_post_lines = makeflyrc['MAX_POST_LINES'] and tonumber(makeflyrc['MAX_POST_LINES']) or max_post_lines_default
 jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX']) or jskomment_max_default
 jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
 -- Display which theme the user have choosed
@@ -761,7 +792,7 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_posts_name, page_post_element, short_date_format_default, tagpath, page_tag_link, page_article_index, max_post)
+createPostIndex(post_files, postpath .. '/' .. index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_posts_name, page_post_element, short_date_format_default, tagpath, page_tag_link, page_article_index, max_post, max_post_lines)
 
 -- Create tag's files: index and each tag's page
 createTagIndex(tags, tagpath, index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
