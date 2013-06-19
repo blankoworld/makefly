@@ -7,7 +7,7 @@ Lua version:
 - fix problem with my ARM computer which block on dispatcher function
 - do translation of "print" (with function _ and xgettext/msgfmt)
 - delete "resultextension" argument for createPostIndex and use a "default result extension"
-- add a variable for ".md" extension
+- add a variable for ".md" extension (or create a system that use markdown or anything else regarding file extension option?). For an example to activate or desactivate markdown functionnality
 
 Next version (0.3):
 - Do some LUA tests to improve file generation
