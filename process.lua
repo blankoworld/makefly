@@ -56,9 +56,9 @@ local page_jskomment = templatepath .. '/' .. 'jskomment.article.xhtml'
 local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration.xhtml'
 local page_jskomment_script = templatepath .. '/' .. jskomment_js_filename
 local page_jskomment_css_name = 'jskomment.css'
-local page_rss_header_name = 'feed.header.rss'
-local page_rss_element_name = 'feed.element.rss'
-local page_rss_footer_name = 'feed.footer.rss'
+local page_rss_header = templatepath .. '/' .. 'feed.header.rss'
+local page_rss_element = templatepath .. '/' .. 'feed.element.rss'
+local page_rss_footer = templatepath .. '/' .. 'feed.footer.rss'
 -- others
 local version = os.getenv('VERSION') or 'L 0.2.1-trunk'
 local replacements = {} -- substitution table
@@ -416,9 +416,9 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   local post_index = io.open(index_file, 'wb')
   -- prepare rss elements
   local rss_index = io.open(publicpath .. '/' .. rss_name_default .. rss_extension_default, 'wb')
-  local rss_header = readFile(templatepath .. '/' .. page_rss_header_name, 'r')
-  local rss_footer = readFile(templatepath .. '/' .. page_rss_footer_name, 'r')
-  local rss_element = readFile(templatepath .. '/' .. page_rss_element_name, 'r')
+  local rss_header = readFile(page_rss_header, 'r')
+  local rss_footer = readFile(page_rss_footer, 'r')
+  local rss_element = readFile(page_rss_element, 'r')
   -- create a rope to merge all text
   local index = rope()
   local rss = rope()
