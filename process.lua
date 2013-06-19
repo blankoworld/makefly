@@ -56,6 +56,9 @@ local page_jskomment = templatepath .. '/' .. 'jskomment.article.xhtml'
 local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration.xhtml'
 local page_jskomment_script = templatepath .. '/' .. jskomment_js_filename
 local page_jskomment_css_name = 'jskomment.css'
+local page_rss_header_name = 'feed.header.rss'
+local page_rss_element_name = 'feed.element.rss'
+local page_rss_footer_name = 'feed.footer.rss'
 -- others
 local version = os.getenv('VERSION') or 'L 0.2.1-trunk'
 local replacements = {} -- substitution table
@@ -72,10 +75,13 @@ local footer_default = 'footer' -- footer's name in special directory
 local sidebar_default = 'sidebar' -- sidebar's name in special directory
 local bodyclass_default = 'single' -- body class for pages
 local index_name_default = 'index' -- index name
+local rss_name_default = 'rss' -- rss default name
 local extension_default = '.html' -- file extension for HTML pages
+local rss_extension_default = '.xml' -- rss file extension
 local language_default = 'en' -- language name
 local max_post_default = 3 -- number of posts displayed on homepage
 local max_post_lines_default = nil -- no post limitations
+local max_rss_default = 5 -- number of posts displayed in RSS Feed
 local jskomment_max_default = 3 -- number of comments displayed by default for each post
 local jskomment_url_default = 'http://jskomment.appspot.com' -- default URL of JSKOMMENT comment system
 local jskomment_captcha_theme_default = 'white'
@@ -408,9 +414,17 @@ end
 function createPostIndex(posts, index_file, header, footer, replacements, extension, template_index_file, template_element_file, short_date_format, tagpath, template_taglink_file, template_article_index_file, max_post, max_post_lines)
   -- open result file
   local post_index = io.open(index_file, 'wb')
+  -- prepare rss elements
+  local rss_index = io.open(publicpath .. '/' .. rss_name_default .. rss_extension_default, 'wb')
+  local rss_header = readFile(templatepath .. '/' .. page_rss_header_name, 'r')
+  local rss_footer = readFile(templatepath .. '/' .. page_rss_footer_name, 'r')
+  local rss_element = readFile(templatepath .. '/' .. page_rss_element_name, 'r')
   -- create a rope to merge all text
   local index = rope()
+  local rss = rope()
+  -- get header for results
   index:push (header)
+  rss:push (rss_header)
   -- get post index general content
   local post_content = readFile(template_index_file, 'r')
   index:push (post_content)
@@ -470,20 +484,20 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
       assert(remember_file:close())
       -- push result into index
       index:push(post_element_content)
+      -- read post real content
+      local real_post_content = readFile(srcpath .. '/' .. title .. '.md', 'r')
       -- process post to be displayed on HOMEPAGE
       if index_nb < max_post then
-        -- read post real content
-        local real_post_content = readFile(srcpath .. '/' .. title .. '.md', 'r')
         if max_post_lines then
           local n = 0
           for i in real_post_content:gmatch("\n") do n=n+1 end
-          real_post_content = headFile(srcpath .. '/' .. title .. '.md', max_post_lines)
+          final_post_content = headFile(srcpath .. '/' .. title .. '.md', max_post_lines)
           if max_post_lines < n then
             local page_read_more = readFile(themepath .. '/' .. page_read_more_name, 'r')
-            real_post_content = real_post_content .. page_read_more
+            final_post_content = final_post_content .. page_read_more
           end
         end
-        local post_content = replace(template_article_index, {CONTENT=markdown(real_post_content)})
+        local post_content = replace(template_article_index, {CONTENT=markdown(final_post_content)})
         -- complete missing info
         post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE']
         post_substitutions['POST_ESCAPED_TITLE'] = title
@@ -497,6 +511,12 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
         local content4index = replace(post_content, post_substitutions)
         assert(first_posts_file:write(content4index))
       end
+      -- process post to be used in RSS file
+      if index_nb < max_rss then
+        local rss_post_html_link = makeflyrc['BLOG_URL'] .. '/' .. postdir_name .. '/' .. title .. resultextension
+        local rss_post = replace(rss_element, {DESCRIPTION=markdown(real_post_content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link})
+        rss:push(rss_post)
+      end
       -- incrementation
       index_nb = index_nb + 1
     end
@@ -504,6 +524,10 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   -- close first_posts file
   assert(first_posts_file:close())
   index:push (footer)
+  -- rss process
+  rss:push (rss_footer)
+  rss_index:write(replace(rss:flatten(), replacements))
+  rss_index:close()
   -- do substitutions on page
   local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE']})
   local index_content = replace(index:flatten(), index_substitutions)
@@ -598,6 +622,7 @@ date_format_default = makeflyrc['DATE_FORMAT'] or '%Y-%m-%d at %H:%M'
 short_date_format_default = makeflyrc['SHORT_DATE'] or '%Y/%m'
 max_post = makeflyrc['MAX_POST'] and tonumber(makeflyrc['MAX_POST']) or max_post_default
 max_post_lines = makeflyrc['MAX_POST_LINES'] and tonumber(makeflyrc['MAX_POST_LINES']) or max_post_lines_default
+max_rss = makeflyrc['MAX_RSS'] and tonumber(makeflyrc['MAX_RSS']) or max_rss_default
 jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX']) or jskomment_max_default
 jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
 -- Display which theme the user have choosed
