@@ -526,7 +526,8 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   index:push (footer)
   -- rss process
   rss:push (rss_footer)
-  rss_index:write(replace(rss:flatten(), replacements))
+  rss_replace = replace(rss:flatten(), replacements)
+  rss_index:write(rss_replace)
   rss_index:close()
   -- do substitutions on page
   local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE']})
