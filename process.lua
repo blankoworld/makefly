@@ -59,6 +59,10 @@ local page_jskomment_css_name = 'jskomment.css'
 local page_rss_header = templatepath .. '/' .. 'feed.header.rss'
 local page_rss_element = templatepath .. '/' .. 'feed.element.rss'
 local page_rss_footer = templatepath .. '/' .. 'feed.footer.rss'
+local page_eli_content = templatepath .. '/' .. 'eli_content.xhtml'
+local page_eli_css = templatepath .. '/' .. 'eli.css'
+local page_eli_declaration = templatepath .. '/' .. 'eli_declaration.xhtml'
+local page_eli_script = templatepath .. '/' .. 'eli.js'
 -- others
 local version = os.getenv('VERSION') or 'L 0.2.1-trunk'
 local replacements = {} -- substitution table
@@ -85,6 +89,11 @@ local max_rss_default = 5 -- number of posts displayed in RSS Feed
 local jskomment_max_default = 3 -- number of comments displayed by default for each post
 local jskomment_url_default = 'http://jskomment.appspot.com' -- default URL of JSKOMMENT comment system
 local jskomment_captcha_theme_default = 'white'
+local eli_css_name = 'eli.css'
+local eli_js_filename = 'eli.js'
+local eli_max_default = 5
+local eli_type_default = 'user'
+local eli_tmp_file = tmppath .. '/' .. 'content.eli'
 
 --[[ Methods ]]--
 
@@ -693,6 +702,7 @@ replacements = {
   ELI_SCRIPT = '',
   ELI_CONTENT = '',
   ELI_CSS = '',
+  ELI_STATUS = '',
   INTRO_CONTENT = '',
   FOOTER_CONTENT = '',
   ABOUT_LINK = '',
@@ -721,12 +731,44 @@ if about_file then
   replacements['ABOUT_LINK'] = stuffTemplate(themepath .. '/' .. page_about_name, '', '', '', false)
 end
 
--- FIXME: COMPLETE here replacements for all kind of variables as ELI, special files, etc.
+-- ELI badge
+-- FIXME: Delete "link" tag in HTML header for ELI css file (it's useless)
+if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
+  print ('-- ELI badge: activated.')
+  -- Set default ELI mandatory variables
+  eli_max = makeflyrc['ELI_MAX'] or eli_max_default
+  eli_type = makeflyrc['ELI_TYPE'] or eli_type_default
+  -- copy ELI css file
+  table.insert(threads, coroutine.create(function () copyFile(page_eli_css, publicpath .. '/' .. eli_css_name) end))
+  replacements['ELI_CSS'] = eli_css_name
+  -- copy ELI script to public directory
+  local template_eli_script = readFile(page_eli_script, 'r')
+  local eli_script = assert(io.open(publicpath .. '/' .. eli_js_filename, 'wb'))
+  eli_script_substitutions = getSubstitutions(replacements, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER']})
+  local eli_script_replace = replace(template_eli_script, eli_script_substitutions)
+  eli_script:write(eli_script_replace)
+  assert(eli_script:close())
+  -- ELI script declaration in all pages
+  local template_eli_declaration = readFile(page_eli_declaration, 'r')
+  replacements['ELI_SCRIPT'] = replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL=makeflyrc['BLOG_URL']})
+  -- get ELI status
+  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmp_file}'
+  eli_cmd = replace(eli_cmd, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER'], eli_tmp_file=eli_tmp_file})
+  status_return = assert(os.execute(eli_cmd))
+  if status_return == 0 then
+    local eli_status = readFile(eli_tmp_file, 'r')
+    replacements['ELI_STATUS'] = eli_status
+  end
+  -- read ELI content to add it in all pages
+  replacements['ELI_CONTENT'] = stuffTemplate(page_eli_content, '', '')
+else
+  print ('-- ELI badge: desactivated.')
+end
+
 -- Sidebar (display that's active/inactive)
 if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
   print ('-- Sidebar: activated.')
   local sidebar_content = readFile(specialpath .. '/' .. sidebar_default .. '.md', 'r')
-  local sidebar_replaced_content
   replacements['SIDEBAR'] = stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
 else
   print ('-- Sidebar: desactivated.')
@@ -741,6 +783,7 @@ else
 end
 
 -- JSKOMMENT system
+-- FIXME: Delete "link" tag in header file for JSKOMMENT css file (it's useless)
 if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   print ('-- Comment system: activated.')
   -- copy jskomment css file
