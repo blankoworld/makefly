@@ -2,7 +2,7 @@ TODO:
 -----
 
 Lua version:
-- Adapt Makefile for Lua script (give some VAR='nawak' OTHER='choz' script.lua)
+- Test that mandatory variables from makefly.rc are present!!! If not, raise an error!
 - Readapt documentation
 - Update TESTS
 - Update prepare-new-version.sh script
@@ -18,6 +18,13 @@ Next version (0.3):
 - Create translation for displayed info message when compiling Makefly
 
 Tests:
+- test: pmake backup
+- test: pmake list
+- test: pmake help
+- test: pmake clean
+- test: pmake install
+- test: pmake theme
+- test: pmake version
 - Do some tests with image comparison of all themes
 
 Templates:
