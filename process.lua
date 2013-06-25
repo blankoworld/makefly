@@ -137,7 +137,7 @@ function checkDirectory(path)
   if lfs.attributes(path) == nil then
     assert(lfs.mkdir(path))
     -- Display created directory
-    print ('-- Created folder: ' .. path .. ' ...')
+    print ("-- Created folder: '" .. path .. "'.")
   end
 end
 
