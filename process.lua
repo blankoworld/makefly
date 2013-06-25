@@ -494,13 +494,15 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
       -- push result into index
       index:push(post_element_content)
       -- read post real content
-      local real_post_content = readFile(srcpath .. '/' .. title .. '.md', 'r')
+      local post_content_file = srcpath .. '/' .. title .. '.md'
+      local real_post_content = readFile(post_content_file, 'r')
       -- process post to be displayed on HOMEPAGE
+      local final_post_content = readFile(post_content_file, 'r')
       if index_nb < max_post then
         if max_post_lines then
           local n = 0
           for i in real_post_content:gmatch("\n") do n=n+1 end
-          final_post_content = headFile(srcpath .. '/' .. title .. '.md', max_post_lines)
+          final_post_content = headFile(post_content_file, max_post_lines)
           if max_post_lines < n then
             local page_read_more = readFile(themepath .. '/' .. page_read_more_name, 'r')
             final_post_content = final_post_content .. page_read_more
