@@ -2,15 +2,19 @@ TODO:
 -----
 
 Lua version:
-- Do a "markdown and replace" method to change in markdown and do replacements
+- Adapt Makefile for Lua script (give some VAR='nawak' OTHER='choz' script.lua)
+- Readapt documentation
+- Update TESTS
+- Update prepare-new-version.sh script
+
+Lua version improvements:
 - fix problem with my ARM computer which block on dispatcher function
 - do translation of "print" (with function _ and xgettext/msgfmt)
 - delete "resultextension" argument for createPostIndex and use a "default result extension"
 - add a variable for ".md" extension (or create a system that use markdown or anything else regarding file extension option?). For an example to activate or desactivate markdown functionnality
+- Do a "markdown and replace" method to change in markdown and do replacements
 
 Next version (0.3):
-- Do some LUA tests to improve file generation
-- Slowly migrate to LUA (for an example for file generation)
 - Create translation for displayed info message when compiling Makefly
 
 Tests:

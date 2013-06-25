@@ -64,7 +64,7 @@ local page_eli_css = templatepath .. '/' .. 'eli.css'
 local page_eli_declaration = templatepath .. '/' .. 'eli_declaration.xhtml'
 local page_eli_script = templatepath .. '/' .. 'eli.js'
 -- others
-local version = os.getenv('VERSION') or 'L 0.2.1-trunk'
+local version = os.getenv('VERSION') or 'unknown-trunk'
 local replacements = {} -- substitution table
 local today = os.time() -- today's timestamp
 local tags = {}
