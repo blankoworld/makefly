@@ -548,6 +548,8 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   rss_replace = replace(rss:flatten(), replacements)
   rss_index:write(rss_replace)
   rss_index:close()
+  -- Display that RSS file was created
+  print (string.format("-- [%s] RSS feed: BUILT.", display_success))
   -- do substitutions on page
   local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE']})
   local index_content = replace(index:flatten(), index_substitutions)
