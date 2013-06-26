@@ -2,7 +2,6 @@ TODO:
 -----
 
 Lua version:
-- Copy static directory… Dude!
 - Test that mandatory variables from makefly.rc are present!!! If not, raise an error!
 - Readapt documentation
 - Update TESTS

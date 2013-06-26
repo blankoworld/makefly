@@ -859,6 +859,11 @@ if about_file then
   about_file_result:close()
 end
 
+-- Copy static directory content to public path
+static_directory = staticpath
+copy(static_directory, publicpath)
+print (string.format("-- [%s] Folder content copied: %s", display_success, staticpath))
+
 -- Browse DB files
 local post_files = {}
 dbresult = listing (dbpath, "mk")
