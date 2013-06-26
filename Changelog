@@ -1,4 +1,5 @@
 Trunk
+	- Improve display of message when compiling
 	- Improve RSS factory by only generating those that's expected
 	- Change posts generation bash script by a Lua script named process.lua
 	- Fix bug on tags that have space in their name
