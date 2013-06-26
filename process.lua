@@ -94,6 +94,13 @@ local eli_js_filename = 'eli.js'
 local eli_max_default = 5
 local eli_type_default = 'user'
 local eli_tmp_file = tmppath .. '/' .. 'content.eli'
+-- default display values
+local display_info =    '  INFO   '
+local display_success = ' SUCCESS '
+local display_enable =  ' ENABLE  '
+local display_disable = ' DISABLE '
+local display_warning = ' WARNING '
+local display_error =   '  ERROR  '
 
 --[[ Methods ]]--
 
@@ -137,7 +144,7 @@ function checkDirectory(path)
   if lfs.attributes(path) == nil then
     assert(lfs.mkdir(path))
     -- Display created directory
-    print ("-- Created folder: '" .. path .. "'.")
+    print (string.format("-- [%s] New folder: %s", display_success, path))
   end
 end
 
@@ -168,11 +175,11 @@ end
 
 function readFile(path, mode)
   local result = ''
-  if not mode then
+  if mode == nil then
     local mode = 'r'
   end
   if mode ~= 'r' and mode ~= 'rb' then
-    print('Unknown read mode!')
+    print(string.format("-- [%s] Unknown read mode while reading this path: %s.", display_error, path))
     os.exit(1)
   end
   local attr = lfs.attributes(path)
@@ -246,7 +253,8 @@ function copy(origin, destination)
   elseif attr and attr.mode == 'file' then
     copyFile(origin, destination)
   else
-    print (origin .. ' not found!')
+    print (string.format("-- [%s] %s not found in copy method!", display_error, origin))
+    os.exit(1)
   end
 end
 
@@ -357,7 +365,7 @@ function createPost(file, config, header, footer, tagpath, template_file, templa
     -- close output file
     assert(out:close())
     -- Print post title
-    print ("-- Post successfully created: " .. config['TITLE'])
+    print (string.format("-- [%s] New post: %s", display_success, config['TITLE']))
   end
 end
 
@@ -547,7 +555,7 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   -- Close post's index
   post_index:close()
   -- Display that post index was created
-  print ('-- Post list built.')
+  print (string.format('-- [%s] Post list: BUILT.', display_success))
 end
 
 function createTag(filename, title, posts, header, footer, replacements)
@@ -569,7 +577,7 @@ function createTag(filename, title, posts, header, footer, replacements)
   page_file:write(final_content)
   page_file:close()
   -- Print tag title
-  print ("-- Tag successfully created: " .. title)
+  print (string.format("-- [%s] New tag: %s", display_success, title))
 end
 
 function createTagIndex(all_tags, tagpath, index_filename, header, footer, replacements, extension, template_index_filename, template_element_filename)
@@ -596,7 +604,7 @@ function createTagIndex(all_tags, tagpath, index_filename, header, footer, repla
   -- Close post's index
   assert(index_file:close())
   -- Display that tag index was created
-  print ('-- Tag list built.')
+  print (string.format("-- [%s] Tag list: BUILT.", display_success))
 end
 
 function createHomepage(file, title, header, footer)
@@ -638,7 +646,7 @@ max_rss = makeflyrc['MAX_RSS'] and tonumber(makeflyrc['MAX_RSS']) or max_rss_def
 jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX']) or jskomment_max_default
 jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
 -- Display which theme the user have choosed
-print ('-- Choosen theme: ' .. theme)
+print (string.format("-- [%s] Theme: %s", display_info, theme))
 
 -- Get language configuration
 language = makeflyrc['BLOG_LANG'] or language_default
@@ -736,7 +744,7 @@ end
 -- ELI badge
 -- FIXME: Delete "link" tag in HTML header for ELI css file (it's useless)
 if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
-  print ('-- ELI badge: activated.')
+  print (string.format("-- [%s] ELI badge", display_enable))
   -- Set default ELI mandatory variables
   eli_max = makeflyrc['ELI_MAX'] or eli_max_default
   eli_type = makeflyrc['ELI_TYPE'] or eli_type_default
@@ -764,30 +772,30 @@ if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   -- read ELI content to add it in all pages
   replacements['ELI_CONTENT'] = stuffTemplate(page_eli_content, '', '')
 else
-  print ('-- ELI badge: desactivated.')
+  print (string.format("-- [%s] ELI badge", display_disable))
 end
 
 -- Sidebar (display that's active/inactive)
 if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
-  print ('-- Sidebar: activated.')
+  print (string.format("-- [%s] Sidebar", display_enable))
   local sidebar_content = readFile(specialpath .. '/' .. sidebar_default .. '.md', 'r')
   replacements['SIDEBAR'] = stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
 else
-  print ('-- Sidebar: desactivated.')
+  print (string.format("-- [%s] Sidebar", display_disable))
 end
 
 -- Search bar
 if makeflyrc['SEARCH_BAR'] and makeflyrc['SEARCH_BAR'] == '1' then
-  print ('-- Search bar: activated.')
+  print (string.format("-- [%s] Search bar", display_enable))
   replacements['SEARCHBAR'] = stuffTemplate(page_searchbar)
 else
-  print ('-- Search bar: desactivated.')
+  print (string.format("-- [%s] Search bar", display_disable))
 end
 
 -- JSKOMMENT system
 -- FIXME: Delete "link" tag in header file for JSKOMMENT css file (it's useless)
 if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
-  print ('-- Comment system: activated.')
+  print (string.format("-- [%s] Comment system", display_enable))
   -- copy jskomment css file
   table.insert(threads, coroutine.create(function () copyFile(jskomment_css_file, publicpath .. '/' .. jskomment_css_filename) end))
   replacements['JSKOMMENT_CSS'] = jskomment_css_filename
@@ -803,7 +811,7 @@ if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   -- read different templates for next processes
   template_comment = readFile(page_jskomment, 'r')
 else
-  print ('-- Comment system: desactivated.')
+  print (string.format("-- [%s] Comment system", display_disable))
 end
 
 -- Introduction / footer file
@@ -818,11 +826,11 @@ for i, j in pairs(special_files) do
   local special_file_path = specialpath .. '/' .. j
   local special_file = readFile(special_file_path, 'r')
   if special_file and special_file ~= '' then
-    print ('-- ' .. i .. ': activated.')
+    print (string.format("-- [%s] %s", display_enable, i))
     local special_file_final_content = replace(markdown(special_file), replacements)
     replacements[i .. '_CONTENT'] = special_file_final_content
   else
-    print ('-- ' .. i .. ': desactivated.')
+    print (string.format("-- [%s] %s", display_disable, i))
   end
 end
 
@@ -856,7 +864,7 @@ if dbresult then
     table.insert(threads, co)
   end
 else
-  print ("-- No DB file found!")
+  print (string.format("-- [%s] No DB file(s) found!", display_warning))
 end
 
 -- launch dispatcher to create each post and more (copy needed directories/files, etc.)
