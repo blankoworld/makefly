@@ -761,14 +761,15 @@ if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   -- ELI script declaration in all pages
   local template_eli_declaration = readFile(page_eli_declaration, 'r')
   replacements['ELI_SCRIPT'] = replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL=makeflyrc['BLOG_URL']})
-  -- get ELI status
-  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmp_file}'
-  eli_cmd = replace(eli_cmd, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER'], eli_tmp_file=eli_tmp_file})
-  status_return = assert(os.execute(eli_cmd))
-  if status_return == 0 then
-    local eli_status = readFile(eli_tmp_file, 'r')
-    replacements['ELI_STATUS'] = eli_status
-  end
+  -- FIXME: get ELI status (with lua socket or anything else)
+--  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmp_file}'
+--  eli_cmd = replace(eli_cmd, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER'], eli_tmp_file=eli_tmp_file})
+--  status_return = assert(os.execute(eli_cmd))
+--  if status_return == 0 then
+--    local eli_status = readFile(eli_tmp_file, 'r')
+--    replacements['ELI_STATUS'] = eli_status
+--  end
+  replacements['ELI_STATUS'] = languagerc['ELI_DEFAULT_STATUS'] or ''
   -- read ELI content to add it in all pages
   replacements['ELI_CONTENT'] = stuffTemplate(page_eli_content, '', '')
 else

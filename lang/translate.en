@@ -24,3 +24,4 @@ JSKOMMENT_YOUR = Your comment
 JSKOMMENT_LABEL = Nickname: 
 JSKOMMENT_CAPTCHA_ERROR = error in API usage
 ELI_TITLE = Timeline
+ELI_DEFAULT_STATUS = None

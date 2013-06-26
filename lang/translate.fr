@@ -24,3 +24,4 @@ JSKOMMENT_YOUR = Votre commentaire
 JSKOMMENT_LABEL = Pseudonyme : 
 JSKOMMENT_CAPTCHA_ERROR = erreur d\'utilisation de l\'API
 ELI_TITLE = Chronologie
+ELI_DEFAULT_STATUS = Aucun
