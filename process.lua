@@ -737,8 +737,11 @@ end
 about_file_path = specialpath .. '/' .. about_default .. '.md'
 about_file = readFile(about_file_path, 'r')
 if about_file then
+  print (string.format("-- [%s] About's page available", display_enable))
   replacements['ABOUT_INDEX'] = (makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default
   replacements['ABOUT_LINK'] = stuffTemplate(themepath .. '/' .. page_about_name, '', '', '', false)
+else
+  print (string.format("-- [%s] About's page not found", display_disable))
 end
 
 -- ELI badge
