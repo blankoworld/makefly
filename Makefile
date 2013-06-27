@@ -118,7 +118,7 @@ doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
 TODAY != ${date} '+%Y%m%d'
 backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
-		${tar} cf - makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} ${THEMEDIR} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
+		${tar} cf - makefly.rc ${STATICDIR:S/^.\///} ${DBDIR:S/^.\///} ${SRCDIR:S/^.\///} ${SPECIALDIR:S/^.\///} ${THEMEDIR:S/^.\///} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
 		{ \
 			echo "-- Backup failed!" ; \
 			false ; \
