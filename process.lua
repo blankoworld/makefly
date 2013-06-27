@@ -64,6 +64,7 @@ local page_eli_css = templatepath .. '/' .. 'eli.css'
 local page_eli_declaration = templatepath .. '/' .. 'eli_declaration.xhtml'
 local page_eli_script = templatepath .. '/' .. 'eli.js'
 -- others
+local blog_url = os.getenv('BLOG_URL') or ''
 local version = os.getenv('VERSION') or 'unknown-trunk'
 local replacements = {} -- substitution table
 local today = os.time() -- today's timestamp
@@ -532,7 +533,7 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
       end
       -- process post to be used in RSS file
       if index_nb < max_rss then
-        local rss_post_html_link = makeflyrc['BLOG_URL'] .. '/' .. postdir_name .. '/' .. title .. resultextension
+        local rss_post_html_link = blog_url .. '/' .. postdir_name .. '/' .. title .. resultextension
         local rss_post = replace(rss_element, {DESCRIPTION=markdown(real_post_content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link})
         rss:push(rss_post)
       end
@@ -692,7 +693,7 @@ else
   jskomment_css_file = templatepath .. '/' .. page_jskomment_css_name
   jskomment_css_filename = page_jskomment_css_name
 end
-table.insert(threads, coroutine.create(function () copyFile(css_file, publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = makeflyrc['BLOG_URL'] }) end))
+table.insert(threads, coroutine.create(function () copyFile(css_file, publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = blog_url }) end))
 table.insert(threads, coroutine.create(function () copyFile(css_color_file, publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
 -- Copy static theme directory
 theme_static_directory = themepath .. '/static'
@@ -704,7 +705,7 @@ replacements = {
   BLOG_TITLE = makeflyrc['BLOG_TITLE'],
   BLOG_DESCRIPTION = makeflyrc['BLOG_DESCRIPTION'],
   BLOG_SHORT_DESC = makeflyrc['BLOG_SHORT_DESC'],
-  BLOG_URL = makeflyrc['BLOG_URL'],
+  BLOG_URL = blog_url,
   LANG = makeflyrc['BLOG_LANG'],
   BLOG_CHARSET = makeflyrc['BLOG_CHARSET'],
   RSS_FEED_NAME = makeflyrc['RSS_FEED_NAME'],
@@ -767,7 +768,7 @@ if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   assert(eli_script:close())
   -- ELI script declaration in all pages
   local template_eli_declaration = readFile(page_eli_declaration, 'r')
-  replacements['ELI_SCRIPT'] = replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL=makeflyrc['BLOG_URL']})
+  replacements['ELI_SCRIPT'] = replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL=blog_url})
   -- FIXME: get ELI status (with lua socket or anything else)
 --  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmp_file}'
 --  eli_cmd = replace(eli_cmd, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER'], eli_tmp_file=eli_tmp_file})
@@ -815,7 +816,7 @@ if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   assert(jskomment_script:close())
   -- jskomment javascript declaration in all pages
   local template_jskomment_declaration = readFile(page_jskomment_declaration, 'r')
-  replacements['JSKOMMENT_SCRIPT'] = replace(template_jskomment_declaration, {jskom_name=jskomment_js_filename, BLOG_URL=makeflyrc['BLOG_URL']})
+  replacements['JSKOMMENT_SCRIPT'] = replace(template_jskomment_declaration, {jskom_name=jskomment_js_filename, BLOG_URL=blog_url})
   -- read different templates for next processes
   template_comment = readFile(page_jskomment, 'r')
 else
