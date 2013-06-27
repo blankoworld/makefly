@@ -677,7 +677,7 @@ local page_article_index = themepath .. '/' .. page_homepage_article_name
 local themerc = getConfig(themepath .. '/' .. themercfile)
 
 -- Some values that comes from template configuration file
-local jskomment_captcha_theme = themerc['JSKOMMENT_CAPTCHA_THEME'] or jskomment_captcha_theme_default
+local jskomment_captcha_theme = makeflyrc['JSKOMMENT_CAPTCHA_THEME'] or themerc['JSKOMMENT_CAPTCHA_THEME'] or jskomment_captcha_theme_default
 
 -- Read template's mandatory files
 local header = readFile(page_header, 'r')
