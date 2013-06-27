@@ -796,9 +796,10 @@ else
 end
 
 -- Sidebar (display that's active/inactive)
+local sidebar_filename = (makeflyrc['SIDEBAR_FILENAME'] or sidebar_default) .. '.md'
 if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
   print (string.format("-- [%s] Sidebar", display_enable))
-  local sidebar_content = readFile(specialpath .. '/' .. sidebar_default .. '.md', 'r')
+  local sidebar_content = readFile(specialpath .. '/' .. sidebar_filename, 'r')
   replacements['SIDEBAR'] = stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
 else
   print (string.format("-- [%s] Sidebar", display_disable))
