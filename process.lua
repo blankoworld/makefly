@@ -620,6 +620,8 @@ function createHomepage(file, title, header, footer)
   local final_content = replace(index:flatten(), substitutions)
   index_file:write(final_content)
   assert(index_file:close())
+  -- Display that homepage was created
+  print (string.format("-- [%s] Homepage: BUILT.", display_success))
 end
 
 --[[ MAIN ]]--
