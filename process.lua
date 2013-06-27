@@ -685,7 +685,18 @@ local footer = readFile(page_footer, 'r')
 
 -- Create CSS files
 css_file = themepath .. '/style/' .. themerc['CSS_FILE']
-css_color_file = themepath .. '/style/' .. themerc['CSS_COLOR_FILE']
+local css_color_file_name = themerc['CSS_COLOR_FILE']
+if makeflyrc['FLAVOR'] and makeflyrc['FLAVOR'] ~= '' then
+  local css_color_file_test = 'color_' .. theme .. '_' .. makeflyrc['FLAVOR'] .. '.css'
+  local css_color_file_attr = lfs.attributes(themepath .. '/style/' .. css_color_file_test)
+  if css_color_file_attr and css_color_file_attr.mode == 'file' then
+    css_color_file_name = css_color_file_test
+  else
+    print (string.format("-- [%s] Wrong flavor: %s", display_warning, makeflyrc['FLAVOR']))
+  end
+  print (string.format("-- [%s] Specific flavor: %s", display_info, makeflyrc['FLAVOR']))
+end
+css_color_file = themepath .. '/style/' .. css_color_file_name
 if themerc['JSKOMMENT_CSS'] then
   jskomment_css_file = themepath .. '/' .. themerc['JSKOMMENT_CSS']
   jskomment_css_filename = themerc['JSKOMMENT_CSS']
