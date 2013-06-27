@@ -765,7 +765,7 @@ end
 if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   print (string.format("-- [%s] ELI badge", display_enable))
   -- Set default ELI mandatory variables
-  eli_max = makeflyrc['ELI_MAX'] or eli_max_default
+  eli_max = makeflyrc['ELI_MAX'] and tonumber(makeflyrc['ELI_MAX']) or eli_max_default
   eli_type = makeflyrc['ELI_TYPE'] or eli_type_default
   -- copy ELI css file
   table.insert(threads, coroutine.create(function () copyFile(page_eli_css, publicpath .. '/' .. eli_css_name) end))
