@@ -1,5 +1,3 @@
-<link href="./readme.css" rel="stylesheet"></link>
-
 # Makefly
 
 [Original english documentation version](http://makefly.e-mergence.org/documentation.html) (version originale en anglais)
