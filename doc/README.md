@@ -130,7 +130,7 @@ This one is named **special** because it can contain some file you have to creat
 
   * *about.md* : Is the content of an about's page about your website. It will add an item in the website main menu (If your theme support it.)
   * *sidebar.md* : Add a sidebar on your website. The theme have to support this function.
-  * *introduction.md* : Display this file's content as an introduction to your website homepage. This could change regarding the choosen theme.
+  * *introduction.md* : Display this file's content as an introduction on all your website's pages. This could change regarding the choosen theme.
   * *footer.md* : Display this file's content as a footer on all your website's pages. This could change regarding the choosen theme.
 
 ## Use it!
@@ -149,24 +149,19 @@ The result is compatible with all HTML servers. In fact you could probably use r
 
 ### From a webserver
 
-If you launch Makefly on you own server or probably on provider ' server, you should so use **install.sh** which is a bash shell script. Just launch it:
+If you launch Makefly on you own server or probably on provider ' server, you should be capable to use **install** script automation. Just launch it as:
 
-    cd tools
-    bash tinstall.sh
+    pmake install
 
 ...and it will copy all files to **~/public\_html** directory.
 
 **WARNING**: This will erase all files from *public\_html* directory!
 
-**Note**: You can customize the script to copy files in another directory. To do that, just edit **install.sh** script and change this variable:
+**Note**: You can customize the destination by changing **makefly.rc** file espacially the given line : 
 
-    DESTDIR=${HOME}/public_html
+    INSTALLDIR=${HOME}/public_html
 
-to:
-
-    DESTDIR=/my/personal/website
-
-Relaunch *install.sh* script to see result.
+Then relaunch `pmake install` to recompile the weblog.
 
 ### To a remote computer: *publish* command
 
