@@ -139,7 +139,7 @@ function stuffTemplate(filepath, content, variable, option, double_replacement)
   return result
 end
 
-function createPost(file, config, tagpath, template_file, template_tag_file)
+function createPost(file, config, template_file, template_tag_file)
   -- get post's title and timestamp
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
@@ -161,7 +161,7 @@ function createPost(file, config, tagpath, template_file, template_tag_file)
       table.insert(post_tags, post_tagname)
     end
     -- create tag links
-    local post_tag_links = createTagLinks(post_tags, tagpath, template_tag_file, resultextension)
+    local post_tag_links = createTagLinks(post_tags, template_tag_file, resultextension)
     -- concatenate all final post subelements
     post:push (header)
     post:push (template)
@@ -247,7 +247,7 @@ function pairsByKeys (t, f)
   return iter
 end
 
-function createTagLinks(post_tags, tagpath, file, extension)
+function createTagLinks(post_tags, file, extension)
   -- prepare some values
   local result = ''
   -- get single tag element template
@@ -264,7 +264,7 @@ function createTagLinks(post_tags, tagpath, file, extension)
   return result
 end
 
-function createPostIndex(posts, index_file, extension, template_index_file, template_element_file, tagpath, template_taglink_file, template_article_index_file, max_post, max_post_lines)
+function createPostIndex(posts, index_file, extension, template_index_file, template_element_file, template_taglink_file, template_article_index_file, max_post, max_post_lines)
   -- open result file
   local post_index = io.open(index_file, 'wb')
   -- prepare rss elements
@@ -323,7 +323,7 @@ function createPostIndex(posts, index_file, extension, template_index_file, temp
           end
         end
         -- create tag links
-        local tag_links = createTagLinks(post_tags, tagpath, template_taglink_file, extension)
+        local tag_links = createTagLinks(post_tags, template_taglink_file, extension)
         if tag_links then
           metadata['TAG_LINKS_LIST'] = tag_links
         end
@@ -418,7 +418,7 @@ function createTag(filename, title, posts)
   print (string.format("-- [%s] New tag: %s", display_success, title))
 end
 
-function createTagIndex(all_tags, tagpath, index_filename, extension, template_index_filename, template_element_filename)
+function createTagIndex(all_tags, index_filename, extension, template_index_filename, template_element_filename)
   local index = rope()
   index:push(header)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
@@ -721,7 +721,7 @@ if dbresult then
   for k,v in pairs(dbresult) do
     -- parse DB files to get metadata and posts'title
     table.insert(post_files, {file=v, conf=getConfig(v)})
-    local co = coroutine.create(function () createPost(v, getConfig(v), tagpath, page_article_single, page_tag_link) end)
+    local co = coroutine.create(function () createPost(v, getConfig(v), page_article_single, page_tag_link) end)
     table.insert(threads, co)
   end
 else
@@ -732,10 +732,10 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, resultextension, themepath .. '/' .. page_posts_name, page_post_element, tagpath, page_tag_link, page_article_index, max_post, max_post_lines)
+createPostIndex(post_files, postpath .. '/' .. index_filename, resultextension, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index, max_post, max_post_lines)
 
 -- Create tag's files: index and each tag's page
-createTagIndex(tags, tagpath, index_filename, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
+createTagIndex(tags, index_filename, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
 
 -- Create index
 createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
