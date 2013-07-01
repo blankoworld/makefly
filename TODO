@@ -1,12 +1,6 @@
 TODO:
 -----
 
-Lua version:
-- Test that mandatory variables from makefly.rc are present!!! If not, raise an error!
-- Readapt documentation
-- Update TESTS
-- Update prepare-new-version.sh script
-
 Lua version improvements:
 - fix problem with my ARM computer which block on dispatcher function
 - do translation of "print" (with function _ and xgettext/msgfmt)

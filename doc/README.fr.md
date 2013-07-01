@@ -1,5 +1,3 @@
-<link href="./readme.css" rel="stylesheet"></link>
-
 # Makefly
 
 [Original english documentation version](http://makefly.e-mergence.org/documentation.html) (version originale en anglais)
@@ -124,7 +122,7 @@ Il est &agrave; noter que Makefly utilise [le format markdown](http://daringfire
 
 ### Fichiers statiques
 
-Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans le dossier *static*. Ils seront copier dans le dossier de destination.
+Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans le dossier *static*. Ils seront copiés dans le dossier de destination.
 
 ### Le dossier 'special'
 
@@ -132,7 +130,7 @@ Ce dossier nomm&eacute; **special** peut contenir certains fichiers que vous dev
 
   * *about.md* : Contient le contenu d'une page d'&agrave; propos au sujet de votre site. Cela va ajouter une entr&eacute;e dans le menu principal du site (si votre th&egrave;me le supporte).
   * *sidebar.md* : Ajoute une barre lat&eacute;rale sur votre site. Le th&egrave;me doit supporter cette fonction.
-  * *introduction.md* : Affiche le contenu de ce fichier comme introduction de votre page d'accueil. Varie selon le th&egrave;me choisi.
+  * *introduction.md* : Affiche le contenu de ce fichier comme introduction sur l'ensemble de vos pages. Varie selon le th&egrave;me choisi.
   * *footer.md* : Affiche le contenu de ce fichier comme d'un pied de page sur l'ensemble de vos pages. Varie selon le th&egrave;me choisi.
 
 ## Utilisez le !
@@ -151,24 +149,19 @@ Le r&eacute;sultat de Makefly est compatible avec tous le serveurs HTML. En effe
 
 ### Sur un serveur web
 
-Si vous lancez Makefly sur votre propre serveur ou tr&egrave;s certainement sur le serveur de votre h&eacute;bergeur, vous pourrez utiliser **install.sh** qui est un script shell. Lancez simplement : 
+Si vous lancez Makefly sur votre propre serveur ou tr&egrave;s certainement sur le serveur de votre h&eacute;bergeur, vous pourrez utiliser l'installation automatis&eacute;e. Lancez simplement la commande suivante : 
 
-    cd tools
-    bash install.sh
+    pmake install
 
 ...et cela copiera tous les fichiers dans le r&eacute;pertoire **~/public\_html**.
 
 **ATTENTION**: Cela supprimera tous les fichiers contenus dans le dossier *public\_html* !
 
-**Note**: Vous pouvez personnaliser le script pour copier tous les fichiers dans un autre r&eacute;pertoire que le *public\_html*. Pour cela, modifiez le script **install.sh** et changez cette variable : 
+**Note**: Vous pouvez personnaliser la destination en changeant le fichier **makefly.rc** et plus particuli&egrave;rement la ligne suivante : 
 
-    DESTDIR=${HOME}/public_html
+    INSTALLDIR=${HOME}/public_html
 
-en : 
-
-    DESTDIR=/mon/site/web
-
-Relancez le script *install.sh* pour voir le r&eacute;sultat.
+Relancez ensuite la commande `pmake install` pour recompiler le blog.
 
 ### Vers un ordinateur distant : la commande *publish*
 

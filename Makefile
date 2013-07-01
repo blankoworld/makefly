@@ -65,6 +65,7 @@ COMPRESS_EXT = .gz
 # first main variables
 .include "${conf}"
 PAGE_EXT ?= .html
+BLOG_URL ?= http://localhost/~${USER}
 # then theme VARIABLES
 THEMEDIR = ${TMPLDIR}/${THEME}
 theme_config ?= ${THEMEDIR}/config.mk
@@ -87,7 +88,7 @@ ${${DIR}}:
 
 # BEGIN
 all:
-	$QCURDIR="${.OBJDIR}" DBDIR="${DBDIR}" SRCDIR="${SRCDIR}" TMPDIR="${TMPDIR}" TMPLDIR="${TMPLDIR}" STATICDIR="${STATICDIR}" SPECIALDIR="${SPECIALDIR}" LANGDIR="${LANGDIR}" DESTDIR="${DESTDIR}" VERSION="${VERSION}" conf="${conf}" ${lua} ${mainscript} || exit 1
+	$QCURDIR="${.OBJDIR}" DBDIR="${DBDIR}" SRCDIR="${SRCDIR}" TMPDIR="${TMPDIR}" TMPLDIR="${TMPLDIR}" STATICDIR="${STATICDIR}" SPECIALDIR="${SPECIALDIR}" LANGDIR="${LANGDIR}" DESTDIR="${DESTDIR}" BLOG_URL=${BLOG_URL} VERSION="${VERSION}" conf="${conf}" ${lua} ${mainscript} || exit 1
 
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
@@ -117,7 +118,7 @@ doc: ${DOCFILESRESULT:S/.md$/${PAGE_EXT}/}
 TODAY != ${date} '+%Y%m%d'
 backup: makefly.rc ${BACKUPDIR}
 	$Q{ \
-		${tar} cf - makefly.rc ${STATICDIR} ${DBDIR} ${SRCDIR} ${SPECIALDIR} ${THEMEDIR} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
+		${tar} cf - makefly.rc ${STATICDIR:S/^.\///} ${DBDIR:S/^.\///} ${SRCDIR:S/^.\///} ${SPECIALDIR:S/^.\///} ${THEMEDIR:S/^.\///} | ${COMPRESS_TOOL} > ${BACKUPDIR}/${TODAY}_makefly.tar${COMPRESS_EXT} || \
 		{ \
 			echo "-- Backup failed!" ; \
 			false ; \
