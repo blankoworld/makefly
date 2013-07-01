@@ -247,7 +247,7 @@ function pairsByKeys (t, f)
   return iter
 end
 
-function createTagLinks(post_tags, file, extension)
+function createTagLinks(post_tags, file)
   -- prepare some values
   local result = ''
   -- get single tag element template
@@ -258,13 +258,13 @@ function createTagLinks(post_tags, file, extension)
     if k > 1 then
       result = result .. ', '
     end
-    local tag_page = string.gsub(v, '%s', '_') .. extension
+    local tag_page = string.gsub(v, '%s', '_') .. resultextension
     result = result .. replace(template, {TAG_PAGE=tag_page, TAG_NAME=v})
   end
   return result
 end
 
-function createPostIndex(posts, index_file, extension, template_index_file, template_element_file, template_taglink_file, template_article_index_file, max_post, max_post_lines)
+function createPostIndex(posts, index_file, template_index_file, template_element_file, template_taglink_file, template_article_index_file, max_post, max_post_lines)
   -- open result file
   local post_index = io.open(index_file, 'wb')
   -- prepare rss elements
@@ -323,7 +323,7 @@ function createPostIndex(posts, index_file, extension, template_index_file, temp
           end
         end
         -- create tag links
-        local tag_links = createTagLinks(post_tags, template_taglink_file, extension)
+        local tag_links = createTagLinks(post_tags, template_taglink_file)
         if tag_links then
           metadata['TAG_LINKS_LIST'] = tag_links
         end
@@ -418,7 +418,7 @@ function createTag(filename, title, posts)
   print (string.format("-- [%s] New tag: %s", display_success, title))
 end
 
-function createTagIndex(all_tags, index_filename, extension, template_index_filename, template_element_filename)
+function createTagIndex(all_tags, index_filename, template_index_filename, template_element_filename)
   local index = rope()
   index:push(header)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
@@ -429,7 +429,7 @@ function createTagIndex(all_tags, index_filename, extension, template_index_file
   -- browse all tags
   local taglist_content = ''
   for tag, posts in pairsByKeys(tags) do
-    local tag_page = string.gsub(tag, '%s', '_') .. extension
+    local tag_page = string.gsub(tag, '%s', '_') .. resultextension
     taglist_content = taglist_content .. replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
     createTag(tagpath .. '/' .. tag_page, tag, posts)
   end
@@ -589,7 +589,7 @@ about_file_path = specialpath .. '/' .. about_default .. '.md'
 about_file = readFile(about_file_path, 'r')
 if about_file then
   print (string.format("-- [%s] About's page available", display_enable))
-  replacements['ABOUT_INDEX'] = (makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default
+  replacements['ABOUT_INDEX'] = (makeflyrc['ABOUT_FILENAME'] or about_default) .. resultextension
   replacements['ABOUT_LINK'] = stuffTemplate(themepath .. '/' .. page_about_name, '', '', '', false)
 else
   print (string.format("-- [%s] About's page not found", display_disable))
@@ -732,10 +732,10 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, resultextension, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index, max_post, max_post_lines)
+createPostIndex(post_files, postpath .. '/' .. index_filename, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index, max_post, max_post_lines)
 
 -- Create tag's files: index and each tag's page
-createTagIndex(tags, index_filename, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
+createTagIndex(tags, index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
 
 -- Create index
 createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
