@@ -222,7 +222,7 @@ function createTagLinks(post_tags, file)
   return result
 end
 
-function createPostIndex(posts, index_file, template_index_file, template_element_file, template_taglink_file, template_article_index_file, max_post, max_post_lines)
+function createPostIndex(posts, index_file, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
   -- open result file
   local post_index = io.open(index_file, 'wb')
   -- prepare rss elements
@@ -690,7 +690,7 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index, max_post, max_post_lines)
+createPostIndex(post_files, postpath .. '/' .. index_filename, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index)
 
 -- Create tag's files: index and each tag's page
 createTagIndex(tags, index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
