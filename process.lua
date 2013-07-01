@@ -306,7 +306,7 @@ function stuffTemplate(filepath, content, variable, option, double_replacement)
   return result
 end
 
-function createPost(file, config, header, footer, tagpath, template_file, template_tag_file)
+function createPost(file, config, tagpath, template_file, template_tag_file)
   -- get post's title and timestamp
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
@@ -431,7 +431,7 @@ function createTagLinks(post_tags, tagpath, file, extension)
   return result
 end
 
-function createPostIndex(posts, index_file, header, footer, replacements, extension, template_index_file, template_element_file, tagpath, template_taglink_file, template_article_index_file, max_post, max_post_lines)
+function createPostIndex(posts, index_file, replacements, extension, template_index_file, template_element_file, tagpath, template_taglink_file, template_article_index_file, max_post, max_post_lines)
   -- open result file
   local post_index = io.open(index_file, 'wb')
   -- prepare rss elements
@@ -563,7 +563,7 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
   print (string.format('-- [%s] Post list: BUILT.', display_success))
 end
 
-function createTag(filename, title, posts, header, footer, replacements)
+function createTag(filename, title, posts, replacements)
   local page = rope()
   page:push(header)
   -- insert content (all posts linked to this tag)
@@ -585,7 +585,7 @@ function createTag(filename, title, posts, header, footer, replacements)
   print (string.format("-- [%s] New tag: %s", display_success, title))
 end
 
-function createTagIndex(all_tags, tagpath, index_filename, header, footer, replacements, extension, template_index_filename, template_element_filename)
+function createTagIndex(all_tags, tagpath, index_filename, replacements, extension, template_index_filename, template_element_filename)
   local index = rope()
   index:push(header)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
@@ -598,7 +598,7 @@ function createTagIndex(all_tags, tagpath, index_filename, header, footer, repla
   for tag, posts in pairsByKeys(tags) do
     local tag_page = string.gsub(tag, '%s', '_') .. extension
     taglist_content = taglist_content .. replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
-    createTag(tagpath .. '/' .. tag_page, tag, posts, header, footer, replacements)
+    createTag(tagpath .. '/' .. tag_page, tag, posts, replacements)
   end
   index:push(replace(template_index, {TAGLIST_CONTENT=taglist_content}))
   index:push(footer)
@@ -612,7 +612,7 @@ function createTagIndex(all_tags, tagpath, index_filename, header, footer, repla
   print (string.format("-- [%s] Tag list: BUILT.", display_success))
 end
 
-function createHomepage(file, title, header, footer)
+function createHomepage(file, title)
   local index = rope()
   local index_file = io.open(file, 'wb')
   local content = readFile(tmppath .. '/' .. 'index.tmp', 'r')
@@ -682,8 +682,8 @@ local themerc = getConfig(themepath .. '/' .. themercfile)
 local jskomment_captcha_theme = makeflyrc['JSKOMMENT_CAPTCHA_THEME'] or themerc['JSKOMMENT_CAPTCHA_THEME'] or jskomment_captcha_theme_default
 
 -- Read template's mandatory files
-local header = readFile(page_header, 'r')
-local footer = readFile(page_footer, 'r')
+header = readFile(page_header, 'r')
+footer = readFile(page_footer, 'r')
 
 -- Create CSS files
 css_file = themepath .. '/style/' .. themerc['CSS_FILE']
@@ -888,7 +888,7 @@ if dbresult then
   for k,v in pairs(dbresult) do
     -- parse DB files to get metadata and posts'title
     table.insert(post_files, {file=v, conf=getConfig(v)})
-    local co = coroutine.create(function () createPost(v, getConfig(v), header, footer, tagpath, page_article_single, page_tag_link) end)
+    local co = coroutine.create(function () createPost(v, getConfig(v), tagpath, page_article_single, page_tag_link) end)
     table.insert(threads, co)
   end
 else
@@ -899,13 +899,13 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_posts_name, page_post_element, tagpath, page_tag_link, page_article_index, max_post, max_post_lines)
+createPostIndex(post_files, postpath .. '/' .. index_filename, replacements, resultextension, themepath .. '/' .. page_posts_name, page_post_element, tagpath, page_tag_link, page_article_index, max_post, max_post_lines)
 
 -- Create tag's files: index and each tag's page
-createTagIndex(tags, tagpath, index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
+createTagIndex(tags, tagpath, index_filename, replacements, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
 
 -- Create index
-createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'], header, footer)
+createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
 
 -- Delete temporary files
 for tag, posts in pairs(tags) do
