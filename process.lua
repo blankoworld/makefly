@@ -84,6 +84,7 @@ local index_name_default = 'index' -- index name
 local rss_name_default = 'rss' -- rss default name
 local extension_default = '.html' -- file extension for HTML pages
 local rss_extension_default = '.xml' -- rss file extension
+local source_extension_default = '.md' -- source file default extension (markdown here)
 local language_default = 'en' -- language name
 local max_post_default = 3 -- number of posts displayed on homepage
 local max_post_lines_default = nil -- no post limitations
@@ -151,7 +152,7 @@ function createPost(file, config, template_file, template_tag_file)
     -- create a rope for post's result
     local post = rope()
     -- open content of post (SRC file)
-    local content = readFile(srcpath .. "/" .. title .. ".md", 'r')
+    local content = readFile(srcpath .. "/" .. title .. source_extension, 'r')
     -- markdown process on content
     local markdown_content = markdown(content)
     -- process tags
@@ -296,7 +297,7 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
       -- push result into index
       index:push(post_element_content)
       -- read post real content
-      local post_content_file = srcpath .. '/' .. title .. '.md'
+      local post_content_file = srcpath .. '/' .. title .. source_extension
       local real_post_content = readFile(post_content_file, 'r')
       -- process post to be displayed on HOMEPAGE
       local final_post_content = readFile(post_content_file, 'r')
@@ -424,6 +425,10 @@ threads = {}
 
 -- Get makefly's configuration
 makeflyrc = getConfig(makeflyrcfile)
+-- FIXME: permit user to choose its own extension
+source_extension = source_extension_default
+-- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
+-- FIXME: place here the code
 
 -- Set variables regarding user configuration
 index_name = makeflyrc['INDEX_FILENAME'] or index_name_default
@@ -543,7 +548,7 @@ for k, v in pairs(languagerc) do
 end
 
 -- Check about's page presence
-about_file_path = specialpath .. '/' .. about_default .. '.md'
+about_file_path = specialpath .. '/' .. about_default .. source_extension
 about_file = readFile(about_file_path, 'r')
 if about_file then
   print (string.format("-- [%s] About's page available", display_enable))
@@ -589,7 +594,7 @@ else
 end
 
 -- Sidebar (display that's active/inactive)
-local sidebar_filename = (makeflyrc['SIDEBAR_FILENAME'] or sidebar_default) .. '.md'
+local sidebar_filename = (makeflyrc['SIDEBAR_FILENAME'] or sidebar_default) .. source_extension
 if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
   print (string.format("-- [%s] Sidebar", display_enable))
   local sidebar_content = readFile(specialpath .. '/' .. sidebar_filename, 'r')
@@ -631,8 +636,8 @@ end
 -- Introduction / footer file
 -- prepare a list of special files
 special_files = {
-  INTRO = introduction_filename .. '.md',
-  FOOTER = footer_filename .. '.md',
+  INTRO = introduction_filename .. source_extension,
+  FOOTER = footer_filename .. source_extension,
 }
 -- browse them
 for i, j in pairs(special_files) do
