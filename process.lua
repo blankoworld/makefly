@@ -205,48 +205,6 @@ function createPost(file, config, template_file, template_tag_file)
   end
 end
 
-function dispatcher ()
-  while true do
-    local n = table.getn(threads)
-    if n == 0 then break end   -- no more threads to run
-    for i=1,n do
-      local status, res = coroutine.resume(threads[i])
-      if not res then    -- thread finished its task?
-        table.remove(threads, i)
-        break
-      end
-    end
-  end
-end
-
-function compare_post(a, b, order)
-  local r = a['file'] > b['file']
-  if order == nil then
-    r = a['file'] > b['file']
-  elseif order == 'asc' then
-    r = a['file'] < b['file']
-  elseif order == 'desc' then
-    r = a['file'] > b['file']
-  else
-    r = a['file'] > b['file']
-  end
-  return r
-end
-
-function pairsByKeys (t, f)
-  local a = {}
-  for n in pairs(t) do table.insert(a, n) end
-  table.sort(a, f)
-  local i = 0      -- iterator variable
-  local iter = function ()   -- iterator function
-    i = i + 1
-    if a[i] == nil then return nil
-    else return a[i], t[a[i]]
-    end
-  end
-  return iter
-end
-
 function createTagLinks(post_tags, file)
   -- prepare some values
   local result = ''
