@@ -71,6 +71,8 @@ local today = os.time() -- today's timestamp
 local tags = {}
 -- default values
 local datetime_format_default = '%Y-%m-%dT%H:%M'
+local date_format_default = '%Y-%m-%d at %H:%M'
+local short_date_format_default = '%Y/%m'
 local theme_default = "responsive" -- theme
 local postdir_name_default = 'posts' -- name for posts directory
 local tagdir_name_default = 'tags' -- name for tags directory
@@ -304,7 +306,7 @@ function stuffTemplate(filepath, content, variable, option, double_replacement)
   return result
 end
 
-function createPost(file, config, header, footer, tagpath, template_file, template_tag_file, date_format)
+function createPost(file, config, header, footer, tagpath, template_file, template_tag_file)
   -- get post's title and timestamp
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
@@ -429,7 +431,7 @@ function createTagLinks(post_tags, tagpath, file, extension)
   return result
 end
 
-function createPostIndex(posts, index_file, header, footer, replacements, extension, template_index_file, template_element_file, short_date_format, tagpath, template_taglink_file, template_article_index_file, max_post, max_post_lines)
+function createPostIndex(posts, index_file, header, footer, replacements, extension, template_index_file, template_element_file, tagpath, template_taglink_file, template_article_index_file, max_post, max_post_lines)
   -- open result file
   local post_index = io.open(index_file, 'wb')
   -- prepare rss elements
@@ -468,8 +470,8 @@ function createPostIndex(posts, index_file, header, footer, replacements, extens
         POST_FILE = title .. resultextension,
         POST_AUTHOR = v['conf']['AUTHOR'],
         POST_DESCRIPTION = v['conf']['DESCRIPTION'],
-        SHORT_DATE = os.date(short_date_format_default, timestamp) or '',
-        DATE = os.date(date_format_default, timestamp) or '',
+        SHORT_DATE = os.date(short_date_format, timestamp) or '',
+        DATE = os.date(date_format, timestamp) or '',
         DATETIME = os.date(datetime_format_default, timestamp) or '',
       }
       -- registering tags
@@ -643,8 +645,8 @@ bodyclass = makeflyrc['BODY_CLASS'] or bodyclass_default
 postpath = publicpath .. '/' .. postdir_name
 tagpath = publicpath .. '/' .. tagdir_name
 index_filename = index_name .. resultextension
-date_format_default = makeflyrc['DATE_FORMAT'] or '%Y-%m-%d at %H:%M'
-short_date_format_default = makeflyrc['SHORT_DATE'] or '%Y/%m'
+date_format = makeflyrc['DATE_FORMAT'] or date_format_default
+short_date_format = makeflyrc['SHORT_DATE_FORMAT'] or short_date_format_default
 max_post = makeflyrc['MAX_POST'] and tonumber(makeflyrc['MAX_POST']) or max_post_default
 max_post_lines = makeflyrc['MAX_POST_LINES'] and tonumber(makeflyrc['MAX_POST_LINES']) or max_post_lines_default
 max_rss = makeflyrc['MAX_RSS'] and tonumber(makeflyrc['MAX_RSS']) or max_rss_default
@@ -886,7 +888,7 @@ if dbresult then
   for k,v in pairs(dbresult) do
     -- parse DB files to get metadata and posts'title
     table.insert(post_files, {file=v, conf=getConfig(v)})
-    local co = coroutine.create(function () createPost(v, getConfig(v), header, footer, tagpath, page_article_single, page_tag_link, date_format_default) end)
+    local co = coroutine.create(function () createPost(v, getConfig(v), header, footer, tagpath, page_article_single, page_tag_link) end)
     table.insert(threads, co)
   end
 else
@@ -897,7 +899,7 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_posts_name, page_post_element, short_date_format_default, tagpath, page_tag_link, page_article_index, max_post, max_post_lines)
+createPostIndex(post_files, postpath .. '/' .. index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_posts_name, page_post_element, tagpath, page_tag_link, page_article_index, max_post, max_post_lines)
 
 -- Create tag's files: index and each tag's page
 createTagIndex(tags, tagpath, index_filename, header, footer, replacements, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
