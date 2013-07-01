@@ -66,7 +66,7 @@ local page_eli_script = templatepath .. '/' .. 'eli.js'
 -- others
 local blog_url = os.getenv('BLOG_URL') or ''
 local version = os.getenv('VERSION') or 'unknown-trunk'
-local replacements = {} -- substitution table
+replacements = {} -- substitution table
 local today = os.time() -- today's timestamp
 local tags = {}
 -- default values
@@ -213,7 +213,7 @@ function headFile(path, number)
   return result
 end
 
-function copyFile(origin, destination, replacements)
+function copyFile(origin, destination, freplace)
   local content = ''
   if lfs.attributes(origin) and lfs.attributes(origin).mode == 'file' then
     -- open the file
@@ -224,8 +224,8 @@ function copyFile(origin, destination, replacements)
   if content == nil then
     result:close()
   else
-    if replacements then
-      result:write(replace(content, replacements))
+    if freplace then
+      result:write(replace(content, freplace))
     else
       result:write(content)
     end
@@ -261,13 +261,13 @@ function copy(origin, destination)
   end
 end
 
-function getSubstitutions(replacements, local_replacements)
+function getSubstitutions(replaces, local_replaces)
   -- create substitutions list
   local result = {}
-  for k, v in pairs(replacements) do 
+  for k, v in pairs(replaces) do 
     result[k] = v
   end
-  for k, v in pairs(local_replacements) do 
+  for k, v in pairs(local_replaces) do 
     result[k] = v
   end
   return result
@@ -431,7 +431,7 @@ function createTagLinks(post_tags, tagpath, file, extension)
   return result
 end
 
-function createPostIndex(posts, index_file, replacements, extension, template_index_file, template_element_file, tagpath, template_taglink_file, template_article_index_file, max_post, max_post_lines)
+function createPostIndex(posts, index_file, extension, template_index_file, template_element_file, tagpath, template_taglink_file, template_article_index_file, max_post, max_post_lines)
   -- open result file
   local post_index = io.open(index_file, 'wb')
   -- prepare rss elements
@@ -563,7 +563,7 @@ function createPostIndex(posts, index_file, replacements, extension, template_in
   print (string.format('-- [%s] Post list: BUILT.', display_success))
 end
 
-function createTag(filename, title, posts, replacements)
+function createTag(filename, title, posts)
   local page = rope()
   page:push(header)
   -- insert content (all posts linked to this tag)
@@ -585,7 +585,7 @@ function createTag(filename, title, posts, replacements)
   print (string.format("-- [%s] New tag: %s", display_success, title))
 end
 
-function createTagIndex(all_tags, tagpath, index_filename, replacements, extension, template_index_filename, template_element_filename)
+function createTagIndex(all_tags, tagpath, index_filename, extension, template_index_filename, template_element_filename)
   local index = rope()
   index:push(header)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
@@ -598,7 +598,7 @@ function createTagIndex(all_tags, tagpath, index_filename, replacements, extensi
   for tag, posts in pairsByKeys(tags) do
     local tag_page = string.gsub(tag, '%s', '_') .. extension
     taglist_content = taglist_content .. replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
-    createTag(tagpath .. '/' .. tag_page, tag, posts, replacements)
+    createTag(tagpath .. '/' .. tag_page, tag, posts)
   end
   index:push(replace(template_index, {TAGLIST_CONTENT=taglist_content}))
   index:push(footer)
@@ -899,10 +899,10 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, replacements, resultextension, themepath .. '/' .. page_posts_name, page_post_element, tagpath, page_tag_link, page_article_index, max_post, max_post_lines)
+createPostIndex(post_files, postpath .. '/' .. index_filename, resultextension, themepath .. '/' .. page_posts_name, page_post_element, tagpath, page_tag_link, page_article_index, max_post, max_post_lines)
 
 -- Create tag's files: index and each tag's page
-createTagIndex(tags, tagpath, index_filename, replacements, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
+createTagIndex(tags, tagpath, index_filename, resultextension, themepath .. '/' .. page_tag_index_name, page_tag_element)
 
 -- Create index
 createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
