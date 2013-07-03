@@ -548,11 +548,12 @@ for k, v in pairs(languagerc) do
 end
 
 -- Check about's page presence
-about_file_path = specialpath .. '/' .. about_default .. source_extension
+about_filename = makeflyrc['ABOUT_FILENAME'] or about_default
+about_file_path = specialpath .. '/' .. about_filename .. source_extension
 about_file = readFile(about_file_path, 'r')
 if about_file ~= '' then
   print (string.format("-- [%s] About's page available", display_enable))
-  replacements['ABOUT_INDEX'] = (makeflyrc['ABOUT_FILENAME'] or about_default) .. resultextension
+  replacements['ABOUT_INDEX'] = about_filename .. resultextension
   replacements['ABOUT_LINK'] = stuffTemplate(themepath .. '/' .. page_about_name, '', '', '', false)
 else
   print (string.format("-- [%s] About's page not found", display_disable))
