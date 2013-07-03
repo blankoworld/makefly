@@ -550,7 +550,7 @@ end
 -- Check about's page presence
 about_file_path = specialpath .. '/' .. about_default .. source_extension
 about_file = readFile(about_file_path, 'r')
-if about_file then
+if about_file ~= '' then
   print (string.format("-- [%s] About's page available", display_enable))
   replacements['ABOUT_INDEX'] = (makeflyrc['ABOUT_FILENAME'] or about_default) .. resultextension
   replacements['ABOUT_LINK'] = stuffTemplate(themepath .. '/' .. page_about_name, '', '', '', false)
