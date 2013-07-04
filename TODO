@@ -5,6 +5,7 @@ Lua version improvements:
 - fix problem with my ARM computer which block on dispatcher function
 - do translation of "print" (with function _ and xgettext/msgfmt)
 - Do a "markdown and replace" method to change in markdown and do replacements
+- update documentation to say that lua-filesystem and lua-markdown are needed. markdown is not.
 
 Next version (0.3):
 - Create translation for displayed info message when compiling Makefly
