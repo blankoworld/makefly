@@ -33,14 +33,49 @@ Makefly is a subproject of [BlogBox](http://blogbox.e-mergence.org/ "Read more a
 Some programs on which makefly depends: 
 
   * pmake or bmake
-  * markdown command
   * lua 5.1 and earlier
 
 So use your distribution package manager to install them. For an example on Debian and derivated, it would be:
 
-    apt-get install pmake markdown lua5.1
+    apt-get install pmake lua5.1
 
 For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
+
+### Librairies
+
+Some librairies are needed in order Lua scripts to work:
+
+  * lua-filesystem
+  * lua-markdown
+
+To install them you have 2 choices:
+
+  * either you install **luarocks**
+  * or **your distribution's packages**
+
+#### Luarocks
+
+You just have to install *luarocks* and launch some commands:
+
+    apt-get install luarocks
+    luarocks install lua-filesystem lua-markdown
+
+That's all!
+
+#### Your distribution's packages
+
+Use this method only if you didn't use previous *luarocks* one.
+
+Under GNU/Linux Debian for an example install given packages:
+
+  * liblua5.1-filesystem0
+  * liblua5.1-markdown0
+
+with this command:
+
+    apt-get install liblua5.1-filesystem0 liblua5.1-markdown0
+
+That's all!
 
 ## Installation
 
