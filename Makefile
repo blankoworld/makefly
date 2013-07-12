@@ -33,7 +33,7 @@ conf ?= makefly.rc
 # use mainscript= to change script file
 mainscript ?= process.lua
 # Makefly version
-VERSION = L 0.2.1-trunk
+VERSION = 0.2.1-lua
 
 # directories
 TMPLDIR          = ./template
