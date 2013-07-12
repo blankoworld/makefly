@@ -1227,10 +1227,6 @@ margin: 5px;
 
 /* Introduction */
 #introduction {
-  margin: 15px 0 20px 0;
-  background-color: #fff;
-  border-top: thin solid #000;
-  border-bottom: thin solid #000;
   word-spacing: 1px;
   text-align: center;
 }
