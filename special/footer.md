@@ -12,4 +12,3 @@ Le contenu de ce site est mis à disposition sous un [contrat Creative Commons](
  [6]: ${BASE_URL}/images/css.jpg (Utilise du CSS)
  [7]: ${BASE_URL}/rss.xml (Suivre le flux RSS)
  [8]: http://jigsaw.w3.org/css-validator/validator?uri=${BASE_URL} (Vérifier la validité de ce site à l'aide du validateur du W3C)
-

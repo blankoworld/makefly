@@ -14,21 +14,21 @@ Tags: light, white, black, gray, one-column, two-columns, left-sidebar, right-si
 
 @font-face {
   font-family: "Cantarell";
-  src: url("${BASE_URL}/Cantarell-Regular.ttf");
+  src: url("${BLOG_URL}/Cantarell-Regular.ttf");
 }
 @font-face {
   font-family: "Cantarell";
-  src: url("${BASE_URL}/Cantarell-Bold.ttf");
+  src: url("${BLOG_URL}/Cantarell-Bold.ttf");
   font-weight: bold;
 }
 @font-face {
   font-family: "Cantarell";
-  src: url("${BASE_URL}/Cantarell-Oblique.ttf");
+  src: url("${BLOG_URL}/Cantarell-Oblique.ttf");
   font-style: italic;
 }
 @font-face {
   font-family: "Cantarell";
-  src: url("${BASE_URL}/Cantarell-BoldOblique.ttf");
+  src: url("${BLOG_URL}/Cantarell-BoldOblique.ttf");
   font-style: italic;
   font-weight: bold;
 }
@@ -43,7 +43,7 @@ Tags: light, white, black, gray, one-column, two-columns, left-sidebar, right-si
 }
 
 body {
-    background: url("${BASE_URL}/bg.png") center top repeat;
+    background: url("${BLOG_URL}/bg.png") center top repeat;
     color: rgba(0, 0, 0, 0.6);
     display: block;
     margin: 0;
@@ -162,7 +162,7 @@ a.accueil {
     	   -moz-transition: all 0.2s ease 0s;
     	     -o-transition: all 0.2s ease 0s;
     	    -ms-transition: all 0.2s ease 0s;
-    background: url("${BASE_URL}/logodefault.png") right center no-repeat;
+    background: url("${BLOG_URL}/logodefault.png") right center no-repeat;
     color: #666666;
     display: block;
     font-size: 28px;
@@ -258,7 +258,7 @@ header#joliebarre nav li a:hover {
 	text-decoration: none;
 }
 header#joliebarre nav a.home span {
-    background: url("${BASE_URL}/labels.png") no-repeat scroll -9px 5px transparent;
+    background: url("${BLOG_URL}/labels.png") no-repeat scroll -9px 5px transparent;
     display: inline-block;
     float: left;
     height: 27px;
@@ -271,7 +271,7 @@ header#joliebarre nav li.home {
 header#joliebarre a.rss {
 }
 header#joliebarre a.rss span {
-    background: url("${BASE_URL}/labels.png") no-repeat scroll -11px -35px transparent;
+    background: url("${BLOG_URL}/labels.png") no-repeat scroll -11px -35px transparent;
     display: inline-block;
     height: 27px;
     margin: 4px 3px 0 0;
@@ -332,7 +332,7 @@ header#joliebarre nav #searchform {
 }
 header#joliebarre nav #searchform input#s {
     background-color: transparent;
-    background-image: url("${BASE_URL}/labels.png");
+    background-image: url("${BLOG_URL}/labels.png");
     background-position: 0 -111px;
     background-repeat: no-repeat;
     border-left: 1px solid rgba(255, 255, 255, 0.2);
@@ -686,7 +686,7 @@ body.page section#flux article.post {
 body.home section#flux article.post, body.archive section#flux article.post, body.search section#flux article.post {
     border-radius: 3px;
     background-color: #FFFFFF;
-    background-image: url("${BASE_URL}/bg.png");
+    background-image: url("${BLOG_URL}/bg.png");
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 -2px 0 rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(255, 255, 255, 0.5) inset, 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
     	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 -2px 0 rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(255, 255, 255, 0.5) inset, 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
     	   -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 -2px 0 rgba(0, 0, 0, 0.1) inset, 0 0 10px rgba(255, 255, 255, 0.5) inset, 0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -1078,7 +1078,7 @@ footer#lamochebarre section span.credits {
 /* Formulaires */
 
 #searchform input#s {
-    background-image: url(${BASE_URL}/labels.png);
+    background-image: url(${BLOG_URL}/labels.png);
     background-position: -2px -77px;
     background-repeat: no-repeat;
     font-size: 20px;
@@ -1231,4 +1231,10 @@ margin: 5px;
   background-color: #fff;
   border-top: thin solid #000;
   border-bottom: thin solid #000;
+  word-spacing: 1px;
+  text-align: center;
+}
+
+.read_more {
+text-align: right;
 }
