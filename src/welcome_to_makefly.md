@@ -1,39 +1,63 @@
-Makefly is a *static weblog engine* working thanks to a BSD **makefile** under GNU Affero General Public License (AGPL).
+### Introduction
 
-It's composed of:
+Makefly is a *static weblog engine* working thanks to a BSD **makefile** and Lua language under GNU Affero General Public License (AGPL).
 
-  * home page
-  * post's list
-  * tag's list
+Feel free to use, modify and share it!
 
-and includes somes functionalities like:
+### Main
 
+Makefly result is composed of:
+
+  * The Homepage: main page
+  * The post's list: a list view of all posts
+  * The tag's list: a list view of all tags
+  * RSS feed: a file that permit your users to feed you with some RSS feed clients
+  * An optional about's page that give information about your blog
+
+### Functionalities
+
+You have a lot of possibilities like:
+
+  * templates to customize your blog
+  * share file to the Web using 'static' directory
+  * add comments to your posts
+  * show your last statuses from StatusNet instance
+  * sort your post by tags
+  * backup your blog
+  * publish your blog on a remote machine
+  * translate it easily
+  * create some post in advance but do not show them (using timestamp)
+  * create an introduction for all pages in your blog
+  * create a conclusion for all pages in your blog
+  * add a sidebar with some links to your friend's blogs
+
+### Technical info
+
+If you know what a static weblog is, here is some details:
+
+  * Lua language
+  * BSD Makefile to launch commands
   * RSS feed
   * tags
   * permalink
-  * possibility to set posting date (using a _timestamp_)
-  * customization using options like max post on homepage
-  * translation: English, French
-  * static files
+  * set posting date (using a _timestamp_)
+  * set max post that appears on homepage
+  * set max post lines that will appears for each post on homepage (with a _read more_ link)
+  * translations: English, French. Approximatively 30 words to translate for other languages
+  * supplementary files can be added to the result
+  * comment system in javascript using a free and open source server
   * templates
-  * comment system
-  * identica badge (to display twitter/identica statuses)
-  * backup command
-
-You can so:
-
-  * create posts
-  * add tags to them
-  * add image
-  * generate an RSS feed
-  * give some static files (for an example to share PDF)
-  * have your own template
-  * translate Makefly in your language
-  * prepare some post and publish them in the future
-  * add comments on each post
-  * add an about page, an introduction on main page and/or a specific footer content
-  * display your identica statuses in sidebar
+  * statusnet badge
   * backup your configuration file, theme, static files and some important files for your Makefile blog
+  * command that permit to create a new theme
+  * publish script
+  * install script to a local directory
+  * sidebar possibililty with some links
+  * about's page
+  * introduction on all pages
+  * conclusion on all pages
 
-In fact, it's a lightweight weblog engine that generate some HTML static files.
+### Conclusion
+
+In fact, it's a lightweight weblog engine that generate some HTML static files which is compatible with a lot of provider.
 

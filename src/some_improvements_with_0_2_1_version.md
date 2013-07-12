@@ -4,7 +4,7 @@ Two last months 2 users accept to test occasionnaly Makefly. For me it was an hu
 
 I so improve themes, documentation, add some commands to simplify Makefly's use (even it's not planned to be used by a "normal" user), etc.
 
-That's why today [Makefly v0.2.1](${BASE_URL}/makefly_0.2.1.zip) is out with these improvements.
+That's why today [Makefly v0.2.1](${BLOG_URL}/makefly_0.2.1.zip) is out with these improvements.
 
 ### Plan for next 0.3 release
 

@@ -11,7 +11,7 @@ During three last months was integrated some functionalities in Makefly:
 
 Of course I fix some bugs and do minimalist improvements on backups, documentation and translations.
 
-You can so [download Makefly v0.2](${BASE_URL}/makefly_0.2.zip "Download Makefly v0.2") now.
+You can so [download Makefly v0.2](${BLOG_URL}/makefly_0.2.zip "Download Makefly v0.2") now.
 
 ## Next
 

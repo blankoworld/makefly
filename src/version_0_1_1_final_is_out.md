@@ -1,6 +1,6 @@
 ## New version
 
-Yes, [Makefly v0.1.1 Final version is out](${BASE_URL}/makefly_0.1.1.zip "Download Makefly 0.1.1") !
+Yes, [Makefly v0.1.1 Final version is out](${BLOG_URL}/makefly_0.1.1.zip "Download Makefly 0.1.1") !
 
 6 months ago Makefly 0.1 was out. It mainly includes improvements as: 
 

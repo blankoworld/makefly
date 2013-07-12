@@ -6,4 +6,4 @@ Since v0.1.1-alpha version:
   * I test it on my weblog
   * I continue [the script that import Nanoblogger posts to Makefly](http://git.dossmann.net/blogbox/nb2makefly.git/ "Go to git repository of nb2makefly script")
 
-So you can now [download and test the 0.1.1-bêta version of Makefly](${BASE_URL}/makefly_0.1.1-beta.zip "Download 0.1.1-bêta version of Makefly")
+So you can now [download and test the 0.1.1-bêta version of Makefly](${BLOG_URL}/makefly_0.1.1-beta.zip "Download 0.1.1-bêta version of Makefly")

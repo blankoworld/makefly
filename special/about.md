@@ -48,7 +48,7 @@ In fact, it's a lightweight weblog engine that generates some HTML static files.
 
 ## Themes
 
-Have a look to [Themes list for v0.2](${BASE_URL}/${POSTDIR_NAME}/theme_list_v0_2.html). Hope you will find a theme you like.
+Have a look to [Themes list for v0.2](${BLOG_URL}/${POSTDIR_NAME}/theme_list_v0_2.html). Hope you will find a theme you like.
 
 ## No UI?
 
@@ -82,11 +82,11 @@ For developers, it exists [a Makefly's developers documentation on github](https
 
 ## Archives
 
-  * [Makefly v0.2.1](${BASE_URL}/makefly_0.2.1.zip)
-  * [Makefly v0.2](${BASE_URL}/makefly_0.2.zip)
-  * [Makefly v0.2-beta](${BASE_URL}/makefly_0.2-beta.zip)
-  * [Makefly v0.2-alpha](${BASE_URL}/makefly_0.2-alpha.zip)
-  * [Makefly v0.1.1](${BASE_URL}/makefly_0.1.1.zip)
-  * [Makefly v0.1.1-beta](${BASE_URL}/makefly_0.1.1-beta.zip)
-  * [Makefly v0.1.1-alpha](${BASE_URL}/makefly_0.1.1-alpha.zip)
-  * [Makefly v0.1](${BASE_URL}/makefly_0.1.zip)
+  * [Makefly v0.2.1](${BLOG_URL}/makefly_0.2.1.zip)
+  * [Makefly v0.2](${BLOG_URL}/makefly_0.2.zip)
+  * [Makefly v0.2-beta](${BLOG_URL}/makefly_0.2-beta.zip)
+  * [Makefly v0.2-alpha](${BLOG_URL}/makefly_0.2-alpha.zip)
+  * [Makefly v0.1.1](${BLOG_URL}/makefly_0.1.1.zip)
+  * [Makefly v0.1.1-beta](${BLOG_URL}/makefly_0.1.1-beta.zip)
+  * [Makefly v0.1.1-alpha](${BLOG_URL}/makefly_0.1.1-alpha.zip)
+  * [Makefly v0.1](${BLOG_URL}/makefly_0.1.zip)

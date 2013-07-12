@@ -1,5 +1,3 @@
-<link href="./readme.css" rel="stylesheet"></link>
-
 # Makefly
 
 [Version originale de la documentation](http://makefly.e-mergence.org/documentation.html) (French original version)
@@ -35,14 +33,49 @@ Makefly is a subproject of [BlogBox](http://blogbox.e-mergence.org/ "Read more a
 Some programs on which makefly depends: 
 
   * pmake or bmake
-  * markdown command
   * lua 5.1 and earlier
 
 So use your distribution package manager to install them. For an example on Debian and derivated, it would be:
 
-    apt-get install pmake markdown lua5.1
+    apt-get install pmake lua5.1
 
 For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
+
+### Librairies
+
+Some librairies are needed in order Lua scripts to work:
+
+  * lua-filesystem
+  * lua-markdown
+
+To install them you have 2 choices:
+
+  * either you install **luarocks**
+  * or **your distribution's packages**
+
+#### Luarocks
+
+You just have to install *luarocks* and launch some commands:
+
+    apt-get install luarocks
+    luarocks install lua-filesystem lua-markdown
+
+That's all!
+
+#### Your distribution's packages
+
+Use this method only if you didn't use previous *luarocks* one.
+
+Under GNU/Linux Debian for an example install given packages:
+
+  * liblua5.1-filesystem0
+  * liblua5.1-markdown0
+
+with this command:
+
+    apt-get install liblua5.1-filesystem0 liblua5.1-markdown0
+
+That's all!
 
 ## Installation
 
@@ -132,7 +165,7 @@ This one is named **special** because it can contain some file you have to creat
 
   * *about.md* : Is the content of an about's page about your website. It will add an item in the website main menu (If your theme support it.)
   * *sidebar.md* : Add a sidebar on your website. The theme have to support this function.
-  * *introduction.md* : Display this file's content as an introduction to your website homepage. This could change regarding the choosen theme.
+  * *introduction.md* : Display this file's content as an introduction on all your website's pages. This could change regarding the choosen theme.
   * *footer.md* : Display this file's content as a footer on all your website's pages. This could change regarding the choosen theme.
 
 ## Use it!
@@ -151,24 +184,19 @@ The result is compatible with all HTML servers. In fact you could probably use r
 
 ### From a webserver
 
-If you launch Makefly on you own server or probably on provider ' server, you should so use **install.sh** which is a bash shell script. Just launch it:
+If you launch Makefly on you own server or probably on provider ' server, you should be capable to use **install** script automation. Just launch it as:
 
-    cd tools
-    bash tinstall.sh
+    pmake install
 
 ...and it will copy all files to **~/public\_html** directory.
 
 **WARNING**: This will erase all files from *public\_html* directory!
 
-**Note**: You can customize the script to copy files in another directory. To do that, just edit **install.sh** script and change this variable:
+**Note**: You can customize the destination by changing **makefly.rc** file espacially the given line : 
 
-    DESTDIR=${HOME}/public_html
+    INSTALLDIR=${HOME}/public_html
 
-to:
-
-    DESTDIR=/my/personal/website
-
-Relaunch *install.sh* script to see result.
+Then relaunch `pmake install` to recompile the weblog.
 
 ### To a remote computer: *publish* command
 
@@ -268,7 +296,7 @@ Here is some options you can change:
   * BLOG\_DESCRIPTION: A long description of your weblog
   * BLOG\_LANG: your language code. Note that file lang/translate.YOUR\_LANGUAGE\_CODE should exists. For an example if I set this parameter to *en*, a *lang/translate.en* file should exists!
   * BLOG\_CHARSET: your encoding configuration. Should be something like **UTF-8** or **ISO-8859-1**. If you don't know what's this option, just let it to *UTF-8*.
-  * BASE\_URL: absolute URL of your blog. For an example http://makefly.e-mergence.org/.
+  * BLOG\_URL: absolute URL of your blog. For an example http://makefly.e-mergence.org/.
   * RSS\_FEED\_NAME: Title for the RSS Feed
   * MAX\_POST: Max post that would be showed on home page
   * MAX\_POST\_LINES: Number of lines that should be shown on Homepage. If set to 0 or not referenced in *makefly.rc* file, then posts are fully shown.

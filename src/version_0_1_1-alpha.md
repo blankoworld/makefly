@@ -1,6 +1,6 @@
 ## Brief
 
-You can now test [Makefly v0.1.1-alpha](${BASE_URL}/makefly_0.1.1-alpha.zip "Download Makefly v0.1.1-alpha").
+You can now test [Makefly v0.1.1-alpha](${BLOG_URL}/makefly_0.1.1-alpha.zip "Download Makefly v0.1.1-alpha").
 
 The tests behind this alpha version aims to find some problems that could happen by using Makefly.
 

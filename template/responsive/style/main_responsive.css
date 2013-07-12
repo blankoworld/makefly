@@ -515,3 +515,7 @@ margin: 0 auto;
 text-align: center;
 }
 
+#introduction {
+  width: 90%;
+  margin: 15px auto;
+}

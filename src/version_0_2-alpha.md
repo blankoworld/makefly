@@ -1,6 +1,6 @@
 ## Brief
 
-[0.2 alpha version is out](${BASE_URL}/makefly_0.2-alpha.zip "Download last 0.2-alpha version") !
+[0.2 alpha version is out](${BLOG_URL}/makefly_0.2-alpha.zip "Download last 0.2-alpha version") !
 
 Use it and [report bug](https://github.com/blankoworld/makefly/issues/new "Report a Makefly's bug") if you find anyone.
 
