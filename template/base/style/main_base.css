@@ -57,6 +57,18 @@ textarea {
     padding: 0.2em 0;
 }
 
+pre,
+blockquote {
+    border-left: medium solid #000000;
+    page-break-inside: avoid;
+    padding-left: 5px;
+}
+
+pre {
+    border: thin solid #000000;
+    width: 90%;
+    margin: 0 auto;
+}
 
 /* ==========================================================================
    Author's custom styles

@@ -1,5 +1,3 @@
-<link href="./readme.css" rel="stylesheet"></link>
-
 # Makefly
 
 [Original english documentation version](http://makefly.e-mergence.org/documentation.html) (version originale en anglais)
@@ -35,14 +33,49 @@ Makefly est un sous-projet de [BlogBox](http://blogbox.e-mergence.org/ "En savoi
 Quelques programmes dont Makefly d&eacute;pend : 
 
   * pmake ou bmake
-  * la commande markdown
   * lua 5.1 ou plus r&eacute;cent
 
 Ainsi utilisez le gestionnaire de paquet de votre distribution pour les installer. Par exemple sur Debian et d&eacute;riv&eacute;es, ce serait : 
 
-    apt-get install pmake markdown lua5.1
+    apt-get install pmake lua5.1
 
 Pour d'autres distributions, regardez du c&ocirc;t&eacute; des forums, d'IRC et/ou de la communaut&eacute; de votre distribution. Ils seront heureux de vous aider.
+
+### Biblioth&egrave;ques
+
+Quelques biblioth&egrave;ques sont n&eacute;cessaires pour faire fonctionner les scripts Lua : 
+
+  * lua-filesystem
+  * lua-markdown
+
+Pour les installer, vous avez deux possibilit&eacute;s : 
+
+  * soit vous utilisez **luarocks**
+  * soit vous utilisez **les paquets de votre distribution**
+
+#### Luarocks
+
+Il suffit d'installer *luarocks* et de lancer quelques commandes : 
+
+    apt-get install luarocks
+    luarocks install lua-filesystem lua-markdown
+
+Et c'est tout !
+
+#### Les paquets de votre distribution
+
+Utilisez cette m&eacute;thode seulement si vous n'avez pas fait celle de *luarocks* pr&eacute;c&eacute;dente.
+
+Sous Debian GNU/Linux, par exemple, installer les paquets suivant : 
+
+  * liblua5.1-filesystem0
+  * liblua5.1-markdown0
+
+à l'aide de la commande suivante : 
+
+    apt-get install liblua5.1-filesystem0 liblua5.1-markdown0
+
+Et c'est tout !
 
 ## Installation
 
@@ -124,7 +157,7 @@ Il est &agrave; noter que Makefly utilise [le format markdown](http://daringfire
 
 ### Fichiers statiques
 
-Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans le dossier *static*. Ils seront copier dans le dossier de destination.
+Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans le dossier *static*. Ils seront copiés dans le dossier de destination.
 
 ### Le dossier 'special'
 
@@ -132,7 +165,7 @@ Ce dossier nomm&eacute; **special** peut contenir certains fichiers que vous dev
 
   * *about.md* : Contient le contenu d'une page d'&agrave; propos au sujet de votre site. Cela va ajouter une entr&eacute;e dans le menu principal du site (si votre th&egrave;me le supporte).
   * *sidebar.md* : Ajoute une barre lat&eacute;rale sur votre site. Le th&egrave;me doit supporter cette fonction.
-  * *introduction.md* : Affiche le contenu de ce fichier comme introduction de votre page d'accueil. Varie selon le th&egrave;me choisi.
+  * *introduction.md* : Affiche le contenu de ce fichier comme introduction sur l'ensemble de vos pages. Varie selon le th&egrave;me choisi.
   * *footer.md* : Affiche le contenu de ce fichier comme d'un pied de page sur l'ensemble de vos pages. Varie selon le th&egrave;me choisi.
 
 ## Utilisez le !
@@ -151,24 +184,19 @@ Le r&eacute;sultat de Makefly est compatible avec tous le serveurs HTML. En effe
 
 ### Sur un serveur web
 
-Si vous lancez Makefly sur votre propre serveur ou tr&egrave;s certainement sur le serveur de votre h&eacute;bergeur, vous pourrez utiliser **install.sh** qui est un script shell. Lancez simplement : 
+Si vous lancez Makefly sur votre propre serveur ou tr&egrave;s certainement sur le serveur de votre h&eacute;bergeur, vous pourrez utiliser l'installation automatis&eacute;e. Lancez simplement la commande suivante : 
 
-    cd tools
-    bash install.sh
+    pmake install
 
 ...et cela copiera tous les fichiers dans le r&eacute;pertoire **~/public\_html**.
 
 **ATTENTION**: Cela supprimera tous les fichiers contenus dans le dossier *public\_html* !
 
-**Note**: Vous pouvez personnaliser le script pour copier tous les fichiers dans un autre r&eacute;pertoire que le *public\_html*. Pour cela, modifiez le script **install.sh** et changez cette variable : 
+**Note**: Vous pouvez personnaliser la destination en changeant le fichier **makefly.rc** et plus particuli&egrave;rement la ligne suivante : 
 
-    DESTDIR=${HOME}/public_html
+    INSTALLDIR=${HOME}/public_html
 
-en : 
-
-    DESTDIR=/mon/site/web
-
-Relancez le script *install.sh* pour voir le r&eacute;sultat.
+Relancez ensuite la commande `pmake install` pour recompiler le blog.
 
 ### Vers un ordinateur distant : la commande *publish*
 
@@ -268,7 +296,7 @@ Voici quelques options que vous pouvez changer :
   * BLOG\_DESCRIPTION : Une description plus compl&egrave;te de votre blog
   * BLOG\_LANG : votre code langue. &Agrave; noter qu'un fichier lang/translate.VOTRE\_CODE\_LANGAGE doit exister. Par exemple si je configure ce param&egrave;tre &agrave; *fr*, un fichier *lang/translate.fr* doit exister !
   * BLOG\_CHARSET : votre configuration d'encodage. Doit ressembler &agrave; quelque chose comme **UTF-8** ou **ISO-8859-1**. Si vous ne savez pas ce que c'est, laissez la param&eacute;tr&eacute;e &agrave; *UTF-8*.
-  * BASE\_URL : adresse URL absolue de votre blog. Par exemple http://makefly.e-mergence.org/.
+  * BLOG\_URL : adresse URL absolue de votre blog. Par exemple http://makefly.e-mergence.org/.
   * RSS\_FEED\_NAME : Titre affich&eacute; dans le flux RSS.
   * MAX\_POST : Nombre maximum d'articles qui seront affich&eacute;s sur la page d'accueil.
   * MAX\_POST\_LINES : Nombre de lignes qui seront montr&eacute;es sur la page d'accueil. Si param&eacute;tr&eacute; &agrave; 0 ou inexistant dans le fichier *makefly.rc*, alors les articles sont enti&egrave;rement montr&eacute;s.

@@ -3,4 +3,4 @@
   <channel>
     <title>${BLOG_TITLE}</title>
     <description>${BLOG_DESCRIPTION}</description>
-    <link>${BASE_URL}</link>
+    <link>${BLOG_URL}</link>
