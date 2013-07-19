@@ -5,6 +5,7 @@
   * [IRPDEV](http://www.irpdev.fr/ "Le blog d'IRPDEV")
   * [Deber](http://oceamer.com/~interlude/ "Journal du projet de Deber")
   * [mart-e](http://mart-e.be/ "about life, linux and everything")
+  * [Vinilox](http://vinilox.eu/ "Le blog de Vinilox")
   * [Postblue](http://postblue.info/ "Le blog de Postblue")
   * [Halpanet](http://www.halpanet.org/ "Découvrir la liberté informatique avec Halpanet")
   * [fabienwang](http://www.fabienwang.fr/ "Adepte et développeur de logiciels Libres")
