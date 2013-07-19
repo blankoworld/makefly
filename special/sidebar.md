@@ -7,6 +7,7 @@
   * [mart-e](http://mart-e.be/ "about life, linux and everything")
   * [Postblue](http://postblue.info/ "Le blog de Postblue")
   * [Halpanet](http://www.halpanet.org/ "Découvrir la liberté informatique avec Halpanet")
+  * [fabienwang](http://www.fabienwang.fr/ "Adepte et développeur de logiciels Libres")
   * [Schoewilliam](http://schoewilliam.fr/ "Carnet web d'un habitant de la banquise GNU/Linuxienne.")
   * [Porneia delights](http://porneia.free.fr/pub/ "I used to be schizophrenic but now we are going much better. We are the Porneia delights. We are persistent and reluctant. We also do not really come from outer space.")
   * [L'antre de Lenezir](http://blog.lenezir.fr/ "Les péripéties d'un linuxien sur frugalware")
