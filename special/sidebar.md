@@ -7,6 +7,7 @@
   * [mart-e](http://mart-e.be/ "about life, linux and everything")
   * [Vinilox](http://vinilox.eu/ "Le blog de Vinilox")
   * [Postblue](http://postblue.info/ "Le blog de Postblue")
+  * [BlogiGor](https://id-libre.org/ "blogiGor|traces éphémères")
   * [Halpanet](http://www.halpanet.org/ "Découvrir la liberté informatique avec Halpanet")
   * [fabienwang](http://www.fabienwang.fr/ "Adepte et développeur de logiciels Libres")
   * [Schoewilliam](http://schoewilliam.fr/ "Carnet web d'un habitant de la banquise GNU/Linuxienne.")
