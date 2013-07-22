@@ -34,7 +34,7 @@ En voici deux :
 
 #### wgetpaste
 
-Cet outil est disponible, à ma connaissance, sous ArchLinux, Gentoo, et bien évidemment [NuTyX](${BASE_URL}/archives/2009/07/05/nutyx_une_distribution_gnulinux/index.html "Relire le billet de Blanko sur la distribution GNU/Linux NuTyX") !
+Cet outil est disponible, à ma connaissance, sous ArchLinux, Gentoo, et bien évidemment [NuTyX](${BLOG_URL}/archives/2009/07/05/nutyx_une_distribution_gnulinux/index.html "Relire le billet de Blanko sur la distribution GNU/Linux NuTyX") !
 
 Pour l'utiliser, voici quelques commandes : 
 

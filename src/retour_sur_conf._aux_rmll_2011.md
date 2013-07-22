@@ -1,6 +1,6 @@
 ### Introduction
 
-Dans [le billet précédent](${BASE_URL}/archives/2011/06/29/mini-conf_au_lug_de_strasbourg_le_7_juillet_2011/index.html "Lire l'article précédent sur la présentation de Nanoblogger dans une conférence aux RMLL 2011 se tenant à Strasbourg.") je vous confiais que j'allais aux Rencontres Mondiales du Logiciel Libre 2011 se déroulant à Strasbourg pour présenter une conférence sur Nanoblogger.
+Dans [le billet précédent](${BLOG_URL}/archives/2011/06/29/mini-conf_au_lug_de_strasbourg_le_7_juillet_2011/index.html "Lire l'article précédent sur la présentation de Nanoblogger dans une conférence aux RMLL 2011 se tenant à Strasbourg.") je vous confiais que j'allais aux Rencontres Mondiales du Logiciel Libre 2011 se déroulant à Strasbourg pour présenter une conférence sur Nanoblogger.
 
 Voici quelques éléments supplémentaires sur l'évènement.
 

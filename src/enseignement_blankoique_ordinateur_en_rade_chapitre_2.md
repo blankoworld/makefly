@@ -1,4 +1,4 @@
-[Souvenez-vous le Chapitre 1 sur les enseignements blankoïques suite à la panne de mon ordinateur principal, OrdyIII](${BASE_URL}/archives/2010/03/28/enseignement_blankoique_ordinateur_en_rade_chapitre_1/index.html "Lire l'article Enseignement blankoïque, Ordinateur en rade, chapitre 1") où j'exposais différentes stratagèmes pour déceler les éléments à l'origine d'une panne.
+[Souvenez-vous le Chapitre 1 sur les enseignements blankoïques suite à la panne de mon ordinateur principal, OrdyIII](${BLOG_URL}/archives/2010/03/28/enseignement_blankoique_ordinateur_en_rade_chapitre_1/index.html "Lire l'article Enseignement blankoïque, Ordinateur en rade, chapitre 1") où j'exposais différentes stratagèmes pour déceler les éléments à l'origine d'une panne.
 
 Figurez-vous que la saga continue ! En effet je vous propose deux articles (dont celui-ci), ayant pour thème : 
 
@@ -89,7 +89,7 @@ Il faut :
   * Ouvrir la tranche droite quand nous sommes face à l'arrière de la machine, c'est à dire face aux prises pour le courant, pour le clavier et souris, pour le port imprimante, etc.
   * Poser à plat, sur l'autre tranche de l'ordinateur de manière à ce que la carte mère apparaisse comme posée au fond d'un aquarium (Cf. photos suivantes)
 
-[![Image d'un ordinateur posé sur la tranche sur laquelle est attachée la carte mère](${BASE_URL}/images/materiel/desassemblage/mini_20100330_001.jpg "Ordinateur posé sur la tranche gauche sur laquelle est attachée la carte mère")](${BASE_URL}/images/materiel/desassemblage/20100330_001.jpg "Visualiser en taille réelle l'image d'un ordinateur posé sur la tranche sur laquelle est attachée la carte mère")
+[![Image d'un ordinateur posé sur la tranche sur laquelle est attachée la carte mère](${BLOG_URL}/images/materiel/desassemblage/mini_20100330_001.jpg "Ordinateur posé sur la tranche gauche sur laquelle est attachée la carte mère")](${BLOG_URL}/images/materiel/desassemblage/20100330_001.jpg "Visualiser en taille réelle l'image d'un ordinateur posé sur la tranche sur laquelle est attachée la carte mère")
 
 Ensuite : 
 
@@ -111,7 +111,7 @@ Ensuite :
   * Mettre le nouveau "cache" de la nouvelle carte mère à la place
   * Le boîtier est quasiment vide !
 
-[![Image d'un boîtier quasiment vide](${BASE_URL}/images/materiel/desassemblage/mini_20100330_004.jpg "Ordinateur quasiment vide")](${BASE_URL}/images/materiel/desassemblage/20100330_004.jpg "Visualiser en taille réelle l'image d'un ordinateur quasiment vide")
+[![Image d'un boîtier quasiment vide](${BLOG_URL}/images/materiel/desassemblage/mini_20100330_004.jpg "Ordinateur quasiment vide")](${BLOG_URL}/images/materiel/desassemblage/20100330_004.jpg "Visualiser en taille réelle l'image d'un ordinateur quasiment vide")
 
 ### Le montage
 

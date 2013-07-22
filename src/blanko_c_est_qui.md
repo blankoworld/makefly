@@ -1,4 +1,4 @@
-<img src="${BASE_URL}/images/blanko/tetablanko.jpg" alt="Blanko" align="center" /><br /><br />
+<img src="${BLOG_URL}/images/blanko/tetablanko.jpg" alt="Blanko" align="center" /><br /><br />
 <br /><br />
 Me voici donc : Blanko, créateur de ce Weblogue.<br /><br />
 Comment ça tout blanc ? Oui je suis tout blanc ; c'est dailleurs pour cette raison  que je me surnomme Blanko ;-)<br /><br />

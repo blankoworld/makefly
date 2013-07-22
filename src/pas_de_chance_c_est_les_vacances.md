@@ -8,7 +8,7 @@ Vous savez ce que c'est. On se dit "Super, j'ai fini mes études, désormais c'e
 
 ### En vadrouille
 
-Après le [voyage à Nantes](${BASE_URL}/archives/2009/07/08/blanko_aux_rmll_de_nantes_année_2009/index.html "En apprendre davantage sur le voyage à Nantes pour les RMLL") qui fut épuisant mais intéressant, j'avais une semaine de repos avant de devoir repartir vers Baumes-les-Dames, dans le Doubs (si je ne me trompe pas), pour rencontrer quelques informaticiens (et plus encore) à l'occasion de la [rencontre BBQ #ordinatueur](http://barbec.ordinatueur.org/).
+Après le [voyage à Nantes](${BLOG_URL}/archives/2009/07/08/blanko_aux_rmll_de_nantes_année_2009/index.html "En apprendre davantage sur le voyage à Nantes pour les RMLL") qui fut épuisant mais intéressant, j'avais une semaine de repos avant de devoir repartir vers Baumes-les-Dames, dans le Doubs (si je ne me trompe pas), pour rencontrer quelques informaticiens (et plus encore) à l'occasion de la [rencontre BBQ #ordinatueur](http://barbec.ordinatueur.org/).
 
 Cet évènement s'est déroulé sur 2 jours, mais lui aussi très fatiguant. Après tout, nous dépensons beaucoup d'énergie dans le bonheur occasionné par la rencontre de nouvelles personnes (ou pas).
 

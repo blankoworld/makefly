@@ -4,7 +4,7 @@ OpenMoko comme **Mok**erie ouverte, moquerie *Open* ? Non pas du tout ! L'OpenMo
 
 Je vous en parlais depuis longtemps de cet article, eh bien le voici !
 
-Tout d'abord une description courte de l'OpenMoko au travers une image : ![Vue à la fois de face et de profil du Neo Free Runner, le premier téléphone libre du monde muni d'OpenMoko](${BASE_URL}/images/materiel/neo-freerunner.jpg "Image du Neo Free Runner, téléphone utilisé pour l'OpenMoko").
+Tout d'abord une description courte de l'OpenMoko au travers une image : ![Vue à la fois de face et de profil du Neo Free Runner, le premier téléphone libre du monde muni d'OpenMoko](${BLOG_URL}/images/materiel/neo-freerunner.jpg "Image du Neo Free Runner, téléphone utilisé pour l'OpenMoko").
 
 Si vous lisez un tant soit peu les commentaires de l'image, vous remarquerez que le nom du téléphone est Neo Free Runner et non pas OpenMoko. L'explication en est toute simple : en fait le <span lang="en">Neo Free Runner</span> n'est rien de plus que le téléphone dit *support* d'OpenMoko.
 

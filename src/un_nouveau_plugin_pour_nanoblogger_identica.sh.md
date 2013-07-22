@@ -24,7 +24,7 @@ Voilà pourquoi le Blanko s'est inscrit !
 
 Figurez vous que m'ayant attaché un peu à toute cette mode *webienne*, je me suis dit que ça pouvait être sympa d'avoir un compte identi.ca, ne serait ce que pour partager son existence à mon entourage.
 
-Seulement voilà, problème : comment faire pour mettre son dernier statut sur le [BlankoJoueb](${BASE_URL}/ "Visiter le BlankoJoueb") ?
+Seulement voilà, problème : comment faire pour mettre son dernier statut sur le [BlankoJoueb](${BLOG_URL}/ "Visiter le BlankoJoueb") ?
 
 Je me suis posé cette question, et pour seule réponse mon cerveau a dit : fait un script BASH pour intégrer le statut sous Nanoblogger.
 

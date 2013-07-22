@@ -1,4 +1,4 @@
-La semaine dernière je parlais de l'[internet libre](${BASE_URL}/archives/2008/04/11/nouveau_domaine_dossmann_net/index.html "Visionner le billet concernant l'internet libre"). Pour mener à bien cette mission, et sans reparler de mes actions faites, je devais aussi migrer le [joueb / blog de Filledou](http://filledou.skyblog.com) (ma soeur), sur Dotclear ou similaire.
+La semaine dernière je parlais de l'[internet libre](${BLOG_URL}/archives/2008/04/11/nouveau_domaine_dossmann_net/index.html "Visionner le billet concernant l'internet libre"). Pour mener à bien cette mission, et sans reparler de mes actions faites, je devais aussi migrer le [joueb / blog de Filledou](http://filledou.skyblog.com) (ma soeur), sur Dotclear ou similaire.
 
 ### Le début
 

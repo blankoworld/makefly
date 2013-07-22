@@ -4,7 +4,7 @@ Il y a quelques années de cela, un groupe de personnes ayant travaillé dans di
 
 Ce sont des conseils de personnes avisées et expérimentées qui soulignent les éléments majeurs de la réussite d'un projet au sein d'une communauté Libre.
 
-![Un conseil à l'oreille](${BASE_URL}/images/humains/open_advice.jpg "Image d'une personne confiant un secret à l'oreille de l'autre personne")
+![Un conseil à l'oreille](${BLOG_URL}/images/humains/open_advice.jpg "Image d'une personne confiant un secret à l'oreille de l'autre personne")
 
 ### Libres Conseils chez Framablog
 

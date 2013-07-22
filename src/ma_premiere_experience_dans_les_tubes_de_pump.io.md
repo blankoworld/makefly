@@ -10,7 +10,7 @@ Ainsi, dans le monde d'Identica s'est déroulé récemment une succession d'év�
 
 Cet article donne mon expérience et mes impressions sur ce nouvel outil (pump.io) que j'ai testé en local.
 
-![Water pump](${BASE_URL}/images/nature/water_pump.jpg)
+![Water pump](${BLOG_URL}/images/nature/water_pump.jpg)
 
 Photo par Darmin70 sur [son album Flickr](http://www.flickr.com/photos/darwin70/1200152443/in/photostream/ "Découvrir l'album de Darwin70").
 

@@ -1,12 +1,12 @@
 ### Introduction
 
-Il y a bientôt 2 ans, [je vous parlais de l'ergonomie à son poste informatique](${BASE_URL}/archives/2010/03/22/modifiez_votre_environnement_de_travail_avant_que_ce_ne_soit_lui_qui_le_fasse/index.html "Lire l'ancien article au sujet de l'ergonomise à son poste de travail"). Ne vous inquiétez pas, c'est toujours à jour, simplement nous allons le compléter avec un logiciel supplémentaire : un outil qui permet d'adapter le contraste/température de votre écran en fonction de votre géolocalisation, de l'heure de la journée et de la *température* du soleil.
+Il y a bientôt 2 ans, [je vous parlais de l'ergonomie à son poste informatique](${BLOG_URL}/archives/2010/03/22/modifiez_votre_environnement_de_travail_avant_que_ce_ne_soit_lui_qui_le_fasse/index.html "Lire l'ancien article au sujet de l'ergonomise à son poste de travail"). Ne vous inquiétez pas, c'est toujours à jour, simplement nous allons le compléter avec un logiciel supplémentaire : un outil qui permet d'adapter le contraste/température de votre écran en fonction de votre géolocalisation, de l'heure de la journée et de la *température* du soleil.
 
 ### Redshift
 
 C'est bien de cela que nous parlons : [Redshift](https://launchpad.net/redshift "Visiter le projet Redshift sur Launchpad").
 
-![Redshift](${BASE_URL}/images/logiciels/redshift-scr-1.png "Le logiciel Redshift")
+![Redshift](${BLOG_URL}/images/logiciels/redshift-scr-1.png "Le logiciel Redshift")
 
 Cet outil permet d'adapter la couleur/contraste/température de votre écran pour économiser vos yeux.
 

@@ -6,7 +6,7 @@ Et concernant la route, la conduite automobile, le trafic routier et tout simple
 
 J'ai constaté, ces douze dernières années, une réduction progressive de l'attention du conducteur à la route de manière inquiétante. Nous en ferons donc une synthèse rapide, après quoi nous chercherons les causes possibles pour terminer sur des méthodes pour pallier à ce problème.
 
-[![Chauffard](${BASE_URL}/images/voiture/tableau_bord_nuit_thb.jpg "Image d'un tableau de bord flouté, la nuit")](${BASE_URL}/images/voiture/tableau_bord_nuit.jpg "Aggrandir l'image")
+[![Chauffard](${BLOG_URL}/images/voiture/tableau_bord_nuit_thb.jpg "Image d'un tableau de bord flouté, la nuit")](${BLOG_URL}/images/voiture/tableau_bord_nuit.jpg "Aggrandir l'image")
 
 ### Constatation
 

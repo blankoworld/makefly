@@ -1,4 +1,4 @@
-Vous souvenez vous de mon [article sur Weechat](${BASE_URL}/archives/2008/08/08/8_chats_et_plus_encore__un_logiciel_weechat/ "Lire l'article de Blanko sur Weechat, le logiciel de messagerie instantanée multiplateforme, extensible et léger"), le logiciel de messagerie instantané multiplateforme ? Eh bien c'est de lui dont nous allons parler !
+Vous souvenez vous de mon [article sur Weechat](${BLOG_URL}/archives/2008/08/08/8_chats_et_plus_encore__un_logiciel_weechat/ "Lire l'article de Blanko sur Weechat, le logiciel de messagerie instantanée multiplateforme, extensible et léger"), le logiciel de messagerie instantané multiplateforme ? Eh bien c'est de lui dont nous allons parler !
 
 ### Introduction
 

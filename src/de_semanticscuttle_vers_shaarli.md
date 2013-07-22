@@ -4,7 +4,7 @@
 
 Ce sont deux très bon outils qui disposent de tout un tas de fonctionnalités. Mais ce dont nous allons parler aujourd'hui c'est la migration de l'un vers l'autre, c'est à dire de [Semantic Scuttle](http://semanticscuttle.sourceforge.net/ "Visiter la page officielle de Semantic Scuttle, outil de marques-pages en ligne") vers [Shaarli](http://sebsauvage.net/wiki/doku.php?id=php:shaarli "Se rendre sur la page de présentation de Shaarli").
 
-Comme [je vous l'énoncais dans un billet précédent](https://olivier.dossmann.net${BASE_URL}/archives/2012/03/12/owncloud_une_alternative_de_dropbox/index.html "Découvrir le billet sur Owncloud qui parle, en partie de la recherche d'un remplaçant pour Semantic Scuttle"), chose promise, chose due !
+Comme [je vous l'énoncais dans un billet précédent](https://olivier.dossmann.net${BLOG_URL}/archives/2012/03/12/owncloud_une_alternative_de_dropbox/index.html "Découvrir le billet sur Owncloud qui parle, en partie de la recherche d'un remplaçant pour Semantic Scuttle"), chose promise, chose due !
 
 ### En quelques étapes simples
 

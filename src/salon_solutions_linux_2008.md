@@ -1,6 +1,6 @@
 ### Contexte
 
-Je pensais ne plus avoir assez d'argent et de temps pour aller aux Salon Solutions Linux à Paris, jusqu'à il y a un mois. Oui rappelez vous le [Salon Solutions Linux 2007](${BASE_URL}/archives/2007/02/index.html#e2007-02-12T07_47_30.txt) de l'année dernière. Cela m'avait bien plus, et j'aurai voulu y retourner, mais cette année le jour tombait juste sur un jour de boulot ! Et cette fois je ne voulais pas me *prendre des vacances*. D'autant que ma nouvelle boîte, [PowerLinux](http://powerlinux.fr/fr/), me plaît énormément !
+Je pensais ne plus avoir assez d'argent et de temps pour aller aux Salon Solutions Linux à Paris, jusqu'à il y a un mois. Oui rappelez vous le [Salon Solutions Linux 2007](${BLOG_URL}/archives/2007/02/index.html#e2007-02-12T07_47_30.txt) de l'année dernière. Cela m'avait bien plus, et j'aurai voulu y retourner, mais cette année le jour tombait juste sur un jour de boulot ! Et cette fois je ne voulais pas me *prendre des vacances*. D'autant que ma nouvelle boîte, [PowerLinux](http://powerlinux.fr/fr/), me plaît énormément !
 
 Étant étudiant en licence professionelle donc, mes obligations se tournent vers l'entreprise. Mais quelle ne fut pas ma surprise en apprenant que PowerLinux se rendait cette année à ce Salon !
 

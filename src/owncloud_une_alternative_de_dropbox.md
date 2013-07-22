@@ -15,15 +15,15 @@ Owncloud étant sous licence AGPL, je me suis permis de le tester. Il possède l
   * Marque-pages
   * Éditeur de fichiers
 
-![Logo Owncloud](${BASE_URL}/images/logos/owncloud.png "Le petit nuage d'Owncloud")
+![Logo Owncloud](${BLOG_URL}/images/logos/owncloud.png "Le petit nuage d'Owncloud")
 
 ### Mes attentes
 
 À titre privé je dispose d'une webradio fonctionnant à l'aide de MusicPlayerDaemon et Icecast2. J'ai entendu dire qu'Owncloud utilisait un outil nommé Ampache pour fonctionner. Ce qui permet de connecter des clients Ampache pour lire la musique contenue sur notre compte. C'est l'occasion de remplacer ma webradio !
 
-J'ai aussi vu qu'Owncloud proposait un outil permettant de sauver les adresses de nos sites webs préférés et de les partager. C'est ce que fait déjà [l'outil que je vous présentais : SemanticScuttle](${BASE_URL}/archives/2008/04/15/partager_ses_marques_-_pages__signets_internet/ "Lire l'article sur le partage de ses marques-pages sur le BlankoJoueb"). Je me suis dis qu'Owncloud pouvait potentiellement me délester d'un outil supplémentaire.
+J'ai aussi vu qu'Owncloud proposait un outil permettant de sauver les adresses de nos sites webs préférés et de les partager. C'est ce que fait déjà [l'outil que je vous présentais : SemanticScuttle](${BLOG_URL}/archives/2008/04/15/partager_ses_marques_-_pages__signets_internet/ "Lire l'article sur le partage de ses marques-pages sur le BlankoJoueb"). Je me suis dis qu'Owncloud pouvait potentiellement me délester d'un outil supplémentaire.
 
-De base le système Owncloud dispose d'un calendrier et d'un carnet de contacts. Ce qui lui donne la possibilité de synchroniser ces derniers avec ceux d'un appareil mobile tel que [mon téléphone mobile N900](${BASE_URL}/archives/2009/11/30/r%C3%A9ception_du_nokia_n900/index.html "Lire l'article sur le N900 du BlankoJoueb").
+De base le système Owncloud dispose d'un calendrier et d'un carnet de contacts. Ce qui lui donne la possibilité de synchroniser ces derniers avec ceux d'un appareil mobile tel que [mon téléphone mobile N900](${BLOG_URL}/archives/2009/11/30/r%C3%A9ception_du_nokia_n900/index.html "Lire l'article sur le N900 du BlankoJoueb").
 
 J'ai testé Funambol, et cela ne m'a pas convaincu, c'est très lourd (plus de 100Mo de mémoire vive utilisée) pour pas grand chose. Sachant que l'utilisation de MPD + Icecast2 + SemanticScuttle (avec MySQL) prend certaines ressources, savoir qu'un outil tel qu'Owncloud inclus les même fonctionnalités en utilisant simplement Apache2 + SQLite, cela me semblait être une meilleure idée de l'utiliser.
 

@@ -1,4 +1,4 @@
-À l'instar de [mon premier billet du joueb sur les films](${BASE_URL}/archives/2010/03/19/film_bad_lieutenant_escale_%C3%A0_la_nouvelle_orleans/index.html "Lire le premier article décrivant un film sur le BlankoJoueb") je commence très modestement une catégorie *livre*.
+À l'instar de [mon premier billet du joueb sur les films](${BLOG_URL}/archives/2010/03/19/film_bad_lieutenant_escale_%C3%A0_la_nouvelle_orleans/index.html "Lire le premier article décrivant un film sur le BlankoJoueb") je commence très modestement une catégorie *livre*.
 
 Et la série d'article de cette catégorie commence avec une… série ! Cette dernière se nomme **La Saga du Commonwealth**, rédigée par Peter F. Hamilton. Il est notamment connu pour sa saga *L'Aube de la Nuit*.
 
@@ -10,7 +10,7 @@ Et la série d'article de cette catégorie commence avec une… série ! Cette d
 
 **Type** : Science-fiction
 
-**Couverture** : ![Couverture de Pandore abusée de Peter F. Hamilton](${BASE_URL}/images/livres/pandore_abusee.png "Couverture de Pandore abusée de Peter F. Hamilton représentant un fond bleu nuit avec un vaisseau se rapprochant d'un faisceau lumineux sortant d'un trou béant dans la galaxie")
+**Couverture** : ![Couverture de Pandore abusée de Peter F. Hamilton](${BLOG_URL}/images/livres/pandore_abusee.png "Couverture de Pandore abusée de Peter F. Hamilton représentant un fond bleu nuit avec un vaisseau se rapprochant d'un faisceau lumineux sortant d'un trou béant dans la galaxie")
 
 **Prix en 2012** : 9 euros environ
 

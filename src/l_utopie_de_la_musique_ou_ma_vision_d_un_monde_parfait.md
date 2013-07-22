@@ -1,6 +1,6 @@
 ### Introduction
 
-[Je parlais déjà de ma responsabilité de la mort des artistes dans le domaine de la musique](${BASE_URL}/archives/2012/09/27/je_suis_responsable_de_la_mort_des_artistes_dans_le_domaine_de_la_musique/index.html "Lire l'article de Blanko sur la mort des artistes") il y a quelques articles. Ce sujet semble me travailler quelque peu et je me suis demandé comment je verrais un monde *idéal* dans le domaine de la musique. Et vous, comment verriez-vous un monde idéal dans le domaine de la musique ? Le modèle actuel vous convient-il ?
+[Je parlais déjà de ma responsabilité de la mort des artistes dans le domaine de la musique](${BLOG_URL}/archives/2012/09/27/je_suis_responsable_de_la_mort_des_artistes_dans_le_domaine_de_la_musique/index.html "Lire l'article de Blanko sur la mort des artistes") il y a quelques articles. Ce sujet semble me travailler quelque peu et je me suis demandé comment je verrais un monde *idéal* dans le domaine de la musique. Et vous, comment verriez-vous un monde idéal dans le domaine de la musique ? Le modèle actuel vous convient-il ?
 
 ### Point de départ : ma passion
 
@@ -23,7 +23,7 @@ Qu'en serait-il de la musique si on appliquait ma méthode ?
 
 ### Utopie de la musique
 
-![Utopie](${BASE_URL}/images/musique/utopie.jpg "Dessin de l'utopie")
+![Utopie](${BLOG_URL}/images/musique/utopie.jpg "Dessin de l'utopie")
 
 Ainsi adapté au domaine de la musique, je rêve d'un groupe de personnes dont la musique est leur passion. Ce qui leur donne envie de partager. Cela ne passe pas seulement par l'application d'une licence libre à leurs œuvres (une à plusieurs parmi l'ensemble), mais le partage d'un support.
 

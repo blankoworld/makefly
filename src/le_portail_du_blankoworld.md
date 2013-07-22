@@ -6,7 +6,7 @@ J'ai donc crée pour cette demande un [portail web](http://fr.wikipedia.org/wiki
 
 Les années se sont succédées aussi vite que [mes noms de domaine](http://olivier.dossmann.net/portail/), j'ai donc décidé d'utiliser [le projet PorteAil](http://porteail.e-mergence.org "Aller sur la page officielle du projet PorteAil") pour ces derniers.
 
-![Logo du projet PorteAil](${BASE_URL}/images/logos/porteail.png "Logo du projet PorteAil")
+![Logo du projet PorteAil](${BLOG_URL}/images/logos/porteail.png "Logo du projet PorteAil")
 
 ### Le portail du Blankoworld
 

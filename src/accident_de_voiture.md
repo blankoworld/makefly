@@ -1,4 +1,4 @@
-Plus de 6 mois que [j'avais eu mon accident de voiture en me rendant au travail](${BASE_URL}/archives/2008/07/23/la_routine_puis_la_route_out/index.html "Lire l'article intitulé La routine, puis la route out"). Ayant moins mal au dos et me sentant d'attaque, j'ai pris la décision de reprendre un peu le patin à glace.
+Plus de 6 mois que [j'avais eu mon accident de voiture en me rendant au travail](${BLOG_URL}/archives/2008/07/23/la_routine_puis_la_route_out/index.html "Lire l'article intitulé La routine, puis la route out"). Ayant moins mal au dos et me sentant d'attaque, j'ai pris la décision de reprendre un peu le patin à glace.
 
 Ce n'était finalement pas une bonne idée ...
 
@@ -36,7 +36,7 @@ Pour me distraire, j'ai acheté une tablette graphique pour enfants (Smoby Inter
 
 J'en ai profité pour vous faire un croquis de l'accident : 
 
-![Image de l'accident de voiture, sur le constat](${BASE_URL}/images/evenement/accident/2009/accident_voiture.bmp "Deux voitures qui se rentrent dedans")
+![Image de l'accident de voiture, sur le constat](${BLOG_URL}/images/evenement/accident/2009/accident_voiture.bmp "Deux voitures qui se rentrent dedans")
 
 Je suis très bon dessinateur, n'est ce pas ? :D 
 

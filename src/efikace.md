@@ -6,7 +6,7 @@ Il y aura sûrement un second billet, voire un troisième sur l'Efika, à voir !
 
 ### Présentation
 
-Pour une brève présentation, l'Efika, c'est ça : ![Image représentative de l'Efika](${BASE_URL}/images/materiel/efika.jpg "L'Efika, dans toute sa splendeur").
+Pour une brève présentation, l'Efika, c'est ça : ![Image représentative de l'Efika](${BLOG_URL}/images/materiel/efika.jpg "L'Efika, dans toute sa splendeur").
 
 En somme c'est une carte toute petite qui contient / propose (selon la notice) : 
 

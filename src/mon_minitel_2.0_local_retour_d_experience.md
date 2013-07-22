@@ -10,7 +10,7 @@ Comme j'ai vécu l'essai en conditions réelles, je vous propose tout d'abord de
 
 **NB : Le rédacteur de ce billet, le blog tout entier et le billet lui-même ne sont pas responsables de tout éventuel bug du cerveau suite à la lecture de tout ou partie de ce billet.**
 
-![Pissenlit pour essaimage](${BASE_URL}/images/nature/pissenlit.jpg)
+![Pissenlit pour essaimage](${BLOG_URL}/images/nature/pissenlit.jpg)
 
 Photo sous licence Creative Commons CC-BY-NC-SA 2.0 trouvé sur [l'album Flickr de GnondPomme](http://www.flickr.com/photos/gnondpomme/6126647498/).
 

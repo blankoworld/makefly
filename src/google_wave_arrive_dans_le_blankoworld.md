@@ -2,7 +2,7 @@ Avez-vous entendu parler de Google Wave ?
 
 > Non, quoi ça ?
 
-![Image du logo de Google Wave](${BASE_URL}/images/logos/google_wave.png "La vague Google Wave")
+![Image du logo de Google Wave](${BLOG_URL}/images/logos/google_wave.png "La vague Google Wave")
 
 ### Quelques mots
 

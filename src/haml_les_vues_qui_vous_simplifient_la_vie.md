@@ -39,7 +39,7 @@ L'une des choses qui rend Rails très puissant, très apprécié, et très propr
 
 J'aimerais vous expliquer en détail, mais comme une image vaut mieux que de grands discours, voici un aperçu du schéma MVC : 
 
-![Image décrivant le modèle MVC](${BASE_URL}/images/schemas/MVC.png "Le contrôleur appelle les modèles et les vues ; le modèle renvoie les données à la vues ; et les vues envoient des demandes au contrôleur et des données au modèle")
+![Image décrivant le modèle MVC](${BLOG_URL}/images/schemas/MVC.png "Le contrôleur appelle les modèles et les vues ; le modèle renvoie les données à la vues ; et les vues envoient des demandes au contrôleur et des données au modèle")
 
 Pour de plus amples renseignements sur le modèle MVC, veuillez vous référer à [Wikipedia et son article sur les Modèles - Vues - Contrôleurs](http://fr.wikipedia.org/wiki/Mod%C3%A8le-Vue-Contr%C3%B4leur "Lire l'article de Wikipédia sur le contenu du schéma MVC").
 

@@ -4,7 +4,7 @@ Savez-vous si l'ensemble convient réellement à votre corps ou pas ? Cela vous 
 
 ### Introduction
 
-Suite à [mon accident d'il y a deux ans déjà, que je vous comptais d'ailleurs dans un billet](${BASE_URL}/archives/2008/07/23/la_routine_puis_la_route_out/index.html "Lire l'article de Blanko sur son accident du 17 juillet 2008"), mon dos me fait toujours mal. Je suis donc plus sensible aux problèmes liés au dos, ce qui me permet de constater quotidiennement nos mauvaises habitudes.
+Suite à [mon accident d'il y a deux ans déjà, que je vous comptais d'ailleurs dans un billet](${BLOG_URL}/archives/2008/07/23/la_routine_puis_la_route_out/index.html "Lire l'article de Blanko sur son accident du 17 juillet 2008"), mon dos me fait toujours mal. Je suis donc plus sensible aux problèmes liés au dos, ce qui me permet de constater quotidiennement nos mauvaises habitudes.
 
 À cet effet il se trouve que le lieu de travail propose très peu d'environnements adaptés. Et le bureau sur lequel nous posons notre ordinateur est un exemple d'environnement qui ne propose pas une ergonomie correcte.
 
@@ -22,7 +22,7 @@ Selon moi, il y a quelques règles qu'il faut respecter pour rendre autant confo
 
 Les règles données précédemment sont équivalentes à l'image suivante : 
 
-![Image permettant de visualiser l'ensemble des règles à suivre pour avoir une bonne position devant l'ordinateur](${BASE_URL}/images/schemas/position_ordinateur.jpg "Les bonnes pratiques pour être correctement assis devant l'ordinateur")
+![Image permettant de visualiser l'ensemble des règles à suivre pour avoir une bonne position devant l'ordinateur](${BLOG_URL}/images/schemas/position_ordinateur.jpg "Les bonnes pratiques pour être correctement assis devant l'ordinateur")
 
 D'autres choses encore peuvent être ajoutées à notre bonne conduite devant l'ordinateur, comme les éléments du paragraphe suivant.
 

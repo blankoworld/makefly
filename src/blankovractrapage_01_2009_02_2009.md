@@ -20,7 +20,7 @@ Bonne lecture ;)
 
 #### Sites Web en Java : petite astuce
 
-Ce mois de janvier a été pénible car je devais rendre un site Web en Java. Ce n'est pas que Java soit mauvais ou moins bon qu'un autre langage, simplement, comme [je le disais dans un autre billet au sujet de Rails](${BASE_URL}/archives/2008/12/21/haml_les_vues_qui_vous_simplifient_la_vie/index.html "Lire le premier billet de Blanko sur Rails"), j'utilise [Ruby On Rails](http://rubyonrails.org/ "Se rendre sur le site officiel de Ruby On Rails") pour faire des applications à [Powerlinux.fr](http://powerlinux.fr/ "Se rendre sur la page d'accueil de l'entreprise PowerLinux.fr").
+Ce mois de janvier a été pénible car je devais rendre un site Web en Java. Ce n'est pas que Java soit mauvais ou moins bon qu'un autre langage, simplement, comme [je le disais dans un autre billet au sujet de Rails](${BLOG_URL}/archives/2008/12/21/haml_les_vues_qui_vous_simplifient_la_vie/index.html "Lire le premier billet de Blanko sur Rails"), j'utilise [Ruby On Rails](http://rubyonrails.org/ "Se rendre sur le site officiel de Ruby On Rails") pour faire des applications à [Powerlinux.fr](http://powerlinux.fr/ "Se rendre sur la page d'accueil de l'entreprise PowerLinux.fr").
 
 J'ai été surpris quand mon professeur de Java à l'Université nous a parlé de [Grails](http://grails.org/ "Se rendre sur la page officielle de Grails"), un cadre de travail ( = framework en anglais) codé dans un langage affilié à Java, j'ai nommé [Groovy](http://groovy.codehaus.org/ "Se rendre sur la page officielle de Groovy") ! La particularité de ce dernier est de ressembler énormément aux langages Ruby et Python. Ce qui m'a permis de mener plus rapidement ce projet de site Web en Java, tout en codant de manière similaire à Ruby, et plus particulièrement à Rails puisque Grails se veut être au plus proche de l'esprit "Ruby On Rails" ( = RoR).
 
@@ -30,7 +30,7 @@ Récemment plusieurs autres projets à l'Université m'ont été confiés, vous 
 
 ### Nanoblogger
 
-Ce joueb étant construit à l'aide de Nanoblogger, et [ma participation à Nanoblogger Francophone n'étant plus un secret](${BASE_URL}/archives/2008/10/25/un_wiki_plein_dastuces_sur_nanoblogger/index.html "Lire le billet concernant le fait que Blanko rejoingne la communauté française de Nanoblogger"), je dois avouer que ces deux derniers mois ont ajouté leur lot de changements !
+Ce joueb étant construit à l'aide de Nanoblogger, et [ma participation à Nanoblogger Francophone n'étant plus un secret](${BLOG_URL}/archives/2008/10/25/un_wiki_plein_dastuces_sur_nanoblogger/index.html "Lire le billet concernant le fait que Blanko rejoingne la communauté française de Nanoblogger"), je dois avouer que ces deux derniers mois ont ajouté leur lot de changements !
 
 Ainsi nous accueillons deux nouveaux utilisateurs de Nanoblogger : [Gab.homelinux.net](# "Se rendre sur la page d'accueil de Blog-Notes, le bloc notes de Gab") et [Haltux](http://halpanet.org/ "Se rendre sur la page d'accueil d'Haltux, la découverte de l'informatique libre") ! Je vous invite à visiter leurs jouebs/blogs.
 
@@ -57,7 +57,7 @@ Ainsi j'ai découvert :
 
 Courant décembre, le Père Noël est passé (pour ainsi dire) et j'ai eu la joie de me voir offrir par un ami un ultra - portable de marque ACER (marque que je ne mets pas du tout dans mon estime, mais pour cette fois j'ai fait un effort). C'est donc un ACER Aspire One A110 - Bw qui est venu rejoindre les rangs du BlankoParc Informatique.
 
-![Image de l'ultra - portable ACER Aspire One](${BASE_URL}/images/materiel/acer-aspire-one.jpg "ACER Aspire One de couleur blanche")
+![Image de l'ultra - portable ACER Aspire One](${BLOG_URL}/images/materiel/acer-aspire-one.jpg "ACER Aspire One de couleur blanche")
 
 Cet ordinateur était surtout une contre - partie pour services rendus, il va falloir désormais utiliser ledit portable pour rendre bien d'autres services. Et il rend effectivement des services à son propriétaire (l'auteur de ce billet), comme de permettre le contrôle des serveurs à distance, prendre des notes pour les études, consulter des pages webs ou même écouter de la musique à mes temps perdus (autant dire jamais mdr).
 
@@ -67,7 +67,7 @@ Ah oui, pendant que j'y suis, j'ai affublé ce petit bijou (un des moins chers d
 
 Après Noël, et quelques économies faites depuis Juin, je me devais de trouver une façon de *consommer* mes chèques - cadeaux reçus tout au long de l'année. Comme le magasin commun aux différents chèques était Darty (pour ne pas le nommer), je me suis dit que j'allais faire un tour histoire de voir ce que Darty peut bien offrir d'intéressant. Et là je dois dire que c'est décevant, ou alors je suis moi - même décevant dans la nullité de mes *besoins matériels*. À part acheter un fer à repasser ou un ensemble à raser, je ne trouvais rien de si intéressant. J'ai suivi les conseils de [BoB6784](http://blog.bob6784.net "Visiter le joueb/blog de BoB6784") et me suis acheté une PSP ( = PlayStation Portable). Ce qui ressemble plus ou moins à ceci : 
 
-![Image d'une PlayStation Portable](${BASE_URL}/images/materiel/psp-loco-roco.jpg "Console de jeu portable avec écran large")
+![Image d'une PlayStation Portable](${BLOG_URL}/images/materiel/psp-loco-roco.jpg "Console de jeu portable avec écran large")
 
 J'ai eu un pack avec un jeu nommé [Roco Loco](http://www.locoroco.com/ "Découvrir le jeu Roco Loco"). Ce qui faisait un peu *pauvre* pour jouer réellement. J'ai donc pris un jeu plus adapté à mes envies : [Wipeout Pulse](http://www.wipeoutpulse.com/fr_FR/index.html "Se rendre sur la page officielle de Wipeout") qui, je dois le dire, est bien plus intéressant et enivrant que Roco Loco.
 

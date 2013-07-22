@@ -1,4 +1,4 @@
-Il y a moins de 20 minutes j'écrivais l'[article sur awesome](${BASE_URL}/archives/2008/04/index.html#e2008-04-27T23_57_40.txt), cet environnement de bureau assez jeune. Figurez vous qu'en m'occupant de vous proposer un aperçu écran de mon bureau, je me suis souvenu que j'en avais fait d'autres à chaque fois (ou presque) que j'installais une nouvelle distribution ou que j'avais un GNU / Linux sur une machine.
+Il y a moins de 20 minutes j'écrivais l'[article sur awesome](${BLOG_URL}/archives/2008/04/index.html#e2008-04-27T23_57_40.txt), cet environnement de bureau assez jeune. Figurez vous qu'en m'occupant de vous proposer un aperçu écran de mon bureau, je me suis souvenu que j'en avais fait d'autres à chaque fois (ou presque) que j'installais une nouvelle distribution ou que j'avais un GNU / Linux sur une machine.
 
 Voici donc deux liens qui vous intéresseront (ou pas!) : 
 

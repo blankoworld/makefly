@@ -2,7 +2,7 @@
 
 Cela fait des années que j'entends parler de *la mort de la musique*, des *artistes qui se meurent* et de la **soi-disante** *pauvreté des majors de la musique*. Serais-je en partie responsable ?
 
-![Illustration de l'article](${BASE_URL}/images/musique/vagrant_guitar.jpg "Image d'un guitariste au milieu d'une foule")
+![Illustration de l'article](${BLOG_URL}/images/musique/vagrant_guitar.jpg "Image d'un guitariste au milieu d'une foule")
 
 ### J'avoue mon crime, oui monsieur
 

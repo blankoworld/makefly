@@ -21,8 +21,8 @@ Pour une brève explication, ce sont des billets où j'expliquais comment s'en s
 
 Mieux que des mots, je vous propose de les (re)lire :
 
-  * [Enseignement blankoïque, ordinateur en rade, chapitre 1](${BASE_URL}/archives/2010/03/28/enseignement_blankoique_ordinateur_en_rade_chapitre_1/ "Lire l'article 1 de la saga Ordinateur en rade")
-  * [Enseignement blankoïque, ordinateur en rade, chapitre 2](${BASE_URL}/archives/2010/03/30/enseignement_blankoique_ordinateur_en_rade_chapitre_2/ "Lire l'article 2 de la saga Ordinateur en rade")
+  * [Enseignement blankoïque, ordinateur en rade, chapitre 1](${BLOG_URL}/archives/2010/03/28/enseignement_blankoique_ordinateur_en_rade_chapitre_1/ "Lire l'article 1 de la saga Ordinateur en rade")
+  * [Enseignement blankoïque, ordinateur en rade, chapitre 2](${BLOG_URL}/archives/2010/03/30/enseignement_blankoique_ordinateur_en_rade_chapitre_2/ "Lire l'article 2 de la saga Ordinateur en rade")
 
 Vos commentaires sont les bienvenus, notamment si le fait d'exporter l'article vers le Quicky Blanko vous paraît être une bonne idée.
 

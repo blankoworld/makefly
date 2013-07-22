@@ -1,18 +1,18 @@
 ### Introduction
 
-[Je vous l'expliquais dans un article consacré à pump.io](${BASE_URL}/archives/2013/04/30/ma_premi%C3%A8re_exp%C3%A9rience_dans_les_tubes_de_pump_io/index.html) (logiciel de réseau social) : [identi.ca va passer au logiciel pump.io le 1er juin 2013](http://identi.ca/doc/pumpio).
+[Je vous l'expliquais dans un article consacré à pump.io](${BLOG_URL}/archives/2013/04/30/ma_premi%C3%A8re_exp%C3%A9rience_dans_les_tubes_de_pump_io/index.html) (logiciel de réseau social) : [identi.ca va passer au logiciel pump.io le 1er juin 2013](http://identi.ca/doc/pumpio).
 
-Fort bien, cependant [mon expérience de pump.io](${BASE_URL}/archives/2013/04/30/ma_premi%C3%A8re_exp%C3%A9rience_dans_les_tubes_de_pump_io/index.html) me laisse un étrange arrière goût.
+Fort bien, cependant [mon expérience de pump.io](${BLOG_URL}/archives/2013/04/30/ma_premi%C3%A8re_exp%C3%A9rience_dans_les_tubes_de_pump_io/index.html) me laisse un étrange arrière goût.
 
 Voyons tout d'abord ce que je reproche à pump.io (dans la version que j'ai testée), puis voyons quelle autre solution j'ai tenté et ce qu'il reste comme possibilités.
 
-![Broken Circle](${BASE_URL}/images/lieux/BrokenCircle.jpg)
+![Broken Circle](${BLOG_URL}/images/lieux/BrokenCircle.jpg)
 
 Photo découverte sur [Wikimedia Commons](http://commons.wikimedia.org/wiki/File:BrokenCircle.jpg) dans le domaine public.
 
 ### Pump.io
 
-En plus des [choses que je reprochais déjà à pump.io](${BASE_URL}/archives/2013/04/30/ma_premi%C3%A8re_exp%C3%A9rience_dans_les_tubes_de_pump_io/index.html), en voici de nouvelles : 
+En plus des [choses que je reprochais déjà à pump.io](${BLOG_URL}/archives/2013/04/30/ma_premi%C3%A8re_exp%C3%A9rience_dans_les_tubes_de_pump_io/index.html), en voici de nouvelles : 
 
   * La prochaine version (0.3), qui a déjà un mois de retard sur la date prévue, a encore 140 tickets ouverts pour être résolue et n'est donc terminée qu'à 19%. Pas très rassurant pour le premier juin qui arrive dans une huitaine de jours
   * Les liens de pump.io s'ouvrent directement. Ce qui veut dire qu'on perd chaque fois la page principale. On perd rapidement du temps à revenir en arrière, surtout sur un téléphone mobile !

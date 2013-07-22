@@ -1,6 +1,6 @@
 ### Introduction
 
-Dans [mon dernier billet concernant ma nouvelle galerie de photos](${BASE_URL}/archives/2009/06/10/ouverture_de_la_galerie_blankoesque/index.html "lire le billet sur la nouvelle galerie blankoesque du Blankoworld"), j'évoquais l'ouverture de la Galerie Blankoesque](http://images.dossmann.net/ "découvrir et visionner la galerie Blankoesque").
+Dans [mon dernier billet concernant ma nouvelle galerie de photos](${BLOG_URL}/archives/2009/06/10/ouverture_de_la_galerie_blankoesque/index.html "lire le billet sur la nouvelle galerie blankoesque du Blankoworld"), j'évoquais l'ouverture de la Galerie Blankoesque](http://images.dossmann.net/ "découvrir et visionner la galerie Blankoesque").
 À moins que cela n'ait changé, je me suis doté d'un outil fort intéressant : SPGM (ou Simple Picture Gallery Manager), disponible à l'adresse suivante : [http://spgm.sourceforge.net/](http://spgm.sourceforge.net/ "Se rendre sur le site officiel de SPGM").
 
 > Et ? À quoi cela nous avance - t - il de savoir que, toi, Blanko, a utilisé SPGM ?
@@ -90,7 +90,7 @@ Cette page ne devrait pas avoir à proposer d'autres astuces que celle présente
 
 ### Conclusion
 
-Il fait du bien de devoir à nouveau pouvoir vous écrire, sans trop de maux de tête (Cf. [tourments blankoïques](${BASE_URL}/archives/2009/04/07/tourment_blanko&iuml;que/index.html) qui expliquent en partie quelques soucis).
+Il fait du bien de devoir à nouveau pouvoir vous écrire, sans trop de maux de tête (Cf. [tourments blankoïques](${BLOG_URL}/archives/2009/04/07/tourment_blanko&iuml;que/index.html) qui expliquent en partie quelques soucis).
 
 Cette galerie me convient désormais, et n'est plus sur un site Free à la limite de tomber dans un gouffre pour ne plus jamais en ressortir !
 

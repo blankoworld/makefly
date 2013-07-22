@@ -1,6 +1,6 @@
 ### Introduction
 
-Cette année je vous parlais de [mon passage à Nanoblogger](${BASE_URL}/archives/2008/04/03/création_du_joueb/index.html "Lire le premier article édité sur Nanoblogger dans le BlankoJoueb"), puis d'une [page d'aide sur Nanoblogger dans le Quicky Blanko](${BASE_URL}/archives/2008/04/06/nanoblogger_aide/index.html "Lire l'article parlant de mon aide sur Nanoblogger").
+Cette année je vous parlais de [mon passage à Nanoblogger](${BLOG_URL}/archives/2008/04/03/création_du_joueb/index.html "Lire le premier article édité sur Nanoblogger dans le BlankoJoueb"), puis d'une [page d'aide sur Nanoblogger dans le Quicky Blanko](${BLOG_URL}/archives/2008/04/06/nanoblogger_aide/index.html "Lire l'article parlant de mon aide sur Nanoblogger").
 
 Suite à ma migration et la création d'une page d'aide, je me suis intéressé à divers autres Nanoblogger. J'ai fait la rencontre de Denis Bernard sur [Nanoblogger Francophone](http://oceamer.com/~nanoblogger/ "Visiter le site de Nanoblogger Francophone"). Il est traducteur en Français des pages du manuel. Il contribue donc activement au projet et c'est désormais à la communauté de participer aussi, au travers de [Nanoblogger Francophone [wiki]](http://nb.homelinux.com "Visiter le Wiki de Nanoblogger Francophone").
 

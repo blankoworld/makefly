@@ -22,11 +22,11 @@ Le Nokia N900 est le dernier [ordiphone](http://www.pcinpact.com/news/54731-voca
 
 Je ne vous fait pas languir plus, voici la **bête** :
 
-![Photo présentant le Nokia N900 en semi-profil, ouvert, avec 8 applications ouvertes en arrière plan](${BASE_URL}/images/materiel/nokia_n900.jpg "Le Nokia N900 pour notre plus grand plaisir")
+![Photo présentant le Nokia N900 en semi-profil, ouvert, avec 8 applications ouvertes en arrière plan](${BLOG_URL}/images/materiel/nokia_n900.jpg "Le Nokia N900 pour notre plus grand plaisir")
 
 ### Quelques mots - Opinion
 
-Pour dire quelques mots au sujet de cet appareil, au niveau technique : il répond bien mieux à des besoins crées par la société (comme l'appareil photo numérique et le système pour faire de la visio) que l'[Openmoko dont nous parlions l'année dernière](${BASE_URL}/archives/2008/09/16/openmoko_le_premier_téléphone_libre_du_monde/index.html "Lire l'article sur l'OpenMoko dans le Blankojoueb").
+Pour dire quelques mots au sujet de cet appareil, au niveau technique : il répond bien mieux à des besoins crées par la société (comme l'appareil photo numérique et le système pour faire de la visio) que l'[Openmoko dont nous parlions l'année dernière](${BLOG_URL}/archives/2008/09/16/openmoko_le_premier_téléphone_libre_du_monde/index.html "Lire l'article sur l'OpenMoko dans le Blankojoueb").
 
 Au niveau logiciel : bizarrement aussi cela répond mieux. Les applications proposées sont toutes faciles à utiliser. Elles conviennent parfaitement à l'utilisation d'un téléphone et à la fois d'un organiseur, mais aussi d'un **livre de contact**. Le système est aussi libre, bénéficie donc de réponses rapides à un problème, et permet de modifier le système à volonté si besoin.
 

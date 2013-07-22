@@ -1,4 +1,4 @@
-ikiwiki, ou ikiwiki (à l'envers), est un moteur de wiki très intéressant dont je vous parlais quelque peu dans [mon billet consacré à l'espace de démonstration](${BASE_URL}/archives/2008/09/29/espace_de_d%C3%A9monstration_dans_le_blankoworld/index.html "Lire le billet de Blanko sur son espace de démonstration sur le Web").
+ikiwiki, ou ikiwiki (à l'envers), est un moteur de wiki très intéressant dont je vous parlais quelque peu dans [mon billet consacré à l'espace de démonstration](${BLOG_URL}/archives/2008/09/29/espace_de_d%C3%A9monstration_dans_le_blankoworld/index.html "Lire le billet de Blanko sur son espace de démonstration sur le Web").
 
 ### Présentation
 

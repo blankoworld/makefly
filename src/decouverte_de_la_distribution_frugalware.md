@@ -6,7 +6,7 @@ C'est ce que nous allons rapidement expliquer avant de vous présenter Frugalwar
 
 ### Critères de recherche
 
-[J'avais récemment adopté la distribution NuTyX dont je vous parlais récemment](${BASE_URL}/archives/2009/07/05/nutyx_une_distribution_gnulinux/index.html "Lire l'article précédent parlant de la distribution NuTyX"), seulement pour un ordinateur particulier de mon parc, un [ordinateur Acer Aspire One reçu l'année dernière](${BASE_URL}/archives/2009/02/18/blankovractrapage_012009_022009/index.html "Lire l'article BlankoVractrapage et chercher le paragraphe sur l'ACER Aspire One A110"), je n'avais et n'ai toujours pas les choses suivantes : 
+[J'avais récemment adopté la distribution NuTyX dont je vous parlais récemment](${BLOG_URL}/archives/2009/07/05/nutyx_une_distribution_gnulinux/index.html "Lire l'article précédent parlant de la distribution NuTyX"), seulement pour un ordinateur particulier de mon parc, un [ordinateur Acer Aspire One reçu l'année dernière](${BLOG_URL}/archives/2009/02/18/blankovractrapage_012009_022009/index.html "Lire l'article BlankoVractrapage et chercher le paragraphe sur l'ACER Aspire One A110"), je n'avais et n'ai toujours pas les choses suivantes : 
 
   * des paquets binaires à jour (NuTyX possède des paquets binaires, mais ceux les plus à jour sont les paquets sources et je ne possède encore aucune chaîne de compilation ou d'arbre personnel pour l'instant)
   * certaines applications que j'aimerais ne figurent pas dans la liste de celles proposées par NuTyX, comme par exemple :
@@ -39,7 +39,7 @@ L'installation s'est déroulée sans problèmes majeurs, l'ensemble du matériel
 Cependant, j'ai cru ne jamais pouvoir installer la distribution. Je n'avais pas de lecteur CD et je ne voyais pas comment installer à partir d'une clé USB (je ne suis possiblement pas tombé sur le bon tutoriel). Malgré tout, en regardant les différents modes d'installation, j'ai vu qu'on pouvait utiliser [Unetbootin](http://unetbootin.sourceforge.net/ "Visiter le site officiel d'Unetbootin") pour installer sur une clé USB. Je l'ai utilisé pour installer directement sur … le disque dur de mon ordinateur portable ! Et cela a fonctionné ! À noter qu'il fallait que ma distribution possède Unetbootin, ce qui n'aurait pas été le cas de NuTyX (le paquet unetbootin n'existe tout simplement pas).
 
 J'ai ensuite installé petit à petit les applications dont j'avais besoin, puis ai personnalisé awesome. Je vous laisse voir le résultat ci-dessous : 
-[![Image de l'environnement de bureau awesome avec le fond d'écran de Frugalware et le menu gauche d'awesome ouvert, comportant quelques entrées](${BASE_URL}/images/distributions/20091231_frugalware_awesome-48.jpg "Awesome revêt les couleurs de Frugalware !")](${BASE_URL}/images/distributions/20091231_frugalware_awesome.jpg "Cliquez ici pour voir l'image aggrandie")
+[![Image de l'environnement de bureau awesome avec le fond d'écran de Frugalware et le menu gauche d'awesome ouvert, comportant quelques entrées](${BLOG_URL}/images/distributions/20091231_frugalware_awesome-48.jpg "Awesome revêt les couleurs de Frugalware !")](${BLOG_URL}/images/distributions/20091231_frugalware_awesome.jpg "Cliquez ici pour voir l'image aggrandie")
 
 J'en ai profité pour faire une [page consacrée à l'Acer Aspire One sur le wiki de frugalware](http://wiki.frugalware.org/index.php/Aspire_One_%28Fran%C3%A7ais%29 "Découvrir la page wiki sur l'Acer Aspire One sur wiki.frugalware.org"), dont la communauté francophone, sur l'IRC, semble très accueillante, chaleureuse, et à l'écoute !
 

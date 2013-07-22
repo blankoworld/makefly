@@ -9,7 +9,7 @@ Je tenais, à travers ce billet, vous rappelez que le libre a un visage humain, 
 
 La preuve qu'un homme, par son absence, manque énormément, est que désormais generation-debian.org n'a plus de site de manière momentanée. Eh oui, le site été hébergé chez alex206.
 
-![Alex206 vu de face/profil](${BASE_URL}/images/humains/alex206.png "Photo représentant alex206")
+![Alex206 vu de face/profil](${BLOG_URL}/images/humains/alex206.png "Photo représentant alex206")
 
 ### Où trouvez des traces du passage d'alex206 ?
 

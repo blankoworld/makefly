@@ -9,7 +9,7 @@ autres. En somme vous mettez sur un espace Web les sites que vous appréciez et 
 à partager vos préférences.
 
 Il reste cependant un problème, comme nous l'expliquions sur [le billet concernant l'acquisition de 
-DOSSMANN.NET](${BASE_URL}/archives/2008/04/11/nouveau_domaine_dossmann_net/index.html "Lien interne: Nouveau domaine
+DOSSMANN.NET](${BLOG_URL}/archives/2008/04/11/nouveau_domaine_dossmann_net/index.html "Lien interne: Nouveau domaine
  DOSSMANN.NET"), il est important de posséder l'information, c'est à dire de garder la valeur ajoutée 
  que nous apportons sur Internet. Ainsi il serait peut être plus intéressant d'avoir un site similaire 
  à del.icio.us ou blogmarks.net chez soi, qu'en dites vous ?

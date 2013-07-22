@@ -18,7 +18,7 @@ N'attendez plus, cherchez un Logiciel Libre qui vous saille et qui soit dans vot
 
 > Bah pourquoi ?
 
-![100% libre](${BASE_URL}/images/logos/logiciel_libre.png "Image d'un puzzle représentant le logiciel libre")
+![100% libre](${BLOG_URL}/images/logos/logiciel_libre.png "Image d'un puzzle représentant le logiciel libre")
 
 Développer un Logiciel Libre (existant ou non) va vous permettre de :
 

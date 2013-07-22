@@ -1,4 +1,4 @@
-Nous établissions, dans l'article précédent [concernant Weechat](${BASE_URL}/archives/2008/08/index.html#e2008-08-08T23_26_28.txt) (logiciel de messagerie instantanée pour IRC), une façon particulière de discuter sur internet. Ce jour nous allons voir comment pouvoir laisser notre logiciel de discussion toujours ouvert / allumé afin de pouvoir se connecter après sans avoir pour autant perdu un fil de la conversation.
+Nous établissions, dans l'article précédent [concernant Weechat](${BLOG_URL}/archives/2008/08/index.html#e2008-08-08T23_26_28.txt) (logiciel de messagerie instantanée pour IRC), une façon particulière de discuter sur internet. Ce jour nous allons voir comment pouvoir laisser notre logiciel de discussion toujours ouvert / allumé afin de pouvoir se connecter après sans avoir pour autant perdu un fil de la conversation.
 
 ### Screen, la console virtuelle
 
