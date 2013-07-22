@@ -1,6 +1,4 @@
-## Mes liens
-
-## Jouebs
+## Faites tourner
 
   * [IRPDEV](http://www.irpdev.fr/ "Le blog d'IRPDEV")
   * [Deber](http://oceamer.com/~interlude/ "Journal du projet de Deber")
