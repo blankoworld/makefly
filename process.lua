@@ -181,13 +181,7 @@ function createPost(file, config, template_file, template_tag_file)
       POST_ESCAPED_TITLE = title,
     }
     -- create substitutions list
-    local substitutions = {}
-    for k, v in pairs(replacements) do 
-      substitutions[k] = v
-    end
-    for k, v in pairs(post_replacements) do 
-      substitutions[k] = v
-    end
+    local substitutions = getSubstitutions(replacements, post_replacements)
     -- add comment block if comment system is activated
     if template_comment then
       local jskomment_prefix = config['JSKOMMENT_PREFIX'] and config['JSKOMMENT_PREFIX'] ~= '' and config['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
@@ -196,7 +190,8 @@ function createPost(file, config, template_file, template_tag_file)
       substitutions['JSKOMMENT_CONTENT'] = jskomment_content
     end
     -- ${VARIABLES} substitution on markdown content
-    local final_content = replace(post:flatten(), substitutions)
+    local flatten_final_content = post:flatten()
+    local final_content = replace(flatten_final_content, substitutions)
     -- write result to output file
     out:write(final_content)
     -- close output file
