@@ -4,7 +4,7 @@ Vous avez plusieurs comptes courriels sur différents prestataires ? Des comptes
 
 Si oui, alors nous parlons bien de cet état que je nomme *électroniquement dispersé*.
 
-![Graine de fleurs qui se dispersent](${BASE_URL}/images/nature/fleurs_disperses.jpg)
+![Graine de fleurs qui se dispersent](${BLOG_URL}/images/nature/fleurs_disperses.jpg)
 
 Photo sous licence Creative Commons CC-BY 2.0 trouvé sur [l'album Flickr de FeatheredTar](www.flickr.com/photos/featheredtar/2305728728/).
 
