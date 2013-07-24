@@ -176,6 +176,10 @@ function dispatcher ()
     local n = table.getn(threads)
     if n == 0 then break end   -- no more threads to run
     for i=1,n do
+      if coroutine.status(threads[i]) == 'dead' then
+        table.remove(threads, i)
+        break
+      end
       local status, res = coroutine.resume(threads[i])
       if not res then    -- thread finished its task?
         table.remove(threads, i)
