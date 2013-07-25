@@ -3,5 +3,5 @@ DESCRIPTION = De la manière de consulter l'état du serveur après le grabuge (
 DATE = 12/05/2008 23:17:22
 TAGS = nouvelle,blankoweb
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

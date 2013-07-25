@@ -3,5 +3,5 @@ DESCRIPTION = Ou de la manière du non - langage
 DATE = 05/04/2008 11:37:18
 TAGS = fantasmablankoique
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

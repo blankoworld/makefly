@@ -3,5 +3,5 @@ DESCRIPTION = Installer un serveur glassfish sur une distribution GNU / Linux De
 DATE = 12/05/2008 17:59:22
 TAGS = blankoweb,astuce,libre
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

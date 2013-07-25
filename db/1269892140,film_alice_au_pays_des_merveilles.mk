@@ -3,5 +3,5 @@ DESCRIPTION = Critique du film Alice au Pays des Merveilles
 DATE = 29/03/2010 21:49:00
 TAGS = film
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

@@ -3,5 +3,5 @@ DESCRIPTION = Après une semaine de déni de service, le retour de Nanoblogger F
 DATE = 15/09/2009 20:28:24
 TAGS = nouvelle,web
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

@@ -3,5 +3,5 @@ DESCRIPTION = Quelques nouvelles de l'été passé
 DATE = 17/08/2009 10:00:02
 TAGS = nouvelle
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

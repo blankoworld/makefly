@@ -3,5 +3,5 @@ DESCRIPTION = Les commandes les plus utilisées par Blanko sur son PC fixe
 DATE = 24/04/2008 21:33:28
 TAGS = lui
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

@@ -3,5 +3,5 @@ DESCRIPTION = Un temps pour tout, un temps pour vivre, un temps pour mourir.
 DATE = 31/07/2005 01:24:46
 TAGS = fantasmablankoique
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

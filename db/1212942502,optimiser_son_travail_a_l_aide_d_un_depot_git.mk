@@ -3,5 +3,5 @@ DESCRIPTION = Brève explication sur le principe de l'installation et l'utilisat
 DATE = 08/06/2008 18:28:22
 TAGS = developpement
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

@@ -3,5 +3,5 @@ DESCRIPTION = <a href="http://site.stargate.free.fr"  alt="Site de la Porte des 
 DATE = 30/06/2005 21:29:40
 TAGS = nouvelle,blankoweb
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

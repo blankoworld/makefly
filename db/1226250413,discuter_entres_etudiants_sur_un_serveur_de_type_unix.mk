@@ -3,5 +3,5 @@ DESCRIPTION = Comment faire de la messagerie instantanée super chiante sur un s
 DATE = 09/11/2008 18:06:53
 TAGS = planet-gd,fantasmablankoique,astuce,lui
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

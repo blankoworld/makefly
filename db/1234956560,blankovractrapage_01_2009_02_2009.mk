@@ -3,5 +3,5 @@ DESCRIPTION = Des nouvelles du Blanko en vrac, pour rattraper
 DATE = 18/02/2009 12:29:20
 TAGS = materiel,nouvelle,lui,jeu,web,logiciels,libre
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

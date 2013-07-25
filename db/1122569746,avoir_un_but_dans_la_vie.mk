@@ -3,5 +3,5 @@ DESCRIPTION = Avec la mort dans notre existence il faut avoir un but à suivre a
 DATE = 28/07/2005 18:55:46
 TAGS = fantasmablankoique
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

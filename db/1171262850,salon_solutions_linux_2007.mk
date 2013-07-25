@@ -3,5 +3,5 @@ DESCRIPTION = Voyage à Paris
 DATE = 12/02/2007 07:47:30
 TAGS = lui,libre
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

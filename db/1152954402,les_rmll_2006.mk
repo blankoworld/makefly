@@ -3,5 +3,5 @@ DESCRIPTION = Les Rencontres Mondiales du Logiciel Libre de 2006
 DATE = 15/07/2006 11:06:42
 TAGS = lui,libre
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

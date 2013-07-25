@@ -3,5 +3,5 @@ DESCRIPTION = Découverte du plus grand Salon du Jeux Vidéo en France
 DATE = 09/01/2007 20:43:55
 TAGS = lui,jeu
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

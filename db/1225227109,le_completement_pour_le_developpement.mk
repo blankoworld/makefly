@@ -3,5 +3,5 @@ DESCRIPTION = Comparaison entre gedit et Scribes
 DATE = 28/10/2008 21:51:49
 TAGS = developpement,logiciels,libre
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

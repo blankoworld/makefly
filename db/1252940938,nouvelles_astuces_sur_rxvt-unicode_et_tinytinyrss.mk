@@ -3,5 +3,5 @@ DESCRIPTION = De la manière d'ajouter deux tutoriels supplémentaires à un wik
 DATE = 14/09/2009 17:08:58
 TAGS = nouvelle,blankoweb,astuce,web,logiciels,libre
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

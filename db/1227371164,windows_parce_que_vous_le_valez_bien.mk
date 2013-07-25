@@ -3,5 +3,5 @@ DESCRIPTION = Pourquoi, en partie, je déteste aller sous|utiliser|réparer du W
 DATE = 22/11/2008 17:26:04
 TAGS = fantasmablankoique
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

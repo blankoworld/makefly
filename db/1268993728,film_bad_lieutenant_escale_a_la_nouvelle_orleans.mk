@@ -3,5 +3,5 @@ DESCRIPTION = Critique de film sur Bad Lieutenant, Escale à la Nouvelle Orléan
 DATE = 19/03/2010 11:15:28
 TAGS = film
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

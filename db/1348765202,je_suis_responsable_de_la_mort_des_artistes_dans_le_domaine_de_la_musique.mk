@@ -3,5 +3,5 @@ DESCRIPTION = Pourquoi ?
 DATE = 27/09/2012 19:00:02
 TAGS = fantasmablankoique
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

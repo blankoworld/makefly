@@ -3,5 +3,5 @@ DESCRIPTION = Un nom de domaine mais pas seulement un site : une multitude de si
 DATE = 24/08/2005 13:17:53
 TAGS = nouvelle
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

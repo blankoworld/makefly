@@ -3,5 +3,5 @@ DESCRIPTION = Ou comment faire un titre qui n'a rien à voir avec le sujet
 DATE = 02/05/2008 23:48:35
 TAGS = astuce,logiciels,libre
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

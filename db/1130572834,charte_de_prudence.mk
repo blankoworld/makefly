@@ -3,5 +3,5 @@ DESCRIPTION = Ou comment se protéger des intrusions et autres attaques malsaine
 DATE = 29/10/2005 10:00:34
 TAGS = blankoweb,web
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

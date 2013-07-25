@@ -3,5 +3,5 @@ DESCRIPTION = Comparaison de XFCE4 et awesome
 DATE = 27/04/2008 23:57:40
 TAGS = astuce,logiciels
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

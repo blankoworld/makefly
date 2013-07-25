@@ -3,5 +3,5 @@ DESCRIPTION = VIM dans Iceweasel
 DATE = 04/10/2008 08:46:02
 TAGS = astuce,web
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

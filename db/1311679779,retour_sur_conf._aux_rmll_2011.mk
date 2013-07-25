@@ -3,5 +3,5 @@ DESCRIPTION = Une Conf. peut toujours servir
 DATE = 26/07/2011 13:29:39
 TAGS = nouvelle
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/

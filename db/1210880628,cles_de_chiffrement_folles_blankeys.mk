@@ -3,5 +3,5 @@ DESCRIPTION = Ou comment une erreur dans un programme permet d'apprendre des cho
 DATE = 15/05/2008 21:43:48
 TAGS = nouvelle,astuce,lui
 TYPE = news
-AUTHOR = Blankoworld
+AUTHOR = olivier
 JSKOMMENT_PREFIX = http://olivier.dossmann.net/
