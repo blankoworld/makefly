@@ -196,7 +196,7 @@ function createPost(file, config, template_file, template_tag_file)
     local flatten_final_content = post:flatten()
     local final_content = replace(flatten_final_content, substitutions)
     -- write result to output file
-    out:write(replace(final_content, substitutions))
+    out:write(final_content)
     -- close output file
     assert(out:close())
     -- Print post title
