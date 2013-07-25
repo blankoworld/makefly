@@ -104,6 +104,9 @@ display_enable =  ' ENABLE  '
 display_disable = ' DISABLE '
 display_warning = ' WARNING '
 display_error =   '  ERROR  '
+-- default mandatories variables
+local mandatories_makeflyrc_vars = { 'BLOG_TITLE', 'BLOG_DESCRIPTION', 'BLOG_URL' }
+local mandatories_post_vars = { 'TITLE', 'TAGS', 'AUTHOR' }
 
 --[[ Methods ]]--
 
@@ -171,7 +174,7 @@ function createPost(file, config, template_file, template_tag_file)
     local post_replacements = {
       TITLE = config['TITLE'],
       POST_TITLE = config['TITLE'],
-      ARTICLE_CLASS_TYPE = config['TYPE'],
+      ARTICLE_CLASS_TYPE = config['TYPE'] or '',
       CONTENT = markdown_content,
       POST_FILE = title .. resultextension,
       TAG_LINKS_LIST = post_tag_links and replace(post_tag_links, replacements) or '',
@@ -193,7 +196,7 @@ function createPost(file, config, template_file, template_tag_file)
     local flatten_final_content = post:flatten()
     local final_content = replace(flatten_final_content, substitutions)
     -- write result to output file
-    out:write(final_content)
+    out:write(replace(final_content, substitutions))
     -- close output file
     assert(out:close())
     -- Print post title
@@ -256,7 +259,7 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
         POST_TITLE = v['conf']['TITLE'],
         POST_FILE = title .. resultextension,
         POST_AUTHOR = v['conf']['AUTHOR'],
-        POST_DESCRIPTION = v['conf']['DESCRIPTION'],
+        POST_DESCRIPTION = v['conf']['DESCRIPTION'] or '',
         SHORT_DATE = os.date(short_date_format, timestamp) or '',
         DATE = os.date(date_format, timestamp) or '',
         DATETIME = os.date(datetime_format_default, timestamp) or '',
@@ -308,7 +311,7 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
         end
         local post_content = replace(template_article_index, {CONTENT=markdown(final_post_content)})
         -- complete missing info
-        post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE']
+        post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE'] or ''
         post_substitutions['POST_ESCAPED_TITLE'] = title
         -- add comment block if comment system is activated
         if template_comment then
@@ -424,6 +427,15 @@ makeflyrc = getConfig(makeflyrcfile)
 source_extension = source_extension_default
 -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
 -- FIXME: place here the code
+
+-- Check some variables presence
+print (string.format("-- [%s] Check mandatories information", display_info))
+local missing_makeflyrc_info = processMissingInfo(makeflyrc, mandatories_makeflyrc_vars)
+-- Check that all is OK, otherwise display an error message and quit the program
+if missing_makeflyrc_info ~= '' then
+  print(string.format("-- [%s] Missing information in %s file: %s", display_error, makeflyrcfile, missing_makeflyrc_info))
+  os.exit(1)
+end
 
 -- Set variables regarding user configuration
 index_name = makeflyrc['INDEX_FILENAME'] or index_name_default
@@ -679,7 +691,16 @@ dbresult = listing (dbpath, "mk")
 if dbresult then
   for k,v in pairs(dbresult) do
     -- parse DB files to get metadata and posts'title
-    table.insert(post_files, {file=v, conf=getConfig(v)})
+    local postConf = getConfig(v)
+    -- Check some variables presence
+    local missing_post_info = processMissingInfo(postConf, mandatories_post_vars)
+    -- Check that all is OK, otherwise display an error message and quit the program
+    if missing_post_info ~= '' then
+      local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
+      print(string.format("-- [%s] Missing information in '%s' post: %s", display_error, postTitle, missing_post_info))
+      os.exit(1)
+    end
+    table.insert(post_files, {file=v, conf=postConf})
     local co = coroutine.create(function () createPost(v, getConfig(v), page_article_single, page_tag_link) end)
     table.insert(threads, co)
   end
