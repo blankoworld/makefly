@@ -176,6 +176,10 @@ function dispatcher ()
     local n = table.getn(threads)
     if n == 0 then break end   -- no more threads to run
     for i=1,n do
+      if coroutine.status(threads[i]) == 'dead' then
+        table.remove(threads, i)
+        break
+      end
       local status, res = coroutine.resume(threads[i])
       if not res then    -- thread finished its task?
         table.remove(threads, i)
@@ -212,3 +216,30 @@ function pairsByKeys (t, f)
   end
   return iter
 end
+
+function missingMandatories(origin, mandatories)
+  local res = {}
+  for i, j in ipairs(mandatories) do
+    if origin[j] == nil or origin[j] == '' then
+      table.insert(res, j)
+    end
+  end
+  return res
+end
+
+function displayMissing(missingTable)
+  local res = ''
+  for i, j in ipairs(missingTable) do
+    separator = ', '
+    if i == 1 then separator = '' end
+    res = res .. separator .. j
+  end
+  return res
+end
+
+function processMissingInfo(origin, mandatories)
+  local missing = missingMandatories(origin, mandatories)
+  local res = displayMissing(missing) or ''
+  return res
+end
+-- vim:expandtab:smartindent:tabstop=2:softtabstop=2:shiftwidth=2:
