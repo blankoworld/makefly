@@ -200,10 +200,10 @@ version:
 	$Qecho "Makefly ${VERSION} using '${MAKE}' command. `luac -v|cut -d ' ' -f 1-2`"
 
 # list: list all available command as a help command
-list: 
+commands:
 	$Qecho "List of available commands: \n \
-		list       list all available commands \n \
-		help       same as 'list' command \n \
+		commands   list all available commands \n \
+		help       same as 'commands' one \n \
 		clean      clean up current directory from generated files \n \
 		all        create all entire weblog \n \
 		createpost create a new post \n \
@@ -211,10 +211,10 @@ list:
 		backup     make a backup from your current makefly directory \n \
 		install    install 'pub' directory into INSTALLDIR directory (set in makefly.rc) \n \
 		publish    publish your weblog using tools/publish.sh script \n \
-		theme      copy 'base' theme to create a new one named using 'name' variable \n \
+		theme      Example: name=\"myName\" pmake theme. Will copy 'base' theme to 'myName' one \n \
 		version    give version of the current program"
 
-help: list
+help: commands
 
 # END
 .MAIN: all
