@@ -197,7 +197,7 @@ createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 add: createpost
 
 version: 
-	$Qecho "${VERSION}"
+	$Qecho "Makefly ${VERSION} using '${MAKE}' command. `luac -v|cut -d ' ' -f 1-2`"
 
 # list: list all available command as a help command
 list: 
