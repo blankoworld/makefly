@@ -1,5 +1,5 @@
 BLOG_TITLE = Joueb d'Olivier
-BLOG_SHORT_DESC = Bienvenue dans mon humble demeure. Que votre séjour se déroule sans encombres. Puissiez-vous vous repaître de certains savoirs présentés sur le joueb. Sachez que de l'auteur émane une philosophie particulière, apprenez à la comprendre ;)
+BLOG_SHORT_DESC = Manchot migrateur
 BLOG_DESCRIPTION = Joueb d'Olivier : récits et nouvelles touchant de près ou de loin la vie d'un défenseur des libertés intellectuelles dans le monde informatique
 BLOG_LANG = fr
 BLOG_CHARSET = UTF-8
@@ -13,7 +13,7 @@ SHORT_DATE_FORMAT = %b %Y
 SIDEBAR = 1
 SEARCH_BAR = 1
 MAX_RSS = 8
-THEME = minisch
+THEME = od
 TAGDIR_NAME = motcle
 POSTDIR_NAME = article
 JSKOMMENT = 1
