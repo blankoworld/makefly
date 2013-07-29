@@ -60,11 +60,16 @@ tar      ?= tar
 PUBLISH_SCRIPT_NAME = publish.sh
 COMPRESS_TOOL ?= gzip
 COMPRESS_EXT = .gz
+TMPL_EXT = .tmpl
 
 # include some VARIABLES
 # first main variables
 .include "${conf}"
 PAGE_EXT ?= .html
+EXTENSION_ERROR = 0
+.if $(PAGE_EXT) == $(TMPL_EXT)
+EXTENSION_ERROR = 1
+.endif
 BLOG_URL ?= http://localhost/~${USER}
 # then theme VARIABLES
 THEMEDIR = ${TMPLDIR}/${THEME}
@@ -88,11 +93,12 @@ ${${DIR}}:
 
 # BEGIN
 all:
-	$QCURDIR="${.OBJDIR}" DBDIR="${DBDIR}" SRCDIR="${SRCDIR}" TMPDIR="${TMPDIR}" TMPLDIR="${TMPLDIR}" STATICDIR="${STATICDIR}" SPECIALDIR="${SPECIALDIR}" LANGDIR="${LANGDIR}" DESTDIR="${DESTDIR}" BLOG_URL=${BLOG_URL} VERSION="${VERSION}" conf="${conf}" ${lua} ${mainscript} || exit 1
+	$QCURDIR="${.OBJDIR}" DBDIR="${DBDIR}" SRCDIR="${SRCDIR}" TMPDIR="${TMPDIR}" TMPLDIR="${TMPLDIR}" STATICDIR="${STATICDIR}" SPECIALDIR="${SPECIALDIR}" LANGDIR="${LANGDIR}" DESTDIR="${DESTDIR}" BLOG_URL=${BLOG_URL} VERSION="${VERSION}" conf="${conf}" TMPL_EXT="${TMPL_EXT}" ${lua} ${mainscript} || exit 1
 
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
 clean:
+	$Qif test "${EXTENSION_ERROR}" = "1"; then echo "You cannot choose an extension (${PAGE_EXT}) similar to template's one (${TMPL_EXT})."; exit 1; fi
 	$Q${rm} -rf ${DESTDIR}/ && echo "-- Removed: ${DESTDIR} directory"
 	$Q${rm} -rf ${TMPDIR}/ && echo "-- Removed: ${TMPDIR} directory"
 	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT} && echo "-- Removed: ${DOCDIR}/*${PAGE_EXT} files"

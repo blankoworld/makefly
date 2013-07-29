@@ -38,7 +38,7 @@ local jskomment_js_filename = 'jskomment.js'
 local introduction_filename = 'introduction'
 local footer_filename = 'footer'
 -- theme filenames
-local template_extension_default = '.tmpl'
+local template_extension_default = os.getenv('TMPL_EXT') or '.tmpl'
 local page_header_name = 'header' .. template_extension_default
 local page_footer_name = 'footer' .. template_extension_default
 local page_posts_name = 'post.index' .. template_extension_default
@@ -458,6 +458,12 @@ jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX
 jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
 -- Display which theme the user have choosed
 print (string.format("-- [%s] Theme: %s", display_info, theme))
+
+-- Check that user choice doesn't conflict with default templates extension
+if resultextension == template_extension_default then
+  print(string.format("-- [%s] You cannot choose an extension (%s) similar to template's one (%s).", display_error, resultextension, template_extension_default))
+  os.exit(1)
+end
 
 -- Get language configuration
 language = makeflyrc['BLOG_LANG'] or language_default
