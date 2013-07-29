@@ -102,9 +102,9 @@ clean:
 
 ${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
 	$Q{                                                      \
-		cat ${DOCDIR}/header.xhtml > ${FILE:S/.md$/${PAGE_EXT}/} && \
+		cat ${DOCDIR}/header.tmpl > ${FILE:S/.md$/${PAGE_EXT}/} && \
 		${markdown} ${FILE} >> ${FILE:S/.md$/${PAGE_EXT}/} && \
-		cat ${DOCDIR}/footer.xhtml >> ${FILE:S/.md$/${PAGE_EXT}/} || \
+		cat ${DOCDIR}/footer.tmpl >> ${FILE:S/.md$/${PAGE_EXT}/} || \
 		{                                                    \
 			echo "-- Could not build doc file: $@" ;        \
 		} ;                                                  \
