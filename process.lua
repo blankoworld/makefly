@@ -196,6 +196,8 @@ function createPost(file, config, template_file, template_tag_file)
     -- ${VARIABLES} substitution on markdown content
     local flatten_final_content = post:flatten()
     local final_content = replace(flatten_final_content, substitutions)
+    -- First time we replace element, CONTENT will get markdown_content. But markdown_content was not replaced itself with replacements elements. The next line is here to do that
+    final_content = replace(final_content, substitutions)
     -- write result to output file
     out:write(final_content)
     -- close output file
