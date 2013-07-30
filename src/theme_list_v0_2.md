@@ -4,7 +4,7 @@ Here is Makefly's themes list for v0.2
 ## Responsive
 
   1. _main\_responsive_ template with _color\_responsive\_dark_ style
-[![](${BASE\_URL}/img/main_responsive_color_responsive_dark_thb.jpg)](${BLOG_URL}/img/main_responsive_color_responsive_dark.jpg)
+[![](${BLOG_URL}/img/main_responsive_color_responsive_dark_thb.jpg)](${BLOG_URL}/img/main_responsive_color_responsive_dark.jpg)
 
   2. _main\_responsive_ template with _color\_responsive\_orange_ style
 [![](${BLOG_URL}/img/main_responsive_color_responsive_orange_thb.jpg)](${BLOG_URL}/img/main_responsive_color_responsive_orange.jpg)

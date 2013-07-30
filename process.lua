@@ -38,29 +38,30 @@ local jskomment_js_filename = 'jskomment.js'
 local introduction_filename = 'introduction'
 local footer_filename = 'footer'
 -- theme filenames
-local page_header_name = 'header.xhtml'
-local page_footer_name = 'footer.xhtml'
-local page_posts_name = 'post.index.xhtml'
-local page_article_name = 'article.xhtml'
-local page_homepage_article_name = 'article.index.xhtml'
-local page_post_element_name = 'element.xhtml'
-local page_tag_element_name = 'tagelement.xhtml'
-local page_tag_link_name = 'taglink.xhtml'
-local page_tag_index_name = 'tags.xhtml'
-local page_sidebar_name = 'sidebar.xhtml'
-local page_searchbar_name = 'menu.search_bar.xhtml'
-local page_about_name = 'menu.about.xhtml'
-local page_read_more_name = 'read_more_link.xhtml'
-local page_jskomment = templatepath .. '/' .. 'jskomment.article.xhtml'
-local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration.xhtml'
+local template_extension_default = os.getenv('TMPL_EXT') or '.tmpl'
+local page_header_name = 'header' .. template_extension_default
+local page_footer_name = 'footer' .. template_extension_default
+local page_posts_name = 'post.index' .. template_extension_default
+local page_article_name = 'article' .. template_extension_default
+local page_homepage_article_name = 'article.index' .. template_extension_default
+local page_post_element_name = 'element' .. template_extension_default
+local page_tag_element_name = 'tagelement' .. template_extension_default
+local page_tag_link_name = 'taglink' .. template_extension_default
+local page_tag_index_name = 'tags' .. template_extension_default
+local page_sidebar_name = 'sidebar' .. template_extension_default
+local page_searchbar_name = 'menu.search_bar' .. template_extension_default
+local page_about_name = 'menu.about' .. template_extension_default
+local page_read_more_name = 'read_more_link' .. template_extension_default
+local page_jskomment = templatepath .. '/' .. 'jskomment.article' .. template_extension_default
+local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration' .. template_extension_default
 local page_jskomment_script = templatepath .. '/' .. jskomment_js_filename
 local page_jskomment_css_name = 'jskomment.css'
 local page_rss_header = templatepath .. '/' .. 'feed.header.rss'
 local page_rss_element = templatepath .. '/' .. 'feed.element.rss'
 local page_rss_footer = templatepath .. '/' .. 'feed.footer.rss'
-local page_eli_content = templatepath .. '/' .. 'eli_content.xhtml'
+local page_eli_content = templatepath .. '/' .. 'eli_content' .. template_extension_default
 local page_eli_css = templatepath .. '/' .. 'eli.css'
-local page_eli_declaration = templatepath .. '/' .. 'eli_declaration.xhtml'
+local page_eli_declaration = templatepath .. '/' .. 'eli_declaration' .. template_extension_default
 local page_eli_script = templatepath .. '/' .. 'eli.js'
 -- others
 local blog_url = os.getenv('BLOG_URL') or ''
@@ -457,6 +458,12 @@ jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX
 jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
 -- Display which theme the user have choosed
 print (string.format("-- [%s] Theme: %s", display_info, theme))
+
+-- Check that user choice doesn't conflict with default templates extension
+if resultextension == template_extension_default then
+  print(string.format("-- [%s] You cannot choose an extension (%s) similar to template's one (%s).", display_error, resultextension, template_extension_default))
+  os.exit(1)
+end
 
 -- Get language configuration
 language = makeflyrc['BLOG_LANG'] or language_default
