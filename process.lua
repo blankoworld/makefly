@@ -15,12 +15,20 @@ luarocks install markdown
 
 require 'lib.utils'
 require 'lib.rope'
+require 'lib.gettext'
 
 require 'lfs'
 require 'markdown'
 
---[[ Variables ]]--
+--- Minimum requirement to have translation
+local makeflyrcfile = os.getenv('conf') or 'makefly.rc'
+-- Get makefly's configuration
+makeflyrc = getConfig(makeflyrcfile)
+-- Translations
+language = makeflyrc['BLOG_LANG'] or language_default
+_=assert(load_mo_file(string.format("lang/%s.mo", language)))
 
+--[[ Variables ]]--
 -- default's directories
 local currentpath = os.getenv('CURDIR') or '.'
 local dbpath = os.getenv('DBDIR') or currentpath .. '/db'
@@ -32,7 +40,6 @@ local specialpath = os.getenv('SPECIALDIR') or currentpath .. '/special'
 local langpath = os.getenv('LANGDIR') or currentpath .. '/lang'
 local publicpath = os.getenv('DESTDIR') or currentpath .. '/pub'
 -- default's files
-local makeflyrcfile = os.getenv('conf') or 'makefly.rc'
 local themercfile = 'config.mk'
 local jskomment_js_filename = 'jskomment.js'
 local introduction_filename = 'introduction'
@@ -99,12 +106,12 @@ local eli_max_default = 5
 local eli_type_default = 'user'
 local eli_tmp_file = tmppath .. '/' .. 'content.eli'
 -- default display values
-display_info =    '  INFO   '
-display_success = ' SUCCESS '
-display_enable =  ' ENABLE  '
-display_disable = ' DISABLE '
-display_warning = ' WARNING '
-display_error =   '  ERROR  '
+display_info =    _('  INFO   ')
+display_success = _(' SUCCESS ')
+display_enable =  _(' ENABLE  ')
+display_disable = _(' DISABLE ')
+display_warning = _(' WARNING ')
+display_error =   _('  ERROR  ')
 -- default mandatories variables
 local mandatories_makeflyrc_vars = { 'BLOG_TITLE', 'BLOG_DESCRIPTION', 'BLOG_URL' }
 local mandatories_post_vars = { 'TITLE', 'TAGS', 'AUTHOR' }
@@ -424,8 +431,6 @@ end
 -- create thread table
 threads = {}
 
--- Get makefly's configuration
-makeflyrc = getConfig(makeflyrcfile)
 -- FIXME: permit user to choose its own extension
 source_extension = source_extension_default
 -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
@@ -468,7 +473,6 @@ if resultextension == template_extension_default then
 end
 
 -- Get language configuration
-language = makeflyrc['BLOG_LANG'] or language_default
 languagerc = getConfig(langpath .. '/translate.' .. language)
 
 -- Check if needed directories exists. Otherwise create them
