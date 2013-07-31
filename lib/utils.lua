@@ -1,10 +1,15 @@
-#!/usr/bin/env lua
--- utils.lua
--- Useful methods for process.lua script
--- Olivier DOSSMANN
+-------------------------------------------------------------------------------
+-- General utilities.
+-- @author Olivier DOSSMANN
+-------------------------------------------------------------------------------
 
---[[ Methods ]]--
+local lfs = require 'lfs'
 
+--- Split a string using '@sep' separator
+-- @param sep char to split string
+-- @usage 'a string, with some words':split(',')
+-- @usage 'some:data:to:split':split()
+-- @return table with all split elements using the separator char
 function string:split(sep)
   local sep, fields = sep or ":", {}
   local pattern = string.format("([^%s]+)", sep)
