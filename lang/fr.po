@@ -1,0 +1,173 @@
+# Translation file for Makefly.
+# Copyright (C) 2013
+# This file is distributed under the same license as the makefly package.
+# Olivier DOSSMANN <olivier+makefly@dossmann.net>, 2013.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.2.1-lua\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-31 13:00+0200\n"
+"PO-Revision-Date: 2013-07-31 14:00+0200\n"
+"Last-Translator: Olivier DOSSMANN <olivier+makefly@dossmann.net>\n"
+"Language-Team: None\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: process.lua:113
+msgid "  INFO   "
+msgstr "  INFO   "
+
+#: process.lua:114
+msgid " SUCCESS "
+msgstr " SUCCÈS  "
+
+#: process.lua:115
+msgid " ENABLE  "
+msgstr " ACTIF   "
+
+#: process.lua:116
+msgid " DISABLE "
+msgstr " INACTIF "
+
+#: process.lua:117
+msgid " WARNING "
+msgstr "ATTENTION"
+
+#: process.lua:118
+msgid "  ERROR  "
+msgstr " ERREUR  "
+
+#: process.lua:217
+#, python-format
+msgid "-- [%s] New post: %s"
+msgstr "-- [%s] Nouvel article : %s"
+
+#: process.lua:359
+#, python-format
+msgid "-- [%s] RSS feed: BUILT."
+msgstr "-- [%s] Flux RSS : CRÉE"
+
+#: process.lua:367
+#, python-format
+msgid "-- [%s] Post list: BUILT."
+msgstr "-- [%s] Liste des articles : CRÉÉE."
+
+#: process.lua:389
+#, python-format
+msgid "-- [%s] New tag: %s"
+msgstr "-- [%s] Nouveau mot-clé : %s"
+
+#: process.lua:416
+#, python-format
+msgid "-- [%s] Tag list: BUILT."
+msgstr "-- [%s] Liste des mots-clés : CRÉÉE."
+
+#: process.lua:431
+#, python-format
+msgid "-- [%s] Homepage: BUILT."
+msgstr "-- [%s] Page d'accueil : CRÉÉE."
+
+#: process.lua:444
+#, python-format
+msgid "-- [%s] Check mandatories information"
+msgstr "-- [%s] Vérification des informations obligatoires"
+
+#: process.lua:448
+#, python-format
+msgid "-- [%s] Missing information in %s file: %s"
+msgstr "-- [%s] Information(s) manquante(s) dans le fichier %s : %s"
+
+#: process.lua:471
+#, python-format
+msgid "-- [%s] Theme: %s"
+msgstr "-- [%s] Thème : %s"
+
+#: process.lua:475
+#, python-format
+msgid ""
+"-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."
+msgstr "-- [%s] Vous ne pouvez pas choisir une extension (%s) identique à celle des templates (%s)."
+
+#: process.lua:483
+#, python-format
+msgid "-- [%s] No '%s' translation. Use default one: %s."
+msgstr "-- [%s] Aucune traduction '%s'. Utilisation de celle par défaut : %s."
+
+#: process.lua:522
+#, python-format
+msgid "-- [%s] Wrong flavor: %s"
+msgstr "-- [%s] Mauvaise couleur : %s"
+
+#: process.lua:524
+#, python-format
+msgid "-- [%s] Specific flavor: %s"
+msgstr "-- [%s] Couleur spécifique : %s"
+
+#: process.lua:584
+#, python-format
+msgid "-- [%s] About's page available"
+msgstr "-- [%s] Page d'apropos disponible"
+
+#: process.lua:588
+#, python-format
+msgid "-- [%s] About's page not found"
+msgstr "-- [%s] Page d'apropos non trouvée"
+
+#: process.lua:594 process.lua:623
+#, python-format
+msgid "-- [%s] ELI badge"
+msgstr "-- [%s] Encart ELI"
+
+#: process.lua:629 process.lua:633
+#, python-format
+msgid "-- [%s] Sidebar"
+msgstr "-- [%s] Panneau latéral"
+
+#: process.lua:638 process.lua:641
+#, python-format
+msgid "-- [%s] Search bar"
+msgstr "-- [%s] Barre de recherche"
+
+#: process.lua:647 process.lua:663
+#, python-format
+msgid "-- [%s] Comment system"
+msgstr "-- [%s] Système de commentaire"
+
+#: process.lua:678 process.lua:682
+#, python-format
+msgid "-- [%s] %s"
+msgstr "-- [%s] %s"
+
+#: process.lua:708
+#, python-format
+msgid "-- [%s] Folder content copied: %s"
+msgstr "-- [%s] Contenu du dossier copié : %s"
+
+#: process.lua:722
+#, python-format
+msgid "-- [%s] Missing information in '%s' post: %s"
+msgstr "-- [%s] Information(s) manquante(s) dans l'article %s : %s"
+
+#: process.lua:730
+#, python-format
+msgid "-- [%s] No DB file(s) found!"
+msgstr "-- [%s] Aucun fichier DB trouvé !"
+
+#: lib/utils.lua:76
+#, python-format
+msgid "-- [%s] New folder: %s"
+msgstr "-- [%s] Nouveau dossier : %s"
+
+#: lib/utils.lua:86
+#, python-format
+msgid "-- [%s] Unknown read mode while reading this path: %s."
+msgstr "-- [%s] Mode de lecture inconnu durant la lecture de l'adresse suivante : %s."
+
+#: lib/utils.lua:160
+#, python-format
+msgid "-- [%s] %s not found in copy method!"
+msgstr "-- [%s] %s non trouvé(e) dans la méthode de copie !"

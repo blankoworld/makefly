@@ -1,10 +1,13 @@
-#!/usr/bin/env lua
--- utils.lua
--- Useful methods for process.lua script
--- Olivier DOSSMANN
+-------------------------------------------------------------------------------
+-- General utilities.
+-- @author Olivier DOSSMANN
+-------------------------------------------------------------------------------
 
---[[ Methods ]]--
-
+--- Split a string using '@sep' separator
+-- @param sep char to split string
+-- @usage 'a string, with some words':split(',')
+-- @usage 'some:data:to:split':split()
+-- @return table with all split elements using the separator char
 function string:split(sep)
   local sep, fields = sep or ":", {}
   local pattern = string.format("([^%s]+)", sep)
@@ -70,7 +73,7 @@ function checkDirectory(path)
   if lfs.attributes(path) == nil then
     assert(lfs.mkdir(path))
     -- Display created directory
-    print (string.format("-- [%s] New folder: %s", display_success, path))
+    print (string.format(_("-- [%s] New folder: %s"), display_success, path))
   end
 end
 
@@ -80,7 +83,7 @@ function readFile(path, mode)
     local mode = 'r'
   end
   if mode ~= 'r' and mode ~= 'rb' then
-    print(string.format("-- [%s] Unknown read mode while reading this path: %s.", display_error, path))
+    print(string.format(_("-- [%s] Unknown read mode while reading this path: %s."), display_error, path))
     os.exit(1)
   end
   local attr = lfs.attributes(path)
@@ -154,7 +157,7 @@ function copy(origin, destination)
   elseif attr and attr.mode == 'file' then
     copyFile(origin, destination)
   else
-    print (string.format("-- [%s] %s not found in copy method!", display_error, origin))
+    print (string.format(_("-- [%s] %s not found in copy method!"), display_error, origin))
     os.exit(1)
   end
 end
