@@ -1,15 +1,18 @@
 -------------------------------------------------------------------------------
 -- General utilities.
 -- @author Olivier DOSSMANN
+-- @copyright Olivier DOSSMANN
 -------------------------------------------------------------------------------
 
 local lfs = require 'lfs'
 
+-------------------------------------------------------------------------------
 --- Split a string using '@sep' separator
 -- @param sep char to split string
 -- @usage 'a string, with some words':split(',')
 -- @usage 'some:data:to:split':split()
 -- @return table with all split elements using the separator char
+-------------------------------------------------------------------------------
 function string:split(sep)
   local sep, fields = sep or ":", {}
   local pattern = string.format("([^%s]+)", sep)
@@ -17,16 +20,40 @@ function string:split(sep)
   return fields
 end
 
+-------------------------------------------------------------------------------
+--- Cut off trailing spaces from string's beginning
+-- @param string string to be replaced
+-- @usage deleteBeginSpace('a string') => 'a string'
+-- @usage deleteBeginSpace('   a string') => 'a string'
+-- @usage deleteBeginSpace('   a string    ') => 'a string    '
+-- @return a string without any space at the beginning
+-------------------------------------------------------------------------------
 function deleteBeginSpace(string)
   local res = string.gsub(string, "^ *", '')
   return res
 end
 
+-------------------------------------------------------------------------------
+--- Cut off trailing spaces from string's end
+-- @param string string to be replaced
+-- @usage deleteEndSpace('a string') => 'a string'
+-- @usage deleteEndSpace('a string   ') => 'a string'
+-- @usage deleteEndSpace('   a string    ') => '   a string'
+-- @return a string without any space at the end
+-------------------------------------------------------------------------------
 function deleteEndSpace(string)
   local res = string.gsub(string, " *$", '')
   return res
 end
 
+-------------------------------------------------------------------------------
+-- List only files that have '@extension' as extension from the given '@path'
+-- @param path the absolute path to list
+-- @param extension the extension from file to be listed
+-- @usage listing('/home/olivier/dbfiles', '.mk') => will list all .mk files from /home/olivier/dbfiles
+-- @return a table with key/value where values are file's name
+-- @return nil if path does not exist
+-------------------------------------------------------------------------------
 function listing (path, extension)
   local files = {}
   if lfs.attributes(path) then
