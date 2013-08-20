@@ -70,6 +70,12 @@ function listing (path, extension)
   return files
 end
 
+-------------------------------------------------------------------------------
+-- Read given file as a configuration file (each line as VARIABLE_NAME = value)
+-- @param file the absolute/relative path to the configuration file to read
+-- @usage getConfig('/home/olivier/config.rc')
+-- @return a table with key/value where key = VARIABLE_NAME and value = value
+-------------------------------------------------------------------------------
 function getConfig(file)
   local result = {}
   local f = assert(io.open(file, 'r'))
@@ -89,12 +95,26 @@ function getConfig(file)
   return result
 end
 
+-------------------------------------------------------------------------------
+-- Get '@string' and replace all '${KEY}' by its value given in '@table'
+-- @param string the string in which you will replace some elements
+-- @param table a table composed of KEY/VALUE where KEY is the ${KEY} to replace and VALUE its replacement
+-- @usage replace('Hello, my name is ${NAME}. Who are you?', {NAME='Olivier'})
+-- @usage replace('Hello, my name is ${NAME}. I am ${AGE}.', {NAME='Olivier', AGE='18', TALL='1m80'})
+-- @return the replaced string
+-------------------------------------------------------------------------------
 function replace(string, table)
   return string:gsub("$(%b{})", function(string)
     return table[string:sub(2,-2)]
    end)
 end
 
+-------------------------------------------------------------------------------
+-- Check if path exists, otherwise create the path as a directory
+-- @param path the absolute/relative path to check and to create if no one
+-- @usage checkDirectory('/home/olivier/new_directory')
+-- @return Nothing. The result is just a directory.
+-------------------------------------------------------------------------------
 function checkDirectory(path)
   if lfs.attributes(path) == nil then
     assert(lfs.mkdir(path))
@@ -103,6 +123,15 @@ function checkDirectory(path)
   end
 end
 
+-------------------------------------------------------------------------------
+-- Read the file and return its content
+-- @param path the absolute/relative path to the file to read
+-- @param mode read mode among 'r', 'rb', etc.
+-- @see http://www.lua.org/manual/5.2/manual.html#pdf-io.open
+-- @usage readFile('/home/olivier/document.txt', 'r')
+-- @return file's content if exists
+-- @return an empty string if file does not exist (or is not a file)
+-------------------------------------------------------------------------------
 function readFile(path, mode)
   local result = ''
   if mode == nil then
@@ -121,6 +150,13 @@ function readFile(path, mode)
   return result
 end
 
+-------------------------------------------------------------------------------
+-- Read first lines ('@number') from given '@path'
+-- @param path the absolute/relative path to the file to read
+-- @param number number of line to read from the file's header
+-- @usage headFile('/home/olivier/document.txt', '15') => read the 15 first lines from document.txt file
+-- @return the first lines from given file
+-------------------------------------------------------------------------------
 function headFile(path, number)
   local result = ''
   if not number then
@@ -140,6 +176,16 @@ function headFile(path, number)
   return result
 end
 
+-------------------------------------------------------------------------------
+-- Copy a file from its '@origin' to given '@destination'. Optionally replace some elements
+-- @see replace method
+-- @param origin the absolute/relative path to the file to copy
+-- @param destination the absolute/relative path of the result file
+-- @param freplace a table containing all VARIABLE/VALUE to replace in the given '@origin' file
+-- @usage copyFile('/home/olivier/document.txt', '/home/olivier/document2.txt', nil) => will copy document.txt to document2.txt
+-- @usage copyFile('/home/olivier/document.txt', '/home/olivier/document3.txt', {TITLE='My title'}) => will copy document.txt to document3.txt and will replace all ${TITLE} by 'My title' string.
+-- @return Nothing. The result is the '@destination' file.
+-------------------------------------------------------------------------------
 function copyFile(origin, destination, freplace)
   local content = ''
   if lfs.attributes(origin) and lfs.attributes(origin).mode == 'file' then
@@ -160,6 +206,13 @@ function copyFile(origin, destination, freplace)
   result:close()
 end
 
+-------------------------------------------------------------------------------
+-- Recursive copy from a directory to another one
+-- @param origin original directory to copy
+-- @param destination destination where to copy the given directory ('@origin')
+-- @usage copy('/home/olivier/Pictures', '/home/olivier/Pictures2') => will copy all Pictures' content to Pictures2
+-- @return Nothing. The '@destination' directory should be created.
+-------------------------------------------------------------------------------
 function copy(origin, destination)
   local attr = lfs.attributes(origin)
   if attr and attr.mode == 'directory' then
@@ -188,6 +241,13 @@ function copy(origin, destination)
   end
 end
 
+-------------------------------------------------------------------------------
+-- Merge '@local_replaces' table into '@replaces' one. Overwrite variables from '@replaces' if exist.
+-- @param replaces first table in which add new values
+-- @param local_replaces new values
+-- @usage getSubstitutions({TITLE='My title', NAME='Olivier'}, {AGE='18', NAME='MiniMe'}) => {TITLE='My title', NAME='MiniMe', AGE='18'}
+-- @return a table containing replaces + local_replaces, otherwise return an empty table
+-------------------------------------------------------------------------------
 function getSubstitutions(replaces, local_replaces)
   -- create substitutions list
   local result = {}
