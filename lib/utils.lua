@@ -260,6 +260,11 @@ function getSubstitutions(replaces, local_replaces)
   return result
 end
 
+-------------------------------------------------------------------------------
+-- Launch threads from 'threads' table
+-- @use dispatcher()
+-- @return Nothing
+-------------------------------------------------------------------------------
 function dispatcher ()
   while true do
     local n = table.getn(threads)
@@ -278,6 +283,18 @@ function dispatcher ()
   end
 end
 
+-------------------------------------------------------------------------------
+-- Compare 2 posts regarding their filename. This method is used in a table.sort() method, for an example.
+-- @param a first post
+-- @param b second post to compare regarding the first one
+-- @param order asc OR desc to do a ascending/descending comparison
+-- @usage compare_post({file='the_filename'}, {file='my_filename'}, 'asc') => return False because my_filename is before the_filename in ascending sort
+-- @usage compare_post({file='the_filename'}, {file='my_filename'}, 'desc') => return True because my_filename is after the_filename in descending sort
+-- @return true if a before b with asc
+-- @return true if a after b with desc
+-- @return false if a after b with asc
+-- @return false if a before b with desc
+-------------------------------------------------------------------------------
 function compare_post(a, b, order)
   local r = a['file'] > b['file']
   if order == nil then
@@ -292,6 +309,13 @@ function compare_post(a, b, order)
   return r
 end
 
+-------------------------------------------------------------------------------
+-- Iterator that traverses a table following the order of its keys
+-- @see http://www.lua.org/pil/19.3.html
+-- @param t table to browse
+-- @param f alternative order (function)
+-- @usage for name, line in pairsByKeys(lines) do print(name, line) end => print name, line in alphabetical order
+-------------------------------------------------------------------------------
 function pairsByKeys (t, f)
   local a = {}
   for n in pairs(t) do table.insert(a, n) end
@@ -306,6 +330,14 @@ function pairsByKeys (t, f)
   return iter
 end
 
+-------------------------------------------------------------------------------
+-- Check if given '@mandatories' values are present in '@origin'
+-- @param origin table to check
+-- @param mandatories table with mandatories elements
+-- @usage missingMandatories({TITLE='my title', DATE='2013/08/01'}, {'TITLE', 'TAGS'}) => will return a table with a value to "TAGS" because DATE is present, but not TAGS one.
+-- @return an empty table if all mandatories elements are present in origin
+-- @return a table with missing elements if some elements are missing in '@origin' table
+-------------------------------------------------------------------------------
 function missingMandatories(origin, mandatories)
   local res = {}
   for i, j in ipairs(mandatories) do
@@ -316,16 +348,33 @@ function missingMandatories(origin, mandatories)
   return res
 end
 
+-------------------------------------------------------------------------------
+-- Concatenate all elements from given '@missingTable' to display them in a string
+-- @param missingTable table that lists some elements
+-- @usage displayMissing({'TITLE', 'DATE'}) => return 'TITLE, DATE'
+-- @return a string containing all elements with a coma separator and a space (could be changed regarding language)
+-------------------------------------------------------------------------------
 function displayMissing(missingTable)
   local res = ''
   for i, j in ipairs(missingTable) do
-    separator = ', '
+    separator = _(', ')
     if i == 1 then separator = '' end
     res = res .. separator .. j
   end
   return res
 end
 
+-------------------------------------------------------------------------------
+-- Process '@origin' table to see if all given '@mandatories' elements are present. If not display a string containing all missing ones.
+-- @see missingMandatories function
+-- @see displayMissing function
+-- @param origin table to check
+-- @param mandatories table with elements that should not be missed!
+-- @usage processMissingInfo({TITLE='my title'}, {'DATE', 'TAGS'})
+-- @return 'DATE, TAGS' because they are missing in {TITLE='my title'}
+-- @return a string containing missing elements if case appears
+-- @return an empty string if no element missed
+-------------------------------------------------------------------------------
 function processMissingInfo(origin, mandatories)
   local missing = missingMandatories(origin, mandatories)
   local res = displayMissing(missing) or ''
