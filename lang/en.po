@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.2.1-lua\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-31 13:00+0200\n"
+"POT-Creation-Date: 2013-08-20 14:59+0200\n"
 "PO-Revision-Date: 2013-07-31 14:00+0200\n"
 "Last-Translator: Olivier DOSSMANN <olivier+makefly@dossmann.net>\n"
 "Language-Team: None\n"
@@ -17,157 +17,169 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: process.lua:113
+#: lib/gettext.lua:102
+msgid "again"
+msgstr ""
+
+#: lib/gettext.lua:103
+msgid "nixda"
+msgstr ""
+
+#: lib/utils.lua:122
+#, python-format
+msgid "-- [%s] New folder: %s"
+msgstr ""
+
+#: lib/utils.lua:141
+#, python-format
+msgid "-- [%s] Unknown read mode while reading this path: %s."
+msgstr ""
+
+#: lib/utils.lua:239
+#, python-format
+msgid "-- [%s] %s not found in copy method!"
+msgstr ""
+
+#: lib/utils.lua:360
+msgid ", "
+msgstr ""
+
+#: process.lua:99
 msgid "  INFO   "
 msgstr ""
 
-#: process.lua:114
+#: process.lua:100
 msgid " SUCCESS "
 msgstr ""
 
-#: process.lua:115
+#: process.lua:101
 msgid " ENABLE  "
 msgstr ""
 
-#: process.lua:116
+#: process.lua:102
 msgid " DISABLE "
 msgstr ""
 
-#: process.lua:117
+#: process.lua:103
 msgid " WARNING "
 msgstr ""
 
-#: process.lua:118
+#: process.lua:104
 msgid "  ERROR  "
 msgstr ""
 
-#: process.lua:217
+#: process.lua:203
 #, python-format
 msgid "-- [%s] New post: %s"
 msgstr ""
 
-#: process.lua:359
+#: process.lua:345
 #, python-format
 msgid "-- [%s] RSS feed: BUILT."
 msgstr ""
 
-#: process.lua:367
+#: process.lua:353
 #, python-format
 msgid "-- [%s] Post list: BUILT."
 msgstr ""
 
-#: process.lua:389
+#: process.lua:375
 #, python-format
 msgid "-- [%s] New tag: %s"
 msgstr ""
 
-#: process.lua:416
+#: process.lua:402
 #, python-format
 msgid "-- [%s] Tag list: BUILT."
 msgstr ""
 
-#: process.lua:431
+#: process.lua:417
 #, python-format
 msgid "-- [%s] Homepage: BUILT."
 msgstr ""
 
-#: process.lua:444
+#: process.lua:433
 #, python-format
 msgid "-- [%s] Check mandatories information"
 msgstr ""
 
-#: process.lua:448
+#: process.lua:437
 #, python-format
 msgid "-- [%s] Missing information in %s file: %s"
 msgstr ""
 
-#: process.lua:471
+#: process.lua:460
 #, python-format
 msgid "-- [%s] Theme: %s"
 msgstr ""
 
-#: process.lua:475
+#: process.lua:464
 #, python-format
 msgid ""
 "-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."
 msgstr ""
 
-#: process.lua:483
+#: process.lua:472
 #, python-format
 msgid "-- [%s] No '%s' translation. Use default one: %s."
 msgstr ""
 
-#: process.lua:522
+#: process.lua:511
 #, python-format
 msgid "-- [%s] Wrong flavor: %s"
 msgstr ""
 
-#: process.lua:524
+#: process.lua:513
 #, python-format
 msgid "-- [%s] Specific flavor: %s"
 msgstr ""
 
-#: process.lua:584
+#: process.lua:573
 #, python-format
 msgid "-- [%s] About's page available"
 msgstr ""
 
-#: process.lua:588
+#: process.lua:577
 #, python-format
 msgid "-- [%s] About's page not found"
 msgstr ""
 
-#: process.lua:594 process.lua:623
+#: process.lua:583 process.lua:612
 #, python-format
 msgid "-- [%s] ELI badge"
 msgstr ""
 
-#: process.lua:629 process.lua:633
+#: process.lua:618 process.lua:622
 #, python-format
 msgid "-- [%s] Sidebar"
 msgstr ""
 
-#: process.lua:638 process.lua:641
+#: process.lua:627 process.lua:630
 #, python-format
 msgid "-- [%s] Search bar"
 msgstr ""
 
-#: process.lua:647 process.lua:663
+#: process.lua:636 process.lua:652
 #, python-format
 msgid "-- [%s] Comment system"
 msgstr ""
 
-#: process.lua:678 process.lua:682
+#: process.lua:667 process.lua:671
 #, python-format
 msgid "-- [%s] %s"
 msgstr ""
 
-#: process.lua:708
+#: process.lua:697
 #, python-format
 msgid "-- [%s] Folder content copied: %s"
 msgstr ""
 
-#: process.lua:722
+#: process.lua:711
 #, python-format
 msgid "-- [%s] Missing information in '%s' post: %s"
 msgstr ""
 
-#: process.lua:730
+#: process.lua:719
 #, python-format
 msgid "-- [%s] No DB file(s) found!"
-msgstr ""
-
-#: lib/utils.lua:76
-#, python-format
-msgid "-- [%s] New folder: %s"
-msgstr ""
-
-#: lib/utils.lua:86
-#, python-format
-msgid "-- [%s] Unknown read mode while reading this path: %s."
-msgstr ""
-
-#: lib/utils.lua:160
-#, python-format
-msgid "-- [%s] %s not found in copy method!"
 msgstr ""

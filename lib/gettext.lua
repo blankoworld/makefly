@@ -1,5 +1,5 @@
 #!/usr/bin/env lua
------------------------------------------------------------
+-------------------------------------------------------------------------------
 -- load an mo file and return a lua table
 -- @param mo_file name of the file to load
 -- @return table on success
@@ -7,8 +7,8 @@
 -- @copyright J.Jorgen von Bargen
 -- @licence I provide this as public domain
 -- @see http://www.gnu.org/software/hello/manual/gettext/MO-Files.html
------------------------------------------------------------
-
+-- @see http://lua.2524044.n2.nabble.com/State-of-Lua-and-GNU-gettext-tt4797364.html#a4835939
+-------------------------------------------------------------------------------
 function load_mo_file(mo_file)
     --------------------------------
     -- open file and read data
@@ -69,37 +69,4 @@ function load_mo_file(mo_file)
     return function(text)
         return hash[text] or text
     end
---    return hash    -- return table
 end
-
---[[ EXPLICATIONS / HOWTO
-
-usage:
-
-    local mo_data=assert(load_mo_file("appl.mo"))
-    print(mo_data["again"])
-   -- nochmal
-    print(mo_data["nixda"])
-   -- nil
-
-You could also change "return hash" to
-
-    return function(text)
-        return hash[text] or text
-    end
-
-then you'll get a kind of gettext function
-
-    local gettext=assert(load_mo_file("appl.mo"))
-    print(gettext"again")
-   -- nochmal
-    print(gettext"nixda")
-    -- nixda
-
-with a slight modification this will be ready-to-use for the xgettext tool:
-
-    _=assert(load_mo_file("appl.mo"))
-    print(_("again"))
-    print(_("nixda"))
-
-]]--

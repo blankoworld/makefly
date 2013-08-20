@@ -1,7 +1,27 @@
 #!/usr/bin/env lua
--- process.lua
--- Process db and src directory to create a result
--- Olivier DOSSMANN
+-------------------------------------------------------------------------------
+-- Core: Process db and src directory to create a result in a 'public' directory
+-- - get libraries
+-- - initialize configuration
+-- - prepare the location
+-- - copy CSS files
+-- - prepare some translations for templates
+-- - create eli's badge
+-- - create sidebar
+-- - create searchbar
+-- - create introduction/conclusion paragraphs
+-- - create about's page
+-- - copy static directory
+-- - parse db files
+-- - create each post file
+-- - create post index file
+-- - create each tag file
+-- - create tag index file
+-- - create homepage
+-- - delete temporary files
+-- @author Olivier DOSSMANN
+-- @copyright Olivier DOSSMANN
+-------------------------------------------------------------------------------
 
 --[[Depends
 
@@ -108,6 +128,15 @@ local mandatories_post_vars = { 'TITLE', 'TAGS', 'AUTHOR' }
 
 --[[ Methods ]]--
 
+-------------------------------------------------------------------------------
+-- Read '@filepath' and do substitutions using 'replacements' global table.
+-- @param filepath absolute/relative path to the file to read (will use 'r' mode)
+-- @param content if '@option' is set to 'markdown' and '@variable' given, this will set '@content' into '@variable' for next replacements
+-- @param variable name of variable to use in order to replace it by '@content' string
+-- @param option if set to 'markdown', use markdown format for '@content' variable. If no one, do nothing.
+-- @param double_replacement if set to true, then do replacement twice. First on file, then on result.
+-- @return a string that contains process result
+-------------------------------------------------------------------------------
 function stuffTemplate(filepath, content, variable, option, double_replacement)
   -- default initialization
   local double = nil
@@ -141,6 +170,14 @@ function stuffTemplate(filepath, content, variable, option, double_replacement)
   return result
 end
 
+-------------------------------------------------------------------------------
+-- Create post page for given '@file'
+-- @param file filename of post in db directory
+-- @param config configuration elements as TITLE, TAGS, TYPE, etc.
+-- @param template_file file to use as template for a post
+-- @param template_tag_file file to use as template for tag in a post page
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
 function createPost(file, config, template_file, template_tag_file)
   -- get post's title and timestamp
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
@@ -163,7 +200,7 @@ function createPost(file, config, template_file, template_tag_file)
       table.insert(post_tags, post_tagname)
     end
     -- create tag links
-    local post_tag_links = createTagLinks(post_tags, template_tag_file, resultextension)
+    local post_tag_links = createTagLinks(post_tags, template_tag_file)
     -- concatenate all final post subelements
     post:push (header)
     post:push (template)
@@ -204,6 +241,13 @@ function createPost(file, config, template_file, template_tag_file)
   end
 end
 
+-------------------------------------------------------------------------------
+-- For each tag in '@post_tags' table, use '@file' template and replace information by those given for each tag. Then return a string containing a concatenation of each completed template.
+-- @param post_tags list of tags' name
+-- @param file template to use for each tag link
+-- @return a string if some tags
+-- @return an empty string if no tags
+-------------------------------------------------------------------------------
 function createTagLinks(post_tags, file)
   -- prepare some values
   local result = ''
@@ -221,6 +265,16 @@ function createTagLinks(post_tags, file)
   return result
 end
 
+-------------------------------------------------------------------------------
+-- Create post index page
+-- @param posts list of posts {{file='123456,the_title_of_post.mk', conf={TITLE='The title of post', TAGS='something, other'}}, {file='234567,anything_else.mk', conf={TITLE='Anythin else', TAGS='anything'}}}
+-- @param index_file filename you want for the post index page. Example: pub/posts/index.html
+-- @param template_index_file path to the template to use for the index's page
+-- @param template_element_file path to the template to use for each post that appears on tag's page
+-- @param template_taglink_file path to the template to use for list of links to the tags
+-- @param template_article_index_file path to the template to use for each post that appears on index's page
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
 function createPostIndex(posts, index_file, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
   -- open result file
   local post_index = io.open(index_file, 'wb')
@@ -353,6 +407,12 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   print (string.format(_('-- [%s] Post list: BUILT.'), display_success))
 end
 
+-------------------------------------------------------------------------------
+-- Create a page for a given tag
+-- @param filename path to the file we want to create
+-- @param title title of page (using a replacement)
+-- @param posts list of posts that are linked to this tag
+-------------------------------------------------------------------------------
 function createTag(filename, title, posts)
   local page = rope()
   page:push(header)
@@ -375,7 +435,14 @@ function createTag(filename, title, posts)
   print (string.format(_("-- [%s] New tag: %s"), display_success, title))
 end
 
-function createTagIndex(all_tags, index_filename, template_index_filename, template_element_filename)
+-------------------------------------------------------------------------------
+-- Create the tag index's page
+-- @param index_filename path of file to use to write result into
+-- @param template_index_filename path to the template to use for tag index's page
+-- @param template_element_filename path to the template to use for each tag on tag index's page
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
+function createTagIndex(index_filename, template_index_filename, template_element_filename)
   local index = rope()
   index:push(header)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
@@ -402,6 +469,12 @@ function createTagIndex(all_tags, index_filename, template_index_filename, templ
   print (string.format(_("-- [%s] Tag list: BUILT."), display_success))
 end
 
+-------------------------------------------------------------------------------
+-- Create homepage
+-- @param file path to the file to write into
+-- @param title title of the page
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
 function createHomepage(file, title)
   local index = rope()
   local index_file = io.open(file, 'wb')
@@ -726,7 +799,7 @@ dispatcher()
 createPostIndex(post_files, postpath .. '/' .. index_filename, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index)
 
 -- Create tag's files: index and each tag's page
-createTagIndex(tags, index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
+createTagIndex(index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
 
 -- Create index
 createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
