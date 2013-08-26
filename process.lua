@@ -532,6 +532,12 @@ jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
 -- Display which theme the user have choosed
 print (string.format(_("-- [%s] Theme: %s"), display_info, theme))
 
+-- Check that given them exists
+if lfs.attributes(templatepath .. '/' .. theme) == nil then
+  print(string.format(_("-- [%s] Given theme (%s) seems to not exist."), display_error, theme))
+  os.exit(1)
+end
+
 -- Check that user choice doesn't conflict with default templates extension
 if resultextension == template_extension_default then
   print(string.format(_("-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."), display_error, resultextension, template_extension_default))
