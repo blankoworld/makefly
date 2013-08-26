@@ -87,6 +87,9 @@ local version = os.getenv('VERSION') or 'unknown-trunk'
 replacements = {} -- substitution table
 local today = os.time() -- today's timestamp
 local tags = {}
+local lang = os.getenv('LANG') or en_US.utf-8 -- default user language (could be overwritten by using LANG= before script)
+-- set language for Lua
+os.setlocale(lang)
 -- default values
 local datetime_format_default = '%Y-%m-%dT%H:%M'
 local date_format_default = '%Y-%m-%d at %H:%M'
