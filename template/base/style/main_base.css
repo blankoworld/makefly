@@ -87,6 +87,18 @@ html {
   margin: 0 auto;
 }
 
+article iframe {
+  margin: 15px auto;
+  display: block;
+  max-width: 98%;
+}
+
+article img {
+  margin: 15px auto;
+  display: block;
+  max-width: 98%;
+}
+
 h1 {
   text-align: center;
   margin-bottom: 0;
