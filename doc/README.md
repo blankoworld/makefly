@@ -287,6 +287,16 @@ In Makefly you can publish early posts. To do that metadata file should have a t
 
 For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 1362569400. Your post (situated in the **db** directory) have to have a timestamp inferior to current's one (1362569400).
 
+### Do not lost comments when migrating from an old domain to a new one
+
+When you migrate from **old.domain.tld** to **new.domain.tld**, comments will not appear.
+
+To avoid this problem, just use **migratefrom command** as:
+
+    domain="http://old.domain.tld" pmake migratefrom
+
+This will update all your old posts with the old comments' identifier (your old domain) and comments will afressh appear.
+
 ## The makefly.rc configuration file
 
 Here is some options you can change:

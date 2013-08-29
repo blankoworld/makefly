@@ -287,6 +287,16 @@ Dans Makefly vous pouvez &eacute;crire des billets en avance. Il suffit pour cel
 
 Par exemple nous sommes le 6 mars 2013, &agrave; 12:30, le timestamp est : 1362569400. Il faut que dans le dossier **db**, votre article ait un timestamp inf&eacute;rieur &agrave; celui d'aujourd'hui.
 
+### Ne pas perdre les commentaires quand on migre d'un vieux domaine &agrave; un nouveau
+
+Quand vous migrez de **vieux.domaine.tld** &agrave; **nouveau.domaine.tld**, les commentaires n'appara&icirc;tront plus.
+
+Pour r&eacute;gler le probl&egrave;me, utilisez simplement la **commande migratefrom** : 
+
+    domain="http://vieux.domaine.tld" pmake migratefrom
+
+Ceci va mettre &agrave; jour tout les anciens articles avec l'identifiant des vieux commentaires (votre vieux domaine) et les commentaires r&eacute;appara&icirc;tront.
+
 ## Le fichier de configuration makefly.rc
 
 Voici quelques options que vous pouvez changer : 
