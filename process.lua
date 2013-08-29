@@ -401,7 +401,7 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   -- Display that RSS file was created
   print (string.format(_("-- [%s] RSS feed: BUILT."), display_success))
   -- do substitutions on page
-  local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE']})
+  local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE'], BODY_CLASS="posts"})
   local index_content = replace(index:flatten(), index_substitutions)
   post_index:write(index_content)
   -- Close post's index
@@ -765,7 +765,7 @@ if about_file then
   about:push(about_replaced)
   about:push(footer)
   -- do replacements
-  about_substitutions = getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE']})
+  about_substitutions = getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE'], BODY_CLASS='about'})
   about_content = replace(about:flatten(), about_substitutions)
   -- write changes
   about_file_result = assert(io.open(publicpath .. '/' .. (makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default, 'wb'))

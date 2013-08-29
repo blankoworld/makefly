@@ -1,4 +1,14 @@
 Current (trunk)
+	- Improve base theme
+	- Add "top of the page" element
+	- Add "migratefrom" command to migrate jskomment from an old domain
+	- Delete useless theme to be more precise on some ones
+	- Fix a problem with date in different languages
+	- Improve iframe in posts
+	- Default theme: minisch
+	- Make Lua scripts translatables
+	- Add technical documentation in code
+	- Change template format: TMPL
 	- Update tests to be compatible with Lua version
 	- Improve display of message when compiling
 	- Improve RSS factory by only generating those that's expected

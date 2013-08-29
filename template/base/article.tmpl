@@ -1,11 +1,12 @@
     <article class="post ${ARTICLE_CLASS_TYPE}" id="post-${POST_ESCAPED_TITLE}">
       <header>
         <h1 class='title'><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${POST_TITLE}</a></h1>
-        <p>${POSTED}&#8239;: <time class="entry-date" datetime="${DATETIME}">${DATE}</time></p>
-        <p class="author">${AUTHOR_LABEL}&#8239;: ${POST_AUTHOR}</p>
+        <p><strong>${POSTED}</strong>&#8239;: <time class="entry-date" datetime="${DATETIME}">${DATE}</time>. <span class="author"><strong>${AUTHOR_LABEL}</strong>&#8239;: ${POST_AUTHOR}</span></p>
+        <hr />
       </header>
       ${CONTENT}
       <footer>
+        <hr />
         <section class="tags">
           <p>${TAG_TITLE}&#8239;: ${TAG_LINKS_LIST}</p>
         </section>
