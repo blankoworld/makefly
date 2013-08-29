@@ -317,6 +317,9 @@ Here is some options you can change:
   * BLOG\_LANG: your language code. Note that file lang/translate.YOUR\_LANGUAGE\_CODE should exists. For an example if I set this parameter to *en*, a *lang/translate.en* file should exists!
   * BLOG\_CHARSET: your encoding configuration. Should be something like **UTF-8** or **ISO-8859-1**. If you don't know what's this option, just let it to *UTF-8*.
   * BLOG\_URL: absolute URL of your blog. For an example http://makefly.e-mergence.org/.
+  * BLOG\_AUTHOR: Main blog writer. Allow a better indexation in websearch engine.
+  * BLOG\_COPYRIGHT: Blog copyright. Allow a better indexation in websearch engine.
+  * BLOG\_KEYWORDS: Keywords that will appears on all webblog pages. Allow a better indexation in websearch engine.
   * RSS\_FEED\_NAME: Title for the RSS Feed
   * MAX\_POST: Max post that would be showed on home page
   * MAX\_POST\_LINES: Number of lines that should be shown on Homepage. If set to 0 or not referenced in *makefly.rc* file, then posts are fully shown.

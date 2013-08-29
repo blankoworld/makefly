@@ -1,4 +1,6 @@
 Current (trunk)
+	- Add new global variable for templates: BLOG_AUTHOR, BLOG_COPYRIGHT and
+	BLOG_KEYWORDS
 	- Permit to add new post without editing any file
 	- Improve base theme
 	- Add "top of the page" element
