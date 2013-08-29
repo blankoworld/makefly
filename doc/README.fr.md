@@ -155,6 +155,8 @@ et r&eacute;pondez &agrave; toutes les questions pos&eacute;es. Cela g&eacute;n&
 
 Il est &agrave; noter que Makefly utilise [le format markdown](http://daringfireball.net/projects/markdown/ "En savoir plus sur le format Markdown") pour ses articles.
 
+**N'oubliez pas d'&eacute;diter le fichier renseign&eacute; par la commande 'pmake add'.**
+
 ### Fichiers statiques
 
 Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans le dossier *static*. Ils seront copiés dans le dossier de destination.
@@ -286,6 +288,15 @@ Note: La commande pmake command est pour Debian et d&eacute;riv&eacute;s. Pour l
 Dans Makefly vous pouvez &eacute;crire des billets en avance. Il suffit pour cela que le fichier de m&eacute;ta-donn&eacute;es de votre billet poss&egrave;de un timestamp sup&eacute;rieur &agrave; celui du moment o&ugrave; est g&eacute;n&eacute;r&eacute; le blog.
 
 Par exemple nous sommes le 6 mars 2013, &agrave; 12:30, le timestamp est : 1362569400. Il faut que dans le dossier **db**, votre article ait un timestamp inf&eacute;rieur &agrave; celui d'aujourd'hui.
+
+### &Eacute;crire directement le contenu de l'article &agrave; sa cr&eacute;ation
+
+Utilisez juste la variable 'content' au d&eacute;but de la commande : 
+
+    content="mon petit contenu" pmake add
+
+Ceci ajoutera "mon petit contenu" dans votre nouvel article.
+
 
 ### Ne pas perdre les commentaires quand on migre d'un vieux domaine &agrave; un nouveau
 

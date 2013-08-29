@@ -155,6 +155,8 @@ and answer to all given questions. It will generate some files needed by Makefly
 
 Note that Makefly use the [markdown format](http://daringfireball.net/projects/markdown/ "Learn more about Markdown format") for its posts.
 
+**Don't forget to edit the file that the 'pmake add' command return.**
+
 ### Static files
 
 If you want to add some static files, just add them to the *static* directory. They will be copied in destination directory.
@@ -286,6 +288,14 @@ Note: pmake command is for Debian like. For other distribution, use **bmake** in
 In Makefly you can publish early posts. To do that metadata file should have a timestamp superior to current's one when you generate the weblog. 
 
 For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 1362569400. Your post (situated in the **db** directory) have to have a timestamp inferior to current's one (1362569400).
+
+### Write directly the post's content during its creation
+
+Just use the 'content' variable at the beginning of the command:
+
+    content="my little content" pmake add
+
+This will add "my little content" into your new post.
 
 ### Do not lost comments when migrating from an old domain to a new one
 

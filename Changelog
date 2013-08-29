@@ -1,4 +1,5 @@
 Current (trunk)
+	- Permit to add new post without editing any file
 	- Improve base theme
 	- Add "top of the page" element
 	- Add "migratefrom" command to migrate jskomment from an old domain
