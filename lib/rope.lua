@@ -1,5 +1,8 @@
--- rope.lua
--- found here: http://lua-users.org/wiki/LuaRopes
+#!/usr/bin/env lua
+-------------------------------------------------------------------------------
+-- Permit to do rope with string method
+-- @see http://lua-users.org/wiki/LuaRopes
+-------------------------------------------------------------------------------
 
 --[[ QUICK HOWTO ]]--
 --t,x = rope(),rope()

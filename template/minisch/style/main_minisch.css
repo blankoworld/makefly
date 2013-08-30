@@ -825,6 +825,17 @@ article.post .entry-content p {
 	display: block;
 }
 
+/* Iframes */
+article iframe {
+  margin: 15px auto;
+  display: block;
+}
+
+article img {
+  margin: 15px auto;
+  display: block;
+}
+
 /* Bloc Author */
 #author-info {
     background-color: rgba(100, 100, 100, 0.1);
