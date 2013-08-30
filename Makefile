@@ -93,7 +93,7 @@ ${${DIR}}:
 
 # BEGIN
 all:
-	$QCURDIR="${.OBJDIR}" DBDIR="${DBDIR}" SRCDIR="${SRCDIR}" TMPDIR="${TMPDIR}" TMPLDIR="${TMPLDIR}" STATICDIR="${STATICDIR}" SPECIALDIR="${SPECIALDIR}" LANGDIR="${LANGDIR}" DESTDIR="${DESTDIR}" BLOG_URL=${BLOG_URL} VERSION="${VERSION}" conf="${conf}" TMPL_EXT="${TMPL_EXT}" ${lua} ${mainscript} || exit 1
+	$QCURDIR="${.OBJDIR}" DBDIR="${DBDIR}" SRCDIR="${SRCDIR}" TMPDIR="${TMPDIR}" TMPLDIR="${TMPLDIR}" STATICDIR="${STATICDIR}" SPECIALDIR="${SPECIALDIR}" LANGDIR="${LANGDIR}" DESTDIR="${DESTDIR}" BLOG_URL=${BLOG_URL} VERSION="${VERSION}" conf="${conf}" TMPL_EXT="${TMPL_EXT}" LANG="${LANG}" ${lua} ${mainscript} || exit 1
 
 # Clean all directories
 # EXAMPLE: pub/* AND tmp/*
@@ -151,7 +151,7 @@ publish: ${DESTDIR}
 	} && echo "-- Publish ${DESTDIR} content with ${publish_script}: OK."
 
 # Install: send files to INSTALLDIR variable
-install: ${DESTDIR} ${INSTALLDIR}
+install: ${DESTDIR} ${INSTALLDIR} ${TMPDIR}
 	$Q{ \
 		cat ${TOOLSDIR}/install.sh |${parser} \
 		"SRCDIR=${DESTDIR}" \
@@ -185,13 +185,14 @@ theme: ${TMPLDIR}
 
 # Create post: simple post creation
 # note: create_post.sh -q 1 do not display any editor
-# TODO: title="myTitle" tags="myTags" quiet="1" pmake add
+# You can automatically add a post by using this method:
+# content="This a quick content" pmake add < <(echo "author"; echo "title"; echo "description"; echo "tag1, tag2"; echo "type")
 createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 	$Q{ cat ${TOOLSDIR}/create_post.sh |${parser} \
 		"DBDIR=${DBDIR}" \
 		"SRCDIR=${SRCDIR}" > ${TMPDIR}/create_post.sh && \
 		chmod +x ${TMPDIR}/create_post.sh && \
-		${TMPDIR}/create_post.sh -q 0 && \
+		content="${content}" ${TMPDIR}/create_post.sh -q 0 && \
 		${rm} ${TMPDIR}/create_post.sh || \
 		{ \
 			${rm} -rf ${TMPDIR}/create_post.sh && \
@@ -202,23 +203,43 @@ createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 
 add: createpost
 
+# Migrate from: update each metadata file with old domain (for JSKOMMENT to work)
+migratefrom: ${DBDIR} ${TMPDIR}
+.if ! defined(domain)
+	$Qecho 'No domain found. Launch command like this to use domain migration: \n\tpmake migratefrom domain="myOldDomain"' && exit 1
+.else
+	$Q{ \
+		cp ${TOOLSDIR}/migrate_domain_from.sh \
+		${TMPDIR}/migrate_domain_from.sh && \
+		chmod +x ${TMPDIR}/migrate_domain_from.sh && \
+		DBDIR=${DBDIR} ${TMPDIR}/migrate_domain_from.sh ${domain} && \
+		${rm} ${TMPDIR}/migrate_domain_from.sh || \
+		{ \
+			${rm} -rf ${TMPDIR}/migrate_domain_from.sh && \
+			echo "-- Migration failed!" ; \
+			false ; \
+		} ; \
+	} && echo "-- Migration achieved."
+.endif
+
 version: 
 	$Qecho "Makefly ${VERSION} using '${MAKE}' command. `luac -v|cut -d ' ' -f 1-2`"
 
 # list: list all available command as a help command
 commands:
 	$Qecho "List of available commands: \n \
-		commands   list all available commands \n \
-		help       same as 'commands' one \n \
-		clean      clean up current directory from generated files \n \
-		all        create all entire weblog \n \
-		createpost create a new post \n \
-		add        same as 'createpost' \n \
-		backup     make a backup from your current makefly directory \n \
-		install    install 'pub' directory into INSTALLDIR directory (set in makefly.rc) \n \
-		publish    publish your weblog using tools/publish.sh script \n \
-		theme      Example: name=\"myName\" pmake theme. Will copy 'base' theme to 'myName' one \n \
-		version    give version of the current program"
+		commands    list all available commands \n \
+		help        same as 'commands' one \n \
+		clean       clean up current directory from generated files \n \
+		all         create all entire weblog \n \
+		createpost  create a new post \n \
+		add         same as 'createpost' \n \
+		backup      make a backup from your current makefly directory \n \
+		install     install 'pub' directory into INSTALLDIR directory (set in makefly.rc) \n \
+		publish     publish your weblog using tools/publish.sh script \n \
+		migratefrom Example: domain=\"http://myold.org/blog\" pmake migratefrom. Will update DB files \n \
+		theme       Example: name=\"myName\" pmake theme. Will copy 'base' theme to 'myName' one \n \
+		version     give version of the current program"
 
 help: commands
 

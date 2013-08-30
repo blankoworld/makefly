@@ -1,7 +1,27 @@
 #!/usr/bin/env lua
--- process.lua
--- Process db and src directory to create a result
--- Olivier DOSSMANN
+-------------------------------------------------------------------------------
+-- Core: Process db and src directory to create a result in a 'public' directory
+-- - get libraries
+-- - initialize configuration
+-- - prepare the location
+-- - copy CSS files
+-- - prepare some translations for templates
+-- - create eli's badge
+-- - create sidebar
+-- - create searchbar
+-- - create introduction/conclusion paragraphs
+-- - create about's page
+-- - copy static directory
+-- - parse db files
+-- - create each post file
+-- - create post index file
+-- - create each tag file
+-- - create tag index file
+-- - create homepage
+-- - delete temporary files
+-- @author Olivier DOSSMANN
+-- @copyright Olivier DOSSMANN
+-------------------------------------------------------------------------------
 
 --[[Depends
 
@@ -13,14 +33,13 @@ luarocks install markdown
 
 ]]--
 
+require 'lib.init'
 require 'lib.utils'
 require 'lib.rope'
 
-require 'lfs'
 require 'markdown'
 
 --[[ Variables ]]--
-
 -- default's directories
 local currentpath = os.getenv('CURDIR') or '.'
 local dbpath = os.getenv('DBDIR') or currentpath .. '/db'
@@ -29,7 +48,6 @@ local tmppath = os.getenv('TMPDIR') or currentpath .. '/tmp'
 local templatepath = os.getenv('TMPLDIR') or currentpath .. '/template'
 local staticpath = os.getenv('STATICDIR') or currentpath .. '/static'
 local specialpath = os.getenv('SPECIALDIR') or currentpath .. '/special'
-local langpath = os.getenv('LANGDIR') or currentpath .. '/lang'
 local publicpath = os.getenv('DESTDIR') or currentpath .. '/pub'
 -- default's files
 local makeflyrcfile = os.getenv('conf') or 'makefly.rc'
@@ -69,11 +87,14 @@ local version = os.getenv('VERSION') or 'unknown-trunk'
 replacements = {} -- substitution table
 local today = os.time() -- today's timestamp
 local tags = {}
+local lang = os.getenv('LANG') or en_US.utf-8 -- default user language (could be overwritten by using LANG= before script)
+-- set language for Lua
+os.setlocale(lang)
 -- default values
 local datetime_format_default = '%Y-%m-%dT%H:%M'
 local date_format_default = '%Y-%m-%d at %H:%M'
 local short_date_format_default = '%Y/%m'
-local theme_default = "responsive" -- theme
+local theme_default = "minisch" -- theme
 local postdir_name_default = 'posts' -- name for posts directory
 local tagdir_name_default = 'tags' -- name for tags directory
 local about_default = 'about' -- about's page name in special directory
@@ -86,7 +107,6 @@ local rss_name_default = 'rss' -- rss default name
 local extension_default = '.html' -- file extension for HTML pages
 local rss_extension_default = '.xml' -- rss file extension
 local source_extension_default = '.md' -- source file default extension (markdown here)
-local language_default = 'en' -- language name
 local max_post_default = 3 -- number of posts displayed on homepage
 local max_post_lines_default = nil -- no post limitations
 local max_rss_default = 5 -- number of posts displayed in RSS Feed
@@ -99,18 +119,27 @@ local eli_max_default = 5
 local eli_type_default = 'user'
 local eli_tmp_file = tmppath .. '/' .. 'content.eli'
 -- default display values
-display_info =    '  INFO   '
-display_success = ' SUCCESS '
-display_enable =  ' ENABLE  '
-display_disable = ' DISABLE '
-display_warning = ' WARNING '
-display_error =   '  ERROR  '
+display_info =    _('  INFO   ')
+display_success = _(' SUCCESS ')
+display_enable =  _(' ENABLE  ')
+display_disable = _(' DISABLE ')
+display_warning = _(' WARNING ')
+display_error =   _('  ERROR  ')
 -- default mandatories variables
 local mandatories_makeflyrc_vars = { 'BLOG_TITLE', 'BLOG_DESCRIPTION', 'BLOG_URL' }
 local mandatories_post_vars = { 'TITLE', 'TAGS', 'AUTHOR' }
 
 --[[ Methods ]]--
 
+-------------------------------------------------------------------------------
+-- Read '@filepath' and do substitutions using 'replacements' global table.
+-- @param filepath absolute/relative path to the file to read (will use 'r' mode)
+-- @param content if '@option' is set to 'markdown' and '@variable' given, this will set '@content' into '@variable' for next replacements
+-- @param variable name of variable to use in order to replace it by '@content' string
+-- @param option if set to 'markdown', use markdown format for '@content' variable. If no one, do nothing.
+-- @param double_replacement if set to true, then do replacement twice. First on file, then on result.
+-- @return a string that contains process result
+-------------------------------------------------------------------------------
 function stuffTemplate(filepath, content, variable, option, double_replacement)
   -- default initialization
   local double = nil
@@ -144,6 +173,14 @@ function stuffTemplate(filepath, content, variable, option, double_replacement)
   return result
 end
 
+-------------------------------------------------------------------------------
+-- Create post page for given '@file'
+-- @param file filename of post in db directory
+-- @param config configuration elements as TITLE, TAGS, TYPE, etc.
+-- @param template_file file to use as template for a post
+-- @param template_tag_file file to use as template for tag in a post page
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
 function createPost(file, config, template_file, template_tag_file)
   -- get post's title and timestamp
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
@@ -166,7 +203,7 @@ function createPost(file, config, template_file, template_tag_file)
       table.insert(post_tags, post_tagname)
     end
     -- create tag links
-    local post_tag_links = createTagLinks(post_tags, template_tag_file, resultextension)
+    local post_tag_links = createTagLinks(post_tags, template_tag_file)
     -- concatenate all final post subelements
     post:push (header)
     post:push (template)
@@ -203,10 +240,17 @@ function createPost(file, config, template_file, template_tag_file)
     -- close output file
     assert(out:close())
     -- Print post title
-    print (string.format("-- [%s] New post: %s", display_success, config['TITLE']))
+    print (string.format(_("-- [%s] New post: %s"), display_success, config['TITLE']))
   end
 end
 
+-------------------------------------------------------------------------------
+-- For each tag in '@post_tags' table, use '@file' template and replace information by those given for each tag. Then return a string containing a concatenation of each completed template.
+-- @param post_tags list of tags' name
+-- @param file template to use for each tag link
+-- @return a string if some tags
+-- @return an empty string if no tags
+-------------------------------------------------------------------------------
 function createTagLinks(post_tags, file)
   -- prepare some values
   local result = ''
@@ -224,6 +268,16 @@ function createTagLinks(post_tags, file)
   return result
 end
 
+-------------------------------------------------------------------------------
+-- Create post index page
+-- @param posts list of posts {{file='123456,the_title_of_post.mk', conf={TITLE='The title of post', TAGS='something, other'}}, {file='234567,anything_else.mk', conf={TITLE='Anythin else', TAGS='anything'}}}
+-- @param index_file filename you want for the post index page. Example: pub/posts/index.html
+-- @param template_index_file path to the template to use for the index's page
+-- @param template_element_file path to the template to use for each post that appears on tag's page
+-- @param template_taglink_file path to the template to use for list of links to the tags
+-- @param template_article_index_file path to the template to use for each post that appears on index's page
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
 function createPostIndex(posts, index_file, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
   -- open result file
   local post_index = io.open(index_file, 'wb')
@@ -345,17 +399,23 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   rss_index:write(rss_replace)
   rss_index:close()
   -- Display that RSS file was created
-  print (string.format("-- [%s] RSS feed: BUILT.", display_success))
+  print (string.format(_("-- [%s] RSS feed: BUILT."), display_success))
   -- do substitutions on page
-  local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE']})
+  local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE'], BODY_CLASS="posts"})
   local index_content = replace(index:flatten(), index_substitutions)
   post_index:write(index_content)
   -- Close post's index
   post_index:close()
   -- Display that post index was created
-  print (string.format('-- [%s] Post list: BUILT.', display_success))
+  print (string.format(_('-- [%s] Post list: BUILT.'), display_success))
 end
 
+-------------------------------------------------------------------------------
+-- Create a page for a given tag
+-- @param filename path to the file we want to create
+-- @param title title of page (using a replacement)
+-- @param posts list of posts that are linked to this tag
+-------------------------------------------------------------------------------
 function createTag(filename, title, posts)
   local page = rope()
   page:push(header)
@@ -375,10 +435,17 @@ function createTag(filename, title, posts)
   page_file:write(final_content)
   page_file:close()
   -- Print tag title
-  print (string.format("-- [%s] New tag: %s", display_success, title))
+  print (string.format(_("-- [%s] New tag: %s"), display_success, title))
 end
 
-function createTagIndex(all_tags, index_filename, template_index_filename, template_element_filename)
+-------------------------------------------------------------------------------
+-- Create the tag index's page
+-- @param index_filename path of file to use to write result into
+-- @param template_index_filename path to the template to use for tag index's page
+-- @param template_element_filename path to the template to use for each tag on tag index's page
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
+function createTagIndex(index_filename, template_index_filename, template_element_filename)
   local index = rope()
   index:push(header)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
@@ -402,9 +469,15 @@ function createTagIndex(all_tags, index_filename, template_index_filename, templ
   -- Close post's index
   assert(index_file:close())
   -- Display that tag index was created
-  print (string.format("-- [%s] Tag list: BUILT.", display_success))
+  print (string.format(_("-- [%s] Tag list: BUILT."), display_success))
 end
 
+-------------------------------------------------------------------------------
+-- Create homepage
+-- @param file path to the file to write into
+-- @param title title of the page
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
 function createHomepage(file, title)
   local index = rope()
   local index_file = io.open(file, 'wb')
@@ -417,7 +490,7 @@ function createHomepage(file, title)
   index_file:write(final_content)
   assert(index_file:close())
   -- Display that homepage was created
-  print (string.format("-- [%s] Homepage: BUILT.", display_success))
+  print (string.format(_("-- [%s] Homepage: BUILT."), display_success))
 end
 
 --[[ MAIN ]]--
@@ -426,17 +499,18 @@ threads = {}
 
 -- Get makefly's configuration
 makeflyrc = getConfig(makeflyrcfile)
+language = makeflyrc['BLOG_LANG'] or language_default
 -- FIXME: permit user to choose its own extension
 source_extension = source_extension_default
 -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
 -- FIXME: place here the code
 
 -- Check some variables presence
-print (string.format("-- [%s] Check mandatories information", display_info))
+print (string.format(_("-- [%s] Check mandatories information"), display_info))
 local missing_makeflyrc_info = processMissingInfo(makeflyrc, mandatories_makeflyrc_vars)
 -- Check that all is OK, otherwise display an error message and quit the program
 if missing_makeflyrc_info ~= '' then
-  print(string.format("-- [%s] Missing information in %s file: %s", display_error, makeflyrcfile, missing_makeflyrc_info))
+  print(string.format(_("-- [%s] Missing information in %s file: %s"), display_error, makeflyrcfile, missing_makeflyrc_info))
   os.exit(1)
 end
 
@@ -459,17 +533,27 @@ max_rss = makeflyrc['MAX_RSS'] and tonumber(makeflyrc['MAX_RSS']) or max_rss_def
 jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX']) or jskomment_max_default
 jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
 -- Display which theme the user have choosed
-print (string.format("-- [%s] Theme: %s", display_info, theme))
+print (string.format(_("-- [%s] Theme: %s"), display_info, theme))
+
+-- Check that given them exists
+if lfs.attributes(templatepath .. '/' .. theme) == nil then
+  print(string.format(_("-- [%s] Given theme (%s) seems to not exist."), display_error, theme))
+  os.exit(1)
+end
 
 -- Check that user choice doesn't conflict with default templates extension
 if resultextension == template_extension_default then
-  print(string.format("-- [%s] You cannot choose an extension (%s) similar to template's one (%s).", display_error, resultextension, template_extension_default))
+  print(string.format(_("-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."), display_error, resultextension, template_extension_default))
   os.exit(1)
 end
 
 -- Get language configuration
-language = makeflyrc['BLOG_LANG'] or language_default
-languagerc = getConfig(langpath .. '/translate.' .. language)
+languagefile = langpath .. '/translate.' .. language
+if lfs.attributes(languagefile) == nil then
+  languagefile = langpath .. '/translate.' .. language_default
+  print(string.format(_("-- [%s] No '%s' translation. Use default one: %s."), display_warning, language, language_default))
+end
+languagerc = getConfig(languagefile)
 
 -- Check if needed directories exists. Otherwise create them
 for k,v in pairs({tmppath, publicpath, postpath, tagpath}) do
@@ -506,9 +590,9 @@ if makeflyrc['FLAVOR'] and makeflyrc['FLAVOR'] ~= '' then
   if css_color_file_attr and css_color_file_attr.mode == 'file' then
     css_color_file_name = css_color_file_test
   else
-    print (string.format("-- [%s] Wrong flavor: %s", display_warning, makeflyrc['FLAVOR']))
+    print (string.format(_("-- [%s] Wrong flavor: %s"), display_warning, makeflyrc['FLAVOR']))
   end
-  print (string.format("-- [%s] Specific flavor: %s", display_info, makeflyrc['FLAVOR']))
+  print (string.format(_("-- [%s] Specific flavor: %s"), display_info, makeflyrc['FLAVOR']))
 end
 css_color_file = themepath .. '/style/' .. css_color_file_name
 if themerc['JSKOMMENT_CSS'] then
@@ -531,6 +615,9 @@ replacements = {
   BLOG_DESCRIPTION = makeflyrc['BLOG_DESCRIPTION'],
   BLOG_SHORT_DESC = makeflyrc['BLOG_SHORT_DESC'],
   BLOG_URL = blog_url,
+  BLOG_AUTHOR = makeflyrc['BLOG_AUTHOR'] or '',
+  BLOG_COPYRIGHT = makeflyrc['BLOG_COPYRIGHT'] or '&copy; ' .. os.date('%Y', today),
+  KEYWORDS = makeflyrc['BLOG_KEYWORDS'] or '',
   LANG = makeflyrc['BLOG_LANG'],
   BLOG_CHARSET = makeflyrc['BLOG_CHARSET'],
   RSS_FEED_NAME = makeflyrc['RSS_FEED_NAME'],
@@ -568,17 +655,17 @@ about_filename = makeflyrc['ABOUT_FILENAME'] or about_default
 about_file_path = specialpath .. '/' .. about_filename .. source_extension
 about_file = readFile(about_file_path, 'r')
 if about_file ~= '' then
-  print (string.format("-- [%s] About's page available", display_enable))
+  print (string.format(_("-- [%s] About's page available"), display_enable))
   replacements['ABOUT_INDEX'] = about_filename .. resultextension
   replacements['ABOUT_LINK'] = stuffTemplate(themepath .. '/' .. page_about_name, '', '', '', false)
 else
-  print (string.format("-- [%s] About's page not found", display_disable))
+  print (string.format(_("-- [%s] About's page not found"), display_disable))
 end
 
 -- ELI badge
 -- FIXME: Delete "link" tag in HTML header for ELI css file (it's useless)
 if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
-  print (string.format("-- [%s] ELI badge", display_enable))
+  print (string.format(_("-- [%s] ELI badge"), display_enable))
   -- Set default ELI mandatory variables
   eli_max = makeflyrc['ELI_MAX'] and tonumber(makeflyrc['ELI_MAX']) or eli_max_default
   eli_type = makeflyrc['ELI_TYPE'] or eli_type_default
@@ -607,31 +694,31 @@ if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   -- read ELI content to add it in all pages
   replacements['ELI_CONTENT'] = stuffTemplate(page_eli_content, '', '')
 else
-  print (string.format("-- [%s] ELI badge", display_disable))
+  print (string.format(_("-- [%s] ELI badge"), display_disable))
 end
 
 -- Sidebar (display that's active/inactive)
 local sidebar_filename = (makeflyrc['SIDEBAR_FILENAME'] or sidebar_default) .. source_extension
 if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
-  print (string.format("-- [%s] Sidebar", display_enable))
+  print (string.format(_("-- [%s] Sidebar"), display_enable))
   local sidebar_content = readFile(specialpath .. '/' .. sidebar_filename, 'r')
   replacements['SIDEBAR'] = stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
 else
-  print (string.format("-- [%s] Sidebar", display_disable))
+  print (string.format(_("-- [%s] Sidebar"), display_disable))
 end
 
 -- Search bar
 if makeflyrc['SEARCH_BAR'] and makeflyrc['SEARCH_BAR'] == '1' then
-  print (string.format("-- [%s] Search bar", display_enable))
+  print (string.format(_("-- [%s] Search bar"), display_enable))
   replacements['SEARCHBAR'] = stuffTemplate(page_searchbar)
 else
-  print (string.format("-- [%s] Search bar", display_disable))
+  print (string.format(_("-- [%s] Search bar"), display_disable))
 end
 
 -- JSKOMMENT system
 -- FIXME: Delete "link" tag in header file for JSKOMMENT css file (it's useless)
 if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
-  print (string.format("-- [%s] Comment system", display_enable))
+  print (string.format(_("-- [%s] Comment system"), display_enable))
   -- copy jskomment css file
   table.insert(threads, coroutine.create(function () copyFile(jskomment_css_file, publicpath .. '/' .. jskomment_css_filename) end))
   replacements['JSKOMMENT_CSS'] = jskomment_css_filename
@@ -647,7 +734,7 @@ if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   -- read different templates for next processes
   template_comment = readFile(page_jskomment, 'r')
 else
-  print (string.format("-- [%s] Comment system", display_disable))
+  print (string.format(_("-- [%s] Comment system"), display_disable))
 end
 
 -- Introduction / footer file
@@ -662,11 +749,11 @@ for i, j in pairs(special_files) do
   local special_file_path = specialpath .. '/' .. j
   local special_file = readFile(special_file_path, 'r')
   if special_file and special_file ~= '' then
-    print (string.format("-- [%s] %s", display_enable, i))
+    print (string.format(_("-- [%s] %s"), display_enable, i))
     local special_file_final_content = replace(markdown(special_file), replacements)
     replacements[i .. '_CONTENT'] = special_file_final_content
   else
-    print (string.format("-- [%s] %s", display_disable, i))
+    print (string.format(_("-- [%s] %s"), display_disable, i))
   end
 end
 
@@ -681,7 +768,7 @@ if about_file then
   about:push(about_replaced)
   about:push(footer)
   -- do replacements
-  about_substitutions = getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE']})
+  about_substitutions = getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE'], BODY_CLASS='about'})
   about_content = replace(about:flatten(), about_substitutions)
   -- write changes
   about_file_result = assert(io.open(publicpath .. '/' .. (makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default, 'wb'))
@@ -692,7 +779,7 @@ end
 -- Copy static directory content to public path
 static_directory = staticpath
 copy(static_directory, publicpath)
-print (string.format("-- [%s] Folder content copied: %s", display_success, staticpath))
+print (string.format(_("-- [%s] Folder content copied: %s"), display_success, staticpath))
 
 -- Browse DB files
 local post_files = {}
@@ -706,7 +793,7 @@ if dbresult then
     -- Check that all is OK, otherwise display an error message and quit the program
     if missing_post_info ~= '' then
       local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
-      print(string.format("-- [%s] Missing information in '%s' post: %s", display_error, postTitle, missing_post_info))
+      print(string.format(_("-- [%s] Missing information in '%s' post: %s"), display_error, postTitle, missing_post_info))
       os.exit(1)
     end
     table.insert(post_files, {file=v, conf=postConf})
@@ -714,7 +801,7 @@ if dbresult then
     table.insert(threads, co)
   end
 else
-  print (string.format("-- [%s] No DB file(s) found!", display_warning))
+  print (string.format(_("-- [%s] No DB file(s) found!"), display_warning))
 end
 
 -- launch dispatcher to create each post and more (copy needed directories/files, etc.)
@@ -724,7 +811,7 @@ dispatcher()
 createPostIndex(post_files, postpath .. '/' .. index_filename, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index)
 
 -- Create tag's files: index and each tag's page
-createTagIndex(tags, index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
+createTagIndex(index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
 
 -- Create index
 createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])

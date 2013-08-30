@@ -108,6 +108,8 @@ echo "Type your text in markdown format here" > ${file}
 
 if test "$QUIET" -eq 0;then
   ${edit} ${file}
+elif ! [ -z "$content" ]; then
+  echo -e "$content" > ${file}
 fi
 
 # confirm file creation
