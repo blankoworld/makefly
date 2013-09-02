@@ -1,6 +1,7 @@
 ## Faites tourner
 
-  * [IRPDEV](http://www.irpdev.fr/ "Le blog d'IRPDEV")
+  * [IRPDEV](http://blog.irpdev.fr/ "Le blog d'IRPDEV")
+  * [Lukc](http://lukc.upyum.com/ "Page de Lukc")
   * [Deber](http://oceamer.com/~interlude/ "Journal du projet de Deber")
   * [mart-e](http://mart-e.be/ "about life, linux and everything")
   * [Vinilox](http://vinilox.eu/ "Le blog de Vinilox")
