@@ -6,7 +6,7 @@ Ainsi, pour l'un ou l'autre raison j'ai besoin de traduire les messages d'erreur
 
 Notez que je donne le détail complet du code dans [mon tutoriel sur Gettext pour Lua](https://olivier.dossmann.net/wiki/developpement/lua/gettext).
 
-![La Terre](/joueb/images/nature/la_terre.jpg "Image de la Terre vue de l'espace")
+![La Terre](${BLOG_URL}/images/nature/la_terre.jpg "Image de la Terre vue de l'espace")
 
 Image sous Licence Creative Commons CC-BY 2.0 trouvée sur une galerie photo de [gsfc](http://www.flickr.com/photos/gsfc/ "Aller sur la galerie photo de gsfc").
 
