@@ -726,7 +726,8 @@ if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   local template_jskomment_script = readFile(page_jskomment_script, 'r')
   local jskomment_script = assert(io.open(publicpath .. '/' .. jskomment_js_filename, 'wb'))
   jskomment_script_substitutions = getSubstitutions(replacements, {JSKOMMENT_URL=jskomment_url,JSKOMMENT_MAX=jskomment_max,JSKOMMENT_CAPTCHA_THEME=jskomment_captcha_theme})
-  jskomment_script:write(replace(template_jskomment_script, jskomment_script_substitutions))
+  jskomment_script_content = replace(template_jskomment_script, jskomment_script_substitutions)
+  jskomment_script:write(jskomment_script_content)
   assert(jskomment_script:close())
   -- jskomment javascript declaration in all pages
   local template_jskomment_declaration = readFile(page_jskomment_declaration, 'r')
