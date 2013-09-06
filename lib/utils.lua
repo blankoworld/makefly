@@ -198,7 +198,8 @@ function copyFile(origin, destination, freplace)
     result:close()
   else
     if freplace then
-      result:write(replace(content, freplace))
+      content_replaced = replace(content, freplace)
+      result:write(content_replaced)
     else
       result:write(content)
     end
