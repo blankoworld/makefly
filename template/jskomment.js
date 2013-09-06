@@ -687,7 +687,7 @@ JSKOMMENT.main = function () {
   
   // loading recaptcha
   // see http://code.google.com/apis/recaptcha/docs/display.html#AJAX
-  $.getScript('http://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+  $.getScript('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
   
   $(document).ready(function(){
     
