@@ -1,4 +1,4 @@
-[![Creative Commons License](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr "Se rendre sur le site de Creative Commons pour en apprendre plus sur la licence CC-by-nc-sa")<br />
+[![Creative Commons License](${BLOG_URL}/images/byncsa3.0-88x31.png)](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.fr "Se rendre sur le site de Creative Commons pour en apprendre plus sur la licence CC-by-nc-sa")<br />
 Le contenu de ce site est mis à disposition sous un [contrat Creative Commons](http://creativecommons.org/licenses/by-nc-sa/3.0 "Se rendre sur le site de Creative Commons pour en apprendre plus sur la licence CC-by-nc-sa")
 
 [![Sponsor Apache2][1]][2] [![Flux RSS][3]][7]
