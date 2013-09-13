@@ -211,10 +211,10 @@ function createPost(file, config, template_file, template_tag_file)
     -- keywords
     keywords = rope()
     if config['KEYWORDS'] ~= nil then
-      keywords:push (',' .. config['KEYWORDS'])
+      keywords:push (config['KEYWORDS'])
     end
     keywords:push (',' .. config['TAGS'])
-    keywords:push (makeflyrc['BLOG_KEYWORDS'] or '')
+    keywords:push (',' .. makeflyrc['BLOG_KEYWORDS'] or '')
     -- local replacements
     local post_replacements = {
       TITLE = config['TITLE'],

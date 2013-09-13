@@ -76,6 +76,7 @@ while [ -z "$tags" ]; do
   read -p "Tags (use comma as separator): " tags
 done
 read -p "Type (normal, special, news, etc.): " post_type
+read -p "Keywords: " keywords
 timestamp=`date +'%s'`
 
 # code retrived from Nanoblogger translit_text method with a little improvement for double "_"
@@ -101,6 +102,7 @@ echo "DESCRIPTION = ${desc}" >> ${dbfile}
 echo "TAGS = ${tags}" >> ${dbfile}
 echo "TYPE = ${post_type}" >> ${dbfile}
 echo "AUTHOR = ${author}" >> ${dbfile}
+echo "KEYWORDS = ${keywords}" >> ${dbfile}
 
 # create src file
 touch ${file}
