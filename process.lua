@@ -208,6 +208,13 @@ function createPost(file, config, template_file, template_tag_file)
     post:push (header)
     post:push (template)
     post:push (footer)
+    -- keywords
+    keywords = rope()
+    keywords:push (makeflyrc['BLOG_KEYWORDS'] or '')
+    if config['KEYWORDS'] ~= nil then
+      keywords:push (',' .. config['KEYWORDS'])
+    end
+    keywords:push (',' .. config['TAGS'])
     -- local replacements
     local post_replacements = {
       TITLE = config['TITLE'],
@@ -220,6 +227,7 @@ function createPost(file, config, template_file, template_tag_file)
       DATETIME = os.date(datetime_format_default, timestamp) or '',
       POST_AUTHOR = config['AUTHOR'],
       POST_ESCAPED_TITLE = title,
+      KEYWORDS = keywords:flatten(),
     }
     -- create substitutions list
     local substitutions = getSubstitutions(replacements, post_replacements)
