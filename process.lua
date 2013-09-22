@@ -80,6 +80,7 @@ local page_rss_footer = templatepath .. '/' .. 'feed.footer.rss'
 local page_eli_content = templatepath .. '/' .. 'eli_content' .. template_extension_default
 local page_eli_css = templatepath .. '/' .. 'eli.css'
 local page_eli_declaration = templatepath .. '/' .. 'eli_declaration' .. template_extension_default
+local page_eli_css_declaration = templatepath .. '/' .. 'eli_css_declaration' .. template_extension_default
 local page_eli_script = templatepath .. '/' .. 'eli.js'
 -- others
 local blog_url = os.getenv('BLOG_URL') or ''
@@ -653,6 +654,7 @@ replacements = {
   ELI_SCRIPT = '',
   ELI_CONTENT = '',
   ELI_CSS = '',
+  ELI_CSS_DECLARATION = '',
   ELI_STATUS = '',
   INTRO_CONTENT = '',
   FOOTER_CONTENT = '',
@@ -687,7 +689,6 @@ else
 end
 
 -- ELI badge
--- FIXME: Delete "link" tag in HTML header for ELI css file (it's useless)
 if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   print (string.format(_("-- [%s] ELI badge"), display_enable))
   -- Set default ELI mandatory variables
@@ -706,6 +707,9 @@ if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   -- ELI script declaration in all pages
   local template_eli_declaration = readFile(page_eli_declaration, 'r')
   replacements['ELI_SCRIPT'] = replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL=blog_url})
+  -- ELI CSS declaration in all pages
+  local template_eli_css_declaration = readFile(page_eli_css_declaration, 'r')
+  replacements['ELI_CSS_DECLARATION'] = replace(template_eli_css_declaration, replacements)
   -- FIXME: get ELI status (with lua socket or anything else)
 --  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmp_file}'
 --  eli_cmd = replace(eli_cmd, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER'], eli_tmp_file=eli_tmp_file})
