@@ -3,4 +3,5 @@ DESCRIPTION = Makefly is now available on the web
 TAGS = news, a test to see if space breaks tags, web
 TYPE = special
 AUTHOR = The best long pseudo I ever seen
-JSKOMMENT_PREFIX = 
+KEYWORDS = 
+JSKOMMENT_PREFIX =

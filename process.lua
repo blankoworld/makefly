@@ -208,6 +208,23 @@ function createPost(file, config, template_file, template_tag_file)
     post:push (header)
     post:push (template)
     post:push (footer)
+    -- keywords
+    local keywords = rope()
+    if config['KEYWORDS'] ~= nil then
+      keywords:push (config['KEYWORDS'])
+    end
+    if config['TAGS'] then
+      if keywords:flatten() ~= '' then
+        keywords:push(',')
+      end
+      keywords:push(config['TAGS'])
+    end
+    if makeflyrc['BLOG_KEYWORDS'] then
+      if keywords:flatten() ~= '' then
+        keywords:push(',')
+      end
+      keywords:push (makeflyrc['BLOG_KEYWORDS'])
+    end
     -- local replacements
     local post_replacements = {
       TITLE = config['TITLE'],
@@ -220,6 +237,7 @@ function createPost(file, config, template_file, template_tag_file)
       DATETIME = os.date(datetime_format_default, timestamp) or '',
       POST_AUTHOR = config['AUTHOR'],
       POST_ESCAPED_TITLE = title,
+      KEYWORDS = keywords:flatten(),
     }
     -- create substitutions list
     local substitutions = getSubstitutions(replacements, post_replacements)
@@ -429,8 +447,14 @@ function createTag(filename, title, posts)
   end
   page:push(footer)
   local page_file = assert(io.open(filename, 'wb'))
+  -- keywords
+  local keywords = rope()
+  keywords:push (title)
+  if makeflyrc['BLOG_KEYWORDS'] then
+    keywords:push (',' .. makeflyrc['BLOG_KEYWORDS'])
+  end
   -- do substitutions on page
-  local substitutions = getSubstitutions(replacements, {TITLE=title})
+  local substitutions = getSubstitutions(replacements, {TITLE=title, KEYWORDS=keywords:flatten()})
   local final_content = replace(page:flatten(), substitutions)
   page_file:write(final_content)
   page_file:close()
