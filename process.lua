@@ -72,6 +72,7 @@ local page_about_name = 'menu.about' .. template_extension_default
 local page_read_more_name = 'read_more_link' .. template_extension_default
 local page_jskomment = templatepath .. '/' .. 'jskomment.article' .. template_extension_default
 local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration' .. template_extension_default
+local page_jskomment_css_declaration = templatepath .. '/' .. 'jskomment_css_declaration' .. template_extension_default
 local page_jskomment_script = templatepath .. '/' .. jskomment_js_filename
 local page_jskomment_css_name = 'jskomment.css'
 local page_rss_header = templatepath .. '/' .. 'feed.header.rss'
@@ -650,6 +651,7 @@ replacements = {
   ARTICLE_CLASS_TYPE = 'normal',
   SEARCHBAR = '',
   JSKOMMENT_SCRIPT = '',
+  JSKOMMENT_CSS_DECLARATION = '',
   JSKOMMENT_CONTENT = '',
   ELI_SCRIPT = '',
   ELI_CONTENT = '',
@@ -760,6 +762,9 @@ if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   -- jskomment javascript declaration in all pages
   local template_jskomment_declaration = readFile(page_jskomment_declaration, 'r')
   replacements['JSKOMMENT_SCRIPT'] = replace(template_jskomment_declaration, {jskom_name=jskomment_js_filename, BLOG_URL=blog_url})
+  -- jskomment css declaration in all pages
+  local template_jskomment_css_declaration = readFile(page_jskomment_css_declaration, 'r')
+  replacements['JSKOMMENT_CSS_DECLARATION'] = replace(template_jskomment_css_declaration, replacements)
   -- read different templates for next processes
   template_comment = readFile(page_jskomment, 'r')
 else
