@@ -209,7 +209,7 @@ function createPost(file, config, template_file, template_tag_file)
     post:push (template)
     post:push (footer)
     -- keywords
-    keywords = rope()
+    local keywords = rope()
     if config['KEYWORDS'] ~= nil then
       keywords:push (config['KEYWORDS'])
     end
@@ -437,8 +437,14 @@ function createTag(filename, title, posts)
   end
   page:push(footer)
   local page_file = assert(io.open(filename, 'wb'))
+  -- keywords
+  local keywords = rope()
+  keywords:push (title)
+  if makeflyrc['BLOG_KEYWORDS'] then
+    keywords:push (',' .. makeflyrc['BLOG_KEYWORDS'])
+  end
   -- do substitutions on page
-  local substitutions = getSubstitutions(replacements, {TITLE=title})
+  local substitutions = getSubstitutions(replacements, {TITLE=title, KEYWORDS=keywords:flatten()})
   local final_content = replace(page:flatten(), substitutions)
   page_file:write(final_content)
   page_file:close()
