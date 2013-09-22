@@ -213,8 +213,18 @@ function createPost(file, config, template_file, template_tag_file)
     if config['KEYWORDS'] ~= nil then
       keywords:push (config['KEYWORDS'])
     end
-    keywords:push (',' .. config['TAGS'])
-    keywords:push (',' .. makeflyrc['BLOG_KEYWORDS'] or '')
+    if config['TAGS'] then
+      if keywords:flatten() ~= '' then
+        keywords:push(',')
+      end
+      keywords:push(config['TAGS'])
+    end
+    if makeflyrc['BLOG_KEYWORDS'] then
+      if keywords:flatten() ~= '' then
+        keywords:push(',')
+      end
+      keywords:push (makeflyrc['BLOG_KEYWORDS'])
+    end
     -- local replacements
     local post_replacements = {
       TITLE = config['TITLE'],
