@@ -112,6 +112,7 @@ local source_extension_default = '.md' -- source file default extension (markdow
 local max_post_default = 3 -- number of posts displayed on homepage
 local max_post_lines_default = nil -- no post limitations
 local max_rss_default = 5 -- number of posts displayed in RSS Feed
+local sort_default = 'desc' -- sort order (asc or desc)
 local jskomment_max_default = 3 -- number of comments displayed by default for each post
 local jskomment_url_default = 'http://jskomment.appspot.com' -- default URL of JSKOMMENT comment system
 local jskomment_captcha_theme_default = 'white'
@@ -323,6 +324,12 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   table.sort(posts, compare_post)
   -- prepare some values
   local index_nb = 0
+  local browse_start = table.getn(posts)
+  local increment = false
+  if user_sort_choice == 'asc' then
+    browse_start = 0
+    increment = true
+  end
   -- process posts
   for k, v in pairs(posts) do
     -- get post's title
@@ -563,6 +570,15 @@ max_post_lines = makeflyrc['MAX_POST_LINES'] and tonumber(makeflyrc['MAX_POST_LI
 max_rss = makeflyrc['MAX_RSS'] and tonumber(makeflyrc['MAX_RSS']) or max_rss_default
 jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX']) or jskomment_max_default
 jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
+-- Check if an order have been set for sorting posts
+user_sort_choice = sort_default
+if makeflyrc['SORT'] ~= nil and makeflyrc['SORT'] ~= '' then
+  for id_nb, sort_value in pairs({'ASC', 'asc', 'desc', 'DESC'}) do
+    if sort_value == makeflyrc['SORT'] then
+      user_sort_choice = string.lower(makeflyrc['SORT'])
+    end
+  end
+end
 -- Display which theme the user have choosed
 print (string.format(_("-- [%s] Theme: %s"), display_info, theme))
 
@@ -861,7 +877,12 @@ for tag, posts in pairs(tags) do
     os.remove(tmppath .. '/' .. post)
   end
 end
-os.remove(tmppath .. '/' .. 'index.tmp') -- posts that appears on homepage
+-- delete posts that appear on homepage
+local index_nb = 0
+while index_nb < max_post do
+  os.remove(tmppath .. '/' .. 'index.' .. index_nb .. '.tmp')
+  index_nb = index_nb + 1
+end
 
 --[[ END ]]--
 return 0
