@@ -317,14 +317,12 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   index:push (post_content)
   -- get info for each post
   local post_element = readFile(template_element_file, 'r')
-  -- create temporary file with first posts
-  local first_posts_file = io.open(tmppath .. '/index.tmp', 'wb')
   -- open template for posts that appears on index
   local template_article_index = readFile(template_article_index_file, 'r')
   -- sort posts in a given order
   table.sort(posts, compare_post)
   -- prepare some values
-  index_nb = 0
+  local index_nb = 0
   -- process posts
   for k, v in pairs(posts) do
     -- get post's title
@@ -398,7 +396,11 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
           post_substitutions['JSKOMMENT_CONTENT'] = jskomment_content
         end
         local content4index = replace(post_content, post_substitutions)
-        assert(first_posts_file:write(content4index))
+        -- create temporary file for Homepage
+        local homepage_file = io.open(tmppath .. '/index.' .. index_nb.. '.tmp', 'wb')
+        assert(homepage_file:write(content4index))
+        -- close first_posts file
+        assert(homepage_file:close())
       end
       -- process post to be used in RSS file
       if index_nb < max_rss then
@@ -410,8 +412,6 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
       index_nb = index_nb + 1
     end
   end
-  -- close first_posts file
-  assert(first_posts_file:close())
   index:push (footer)
   -- rss process
   rss:push (rss_footer)
@@ -507,9 +507,14 @@ end
 function createHomepage(file, title)
   local index = rope()
   local index_file = io.open(file, 'wb')
-  local content = readFile(tmppath .. '/' .. 'index.tmp', 'r')
   index:push(header)
-  index:push(content)
+  -- push content from all temporary files
+  local index_nb = 0
+  while index_nb < max_post do
+    local content = readFile(tmppath .. '/' .. 'index.' .. index_nb .. '.tmp', 'r')
+    index:push(content)
+    index_nb = index_nb + 1
+  end
   index:push(footer)
   local substitutions = getSubstitutions(replacements, {BODY_CLASS='home', TITLE=title})
   local final_content = replace(index:flatten(), substitutions)
