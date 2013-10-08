@@ -321,14 +321,19 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   -- open template for posts that appears on index
   local template_article_index = readFile(template_article_index_file, 'r')
   -- sort posts in a given order
-  table.sort(posts, compare_post)
+  table.sort(posts, function(a, b) return compare_post(a,b, user_sort_choice) end)
   -- prepare some values
   local index_nb = 0
-  local browse_start = table.getn(posts)
-  local increment = false
+  local home_min = 0
+  local home_max = home_min + max_post + 1
+  local home_index = 0
+  local post_nb = table.getn(posts)
+  local increment = true
   if user_sort_choice == 'asc' then
-    browse_start = 0
-    increment = true
+    increment = false
+    home_min = post_nb - max_post - 1
+    home_max = post_nb + 1
+    home_index = max_post + 1
   end
   -- process posts
   for k, v in pairs(posts) do
@@ -381,7 +386,7 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
       local real_post_content = readFile(post_content_file, 'r')
       -- process post to be displayed on HOMEPAGE
       local final_post_content = readFile(post_content_file, 'r')
-      if index_nb < max_post then
+      if index_nb >= home_min and index_nb <= home_max then
         if max_post_lines then
           local n = 0
           for i in real_post_content:gmatch("\n") do n=n+1 end
@@ -404,7 +409,12 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
         end
         local content4index = replace(post_content, post_substitutions)
         -- create temporary file for Homepage
-        local homepage_file = io.open(tmppath .. '/index.' .. index_nb.. '.tmp', 'wb')
+        if increment then
+          home_index = home_index + 1
+        else
+          home_index = home_index - 1
+        end
+        local homepage_file = io.open(tmppath .. '/index.' .. home_index .. '.tmp', 'wb')
         assert(homepage_file:write(content4index))
         -- close first_posts file
         assert(homepage_file:close())
@@ -516,8 +526,8 @@ function createHomepage(file, title)
   local index_file = io.open(file, 'wb')
   index:push(header)
   -- push content from all temporary files
-  local index_nb = 0
-  while index_nb < max_post do
+  local index_nb = 1
+  while index_nb <= max_post do
     local content = readFile(tmppath .. '/' .. 'index.' .. index_nb .. '.tmp', 'r')
     index:push(content)
     index_nb = index_nb + 1
