@@ -1,0 +1,15 @@
+BLOG_TITLE = Makefly
+BLOG_SHORT_DESC = Un moteur de blog statique utilisant makefile
+BLOG_DESCRIPTION = Makefly est un moteur de blog statique écrit en Lua et utilisant un fichier Makefile
+BLOG_LANG = fr
+BLOG_CHARSET = UTF-8
+BLOG_URL = http://localhost/~${USER}
+INSTALLDIR = /home/${USER}/public_html
+RSS_FEED_NAME = Flux RSS Makefly
+MAX_POST = 2
+DATE_FORMAT = %d-%m-%Y à %H:%M
+SHORT_DATE_FORMAT = %m/%Y
+SIDEBAR = 0
+SEARCH_BAR = 0
+MAX_RSS = 8
+JSKOMMENT = 0
