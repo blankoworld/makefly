@@ -39,7 +39,6 @@ Bugs:
 
 Others:
 - Permit user to create a cron that publish posts each day?
-- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
 - Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
 - Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
@@ -181,4 +180,4 @@ DONE:
       margin: 15px auto;
       display: block;
     }
-
+- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)

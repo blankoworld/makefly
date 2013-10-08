@@ -327,6 +327,9 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   local home_min = 0
   local home_max = home_min + max_post + 1
   local home_index = 0
+  local rss_min = 0
+  local rss_max = rss_min + max_rss + 1
+  local rss_index_nb = 0
   local post_nb = table.getn(posts)
   local increment = true
   if user_sort_choice == 'asc' then
@@ -334,6 +337,9 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
     home_min = post_nb - max_post - 1
     home_max = post_nb + 1
     home_index = max_post + 1
+    rss_min = post_nb - max_rss - 1
+    rss_max = post_nb + 1
+    rss_index_nb = max_post + 1
   end
   -- process posts
   for k, v in pairs(posts) do
@@ -420,10 +426,19 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
         assert(homepage_file:close())
       end
       -- process post to be used in RSS file
-      if index_nb < max_rss then
+      if index_nb >= rss_min and index_nb <= rss_max then
+        -- create temporary file for RSS
+        if increment then
+          rss_index_nb = rss_index_nb + 1
+        else
+          rss_index_nb = rss_index_nb - 1
+        end
+        local rss_file = io.open(tmppath .. '/rss.' .. rss_index_nb .. '.tmp', 'wb')
         local rss_post_html_link = blog_url .. '/' .. postdir_name .. '/' .. title .. resultextension
         local rss_post = replace(rss_element, {DESCRIPTION=markdown(real_post_content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link})
-        rss:push(rss_post)
+        assert(rss_file:write(rss_post))
+        -- close first_posts file
+        assert(rss_file:close())
       end
       -- incrementation
       index_nb = index_nb + 1
@@ -431,6 +446,12 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   end
   index:push (footer)
   -- rss process
+  local index_rss_nb = 1
+  while index_rss_nb <= max_rss do
+    local rss_content = readFile(tmppath .. '/' .. 'rss.' .. index_rss_nb .. '.tmp', 'r')
+    rss:push (rss_content)
+    index_rss_nb = index_rss_nb + 1
+  end
   rss:push (rss_footer)
   rss_replace = replace(rss:flatten(), replacements)
   rss_index:write(rss_replace)
