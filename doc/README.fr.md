@@ -155,6 +155,8 @@ et r&eacute;pondez &agrave; toutes les questions pos&eacute;es. Cela g&eacute;n&
 
 Il est &agrave; noter que Makefly utilise [le format markdown](http://daringfireball.net/projects/markdown/ "En savoir plus sur le format Markdown") pour ses articles.
 
+**N'oubliez pas d'&eacute;diter le fichier renseign&eacute; par la commande 'pmake add'.**
+
 ### Fichiers statiques
 
 Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans le dossier *static*. Ils seront copiés dans le dossier de destination.
@@ -287,6 +289,25 @@ Dans Makefly vous pouvez &eacute;crire des billets en avance. Il suffit pour cel
 
 Par exemple nous sommes le 6 mars 2013, &agrave; 12:30, le timestamp est : 1362569400. Il faut que dans le dossier **db**, votre article ait un timestamp inf&eacute;rieur &agrave; celui d'aujourd'hui.
 
+### &Eacute;crire directement le contenu de l'article &agrave; sa cr&eacute;ation
+
+Utilisez juste la variable 'content' au d&eacute;but de la commande : 
+
+    content="mon petit contenu" pmake add
+
+Ceci ajoutera "mon petit contenu" dans votre nouvel article.
+
+
+### Ne pas perdre les commentaires quand on migre d'un vieux domaine &agrave; un nouveau
+
+Quand vous migrez de **vieux.domaine.tld** &agrave; **nouveau.domaine.tld**, les commentaires n'appara&icirc;tront plus.
+
+Pour r&eacute;gler le probl&egrave;me, utilisez simplement la **commande migratefrom** : 
+
+    domain="http://vieux.domaine.tld" pmake migratefrom
+
+Ceci va mettre &agrave; jour tout les anciens articles avec l'identifiant des vieux commentaires (votre vieux domaine) et les commentaires r&eacute;appara&icirc;tront.
+
 ## Le fichier de configuration makefly.rc
 
 Voici quelques options que vous pouvez changer : 
@@ -297,6 +318,10 @@ Voici quelques options que vous pouvez changer :
   * BLOG\_LANG : votre code langue. &Agrave; noter qu'un fichier lang/translate.VOTRE\_CODE\_LANGAGE doit exister. Par exemple si je configure ce param&egrave;tre &agrave; *fr*, un fichier *lang/translate.fr* doit exister !
   * BLOG\_CHARSET : votre configuration d'encodage. Doit ressembler &agrave; quelque chose comme **UTF-8** ou **ISO-8859-1**. Si vous ne savez pas ce que c'est, laissez la param&eacute;tr&eacute;e &agrave; *UTF-8*.
   * BLOG\_URL : adresse URL absolue de votre blog. Par exemple http://makefly.e-mergence.org/.
+  * BLOG\_AUTHOR : Auteur principal du blog. Permet un r&eacute;f&eacute;rencement dans les moteurs de recherche.
+  * BLOG\_COPYRIGHT : Copyright du blog. Permet un r&eacute;f&eacute;rencement dans les moteurs de recherche.
+
+  * BLOG\_KEYWORDS : Mots-cl&eacute;s qui doivent appara&icirc;trent pour l'ensemble des pages du blog. Permet un r&eacute;f&eacute;rencement dans les moteurs de recherche.
   * RSS\_FEED\_NAME : Titre affich&eacute; dans le flux RSS.
   * MAX\_POST : Nombre maximum d'articles qui seront affich&eacute;s sur la page d'accueil.
   * MAX\_POST\_LINES : Nombre de lignes qui seront montr&eacute;es sur la page d'accueil. Si param&eacute;tr&eacute; &agrave; 0 ou inexistant dans le fichier *makefly.rc*, alors les articles sont enti&egrave;rement montr&eacute;s.
@@ -327,4 +352,5 @@ Voici quelques options que vous pouvez changer :
   * INSTALLDIR : Permet de choisir le dossier de destination lors de l'utilisation du script **install.sh** (Cf. Chapitre Publier le r&eacute;sultat sur le web).
   * COMPRESS_TOOL (optionnel) : Outil console utilis&eacute; pour la compression lors des sauvegardes via la commande *backup* (Cf. Chapitre *Sauvegardes*). Exemple : **gzip**.
   * COMPRESS_EXT (optionnel) : Extension des fichiers de sauvegarde. Attention &agrave; ne pas oublier le caract&egrave;re point. Exemple : **.gz**.
+  * SORT (optionnel) : Tri la liste des billets. Utilisez ASC pour que les billets soient triés du plus anciens au plus récent. DESC (valeur par défaut) tri les billets du plus récent au plus ancien.
 

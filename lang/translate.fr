@@ -29,3 +29,4 @@ LEGEND_TITLE = Légende
 CONTENT_TITLE = Contenu
 NAVIGATION_MENU_TITLE = Navigation
 FOOTER_PAGE_TITLE = Pied de page
+GO_TO_THE_TOP = Haut de page

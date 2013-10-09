@@ -76,15 +76,36 @@ pre {
 
 html {
   background-color: #999;
+  font-size: 11pt;
 }
 
 #content {
+  background-color: transparent;
+}
+
+#content article {
+  border: 1px solid transparent;
+  margin-bottom: 15px;
+  padding: -1px;
   background-color: #eee;
+  border-radius: 7px;
 }
 
 #content hr {
   width: 50%;
   margin: 0 auto;
+}
+
+article iframe {
+  margin: 15px auto;
+  display: block;
+  max-width: 98%;
+}
+
+article img {
+  margin: 15px auto;
+  display: block;
+  max-width: 98%;
 }
 
 h1 {
@@ -120,6 +141,10 @@ form#search input#text {
 form#search input#validate_button {
   min-width: 70px;
   width: 23%;
+}
+
+footer p#top {
+  text-align: center;
 }
 
 /* ==========================================================================
@@ -184,15 +209,21 @@ nav#main ol li a {
 
 header h1 {
   position: relative;
-  height: 50px;
+  height: 80px;
   width: 100%;
   margin: 10px 0 0 0;
   padding: 0;
   text-align: center;
-  line-height: 50px;
+  line-height: 80px;
   font-size: 32px;
   clear: both;
   overflow: hidden;
+}
+
+article header h1 {
+  font-size: 12pt;
+  background: none;
+  height: 50px;
 }
 
 #content {
@@ -234,11 +265,20 @@ header h1 {
   margin-left: 25px;
 }
 
+body.posts #content, body.tags #content, body.about #content {
+  border: 1px solid transparent;
+  margin-bottom: 15px;
+  padding: -1px;
+  background-color: #eee;
+  border-radius: 7px;
+}
+
 aside#navigation {
   float: right;
   width: 28.7%;
   height: auto;
   background-color: #eee;
+  border-radius: 7px;
 }
 
 aside#navigation h2 {
