@@ -11,6 +11,7 @@ lfs = require 'lfs'
 require 'lib.gettext'
 
 --- Minimum requirement to have translation
+currentpath = os.getenv('CURDIR') or '.'
 langpath = os.getenv('LANGDIR') or currentpath .. '/lang'
 language_default = 'en' -- language name
 oslanguage = os.getenv('LANG') or language_default

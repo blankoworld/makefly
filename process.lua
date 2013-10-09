@@ -41,7 +41,6 @@ require 'markdown'
 
 --[[ Variables ]]--
 -- default's directories
-local currentpath = os.getenv('CURDIR') or '.'
 local dbpath = os.getenv('DBDIR') or currentpath .. '/db'
 local srcpath = os.getenv('SRCDIR') or currentpath .. '/src'
 local tmppath = os.getenv('TMPDIR') or currentpath .. '/tmp'
