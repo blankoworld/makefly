@@ -112,6 +112,7 @@ local max_post_default = 3 -- number of posts displayed on homepage
 local max_post_lines_default = nil -- no post limitations
 local max_rss_default = 5 -- number of posts displayed in RSS Feed
 local sort_default = 'desc' -- sort order (asc or desc)
+local max_page_default = 0 -- number of posts displayed by page on post's list (0 = no limit)
 local jskomment_max_default = 3 -- number of comments displayed by default for each post
 local jskomment_url_default = 'http://jskomment.appspot.com' -- default URL of JSKOMMENT comment system
 local jskomment_captcha_theme_default = 'white'
@@ -298,9 +299,9 @@ end
 -- @param template_article_index_file path to the template to use for each post that appears on index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function createPostIndex(posts, index_file, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
+function createPostIndex(posts, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
   -- open result file
-  local post_index = io.open(index_file, 'wb')
+  local post_index = io.open(postpath .. '/' .. index_name .. resultextension, 'wb')
   -- prepare rss elements
   local rss_index = io.open(publicpath .. '/' .. rss_name_default .. rss_extension_default, 'wb')
   local rss_header = readFile(page_rss_header, 'r')
@@ -331,6 +332,8 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   local rss_index_nb = 0
   local post_nb = table.getn(posts)
   local increment = true
+  local page_number = 0
+  local page_post_nb = 0
   if user_sort_choice == 'asc' then
     increment = false
     home_min = post_nb - max_post - 1
@@ -441,8 +444,19 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
       end
       -- incrementation
       index_nb = index_nb + 1
+      -- Page process
+      page_post_nb = page_post_nb + 1
+      if max_page and page_post_nb > max_page then
+        page_post_nb = 1
+        -- TODO: add footer and write current page and display a message
+        page_number = page_number + 1
+        -- TODO: create new page (header + post_content)
+        print('Page suivante: ' .. page_number)
+      end
+      print('Index: ' .. index_nb .. ' Page nb: ' .. page_post_nb)
     end
   end
+  -- TODO: if last posts (see index_nb and number of total posts) then add footer and write current page
   index:push (footer)
   -- rss process
   local index_rss_nb = 1
@@ -598,6 +612,7 @@ short_date_format = makeflyrc['SHORT_DATE_FORMAT'] or short_date_format_default
 max_post = makeflyrc['MAX_POST'] and tonumber(makeflyrc['MAX_POST']) or max_post_default
 max_post_lines = makeflyrc['MAX_POST_LINES'] and tonumber(makeflyrc['MAX_POST_LINES']) or max_post_lines_default
 max_rss = makeflyrc['MAX_RSS'] and tonumber(makeflyrc['MAX_RSS']) or max_rss_default
+max_page = makeflyrc['MAX_PAGE'] and tonumber(makeflyrc['MAX_PAGE'] or max_page_default)
 jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX']) or jskomment_max_default
 jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
 -- Check if an order have been set for sorting posts
@@ -893,7 +908,7 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index)
+createPostIndex(post_files, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index)
 
 -- Create tag's files: index and each tag's page
 createTagIndex(index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
