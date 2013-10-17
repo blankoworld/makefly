@@ -323,6 +323,7 @@ Here is some options you can change:
   * RSS\_FEED\_NAME: Title for the RSS Feed
   * MAX\_POST: Max post that would be showed on home page
   * MAX\_POST\_LINES: Number of lines that should be shown on Homepage. If set to 0 or not referenced in *makefly.rc* file, then posts are fully shown.
+  * MAX\_PAGE: Maximum number of post that should be displayed on Post's list. If set to 0 or not used in *makefly.rc* file, then only one page is done with all posts!
   * DATE\_FORMAT: Date format displayed for each post. Please see man date's page for more information.
   * SHORT\_DATE\_FORMAT: Short date format that would be used on the post list page. Please see man date's page for more information.
   * INDEX\_FILENAME: Name given to all index'pages. For an example with **INDEX\_FILENAME = mainpage**, post list page will be named *mainpage.html*.
@@ -350,4 +351,5 @@ Here is some options you can change:
   * INSTALLDIR : Permit to choose a target directory when using **install.sh** script (Read more in *Publish result to the web* chapter)
   * COMPRESS_TOOL (optional) : Shell tool used for backup compression via *backup* command (Cf. *Backup* section). Example : **gzip**.
   * COMPRESS_EXT (optional) : Backup file extension. Warning: do not forget the point char. Example: **.gz**.
+  * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
 

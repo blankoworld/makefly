@@ -121,6 +121,18 @@ article h1 {
   text-align: left;
 }
 
+.pagination {
+}
+
+.pagination a {
+  display: inline;
+  padding: 3px 6px;
+  text-decoration: none;
+}
+
+.pagination a:hover {
+}
+
 a {
   text-decoration: none;
 }

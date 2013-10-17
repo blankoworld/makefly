@@ -4,3 +4,4 @@ TAGS = news, web
 TYPE = special
 AUTHOR = olivier
 JSKOMMENT_PREFIX = 
+KEYWORDS = 

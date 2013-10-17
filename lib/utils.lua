@@ -268,7 +268,7 @@ end
 -------------------------------------------------------------------------------
 function dispatcher ()
   while true do
-    local n = table.getn(threads)
+    local n = #threads
     if n == 0 then break end   -- no more threads to run
     for i=1,n do
       if coroutine.status(threads[i]) == 'dead' then

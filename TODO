@@ -16,9 +16,7 @@ Tests:
 - test that an error is returned if TMPL_EXT = PAGE_EXT
 
 Templates:
-- Add HTML keywords/meta on each post's page?
-- Add possibility to choose which meta/keywords add to each post?
-- Add HTML keywords/meta on main page regarding posts
+N/A
 
 Meta functionnality:
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
@@ -34,12 +32,10 @@ Other functionnalities:
 - Add author URL that permit to each author to add a URL/link (this is not mandatory for posts, but could be useful for a UI
 
 Bugs:
-- Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
 - Problem with accentued chars in create_post.sh for TITLE
 
 Others:
 - Permit user to create a cron that publish posts each day?
-- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
 - Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
 - Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
@@ -181,4 +177,9 @@ DONE:
       margin: 15px auto;
       display: block;
     }
+- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
+- Add HTML keywords/meta on each post's page?
+- Add possibility to choose which meta/keywords add to each post?
+- Add HTML keywords/meta on main page regarding posts
+- Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
 

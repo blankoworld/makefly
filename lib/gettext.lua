@@ -50,7 +50,7 @@ function load_mo_file(mo_file)
     --------------------------------
     local V=peek_long(4)
     if V~=0 then
-        return nul,"unsupported version"
+        return nil,"unsupported version"
     end
 
     ------------------------------
