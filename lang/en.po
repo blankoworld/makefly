@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.2.1-lua\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-26 16:16+0200\n"
+"POT-Creation-Date: 2013-10-16 18:13+0200\n"
 "PO-Revision-Date: 2013-07-31 14:00+0200\n"
 "Last-Translator: Olivier DOSSMANN <olivier+makefly@dossmann.net>\n"
 "Language-Team: None\n"
@@ -27,156 +27,161 @@ msgstr ""
 msgid "-- [%s] Unknown read mode while reading this path: %s."
 msgstr ""
 
-#: lib/utils.lua:239
+#: lib/utils.lua:240
 #, python-format
 msgid "-- [%s] %s not found in copy method!"
 msgstr ""
 
-#: lib/utils.lua:360
+#: lib/utils.lua:361
 msgid ", "
 msgstr ""
 
-#: process.lua:119
+#: process.lua:126
 msgid "  INFO   "
 msgstr ""
 
-#: process.lua:120
+#: process.lua:127
 msgid " SUCCESS "
 msgstr ""
 
-#: process.lua:121
+#: process.lua:128
 msgid " ENABLE  "
 msgstr ""
 
-#: process.lua:122
+#: process.lua:129
 msgid " DISABLE "
 msgstr ""
 
-#: process.lua:123
+#: process.lua:130
 msgid " WARNING "
 msgstr ""
 
-#: process.lua:124
+#: process.lua:131
 msgid "  ERROR  "
 msgstr ""
 
-#: process.lua:240
+#: process.lua:265
 #, python-format
 msgid "-- [%s] New post: %s"
 msgstr ""
 
-#: process.lua:399
+#: process.lua:494 process.lua:539
+#, python-format
+msgid "-- [%s] Post list %s/%s: BUILT."
+msgstr ""
+
+#: process.lua:554
 #, python-format
 msgid "-- [%s] RSS feed: BUILT."
 msgstr ""
 
-#: process.lua:407
+#: process.lua:556
 #, python-format
 msgid "-- [%s] Post list: BUILT."
 msgstr ""
 
-#: process.lua:435
+#: process.lua:590
 #, python-format
 msgid "-- [%s] New tag: %s"
 msgstr ""
 
-#: process.lua:469
+#: process.lua:624
 #, python-format
 msgid "-- [%s] Tag list: BUILT."
 msgstr ""
 
-#: process.lua:490
+#: process.lua:650
 #, python-format
 msgid "-- [%s] Homepage: BUILT."
 msgstr ""
 
-#: process.lua:506
+#: process.lua:666
 #, python-format
 msgid "-- [%s] Check mandatories information"
 msgstr ""
 
-#: process.lua:510
+#: process.lua:670
 #, python-format
 msgid "-- [%s] Missing information in %s file: %s"
 msgstr ""
 
-#: process.lua:533
+#: process.lua:703
 #, python-format
 msgid "-- [%s] Theme: %s"
 msgstr ""
 
-#: process.lua:537
+#: process.lua:707
 #, python-format
 msgid "-- [%s] Given theme (%s) seems to not exist."
 msgstr ""
 
-#: process.lua:543
+#: process.lua:713
 #, python-format
 msgid ""
 "-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."
 msgstr ""
 
-#: process.lua:551
+#: process.lua:721
 #, python-format
 msgid "-- [%s] No '%s' translation. Use default one: %s."
 msgstr ""
 
-#: process.lua:590
+#: process.lua:760
 #, python-format
 msgid "-- [%s] Wrong flavor: %s"
 msgstr ""
 
-#: process.lua:592
+#: process.lua:762
 #, python-format
 msgid "-- [%s] Specific flavor: %s"
 msgstr ""
 
-#: process.lua:652
+#: process.lua:827
 #, python-format
 msgid "-- [%s] About's page available"
 msgstr ""
 
-#: process.lua:656
+#: process.lua:831
 #, python-format
 msgid "-- [%s] About's page not found"
 msgstr ""
 
-#: process.lua:662 process.lua:691
+#: process.lua:836 process.lua:868
 #, python-format
 msgid "-- [%s] ELI badge"
 msgstr ""
 
-#: process.lua:697 process.lua:701
+#: process.lua:874 process.lua:878
 #, python-format
 msgid "-- [%s] Sidebar"
 msgstr ""
 
-#: process.lua:706 process.lua:709
+#: process.lua:883 process.lua:886
 #, python-format
 msgid "-- [%s] Search bar"
 msgstr ""
 
-#: process.lua:715 process.lua:731
+#: process.lua:892 process.lua:912
 #, python-format
 msgid "-- [%s] Comment system"
 msgstr ""
 
-#: process.lua:746 process.lua:750
+#: process.lua:927 process.lua:931
 #, python-format
 msgid "-- [%s] %s"
 msgstr ""
 
-#: process.lua:776
+#: process.lua:957
 #, python-format
 msgid "-- [%s] Folder content copied: %s"
 msgstr ""
 
-#: process.lua:790
+#: process.lua:971
 #, python-format
 msgid "-- [%s] Missing information in '%s' post: %s"
 msgstr ""
 
-#: process.lua:798
+#: process.lua:979
 #, python-format
 msgid "-- [%s] No DB file(s) found!"
 msgstr ""

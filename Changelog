@@ -1,4 +1,5 @@
 Current (trunk)
+  - Permit to split post's list into multiple ones by using MAX_PAGE var
   - Permit to reverse list of posts with SORT parameter in configuration file
 	- Add keywords functionnality for posts
 	- Add new global variable for templates: BLOG_AUTHOR, BLOG_COPYRIGHT and

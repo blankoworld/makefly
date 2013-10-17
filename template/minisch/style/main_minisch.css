@@ -825,6 +825,23 @@ article.post .entry-content p {
 	display: block;
 }
 
+.pagination {
+}
+
+.pagination a {
+  display: inline;
+  color: black;
+  padding: 3px 6px;
+  text-decoration: none;
+  border: 1px solid #999999;
+}
+
+.pagination a:hover {
+  background-color: #999999;
+  color: white;
+  text-decoration: none;
+}
+
 /* Iframes */
 article iframe {
   margin: 15px auto;
