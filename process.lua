@@ -189,7 +189,7 @@ function createPost(file, config, template_file, template_tag_file)
   -- get post's title and timestamp
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
-  if os.date('%s', today) > os.date('%s', timestamp) then
+  if today > tonumber(timestamp) then
     -- open template file
     local template = readFile(template_file, 'r')
     -- open post output file
@@ -331,7 +331,7 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
   local rss_min = 0
   local rss_max = rss_min + max_rss + 1
   local rss_index_nb = 0
-  local post_nb = table.getn(posts)
+  local post_nb = #posts
   local increment = true
   local page_number = 0
   local page_post_nb = 1
@@ -360,7 +360,7 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
     -- get post's title
     local timestamp, title = string.match(v['file'], "(%d+),(.+)%.mk")
     -- only add a link for post older than today
-    if os.date('%s', today) > os.date('%s', timestamp) then
+    if today > tonumber(timestamp) then
       -- local substitutions
       local metadata = {
         POST_TITLE = v['conf']['TITLE'],
