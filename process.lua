@@ -41,7 +41,6 @@ require 'markdown'
 
 --[[ Variables ]]--
 -- default's directories
-local currentpath = os.getenv('CURDIR') or '.'
 local dbpath = os.getenv('DBDIR') or currentpath .. '/db'
 local srcpath = os.getenv('SRCDIR') or currentpath .. '/src'
 local tmppath = os.getenv('TMPDIR') or currentpath .. '/tmp'
@@ -72,6 +71,7 @@ local page_about_name = 'menu.about' .. template_extension_default
 local page_read_more_name = 'read_more_link' .. template_extension_default
 local page_jskomment = templatepath .. '/' .. 'jskomment.article' .. template_extension_default
 local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration' .. template_extension_default
+local page_jskomment_css_declaration = templatepath .. '/' .. 'jskomment_css_declaration' .. template_extension_default
 local page_jskomment_script = templatepath .. '/' .. jskomment_js_filename
 local page_jskomment_css_name = 'jskomment.css'
 local page_rss_header = templatepath .. '/' .. 'feed.header.rss'
@@ -80,6 +80,7 @@ local page_rss_footer = templatepath .. '/' .. 'feed.footer.rss'
 local page_eli_content = templatepath .. '/' .. 'eli_content' .. template_extension_default
 local page_eli_css = templatepath .. '/' .. 'eli.css'
 local page_eli_declaration = templatepath .. '/' .. 'eli_declaration' .. template_extension_default
+local page_eli_css_declaration = templatepath .. '/' .. 'eli_css_declaration' .. template_extension_default
 local page_eli_script = templatepath .. '/' .. 'eli.js'
 -- others
 local blog_url = os.getenv('BLOG_URL') or ''
@@ -110,6 +111,8 @@ local source_extension_default = '.md' -- source file default extension (markdow
 local max_post_default = 3 -- number of posts displayed on homepage
 local max_post_lines_default = nil -- no post limitations
 local max_rss_default = 5 -- number of posts displayed in RSS Feed
+local sort_default = 'desc' -- sort order (asc or desc)
+local max_page_default = 0 -- number of posts displayed by page on post's list (0 = no limit)
 local jskomment_max_default = 3 -- number of comments displayed by default for each post
 local jskomment_url_default = 'http://jskomment.appspot.com' -- default URL of JSKOMMENT comment system
 local jskomment_captcha_theme_default = 'white'
@@ -208,6 +211,23 @@ function createPost(file, config, template_file, template_tag_file)
     post:push (header)
     post:push (template)
     post:push (footer)
+    -- keywords
+    local keywords = rope()
+    if config['KEYWORDS'] ~= nil then
+      keywords:push (config['KEYWORDS'])
+    end
+    if config['TAGS'] then
+      if keywords:flatten() ~= '' then
+        keywords:push(',')
+      end
+      keywords:push(config['TAGS'])
+    end
+    if makeflyrc['BLOG_KEYWORDS'] then
+      if keywords:flatten() ~= '' then
+        keywords:push(',')
+      end
+      keywords:push (makeflyrc['BLOG_KEYWORDS'])
+    end
     -- local replacements
     local post_replacements = {
       TITLE = config['TITLE'],
@@ -220,6 +240,7 @@ function createPost(file, config, template_file, template_tag_file)
       DATETIME = os.date(datetime_format_default, timestamp) or '',
       POST_AUTHOR = config['AUTHOR'],
       POST_ESCAPED_TITLE = title,
+      KEYWORDS = keywords:flatten(),
     }
     -- create substitutions list
     local substitutions = getSubstitutions(replacements, post_replacements)
@@ -278,9 +299,9 @@ end
 -- @param template_article_index_file path to the template to use for each post that appears on index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function createPostIndex(posts, index_file, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
+function createPostIndex(posts, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
   -- open result file
-  local post_index = io.open(index_file, 'wb')
+  local post_index = io.open(postpath .. '/' .. index_name .. resultextension, 'wb')
   -- prepare rss elements
   local rss_index = io.open(publicpath .. '/' .. rss_name_default .. rss_extension_default, 'wb')
   local rss_header = readFile(page_rss_header, 'r')
@@ -297,14 +318,31 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
   index:push (post_content)
   -- get info for each post
   local post_element = readFile(template_element_file, 'r')
-  -- create temporary file with first posts
-  local first_posts_file = io.open(tmppath .. '/index.tmp', 'wb')
   -- open template for posts that appears on index
   local template_article_index = readFile(template_article_index_file, 'r')
   -- sort posts in a given order
-  table.sort(posts, compare_post)
+  table.sort(posts, function(a, b) return compare_post(a,b, user_sort_choice) end)
   -- prepare some values
-  index_nb = 0
+  local index_nb = 0
+  local home_min = 0
+  local home_max = home_min + max_post + 1
+  local home_index = 0
+  local rss_min = 0
+  local rss_max = rss_min + max_rss + 1
+  local rss_index_nb = 0
+  local post_nb = table.getn(posts)
+  local increment = true
+  local page_number = 0
+  local page_post_nb = 0
+  if user_sort_choice == 'asc' then
+    increment = false
+    home_min = post_nb - max_post - 1
+    home_max = post_nb + 1
+    home_index = max_post + 1
+    rss_min = post_nb - max_rss - 1
+    rss_max = post_nb + 1
+    rss_index_nb = max_post + 1
+  end
   -- process posts
   for k, v in pairs(posts) do
     -- get post's title
@@ -356,7 +394,7 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
       local real_post_content = readFile(post_content_file, 'r')
       -- process post to be displayed on HOMEPAGE
       local final_post_content = readFile(post_content_file, 'r')
-      if index_nb < max_post then
+      if index_nb >= home_min and index_nb <= home_max then
         if max_post_lines then
           local n = 0
           for i in real_post_content:gmatch("\n") do n=n+1 end
@@ -378,22 +416,55 @@ function createPostIndex(posts, index_file, template_index_file, template_elemen
           post_substitutions['JSKOMMENT_CONTENT'] = jskomment_content
         end
         local content4index = replace(post_content, post_substitutions)
-        assert(first_posts_file:write(content4index))
+        -- create temporary file for Homepage
+        if increment then
+          home_index = home_index + 1
+        else
+          home_index = home_index - 1
+        end
+        local homepage_file = io.open(tmppath .. '/index.' .. home_index .. '.tmp', 'wb')
+        assert(homepage_file:write(content4index))
+        -- close first_posts file
+        assert(homepage_file:close())
       end
       -- process post to be used in RSS file
-      if index_nb < max_rss then
+      if index_nb >= rss_min and index_nb <= rss_max then
+        -- create temporary file for RSS
+        if increment then
+          rss_index_nb = rss_index_nb + 1
+        else
+          rss_index_nb = rss_index_nb - 1
+        end
+        local rss_file = io.open(tmppath .. '/rss.' .. rss_index_nb .. '.tmp', 'wb')
         local rss_post_html_link = blog_url .. '/' .. postdir_name .. '/' .. title .. resultextension
         local rss_post = replace(rss_element, {DESCRIPTION=markdown(real_post_content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link})
-        rss:push(rss_post)
+        assert(rss_file:write(rss_post))
+        -- close first_posts file
+        assert(rss_file:close())
       end
       -- incrementation
       index_nb = index_nb + 1
+      -- Page process
+      page_post_nb = page_post_nb + 1
+      if max_page and page_post_nb > max_page then
+        page_post_nb = 1
+        -- TODO: add footer and write current page and display a message
+        page_number = page_number + 1
+        -- TODO: create new page (header + post_content)
+        print('Page suivante: ' .. page_number)
+      end
+      print('Index: ' .. index_nb .. ' Page nb: ' .. page_post_nb)
     end
   end
-  -- close first_posts file
-  assert(first_posts_file:close())
+  -- TODO: if last posts (see index_nb and number of total posts) then add footer and write current page
   index:push (footer)
   -- rss process
+  local index_rss_nb = 1
+  while index_rss_nb <= max_rss do
+    local rss_content = readFile(tmppath .. '/' .. 'rss.' .. index_rss_nb .. '.tmp', 'r')
+    rss:push (rss_content)
+    index_rss_nb = index_rss_nb + 1
+  end
   rss:push (rss_footer)
   rss_replace = replace(rss:flatten(), replacements)
   rss_index:write(rss_replace)
@@ -429,8 +500,14 @@ function createTag(filename, title, posts)
   end
   page:push(footer)
   local page_file = assert(io.open(filename, 'wb'))
+  -- keywords
+  local keywords = rope()
+  keywords:push (title)
+  if makeflyrc['BLOG_KEYWORDS'] then
+    keywords:push (',' .. makeflyrc['BLOG_KEYWORDS'])
+  end
   -- do substitutions on page
-  local substitutions = getSubstitutions(replacements, {TITLE=title})
+  local substitutions = getSubstitutions(replacements, {TITLE=title, KEYWORDS=keywords:flatten()})
   local final_content = replace(page:flatten(), substitutions)
   page_file:write(final_content)
   page_file:close()
@@ -481,9 +558,14 @@ end
 function createHomepage(file, title)
   local index = rope()
   local index_file = io.open(file, 'wb')
-  local content = readFile(tmppath .. '/' .. 'index.tmp', 'r')
   index:push(header)
-  index:push(content)
+  -- push content from all temporary files
+  local index_nb = 1
+  while index_nb <= max_post do
+    local content = readFile(tmppath .. '/' .. 'index.' .. index_nb .. '.tmp', 'r')
+    index:push(content)
+    index_nb = index_nb + 1
+  end
   index:push(footer)
   local substitutions = getSubstitutions(replacements, {BODY_CLASS='home', TITLE=title})
   local final_content = replace(index:flatten(), substitutions)
@@ -530,8 +612,18 @@ short_date_format = makeflyrc['SHORT_DATE_FORMAT'] or short_date_format_default
 max_post = makeflyrc['MAX_POST'] and tonumber(makeflyrc['MAX_POST']) or max_post_default
 max_post_lines = makeflyrc['MAX_POST_LINES'] and tonumber(makeflyrc['MAX_POST_LINES']) or max_post_lines_default
 max_rss = makeflyrc['MAX_RSS'] and tonumber(makeflyrc['MAX_RSS']) or max_rss_default
+max_page = makeflyrc['MAX_PAGE'] and tonumber(makeflyrc['MAX_PAGE'] or max_page_default)
 jskomment_max = makeflyrc['JSKOMMENT_MAX'] and tonumber(makeflyrc['JSKOMMENT_MAX']) or jskomment_max_default
 jskomment_url = makeflyrc['JSKOMMENT_URL'] or jskomment_url_default
+-- Check if an order have been set for sorting posts
+user_sort_choice = sort_default
+if makeflyrc['SORT'] ~= nil and makeflyrc['SORT'] ~= '' then
+  for id_nb, sort_value in pairs({'ASC', 'asc', 'desc', 'DESC'}) do
+    if sort_value == makeflyrc['SORT'] then
+      user_sort_choice = string.lower(makeflyrc['SORT'])
+    end
+  end
+end
 -- Display which theme the user have choosed
 print (string.format(_("-- [%s] Theme: %s"), display_info, theme))
 
@@ -625,10 +717,12 @@ replacements = {
   ARTICLE_CLASS_TYPE = 'normal',
   SEARCHBAR = '',
   JSKOMMENT_SCRIPT = '',
+  JSKOMMENT_CSS_DECLARATION = '',
   JSKOMMENT_CONTENT = '',
   ELI_SCRIPT = '',
   ELI_CONTENT = '',
   ELI_CSS = '',
+  ELI_CSS_DECLARATION = '',
   ELI_STATUS = '',
   INTRO_CONTENT = '',
   FOOTER_CONTENT = '',
@@ -663,7 +757,6 @@ else
 end
 
 -- ELI badge
--- FIXME: Delete "link" tag in HTML header for ELI css file (it's useless)
 if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   print (string.format(_("-- [%s] ELI badge"), display_enable))
   -- Set default ELI mandatory variables
@@ -682,6 +775,9 @@ if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   -- ELI script declaration in all pages
   local template_eli_declaration = readFile(page_eli_declaration, 'r')
   replacements['ELI_SCRIPT'] = replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL=blog_url})
+  -- ELI CSS declaration in all pages
+  local template_eli_css_declaration = readFile(page_eli_css_declaration, 'r')
+  replacements['ELI_CSS_DECLARATION'] = replace(template_eli_css_declaration, replacements)
   -- FIXME: get ELI status (with lua socket or anything else)
 --  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmp_file}'
 --  eli_cmd = replace(eli_cmd, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER'], eli_tmp_file=eli_tmp_file})
@@ -732,6 +828,9 @@ if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   -- jskomment javascript declaration in all pages
   local template_jskomment_declaration = readFile(page_jskomment_declaration, 'r')
   replacements['JSKOMMENT_SCRIPT'] = replace(template_jskomment_declaration, {jskom_name=jskomment_js_filename, BLOG_URL=blog_url})
+  -- jskomment css declaration in all pages
+  local template_jskomment_css_declaration = readFile(page_jskomment_css_declaration, 'r')
+  replacements['JSKOMMENT_CSS_DECLARATION'] = replace(template_jskomment_css_declaration, replacements)
   -- read different templates for next processes
   template_comment = readFile(page_jskomment, 'r')
 else
@@ -809,7 +908,7 @@ end
 dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, postpath .. '/' .. index_filename, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index)
+createPostIndex(post_files, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index)
 
 -- Create tag's files: index and each tag's page
 createTagIndex(index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
@@ -823,7 +922,12 @@ for tag, posts in pairs(tags) do
     os.remove(tmppath .. '/' .. post)
   end
 end
-os.remove(tmppath .. '/' .. 'index.tmp') -- posts that appears on homepage
+-- delete posts that appear on homepage
+local index_nb = 0
+while index_nb < max_post do
+  os.remove(tmppath .. '/' .. 'index.' .. index_nb .. '.tmp')
+  index_nb = index_nb + 1
+end
 
 --[[ END ]]--
 return 0

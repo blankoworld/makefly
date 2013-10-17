@@ -186,7 +186,7 @@ theme: ${TMPLDIR}
 # Create post: simple post creation
 # note: create_post.sh -q 1 do not display any editor
 # You can automatically add a post by using this method:
-# content="This a quick content" pmake add < <(echo "author"; echo "title"; echo "description"; echo "tag1, tag2"; echo "type")
+# content="This a quick content" pmake add < <(echo "author"; echo "title"; echo "description"; echo "tag1, tag2"; echo "type"; echo "keywords")
 createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 	$Q{ cat ${TOOLSDIR}/create_post.sh |${parser} \
 		"DBDIR=${DBDIR}" \
@@ -227,7 +227,7 @@ version:
 
 # list: list all available command as a help command
 commands:
-	$Qecho "List of available commands: \n \
+	$Qecho -e "List of available commands: \n \
 		commands    list all available commands \n \
 		help        same as 'commands' one \n \
 		clean       clean up current directory from generated files \n \
