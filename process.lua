@@ -69,6 +69,7 @@ local page_sidebar_name = 'sidebar' .. template_extension_default
 local page_searchbar_name = 'menu.search_bar' .. template_extension_default
 local page_about_name = 'menu.about' .. template_extension_default
 local page_read_more_name = 'read_more_link' .. template_extension_default
+local page_pagination_name = 'pagination' .. template_extension_default
 local page_jskomment = templatepath .. '/' .. 'jskomment.article' .. template_extension_default
 local page_jskomment_declaration = templatepath .. '/' .. 'jskomment_declaration' .. template_extension_default
 local page_jskomment_css_declaration = templatepath .. '/' .. 'jskomment_css_declaration' .. template_extension_default
@@ -323,17 +324,28 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
   -- sort posts in a given order
   table.sort(posts, function(a, b) return compare_post(a,b, user_sort_choice) end)
   -- prepare some values
-  local index_nb = 0
-  local home_min = 0
-  local home_max = home_min + max_post + 1
-  local home_index = 0
+  local index_nb = 0 -- number of post in all posts
+  local home_min = 0 -- minimal index_nb in all posts to appear on homepage
+  local home_max = home_min + max_post + 1 -- max index_nb in all posts to appear on homepage
+  local home_index = 0 -- index process for posts that will appear on homepage
   local rss_min = 0
   local rss_max = rss_min + max_rss + 1
   local rss_index_nb = 0
   local post_nb = #posts
   local increment = true
   local page_number = 0
-  local page_post_nb = 0
+  local page_post_nb = 1
+  local pages = 1
+  if max_page and max_page > 0 then
+    pages = (post_nb - (post_nb%max_page))/max_page + 1
+  elseif max_page == 0 then
+    max_page = nil
+  end
+  -- Some common pagination numbers/files
+  local page_sub_first = index_name .. resultextension
+  local page_sub_last = index_name .. (pages - 1) .. resultextension
+  local page_sub_total = pages
+  local page_pagination = readFile(themepath .. '/' .. page_pagination_name, 'r')
   if user_sort_choice == 'asc' then
     increment = false
     home_min = post_nb - max_post - 1
@@ -448,16 +460,85 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
       page_post_nb = page_post_nb + 1
       if max_page and page_post_nb > max_page then
         page_post_nb = 1
-        -- TODO: add footer and write current page and display a message
+        -- Prepare page substitution elements
+        page_current = page_number + 1
+        page_previous = (page_number - 1) > 0 and (page_number - 1) or 0
+        page_next = (page_number + 1) < pages and (page_number + 1) or pages - 1
+        if page_previous == 0 then
+          page_previous = ''
+        end
+        page_sub_previous = index_name .. page_previous .. resultextension
+        page_sub_next = index_name .. page_next .. resultextension
+        -- Add pagination template
+        index:push (page_pagination)
+        -- CLOSE CURRENT INDEX
+        index:push (footer)
+        -- do substitutions on page
+        index_sub_table = {
+          TITLE=replacements['POST_LIST_TITLE'],
+          BODY_CLASS="posts",
+          PAGE_FIRST_LINK=page_sub_first,
+          PAGE_PREV_LINK=page_sub_previous,
+          PAGE_NEXT_LINK=page_sub_next,
+          PAGE_LAST_LINK=page_sub_last,
+          PAGE_CURRENT=page_current,
+          PAGE_TOTAL=page_sub_total,
+        }
+        index_substitutions = getSubstitutions(replacements, index_sub_table)
+        index_content = replace(index:flatten(), index_substitutions)
+        post_index:write(index_content)
+        -- Close post's index
+        post_index:close()
+        post_index = nil
+        index = nil
+        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, page_sub_total))
+        -- increment page number
         page_number = page_number + 1
-        -- TODO: create new page (header + post_content)
-        print('Page suivante: ' .. page_number)
+        -- CREATE NEW INDEX
+        post_index = io.open(postpath .. '/' .. index_name .. page_number .. resultextension, 'wb')
+        index = rope()
+        index:push (header)
+        index:push (post_content)
       end
-      print('Index: ' .. index_nb .. ' Page nb: ' .. page_post_nb)
     end
   end
-  -- TODO: if last posts (see index_nb and number of total posts) then add footer and write current page
-  index:push (footer)
+  -- If last post, finish index writing (to close file)
+  if page_post_nb >= post_nb or (max_page and page_post_nb <= max_page) then
+    -- Prepare page substitution elements
+    if max_page and max_page > 0 and page_sub_total > 1 then
+      page_current = page_number + 1
+      page_previous = (page_number - 1) > 0 and (page_number - 1) or 0
+      page_next = (page_number + 1) < pages and (page_number + 1) or pages - 1
+      if page_previous == 0 then
+        page_previous = ''
+      end
+      page_sub_previous = index_name .. page_previous .. resultextension
+      page_sub_next = index_name .. page_next .. resultextension
+      -- Add pagination template
+      index:push (page_pagination)
+    end
+    -- CLOSE FINAL INDEX
+    index:push (footer)
+    -- do substitutions on page
+    index_sub_table = {
+      TITLE=replacements['POST_LIST_TITLE'],
+      BODY_CLASS="posts",
+      PAGE_FIRST_LINK=page_sub_first,
+      PAGE_PREV_LINK=page_sub_previous,
+      PAGE_NEXT_LINK=page_sub_next,
+      PAGE_LAST_LINK=page_sub_last,
+      PAGE_CURRENT=page_current,
+      PAGE_TOTAL=page_sub_total,
+    }
+    local index_substitutions = getSubstitutions(replacements, index_sub_table)
+    local index_content = replace(index:flatten(), index_substitutions)
+    post_index:write(index_content)
+    -- Close post's index
+    post_index:close()
+    if max_page and max_page > 0 and page_sub_total > 1 then
+      print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, page_sub_total))
+    end
+  end
   -- rss process
   local index_rss_nb = 1
   while index_rss_nb <= max_rss do
@@ -471,12 +552,6 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
   rss_index:close()
   -- Display that RSS file was created
   print (string.format(_("-- [%s] RSS feed: BUILT."), display_success))
-  -- do substitutions on page
-  local index_substitutions = getSubstitutions(replacements, {TITLE=replacements['POST_LIST_TITLE'], BODY_CLASS="posts"})
-  local index_content = replace(index:flatten(), index_substitutions)
-  post_index:write(index_content)
-  -- Close post's index
-  post_index:close()
   -- Display that post index was created
   print (string.format(_('-- [%s] Post list: BUILT.'), display_success))
 end
