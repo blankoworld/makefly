@@ -48,6 +48,7 @@ local templatepath = os.getenv('TMPLDIR') or currentpath .. '/template'
 local staticpath = os.getenv('STATICDIR') or currentpath .. '/static'
 local specialpath = os.getenv('SPECIALDIR') or currentpath .. '/special'
 local publicpath = os.getenv('DESTDIR') or currentpath .. '/pub'
+local pagepath = os.getenv('PAGEDIR') or currentpath .. '/pages'
 -- default's files
 local makeflyrcfile = os.getenv('conf') or 'makefly.rc'
 local themercfile = 'config.mk'
@@ -650,6 +651,28 @@ function createHomepage(file, title)
   print (string.format(_("-- [%s] Homepage: BUILT."), display_success))
 end
 
+-------------------------------------------------------------------------------
+-- Create single static page named PAGE
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
+function createPage(origin, destination, title)
+  local page = rope()
+  local page_file = io.open(destination, 'wb')
+  page:push(header)
+  -- add page content
+  local content = readFile(origin, 'r')
+  local markdown_content = markdown(content)
+  page:push(markdown_content)
+  -- add footer and close file
+  page:push(footer)
+  local substitutions = getSubstitutions(replacements, {BODY_CLASS='page', TITLE=title})
+  local final_content = replace(page:flatten(), substitutions)
+  page_file:write(final_content)
+  assert(page_file:close())
+  -- Display that this page have been created
+  print (string.format(_("-- [%s] Page '%s': BUILT."), display_success, title))
+end
+
 --[[ MAIN ]]--
 -- create thread table
 threads = {}
@@ -977,6 +1000,19 @@ if dbresult then
   end
 else
   print (string.format(_("-- [%s] No DB file(s) found!"), display_warning))
+end
+
+-- Add static pages to the dispatcher
+pages_result = listing(pagepath, 'md')
+if pages_result then
+  for k,v in pairs(pages_result) do
+    local pagetitle = string.match(v, ".+/(.+)%.md")
+    local pagefile = publicpath .. '/' .. pagetitle .. resultextension
+    local co = coroutine.create(function () createPage(v, pagefile, pagetitle) end)
+    table.insert(threads, co)
+  end
+else
+  print (string.format(_("-- [%s] No static page(s) found."), display_info))
 end
 
 -- launch dispatcher to create each post and more (copy needed directories/files, etc.)
