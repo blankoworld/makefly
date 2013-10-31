@@ -194,7 +194,7 @@ function createPost(file, config, template_file, template_tag_file)
     -- open template file
     local template = readFile(template_file, 'r')
     -- open post output file
-    local out = assert(io.open(postpath .. "/" .. title .. resultextension, 'wb'))
+    local out = assert(io.open(postpath .. "/" .. keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension, 'wb'))
     -- create a rope for post's result
     local post = rope()
     -- open content of post (SRC file)
@@ -303,9 +303,9 @@ end
 -------------------------------------------------------------------------------
 function createPostIndex(posts, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
   -- open result file
-  local post_index = io.open(postpath .. '/' .. index_name .. resultextension, 'wb')
+  local post_index = io.open(postpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(index_name) .. resultextension, 'wb')
   -- prepare rss elements
-  local rss_index = io.open(publicpath .. '/' .. rss_name_default .. rss_extension_default, 'wb')
+  local rss_index = io.open(publicpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(rss_name_default) .. rss_extension_default, 'wb')
   local rss_header = readFile(page_rss_header, 'r')
   local rss_footer = readFile(page_rss_footer, 'r')
   local rss_element = readFile(page_rss_element, 'r')
@@ -397,7 +397,7 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
       local post_substitutions = getSubstitutions(v, metadata)
       -- remember this post's element for each tag page
       local post_element_content = replace(post_element, post_substitutions)
-      local remember_file = assert(io.open(tmppath .. '/' .. title, 'wb'))
+      local remember_file = assert(io.open(tmppath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(title), 'wb'))
       assert(remember_file:write(post_element_content))
       assert(remember_file:close())
       -- push result into index
@@ -611,7 +611,7 @@ function createTagIndex(index_filename, template_index_filename, template_elemen
   for tag, posts in pairsByKeys(tags) do
     local tag_page = string.gsub(tag, '%s', '_') .. resultextension
     taglist_content = taglist_content .. replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
-    createTag(tagpath .. '/' .. tag_page, tag, posts)
+    createTag(tagpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts)
   end
   index:push(replace(template_index, {TAGLIST_CONTENT=taglist_content}))
   index:push(footer)
@@ -704,7 +704,7 @@ tagdir_name = makeflyrc['TAGDIR_NAME'] or tagdir_name_default
 bodyclass = makeflyrc['BODY_CLASS'] or bodyclass_default
 postpath = publicpath .. '/' .. postdir_name
 tagpath = publicpath .. '/' .. tagdir_name
-index_filename = index_name .. resultextension
+index_filename = keepUnreservedCharsAndDeleteDuplicate(index_name) .. resultextension
 date_format = makeflyrc['DATE_FORMAT'] or date_format_default
 short_date_format = makeflyrc['SHORT_DATE_FORMAT'] or short_date_format_default
 max_post = makeflyrc['MAX_POST'] and tonumber(makeflyrc['MAX_POST']) or max_post_default
@@ -969,7 +969,7 @@ if about_file then
   about_substitutions = getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE'], BODY_CLASS='about'})
   about_content = replace(about:flatten(), about_substitutions)
   -- write changes
-  about_file_result = assert(io.open(publicpath .. '/' .. (makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default, 'wb'))
+  about_file_result = assert(io.open(publicpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default, 'wb'))
   about_file_result:write(about_content)
   about_file_result:close()
 end
@@ -1007,7 +1007,7 @@ pages_result = listing(pagepath, 'md')
 if pages_result then
   for k,v in pairs(pages_result) do
     local pagetitle = string.match(v, ".+/(.+)%.md")
-    local pagefile = publicpath .. '/' .. pagetitle .. resultextension
+    local pagefile = publicpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. resultextension
     local co = coroutine.create(function () createPage(v, pagefile, pagetitle) end)
     table.insert(threads, co)
   end
