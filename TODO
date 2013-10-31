@@ -1,8 +1,14 @@
 TODO:
 -----
 
-Next version (0.3):
-- Create translation for displayed info message when compiling Makefly
+Version 0.3.1:
+- add documentation for static pages directory
+- replace space (and other special chars) by '_' for pages (static pages) name. Use filename as HTML page's title, but replace space for HTML file. Example: "Another essay.md" should give "Another essay" as title but "another_essay.html" as filename.
+- add 2 pages "about.md" for each language and adapt the prepare-new-version to use the right one into the final archive
+- add same thing for a static pages in pages directory with a "article_test.md" to show how it works. In the content explain to the user that it could edit this pages and add new ones but that it have to create link to this page… It's a trick, not a functionnality to be often use!
+
+Version 0.4:
+- replace [p|b] make by a lua script for launching some commands
 
 Tests:
 - test: pmake backup
@@ -182,4 +188,4 @@ DONE:
 - Add possibility to choose which meta/keywords add to each post?
 - Add HTML keywords/meta on main page regarding posts
 - Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
-
+- Create translation for displayed info message when compiling Makefly

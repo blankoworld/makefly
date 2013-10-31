@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the makefly package.
 # Olivier DOSSMANN <olivier+makefly@dossmann.net>, 2013.
 #
-#, fuzzy
+#,
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2.1-lua\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-16 18:13+0200\n"
+"POT-Creation-Date: 2013-10-24 12:52+0200\n"
 "PO-Revision-Date: 2013-07-31 14:00+0200\n"
 "Last-Translator: Olivier DOSSMANN <olivier+makefly@dossmann.net>\n"
 "Language-Team: None\n"
@@ -37,86 +37,91 @@ msgstr "-- [%s] %s non trouvé(e) dans la méthode de copie !"
 msgid ", "
 msgstr ", "
 
-#: process.lua:126
+#: process.lua:127
 msgid "  INFO   "
 msgstr "  INFO   "
 
-#: process.lua:127
+#: process.lua:128
 msgid " SUCCESS "
 msgstr " SUCCÈS  "
 
-#: process.lua:128
+#: process.lua:129
 msgid " ENABLE  "
 msgstr " ACTIF   "
 
-#: process.lua:129
+#: process.lua:130
 msgid " DISABLE "
 msgstr " INACTIF "
 
-#: process.lua:130
+#: process.lua:131
 msgid " WARNING "
 msgstr "ATTENTION"
 
-#: process.lua:131
+#: process.lua:132
 msgid "  ERROR  "
 msgstr " ERREUR  "
 
-#: process.lua:265
+#: process.lua:266
 #, python-format
 msgid "-- [%s] New post: %s"
 msgstr "-- [%s] Nouvel article : %s"
 
-#: process.lua:494 process.lua:539
+#: process.lua:495 process.lua:540
 #, python-format
 msgid "-- [%s] Post list %s/%s: BUILT."
 msgstr "-- [%s] Liste des articles %s/%s : CRÉÉE."
 
-#: process.lua:554
+#: process.lua:555
 #, python-format
 msgid "-- [%s] RSS feed: BUILT."
 msgstr "-- [%s] Flux RSS : CRÉE"
 
-#: process.lua:556
+#: process.lua:557
 #, python-format
 msgid "-- [%s] Post list: BUILT."
 msgstr "-- [%s] Liste des articles : CRÉÉE."
 
-#: process.lua:590
+#: process.lua:591
 #, python-format
 msgid "-- [%s] New tag: %s"
 msgstr "-- [%s] Nouveau mot-clé : %s"
 
-#: process.lua:624
+#: process.lua:625
 #, python-format
 msgid "-- [%s] Tag list: BUILT."
 msgstr "-- [%s] Liste des mots-clés : CRÉÉE."
 
-#: process.lua:650
+#: process.lua:651
 #, python-format
 msgid "-- [%s] Homepage: BUILT."
 msgstr "-- [%s] Page d'accueil : CRÉÉE."
 
-#: process.lua:666
+#: process.lua:673
+#, python-format
+msgid "-- [%s] Page '%s': BUILT."
+msgstr "-- [%s] Page '%s' : CRÉÉE."
+
+#: process.lua:689
 #, python-format
 msgid "-- [%s] Check mandatories information"
 msgstr "-- [%s] Vérification des informations obligatoires"
 
-#: process.lua:670
+#: process.lua:693
 #, python-format
 msgid "-- [%s] Missing information in %s file: %s"
 msgstr "-- [%s] Information(s) manquante(s) dans le fichier %s : %s"
 
-#: process.lua:703
+#: process.lua:726
 #, python-format
 msgid "-- [%s] Theme: %s"
 msgstr "-- [%s] Thème : %s"
 
-#: process.lua:707
+#: process.lua:730
 #, python-format
 msgid "-- [%s] Given theme (%s) seems to not exist."
 msgstr "-- [%s] Le thème choisi (%s) semble ne pas exister."
 
-#: process.lua:713
+#: process.lua:736
 #, python-format
 msgid ""
 "-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."
@@ -124,70 +129,75 @@ msgstr ""
 "-- [%s] Vous ne pouvez pas choisir une extension (%s) identique à celle des "
 "templates (%s)."
 
-#: process.lua:721
+#: process.lua:744
 #, python-format
 msgid "-- [%s] No '%s' translation. Use default one: %s."
 msgstr "-- [%s] Aucune traduction '%s'. Utilisation de celle par défaut : %s."
 
-#: process.lua:760
+#: process.lua:783
 #, python-format
 msgid "-- [%s] Wrong flavor: %s"
 msgstr "-- [%s] Mauvaise couleur : %s"
 
-#: process.lua:762
+#: process.lua:785
 #, python-format
 msgid "-- [%s] Specific flavor: %s"
 msgstr "-- [%s] Couleur spécifique : %s"
 
-#: process.lua:827
+#: process.lua:850
 #, python-format
 msgid "-- [%s] About's page available"
 msgstr "-- [%s] Page d'apropos disponible"
 
-#: process.lua:831
+#: process.lua:854
 #, python-format
 msgid "-- [%s] About's page not found"
 msgstr "-- [%s] Page d'apropos non trouvée"
 
-#: process.lua:836 process.lua:868
+#: process.lua:859 process.lua:891
 #, python-format
 msgid "-- [%s] ELI badge"
 msgstr "-- [%s] Encart ELI"
 
-#: process.lua:874 process.lua:878
+#: process.lua:897 process.lua:901
 #, python-format
 msgid "-- [%s] Sidebar"
 msgstr "-- [%s] Panneau latéral"
 
-#: process.lua:883 process.lua:886
+#: process.lua:906 process.lua:909
 #, python-format
 msgid "-- [%s] Search bar"
 msgstr "-- [%s] Barre de recherche"
 
-#: process.lua:892 process.lua:912
+#: process.lua:915 process.lua:935
 #, python-format
 msgid "-- [%s] Comment system"
 msgstr "-- [%s] Système de commentaire"
 
-#: process.lua:927 process.lua:931
+#: process.lua:950 process.lua:954
 #, python-format
 msgid "-- [%s] %s"
 msgstr "-- [%s] %s"
 
-#: process.lua:957
+#: process.lua:980
 #, python-format
 msgid "-- [%s] Folder content copied: %s"
 msgstr "-- [%s] Contenu du dossier copié : %s"
 
-#: process.lua:971
+#: process.lua:994
 #, python-format
 msgid "-- [%s] Missing information in '%s' post: %s"
 msgstr "-- [%s] Information(s) manquante(s) dans l'article %s : %s"
 
-#: process.lua:979
+#: process.lua:1002
 #, python-format
 msgid "-- [%s] No DB file(s) found!"
 msgstr "-- [%s] Aucun fichier DB trouvé !"
+
+#: process.lua:1015
+#, python-format
+msgid "-- [%s] No static page(s) found."
+msgstr "-- [%s] Aucune(s) page(s) statique(s) trouvée(s)."
 
 #~ msgid "again"
 #~ msgstr "encore"

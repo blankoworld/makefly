@@ -381,4 +381,39 @@ function processMissingInfo(origin, mandatories)
   local res = displayMissing(missing) or ''
   return res
 end
+
+-------------------------------------------------------------------------------
+-- Only keep Unreserved chars on given '@string'
+-- @see http://www.ietf.org/rfc/rfc3986.txt (Chap 2.2 and 2.3)
+-- @param string String to test
+-- @return replaced string and number of replacements
+-------------------------------------------------------------------------------
+function keepUnreservedChars(string)
+  local res = string.gsub(string, '[^0-9A-Za-z%-._~]', '_') or string
+  return res
+end
+
+-------------------------------------------------------------------------------
+-- Delete string duplicates. Can give the char to simplify
+-- @param string String to simplify
+-- @param char The char that would be simplified
+-- @return replaced string and number of replacements
+-------------------------------------------------------------------------------
+function deleteStringDuplicate(string, char)
+  local char = char or '_'
+  local res = string.gsub(string, char .. char, char) or string
+  return res
+end
+
+-------------------------------------------------------------------------------
+-- Only keep Unreserved chars on given '@string' and delete string duplicates. Can give the '@char' to simplify
+-- @see keepUnreservedChars function
+-- @see deleteStringDuplicate function
+-- @param string String to simplify
+-- @param char The char that would be simplified
+-- @return replaced string and number of replacements
+-------------------------------------------------------------------------------
+function keepUnreservedCharsAndDeleteDuplicate(string, char)
+  return deleteStringDuplicate(keepUnreservedChars(string), char)
+end
 -- vim:expandtab:smartindent:tabstop=2:softtabstop=2:shiftwidth=2:
