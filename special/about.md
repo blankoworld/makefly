@@ -82,6 +82,8 @@ For developers, it exists [a Makefly's developers documentation on github](https
 
 ## Archives
 
+  * [Makefly v0.3b2](${BLOG_URL}/makefly_0.3b2.zip)
+  * [Makefly v0.3b2 (fr)](${BLOG_URL}/makefly_0.3b2_fr.zip)
   * [Makefly v0.3b1](${BLOG_URL}/makefly_0.3b1.zip)
   * [Makefly v0.3b1 (fr)](${BLOG_URL}/makefly_0.3b1_fr.zip)
   * [Makefly v0.2.1](${BLOG_URL}/makefly_0.2.1.zip)

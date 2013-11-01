@@ -1,6 +1,6 @@
 ### Version 0.3 will be late
 
-I scheduled the next version for to October, the 31st.
+I scheduled the next version to October, the 31st.
 
 This is for some reasons:
 
