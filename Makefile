@@ -109,6 +109,7 @@ clean:
 ${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
 	$Q{                                                      \
 		cat ${DOCDIR}/header.tmpl > ${FILE:S/.md$/${PAGE_EXT}/} && \
+		echo "Version ${VERSION}" > ${FILE:S/.md$/${PAGE_EXT}/} && \
 		${markdown} ${FILE} >> ${FILE:S/.md$/${PAGE_EXT}/} && \
 		cat ${DOCDIR}/footer.tmpl >> ${FILE:S/.md$/${PAGE_EXT}/} || \
 		{                                                    \
