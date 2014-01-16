@@ -75,7 +75,7 @@ read -p "Description: " desc
 while [ -z "$tags" ]; do
   read -p "Tags (use comma as separator): " tags
 done
-read -p "Type (normal, special, news, etc.): " post_type
+read -p "Special post type (normal, special, news, etc.): " post_type
 read -p "Keywords: " keywords
 timestamp=`date +'%s'`
 
