@@ -33,7 +33,7 @@ conf ?= makefly.rc
 # use mainscript= to change script file
 mainscript ?= process.lua
 # Makefly version
-VERSION = L 0.3b2-trunk
+VERSION = 0.3
 
 # directories
 TMPLDIR          = ./template
@@ -109,7 +109,7 @@ clean:
 ${FILE:S/.md$/${PAGE_EXT}/}: ${DOCDIR}
 	$Q{                                                      \
 		cat ${DOCDIR}/header.tmpl > ${FILE:S/.md$/${PAGE_EXT}/} && \
-		echo "Version ${VERSION}" > ${FILE:S/.md$/${PAGE_EXT}/} && \
+		echo "Version ${VERSION}" >> ${FILE:S/.md$/${PAGE_EXT}/} && \
 		${markdown} ${FILE} >> ${FILE:S/.md$/${PAGE_EXT}/} && \
 		cat ${DOCDIR}/footer.tmpl >> ${FILE:S/.md$/${PAGE_EXT}/} || \
 		{                                                    \

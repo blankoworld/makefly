@@ -88,7 +88,7 @@ Il y a deux mani&egrave;res d'installer Makefly sur votre ordinateur :
 
 R&eacute;cup&eacute;rez simplement la derni&egrave;re version sur le site officiel : [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Aller sur le site officiel de Makefly").
 
-Par exemple [la version 0.2.1](http://makefly.e-mergence.org/makefly_0.2.1.zip "T&eacute;l&eacute;charger Makefly 0.2.1").
+Par exemple [la version 0.3 (fr)](http://makefly.e-mergence.org/makefly_0.3_fr.zip "T&eacute;l&eacute;charger Makefly 0.3 (fr)").
 
 Puis extraire le contenu de l'archive dans un dossier.
 
@@ -145,7 +145,7 @@ et r&eacute;pondez &agrave; toutes les questions pos&eacute;es. Cela g&eacute;n&
 
 Il est &agrave; noter que Makefly utilise [le format markdown](http://daringfireball.net/projects/markdown/ "En savoir plus sur le format Markdown") pour ses articles.
 
-### Version sup&eacute;rieure ou &eacute;gale &agrave; 0.2.1 (version trunk)
+### Version sup&eacute;rieure ou &eacute;gale &agrave; 0.2.1
 
 Utilisez la commande suivante :
 
