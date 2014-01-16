@@ -238,6 +238,7 @@ commands:
 		install     install 'pub' directory into INSTALLDIR directory (set in makefly.rc) \n \
 		publish     publish your weblog using tools/publish.sh script \n \
 		migratefrom Example: domain=\"http://myold.org/blog\" pmake migratefrom. Will update DB files \n \
+		doc         generate the documentation in 'doc' directory \n \
 		theme       Example: name=\"myName\" pmake theme. Will copy 'base' theme to 'myName' one \n \
 		version     give version of the current program"
 
