@@ -1,4 +1,9 @@
-Current (trunk)
+Version 0.3 (released 2014-01-17)
+  - Add Makefly version in documentation
+  - Complete [p|b]make help command
+  - Adapt create post script to be more understandable by the user that use it
+  - Adapt create post script to be more understandable by the user that use it
+  - Fix problem with accentued chars at post creation
   - Permit to split post's list into multiple ones by using MAX_PAGE var
   - Permit to reverse list of posts with SORT parameter in configuration file
 	- Add keywords functionnality for posts
