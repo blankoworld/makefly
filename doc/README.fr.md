@@ -1,6 +1,6 @@
 # Makefly
 
-[Original english documentation version](http://makefly.e-mergence.org/documentation.html) (version originale en anglais)
+[Original english documentation version](http://makefly.e-mergence.org/documentation.html.en) (version originale en anglais)
 
 [Aller sur le site web](http://makefly.e-mergence.org/)
 
