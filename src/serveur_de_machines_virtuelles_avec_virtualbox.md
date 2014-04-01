@@ -6,6 +6,8 @@ Si vous lisez l'article, je suis sûr que oui ! La virtualisation est un outil f
 
 Le problème, quand on a un serveur distant, c'est que nous n'avons pas d'interface graphique pour créer et gérer ses machines virtuelles.
 
+![VirtualBox About Image](${BLOG_URL}/images/logiciels/virtualbox_ose.png "Image du 'à propos' de VirtualBox")
+
 ### Description du problème
 
 En effet, quand on installe VirtualBox sur un serveur sans interface graphique, on ne sait pas trop comment créer une machine virtuelle ni comment la lancer. Certes on pourrait créer la machine virtuelle sur notre ordinateur, puis l'envoyer sur notre serveur. Mais comment la lancer ensuite ?
