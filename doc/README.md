@@ -1,8 +1,8 @@
 # Makefly
 
-[Version originale de la documentation](http://makefly.e-mergence.org/documentation.html.fr) (French original version)
+[Version originale de la documentation](http://makefly.depotoi.re/documentation.html.fr) (French original version)
 
-[Go to the website](http://makefly.e-mergence.org/)
+[Go to the website](http://makefly.depotoi.re/)
 
 ## About
 
@@ -10,7 +10,7 @@ Makefly is a static weblog engine that used a BSD Makefile to work.
 
 ### Website
 
-Stay tuned to [Makefly weblog](http://makefly.e-mergence.org/blog/ "Visit Makefly official website").
+Stay tuned to [Makefly weblog](http://makefly.depotoi.re/blog/ "Visit Makefly official website").
 
 ### Contact
 
@@ -26,7 +26,7 @@ Some stats about project could be found [on Ohloh.net](http://www.ohloh.net/p/ma
 
 ## Description
 
-Makefly is a subproject of [BlogBox](http://blogbox.e-mergence.org/ "Read more about BlogBox project") that aims to give user a better way to host a blog at home.
+Makefly is a subproject of [BlogBox](http://blogbox.depotoi.re/ "Read more about BlogBox project") that aims to give user a better way to host a blog at home.
 
 ## Dependencies
 
@@ -86,9 +86,9 @@ There is 2 ways to install Makefly on your computer:
 
 ### Using last stable version
 
-Just download last version on official website: [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Go to official makefly website").
+Just download last version on official website: [http://makefly.depotoi.re/](http://makefly.depotoi.re/ "Go to official makefly website").
 
-For an example [0.3 version](http://makefly.e-mergence.org/makefly_0.3.zip "Download Makefly 0.3").
+For an example [0.3 version](http://makefly.depotoi.re/makefly_0.3.zip "Download Makefly 0.3").
 
 Then extract tarball's content into a directory.
 
@@ -316,7 +316,7 @@ Here is some options you can change:
   * BLOG\_DESCRIPTION: A long description of your weblog
   * BLOG\_LANG: your language code. Note that file lang/translate.YOUR\_LANGUAGE\_CODE should exists. For an example if I set this parameter to *en*, a *lang/translate.en* file should exists!
   * BLOG\_CHARSET: your encoding configuration. Should be something like **UTF-8** or **ISO-8859-1**. If you don't know what's this option, just let it to *UTF-8*.
-  * BLOG\_URL: absolute URL of your blog. For an example http://makefly.e-mergence.org/.
+  * BLOG\_URL: absolute URL of your blog. For an example http://makefly.depotoi.re/.
   * BLOG\_AUTHOR: Main blog writer. Allow a better indexation in websearch engine.
   * BLOG\_COPYRIGHT: Blog copyright. Allow a better indexation in websearch engine.
   * BLOG\_KEYWORDS: Keywords that will appears on all webblog pages. Allow a better indexation in websearch engine.
@@ -329,8 +329,8 @@ Here is some options you can change:
   * INDEX\_FILENAME: Name given to all index'pages. For an example with **INDEX\_FILENAME = mainpage**, post list page will be named *mainpage.html*.
   * PAGE\_EXT: suffix that all page will have. **DO NOT FORGET TO ADD A POINT BEFORE SUFFIX**. For an example, with **PAGE\_EXT = .html**, all pages will be under the form: index.html.
   * ABOUT\_FILENAME: As described, this is the about's filename. If you set it to "about" for an example, you have to create a "about.md" file into **special** directory in order to have an about's page. If you change it to "toto", so you have to create a *toto.md* file into **special** directory.
-  * POSTDIR\_NAME: The name you want to be displayed in URL when a user go to post list. For an example, if you set it to "myposts": http://makefly.e-mergence.org/myposts/ will display all you posts. This is useful for others languages.
-  * TAGDIR\_NAME: Same behaviour as POSTDIR\_NAME, but for tags. Change it to "mytags" for an example, and you will have URLs like this: http://makefly.e-mergence.org/mytags/ to display tag list.
+  * POSTDIR\_NAME: The name you want to be displayed in URL when a user go to post list. For an example, if you set it to "myposts": http://makefly.depotoi.re/myposts/ will display all you posts. This is useful for others languages.
+  * TAGDIR\_NAME: Same behaviour as POSTDIR\_NAME, but for tags. Change it to "mytags" for an example, and you will have URLs like this: http://makefly.depotoi.re/mytags/ to display tag list.
   * THEME: Name of the theme you want to be used. All themes are available in **template** directory. Each theme have its own directory. For an example, "default" theme have its **template/default** directory.
   * FLAVOR: This name will be used to select a color from your theme (if exists)
   * BACKUPDIR: Name of directory where *backup* command will save all files.

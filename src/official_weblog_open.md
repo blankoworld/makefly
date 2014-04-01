@@ -1,4 +1,4 @@
-Just remember one address for last makefly news: [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Visit official Makefly weblog to have news about Makefly!").
+Just remember one address for last makefly news: [http://makefly.depotoi.re/](http://makefly.depotoi.re/ "Visit official Makefly weblog to have news about Makefly!").
 
 I will post some tips & tricks, news and event about Makefly here. For this, I could use some example like this to be changed in a file:
 
