@@ -81,3 +81,5 @@ Je verrais cela à l'utilisation, et je vous invite à en faire autant !
 ### Liens utiles
 
   * [En savoir plus sur Docker (en)](https://www.docker.io/learn_more/ "Learn more about Docker")
+  * [Index des images Docker](https://index.docker.io/ "Se rendre sur le site officiel des images Docker")
+  * [Docker sur mon Recueil d'astuces](https://olivier.dossmann.net/wiki/configurations/docker/index "En savoir plus sur Docker")
