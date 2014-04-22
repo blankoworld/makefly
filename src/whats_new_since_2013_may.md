@@ -33,9 +33,9 @@ That's not heavy changes because the real work was in Bash to Lua migration.
 
 ### What's next?
 
-For the coming 0.3 version I hope to finish [all planned tasks as described in the roadmap](http://forge.e-mergence.org/projects/makefly/roadmap).
+For the coming 0.3 version I hope to finish [all planned tasks as described in the roadmap](http://forge.depotoi.re/projects/makefly/roadmap).
 
-What I especially want to do is to improve tests, continuous integration and tarball generation for next releases. This will depend on the way I resolve issues on *forge.e-mergence.org*.
+What I especially want to do is to improve tests, continuous integration and tarball generation for next releases. This will depend on the way I resolve issues on *forge.depotoi.re*.
 
 ### Conclusion
 

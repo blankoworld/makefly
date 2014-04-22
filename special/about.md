@@ -52,7 +52,7 @@ Have a look to [Themes list for v0.2](${BLOG_URL}/${POSTDIR_NAME}/theme_list_v0_
 
 ## No UI?
 
-Makefly aims to do a thing and do it well. It's not user-friendly so you cannot easily add posts. To do this, you need a UI (User Interface) that Makefly's project don't get. But [BlogBox project (fr)](http://blogbox.e-mergence.org "Learn more on BlogBox project") wants to do this soon (approximatively 2013, March).
+Makefly aims to do a thing and do it well. It's not user-friendly so you cannot easily add posts. To do this, you need a UI (User Interface) that Makefly's project don't get. But [BlogBox project (fr)](http://blogbox.depotoi.re "Learn more on BlogBox project") wants to do this soon (approximatively 2013, March).
 
 If you are interested by an UI, perhaps would you be available for:
 
