@@ -16,8 +16,10 @@ and includes somes functionalities like:
 * RSS feed
 * tags
 * permalink
+* keywords for each page
+* static pages
 * possibility to set posting date (using a timestamp)
-* customization using options like max post on homepage
+* homepage customization (max post, reverse list, keywords, etc.)
 * translation: English, French
 * static files
 * templates
@@ -31,10 +33,12 @@ You can so:
 
 * create posts
 * add tags to them
+* add specific keywords to them
 * add image
 * generate an RSS feed
 * give some static files (for an example to share PDF)
 * have your own template
+* create some static pages
 * translate Makefly in your language
 * prepare some post and publish them in the future
 * add comments on each post
