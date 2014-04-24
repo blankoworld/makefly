@@ -14,7 +14,7 @@ Mais l'informatique n'est pas la seule passion que j'ai eu, au fil du temps j'ai
 
 Désormais je pratique le patin à glace, et je continue sans relâche la passion informatique, devenue plus un train de vie qu'une passion. J'en ai d'ailleurs fait un métier.
 
-Vous pouvez visualiser quelques vidéos de ma façon particulière de patiner sur [Vampirisme](http://f.depotoi.re/videos/olivier/patinoire/ "Visualiser des vidéos de patinage d'Olivier").
+Vous pouvez visualiser quelques vidéos de ma façon particulière de patiner sur [Dépotoire](http://f.depotoi.re/videos/olivier/patinoire/ "Visualiser des vidéos de patinage d'Olivier").
 
 ### Métier
 
