@@ -39,7 +39,7 @@
   * [Wiki](http://olivier.dossmann.net/wiki/ "Recueil d'astuces")
   * [Liens](http://olivier.dossmann.net/liens/ "Quelques liens en vrac")
   * [Galerie](http://images.dossmann.net/ "D&eacute;couvrir la galerie d'Olivier DOSSMANN")
-  * [Fichiers](http://vampiris.me/fichiers/ "Serveur de fichiers Vampirisme")
+  * [Fichiers](http://f.depotoi.re/ "Serveur de fichiers du Dépotoire")
   * [Son Oueb](https://olivier.dossmann.net/wiki/blankoweb/index "Liste des sites de son environnement Oueb")
 
 ## Divers
