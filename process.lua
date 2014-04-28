@@ -450,7 +450,11 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
         end
         local rss_file = io.open(tmppath .. '/rss.' .. rss_index_nb .. '.tmp', 'wb')
         local rss_post_html_link = blog_url .. '/' .. postdir_name .. '/' .. title .. resultextension
-        local rss_post = replace(rss_element, {DESCRIPTION=markdown(real_post_content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link})
+        -- Change temporarly locale
+        assert(os.setlocale('C'))
+        local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
+        assert(os.setlocale(lang))
+        local rss_post = replace(rss_element, {DESCRIPTION=markdown(real_post_content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
         assert(rss_file:write(rss_post))
         -- close first_posts file
         assert(rss_file:close())

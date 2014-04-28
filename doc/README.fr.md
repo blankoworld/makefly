@@ -1,8 +1,8 @@
 # Makefly
 
-[Original english documentation version](http://makefly.e-mergence.org/documentation.html) (version originale en anglais)
+[Original english documentation version](http://makefly.depotoi.re/documentation.html.en) (version originale en anglais)
 
-[Aller sur le site web](http://makefly.e-mergence.org/)
+[Aller sur le site web](http://makefly.depotoi.re/)
 
 ## &Agrave; propos
 
@@ -10,7 +10,7 @@ Makefly est un moteur de blog statique qui utilise les fichiers Makefile BSD pou
 
 ### Site web
 
-Visitez fr&eacute;quemment le [blog de Makefly](http://makefly.e-mergence.org/blog/ "Visiter le blog officiel de Makefly") (en) pour avoir des nouvelles du projet.
+Visitez fr&eacute;quemment le [blog de Makefly](http://makefly.depotoi.re/blog/ "Visiter le blog officiel de Makefly") (en) pour avoir des nouvelles du projet.
 
 ### Contact
 
@@ -26,7 +26,7 @@ Quelques stats du projet se trouvent [sur Ohloh.net](http://www.ohloh.net/p/make
 
 ## Description
 
-Makefly est un sous-projet de [BlogBox](http://blogbox.e-mergence.org/ "En savoir plus sur le projet BlogBox") qui vise &agrave; fournir de meilleurs moyens pour h&eacute;berger un blog &agrave; la maison.
+Makefly est un sous-projet de [BlogBox](http://blogbox.depotoi.re/ "En savoir plus sur le projet BlogBox") qui vise &agrave; fournir de meilleurs moyens pour h&eacute;berger un blog &agrave; la maison.
 
 ## D&eacute;pendences
 
@@ -86,9 +86,9 @@ Il y a deux mani&egrave;res d'installer Makefly sur votre ordinateur :
 
 ### Utiliser la derni&egrave;re version stable
 
-R&eacute;cup&eacute;rez simplement la derni&egrave;re version sur le site officiel : [http://makefly.e-mergence.org/](http://makefly.e-mergence.org/ "Aller sur le site officiel de Makefly").
+R&eacute;cup&eacute;rez simplement la derni&egrave;re version sur le site officiel : [http://makefly.depotoi.re/](http://makefly.depotoi.re/ "Aller sur le site officiel de Makefly").
 
-Par exemple [la version 0.3 (fr)](http://makefly.e-mergence.org/makefly_0.3_fr.zip "T&eacute;l&eacute;charger Makefly 0.3 (fr)").
+Par exemple [la version 0.3 (fr)](http://makefly.depotoi.re/makefly_0.3_fr.zip "T&eacute;l&eacute;charger Makefly 0.3 (fr)").
 
 Puis extraire le contenu de l'archive dans un dossier.
 
@@ -317,7 +317,7 @@ Voici quelques options que vous pouvez changer :
   * BLOG\_DESCRIPTION : Une description plus compl&egrave;te de votre blog
   * BLOG\_LANG : votre code langue. &Agrave; noter qu'un fichier lang/translate.VOTRE\_CODE\_LANGAGE doit exister. Par exemple si je configure ce param&egrave;tre &agrave; *fr*, un fichier *lang/translate.fr* doit exister !
   * BLOG\_CHARSET : votre configuration d'encodage. Doit ressembler &agrave; quelque chose comme **UTF-8** ou **ISO-8859-1**. Si vous ne savez pas ce que c'est, laissez la param&eacute;tr&eacute;e &agrave; *UTF-8*.
-  * BLOG\_URL : adresse URL absolue de votre blog. Par exemple http://makefly.e-mergence.org/.
+  * BLOG\_URL : adresse URL absolue de votre blog. Par exemple http://makefly.depotoi.re/.
   * BLOG\_AUTHOR : Auteur principal du blog. Permet un r&eacute;f&eacute;rencement dans les moteurs de recherche.
   * BLOG\_COPYRIGHT : Copyright du blog. Permet un r&eacute;f&eacute;rencement dans les moteurs de recherche.
 
@@ -331,8 +331,8 @@ Voici quelques options que vous pouvez changer :
   * INDEX\_FILENAME : Nom donn&eacute; &agrave; toutes les pages index. Par exemple avec **INDEX\_FILENAME = mainpage**, la liste des articles se nommera *mainpage.html*.
   * PAGE\_EXT : suffixe que toutes les pages auront. **NE PAS OUBLIER D'AJOUTER UN POINT AVANT LE SUFFIXE**. Par exemple avec **PAGE\_EXT = .html**, toutes les pages seront de la forme : *index.html*.
   * ABOUT\_FILENAME : Comme son nom l'indique, c'est le titre du fichier utilis&eacute; pour la page "&Agrave; propos". Si vous le param&eacute;trez &agrave; "apropos" par exemple, vous devez cr&eacute;er un fichier "apropos.md" dans le r&eacute;pertoire nomm&eacute; **special** afin de permettre  l'obtention d'une page d'&agrave; propos. Si vous le changez &agrave; *toto*, vous devez cr&eacute;er un fichier *toto.md* dans le dossier **special**.
-  * POSTDIR\_NAME : Le nom que vous voudriez afficher dans l'URL quand un utilisateur se rend sur la page de la liste des articles. Par exemple, param&eacute;tr&eacute; &agrave; "mesarticles" : http://makefly.e-mergence.org/mesarticles/ affichera la liste de vos articles. Ceci est utile pour divers langages.
-  * TAGDIR\_NAME : M&ecirc;me chose que pour le param&egrave;tre *POSTDIR\_NAME*, mais pour les mots-cl&eacute;s (tags) cette fois. Modifiez le en "motcle" par exemple et l'adresse suivante affichera la liste des mots-cl&eacute;s : http://makefly.e-mergence.org/motcle/.
+  * POSTDIR\_NAME : Le nom que vous voudriez afficher dans l'URL quand un utilisateur se rend sur la page de la liste des articles. Par exemple, param&eacute;tr&eacute; &agrave; "mesarticles" : http://makefly.depotoi.re/mesarticles/ affichera la liste de vos articles. Ceci est utile pour divers langages.
+  * TAGDIR\_NAME : M&ecirc;me chose que pour le param&egrave;tre *POSTDIR\_NAME*, mais pour les mots-cl&eacute;s (tags) cette fois. Modifiez le en "motcle" par exemple et l'adresse suivante affichera la liste des mots-cl&eacute;s : http://makefly.depotoi.re/motcle/.
   * THEME : Nom du th&egrave;me choisi. Les th&egrave;mes sont disponibles dans le dossier nomm&eacute; **template**. Chaque th&egrave;me poss&egrave;de son propre r&eacute;pertoire. Par exemple, le th&egrave;me *default* poss&egrave;de son propre r&eacute;pertoire **template/default**.
   * FLAVOR: Ce nom sera utilis&eacute; pour choisir la couleur de votre th&egrave;me (si elle existe)
   * BACKUPDIR : Nom du dossier o&ugrave; seront sauv&eacute;s les fichiers r&eacute;sultant de la commande *backup*.

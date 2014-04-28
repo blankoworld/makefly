@@ -2,4 +2,5 @@
         <title>${TITLE}</title>
         <link>${LINK}</link>
         <description><![CDATA[${DESCRIPTION}]]></description>
+        <pubDate>${DATE}</pubDate>
     </item>
