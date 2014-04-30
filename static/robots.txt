@@ -1,0 +1,30 @@
+## Tout les robots
+User-Agent: *
+## Autorisations
+Allow: /posts/
+Allow: /img/
+Allow: /tags/
+## Refus Section 1
+Disallow: /css/
+Disallow: /images/
+Disallow: /js/
+Disallow: /themes/
+## Refus Section 2
+Disallow: /images/
+Disallow: /cgi-bin/
+Disallow: /error
+Disallow: /mysql/
+#Disallow: /lostpasswd.php
+#Disallow: /liens/register.php
+## Evite de dupliquer les donnees
+Disallow: /*.php$
+Disallow: /*.js$
+Disallow: /*.inc$
+Disallow: /*.css$
+Disallow: /*.txt$
+
+## VTFF (va te faire foutre)
+User-Agent: MSNBot
+Disallow: /
+
+
