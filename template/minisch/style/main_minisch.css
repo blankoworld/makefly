@@ -87,8 +87,8 @@ aside, section, article, nav, header, abbr, time, ul footer {
 }
 
 ul, ol {
-    padding: 0;
-    list-style: none outside none;
+    padding: 0 0 0 25px;
+    list-style: square outside none;
 }
 
 hr {
