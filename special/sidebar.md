@@ -8,7 +8,6 @@
 
 ## More info
 
-  * [Themes](http://makefly.depotoi.re/themes/index.html)
   * [Documentation](http://makefly.depotoi.re/documentation.html)
   * [Roadmap](http://forge.depotoi.re/projects/makefly/roadmap)
 
