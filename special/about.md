@@ -2,7 +2,7 @@
 
 ## What's Makefly ?
 
-Makefly is a static weblog engine working thanks to a BSD makefile under GNU Affero General Public License (AGPL).
+Makefly is a fast and lightweight alternative to Nanoblogger static weblog engine. It's Lua and BSD Makefile powered and is provided under the GNU Affero General Public License (AGPL).
 
 It's composed of:
 
