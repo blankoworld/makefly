@@ -611,10 +611,13 @@ section#flux {
 	    border-radius: 3px;
 	    display: inline-block;
 	    vertical-align: top;
-	    text-align: center;
-	    padding: 6px 0 0;
-	    width: 76%;
+	    text-align: left;
+	    padding: 0 0 0 1%;
+	    width: 75%;
 	}
+  section#flux .widget_tag_cloud {
+      text-align: center;
+  }
 }
 body.single section#flux,
 body.page section#flux {
