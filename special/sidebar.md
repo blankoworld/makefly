@@ -16,5 +16,5 @@
 
   * [Report a bug](https://github.com/blankoworld/makefly/issues)
   * [Stats](http://www.ohloh.net/p/makefly)
-  * [Identica](http://identi.ca/group/makefly) (social network)
+  * [Social network](http://status.vinilox.eu/group/makefly)
 
