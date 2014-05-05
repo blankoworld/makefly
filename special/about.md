@@ -74,7 +74,7 @@ Some repositories could be found here:
   * [Github](https://github.com/blankoworld/makefly "Read more about Makefly on Github")
   * [Personal](http://git.dossmann.net/blogbox/makefly.git/ "My personal repository for Makefly")
 
-Some info on Makefly could be found on [identi.ca/group/makefly](http://identi.ca/group/makefly "Go to makefly's group on Identi.ca").
+Some info on Makefly could be found on [vinilox.eu/group/makefly](http://vinilox.eu/group/makefly "Go to makefly's group on Identi.ca").
 
 For those who likes statistics, you can find [Makefly on ohloh](http://www.ohloh.net/p/makefly "Have more stats about Makefly project").
 
