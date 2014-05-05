@@ -1,6 +1,6 @@
 BLOG_TITLE = Makefly
-BLOG_SHORT_DESC = A static makefile weblog engine
-BLOG_DESCRIPTION = Makefly is a static weblog engine written in Lua and using a Makefile
+BLOG_SHORT_DESC = A fast and lightweight static weblog engine
+BLOG_DESCRIPTION = Makefly is a fast and lightweight alternative to Nanoblogger static weblog engine. It's Lua and BSD Makefile powered and is provided under the AGPL License.
 BLOG_LANG = en
 BLOG_CHARSET = UTF-8
 BLOG_URL = http://localhost/~${USER}

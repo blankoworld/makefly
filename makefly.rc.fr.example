@@ -1,6 +1,6 @@
 BLOG_TITLE = Makefly
-BLOG_SHORT_DESC = Un moteur de blog statique utilisant makefile
-BLOG_DESCRIPTION = Makefly est un moteur de blog statique écrit en Lua et utilisant un fichier Makefile
+BLOG_SHORT_DESC = Un moteur de blog statique rapide et léger
+BLOG_DESCRIPTION = Makefly est une alternative rapide et légère au moteur de blog statique Nanoblogger. Il tient sa puissance de Lua et des BSD Makefile. Il est fournit sous Licence AGPL.
 BLOG_LANG = fr
 BLOG_CHARSET = UTF-8
 BLOG_URL = http://localhost/~${USER}
