@@ -2,7 +2,7 @@
 
 Makefly could be followed on [the official Makefly weblog](http://makefly.depotoi.re/ "Visit official website").
 
-But for those who prefer status.net, you could use the [makefly social network group](http://vinilox.eu/group/makefly).
+But for those who prefer status.net, you could use the [makefly social network group](http://status.vinilox.eu/group/makefly).
 
 ## Social coding
 
