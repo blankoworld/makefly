@@ -6,7 +6,7 @@
 
 ## Description
 
-Makefly is a fast and lightweight command line static weblob engine which uses the [Markdown format](http://daringfireball.net/projects/markdown/syntax "Discover the Markdown format") for post writting and rendering.
+Makefly is a fast and lightweight command line static weblog engine which uses the [Markdown format](http://daringfireball.net/projects/markdown/syntax "Discover the Markdown format") for post writting and rendering.
 
 It consists in a homepage, a post list, a tag list and an about's page.
 
