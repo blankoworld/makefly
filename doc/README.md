@@ -10,7 +10,7 @@ Makefly is a fast and lightweight command line static weblog engine which uses t
 
 It consists in a homepage, a post list, a tag list and an about's page.
 
-It gives the given functionnalities:
+It gives these functionnalities:
 
   * themes
   * RSS feed
