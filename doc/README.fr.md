@@ -73,7 +73,7 @@ Et le tour est jou&eacute; !
 Vous avez le choix entre : 
 
   * [la version en cours de d&eacute;veloppement](https://github.com/blankoworld/makefly/archive/master.zip "T&eacute;l&eacute;charger la derni&egrave;re version en cours de d&eacute;veloppement")
-  * [la version stable 0.3 FR (recommand&eacute;e)](http://makefly.depotoi.re/makefly_0.3_fr.zip)
+  * [la version stable 0.3 FR (recommand&eacute;e)](http://makefly.depotoi.re/makefly_0.3_fr.zip "T&eacute;l&eacute;charger la version stable 0.3 FR")
 
 Il suffit donc de :
 

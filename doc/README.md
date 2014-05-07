@@ -6,11 +6,11 @@
 
 ## Description
 
-Makefly is a fast and lightweight command line static weblob engine which uses the [Markdown format](http://daringfireball.net/projects/markdown/syntax "Discover the Markdown format") for post writting and rendering.
+Makefly is a fast and lightweight command line static weblog engine which uses the [Markdown format](http://daringfireball.net/projects/markdown/syntax "Discover the Markdown format") for post writting and rendering.
 
 It consists in a homepage, a post list, a tag list and an about's page.
 
-It gives the given functionnalities:
+It gives these functionnalities:
 
   * themes
   * RSS feed
@@ -72,82 +72,42 @@ That's all!
 
 There is 2 ways to install Makefly on your computer:
 
-  * [current development version](https://github.com/blankoworld/makefly/archive/master.zip "T&eacute;l&eacute;charger la derni&egrave;re version en cours de d&eacute;veloppement")
-  * [la version stable 0.3 FR (recommand&eacute;e)](http://makefly.depotoi.re/makefly_0.3_fr.zip)
+  * [current development version](https://github.com/blankoworld/makefly/archive/master.zip "Download current development version")
+  * [0.3 stable version (recommanded)](http://makefly.depotoi.re/makefly_0.3.zip "Download 0.3 stable version")
 
-  * Using last stable version by fetching a tarball (recommanded)
-  * Using current developement version by using a repository (for advanced user only)
+So you just have to:
 
-### Using last stable version
+  * fetch the choosen version
+  * extract the content in a directory on your computer
 
-Just download last version on official website: [http://makefly.depotoi.re/](http://makefly.depotoi.re/ "Go to official makefly website").
+And Makefly is installed.
 
-For an example [0.3 version](http://makefly.depotoi.re/makefly_0.3.zip "Download Makefly 0.3").
+### Configuration
 
-Then extract tarball's content into a directory.
-
-### Using current developement version
-
-You have to use **git** command. If you don't know what it is, have a look to [Git SCM website](http://git-scm.com/ "Learn more about Git").
-
-After git installation, go to a working directory and do this:
-
-    git clone git://gitorious.org/makefly/master.git makefly_dev
-
-This will fetch makefly repository and add files into **makefly\_dev** directory.
-
-**Note**: Using git is useful to easily update makefly. In fact:
-
-    git pull git://gitorious.org/makefly/master.git
-
-will update your makefly.
-
-**WARNING**: You have to always backup your files! This method could delete some changes you made previously.
-
-## Configuration
-
-### Stable version
+#### Stable version
 
 No special configuration required. Check that **makefly.rc** file is present. Otherwise copy **makefly.rc.example** file or rename it to **makefly.rc**.
 
-### Trunk version
+#### Trunk version
 
 The first time you use Makefly you don't have any configuration file. An example is available in *makefly.rc.example*. Copy it to **makefly.rc** to permit Makefly to work.
 
-### More info
+#### More info
 
 For more information please read **The makefly.rc configuration file** section.
 
+# Use it!
 
+**By default the content of the blog is located in the pub directory**.
 
+## In brief
 
+Some useful commands:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  * **pmake**: Produce the blog. Available in the **pub** directory
+  * **pmake help**: Display available commands
+  * **pmake add**: Create a post and add its main metadata
+  * **pmake clean**: Trash the entire final directory content and empty the Makefly's *cache*.
 
 ## Create content
 
