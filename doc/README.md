@@ -323,7 +323,7 @@ Here is some options you can change:
 
 A script that permits to migrate from Nanoblogger exists: [nb2makefly](http://github.com/blankoworld/nb2makefly "Discover nb2makefly").
 
-I guest you to read the [nb2makefly documentation](https://github.com/blankoworld/nb2makefly/blob/master/README.md "Read the nb2makefly documentation") to know more about it.
+I guest you to read the [nb2makefly documentation](https://github.com/blankoworld/nb2makefly/blob/master/README.en.md "Read the nb2makefly documentation") to know more about it.
 
 # The project
 
