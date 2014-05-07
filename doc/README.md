@@ -23,6 +23,7 @@ It gives the given functionnalities:
   * backup
   * publishing scripts to remote servers
   * quick theme creation
+  * Nanoblogger posts migration (Cf. **Migrate from Nanoblogger** section)
 
 # Installation
 
@@ -357,6 +358,12 @@ Here is some options you can change:
   * COMPRESS_TOOL (optional) : Shell tool used for backup compression via *backup* command (Cf. *Backup* section). Example : **gzip**.
   * COMPRESS_EXT (optional) : Backup file extension. Warning: do not forget the point char. Example: **.gz**.
   * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
+
+# Migrate from Nanoblogger
+
+A script that permits to migrate from Nanoblogger exists: [nb2makefly](http://github.com/blankoworld/nb2makefly "Discover nb2makefly").
+
+I guest you to read the [nb2makefly documentation](https://github.com/blankoworld/nb2makefly/blob/master/README.md "Read the nb2makefly documentation") to know more about it.
 
 # The project
 

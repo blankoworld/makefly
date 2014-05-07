@@ -23,6 +23,7 @@ Il propose les fonctionnalités suivantes :
   * copie de sauvegarde
   * script de publication &agrave; distance
   * cr&eacute;ation rapide de nouveaux th&egrave;mes
+  * migration depuis Nanoblogger (Cf. section **Migration depuis Nanoblogger**)
 
 # Installation
 
@@ -319,6 +320,12 @@ Voici quelques options que vous pouvez changer :
   * COMPRESS_TOOL (optionnel) : Outil console utilis&eacute; pour la compression lors des sauvegardes via la commande *backup* (Cf. Chapitre *Sauvegardes*). Exemple : **gzip**.
   * COMPRESS_EXT (optionnel) : Extension des fichiers de sauvegarde. Attention &agrave; ne pas oublier le caract&egrave;re point. Exemple : **.gz**.
   * SORT (optionnel) : Tri la liste des billets. Utilisez ASC pour que les billets soient triés du plus anciens au plus récent. DESC (valeur par défaut) tri les billets du plus récent au plus ancien.
+
+# Migration depuis Nanoblogger
+
+Un script de migration depuis Nanoblogger existe: [nb2makefly](http://github.com/blankoworld/nb2makefly "D&eacute;couvrir nb2makefly").
+
+Je vous invite &agrave; lire la [documentation de nb2makefly](https://github.com/blankoworld/nb2makefly/blob/master/README.md "Lire la documentation de nb2makefly") pour cela.
 
 # Le projet
 
