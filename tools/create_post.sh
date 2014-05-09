@@ -116,7 +116,7 @@ elif ! [ -z "$content" ]; then
 fi
 
 # confirm file creation
-echo "Post: ${file}"
+echo -e "Metafile: ${dbfile}\nPost: ${file}"
 
 #####
 ## END
