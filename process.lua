@@ -302,6 +302,8 @@ end
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
 function createPostIndex(posts, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
+  -- check directory
+  checkDirectory(postpath)
   -- open result file
   local post_index = io.open(postpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(index_name) .. resultextension, 'wb')
   -- prepare rss elements
@@ -605,6 +607,8 @@ end
 function createTagIndex(index_filename, template_index_filename, template_element_filename)
   local index = rope()
   index:push(header)
+  -- check tagpath directory
+  checkDirectory(tagpath)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
   -- read general tag index template file
   local template_index = readFile(template_index_filename, 'r')
