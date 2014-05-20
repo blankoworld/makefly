@@ -99,8 +99,8 @@ all:
 # EXAMPLE: pub/* AND tmp/*
 clean:
 	$Qif test "${EXTENSION_ERROR}" = "1"; then echo "You cannot choose an extension (${PAGE_EXT}) similar to template's one (${TMPL_EXT})."; exit 1; fi
-	$Q${rm} -rf ${DESTDIR}/ && echo "-- Removed: ${DESTDIR} directory"
-	$Q${rm} -rf ${TMPDIR}/ && echo "-- Removed: ${TMPDIR} directory"
+	$Q${rm} -rf ${DESTDIR}/* && echo "-- Removed: ${DESTDIR} directory"
+	$Q${rm} -rf ${TMPDIR}/* && echo "-- Removed: ${TMPDIR} directory"
 	$Q${rm} -f ${DOCDIR}/*${PAGE_EXT} && echo "-- Removed: ${DOCDIR}/*${PAGE_EXT} files"
 
 # Create documentation
