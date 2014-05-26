@@ -804,7 +804,7 @@ table.insert(threads, coroutine.create(function () copyFile(css_file, publicpath
 table.insert(threads, coroutine.create(function () copyFile(css_color_file, publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
 -- Copy static theme directory
 theme_static_directory = themepath .. '/static'
-table.insert(threads, coroutine.create(function () copy(theme_static_directory, publicpath) end))
+table.insert(threads, coroutine.create(function () copy(theme_static_directory, publicpath, { BLOG_URL = blog_url }) end))
 
 -- Add result to replacements table (to substitute ${VARIABLES} in files)
 replacements = {
@@ -984,7 +984,7 @@ end
 
 -- Copy static directory content to public path
 static_directory = staticpath
-copy(static_directory, publicpath)
+copy(static_directory, publicpath, { BLOG_URL = blog_url })
 print (string.format(_("-- [%s] Folder content copied: %s"), display_success, staticpath))
 
 -- Browse DB files
