@@ -214,7 +214,7 @@ end
 -- @usage copy('/home/olivier/Pictures', '/home/olivier/Pictures2') => will copy all Pictures' content to Pictures2
 -- @return Nothing. The '@destination' directory should be created.
 -------------------------------------------------------------------------------
-function copy(origin, destination)
+function copy(origin, destination, sreplace)
   local attr = lfs.attributes(origin)
   if attr and attr.mode == 'directory' then
     -- create destination if no one exists
@@ -225,17 +225,17 @@ function copy(origin, destination)
     for element in lfs.dir(origin) do
       if element ~= '.' and element ~= '..' then
         local path = origin .. '/' .. element
-  -- launch copy directory if element is a directory, otherwise copy file
-  if lfs.attributes(path) and lfs.attributes(path).mode == 'directory' then
-    copy(path, destination .. '/' .. element)
-  else
-    copyFile(path, destination .. '/' .. element)
-  end
+        -- launch copy directory if element is a directory, otherwise copy file
+        if lfs.attributes(path) and lfs.attributes(path).mode == 'directory' then
+          copy(path, destination .. '/' .. element, sreplace)
+        else
+          copyFile(path, destination .. '/' .. element, sreplace)
+        end
       end
     end
   -- if origin is a file, just launch copyFile function
   elseif attr and attr.mode == 'file' then
-    copyFile(origin, destination)
+    copyFile(origin, destination, sreplace)
   else
     print (string.format(_("-- [%s] %s not found in copy method!"), display_error, origin))
     os.exit(1)
