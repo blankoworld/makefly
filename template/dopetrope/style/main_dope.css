@@ -1,0 +1,9 @@
+h2 {
+  line-height: 1em;
+}
+ul.social li a.fa-rss {
+  background: #de8237;
+}
+ul.social li a.fa-rss:hover {
+  background: #f18d3c;
+}
