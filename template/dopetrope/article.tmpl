@@ -1,4 +1,5 @@
     <article class="box is-post ${ARTICLE_CLASS_TYPE}" id="post-${POST_ESCAPED_TITLE}">
+      <a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}" class="image image-full"><img src="${BLOG_URL}/images/brume.jpg" alt="Image de brume sur la forêt"/></a>
       <header>
         <h2 class='title'><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${POST_TITLE}</a></h2>
         <p><strong>${POSTED}</strong>&#8239;: <time class="entry-date" datetime="${DATETIME}">${DATE}</time>. <span class="author"><strong>${AUTHOR_LABEL}</strong>&#8239;: ${POST_AUTHOR}</span></p>
@@ -11,7 +12,7 @@
           <p>${TAG_TITLE}&#8239;: ${TAG_LINKS_LIST}</p>
         </section>
         <section class="permalink">
-          <p><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${PERMALINK_TITLE}</a></p>
+          <p><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}" class="button fa fa-file-text">${PERMALINK_TITLE}</a></p>
         </section>
       </footer>
       <section class="comment" id="comment-${POST_ESCAPED_TITLE}">

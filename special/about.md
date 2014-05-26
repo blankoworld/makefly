@@ -1,3 +1,7 @@
+<section>
+  <header class="major"><h2>À propos</h2></header>
+  <section class="box">
+
 Que serait un site personnel sans présentation de soi et une ribambelle de phrases commençant par "moi je personnellement moi même estime que je crois que je ...". Bref vous avez compris que mon esprit est aussi tordu que l'introduction de cette page.
 
 **NB** : Si vous cherchez des **mentions légales**, c'est en bas de cette page que vous les trouverez !
@@ -69,3 +73,6 @@ Conformément à la loi Informatique et Liberté 78-17 du 6 janvier 1978 modifi�
 Ce droit s'exerce, en justifiant de son identité par courrier électronique : olivier+rectification [CHEZ] dossmann [POINT] net
 
 Aucune donnée à caractère personnelle n'est et ne sera collectée.
+
+</section>
+</section>

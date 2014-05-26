@@ -1,5 +1,11 @@
-      <li>
-        <span class="date">${DATE} <strong>${SHORT_DATE}</strong></span>
-        <h3><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${POST_TITLE}</a></h3>
-        <p>${POST_AUTHOR} - ${TAG_TITLE}&#8239;: ${TAG_LINKS_LIST}</p>
-      </li>
+      <section class="box">
+        <a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}" class="image image-full"><img src="${BLOG_URL}/images/fleur.jpg" alt="Image de brume sur la forêt"/></a>
+        <header>
+          <h3><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${POST_TITLE}</a></h3>
+        </header>
+        <section>
+        </section>
+        <footer>
+          <p>${SHORT_DATE} - ${POST_AUTHOR} - ${TAG_TITLE}&#8239;: ${TAG_LINKS_LIST}</p>
+        </footer>
+      </section>
