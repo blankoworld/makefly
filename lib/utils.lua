@@ -211,6 +211,7 @@ end
 -- Recursive copy from a directory to another one
 -- @param origin original directory to copy
 -- @param destination destination where to copy the given directory ('@origin')
+-- @param sreplace a table containing variable to be replaced by a given value during the copy
 -- @usage copy('/home/olivier/Pictures', '/home/olivier/Pictures2') => will copy all Pictures' content to Pictures2
 -- @return Nothing. The '@destination' directory should be created.
 -------------------------------------------------------------------------------
