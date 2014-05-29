@@ -7,3 +7,15 @@ ul.social li a.fa-rss {
 ul.social li a.fa-rss:hover {
   background: #f18d3c;
 }
+
+blockquote {
+  display: block;
+  font-style: italic;
+  margin-bottom: 24px;
+  margin-left: 1.5em;
+  min-height: 5px;
+  padding: 0 0.7em;
+  text-align: left;
+  position: relative;
+  border-left: 4px solid #d52349;
+}
