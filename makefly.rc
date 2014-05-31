@@ -19,6 +19,6 @@ THEME = dopetrope
 TAGDIR_NAME = motcle
 POSTDIR_NAME = article
 JSKOMMENT = 1
-JSKOMMENT_URL = http://jskomment.e-mergence.org
+JSKOMMENT_URL = http://jskomment.depotoi.re
 ELI_API = http://status.vinilox.eu/api/
 MAX_PAGE = 15
