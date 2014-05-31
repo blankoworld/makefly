@@ -19,3 +19,8 @@ blockquote {
   position: relative;
   border-left: 4px solid #d52349;
 }
+
+.box ul {
+  list-style-type: disc;
+  margin-left: 25px;
+}
