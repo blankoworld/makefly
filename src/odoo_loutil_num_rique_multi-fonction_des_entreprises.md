@@ -22,7 +22,7 @@ On ne sait pas ce que firent les bricoleurs du dimanche pendant tout ce temps, t
 
 Quoiqu'il en soit, même après la sortie les commerciaux ne semblaient pas satisfaits. Il fallait encore gonfler le buste, alors on a eu droit à [une campagne Indiegogo pour le point of sale façon OpenERP](https://www.indiegogo.com/projects/opensource-your-shop).
 
-Mais quelques choses de plus sombre, de plus noir, de plus *innovant* se tramer. Tapis dans l'ombre : une souris filaire !
+Mais quelques choses de plus sombre, de plus noir, de plus *innovant* se tramait. Tapie dans l'ombre : une souris filaire !
 
 > Quoi, une souris ?
 
@@ -30,7 +30,7 @@ Non, c'est une blague. L'innovation continua jusqu'à son paroxysme et OpenERP s
 
 ### Diversifier pour mieux régner
 
-OpenERP sort donc quelques **grosses** fonctionnalités supplémentaire, assez conséquentes : 
+OpenERP sort donc quelques **grosses** fonctionnalités supplémentaires, assez conséquentes : 
 
   * Générateur de site Web
   * Blog
@@ -66,7 +66,7 @@ Nous verrons bien si - avec le temps - Odoo saura nous émerveiller autant que T
 
 ### Edit du 02 juin 2014
 
-Fabien Pinckaers m'a écrit pour quelques petits informations complémentaires suite à la lecture de ce billet, voici son courriel : 
+Fabien Pinckaers m'a écrit pour quelques informations complémentaires suite à la lecture de ce billet, voici son courriel : 
 
 <pre>
 Petites corrections:
