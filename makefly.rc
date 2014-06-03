@@ -1,6 +1,6 @@
-BLOG_TITLE = Joueb d'Olivier
+BLOG_TITLE = Blog d'Olivier
 BLOG_SHORT_DESC = Manchot distro-migrateur
-BLOG_DESCRIPTION = Joueb d'Olivier : récits et nouvelles touchant de près ou de loin la vie d'un défenseur des libertés intellectuelles dans le monde informatique
+BLOG_DESCRIPTION = Blog d'Olivier : récits et nouvelles touchant de près ou de loin la vie d'un défenseur des libertés intellectuelles dans le monde informatique
 BLOG_LANG = fr
 BLOG_CHARSET = UTF-8
 BLOG_URL = https://olivier.dossmann.net/blog
