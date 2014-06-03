@@ -19,6 +19,7 @@ Disallow: /*.php$
 Disallow: /*.js$
 Disallow: /*.inc$
 Disallow: /*.css$
+Sitemap: https://olivier.dossmann.net/sitemap.xml.gz
 
 ## VTFF (va te faire foutre)
 User-Agent: MSNBot
