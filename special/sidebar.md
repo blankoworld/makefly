@@ -8,12 +8,13 @@
   * [Postblue](http://postblue.info/ "Le blog de Postblue")
   * [BlogiGor](https://id-libre.org/ "blogiGor|traces éphémères")
   * [Halpanet](http://www.halpanet.org/ "Découvrir la liberté informatique avec Halpanet")
-  * [fabienwang](http://www.fabienwang.fr/ "Adepte et développeur de logiciels Libres")
   * [Schoewilliam](http://schoewilliam.fr/ "Carnet web d'un habitant de la banquise GNU/Linuxienne.")
+  * [L'appel du Gnou](http://blog.wolf.am/ "Le blog d'un vadrouilleur libre, explorateur de gnu/linux et d'autres horizons")
   * [Porneia delights](http://porneia.free.fr/pub/ "I used to be schizophrenic but now we are going much better. We are the Porneia delights. We are persistent and reluctant. We also do not really come from outer space.")
-  * [L'antre de Lenezir](http://blog.lenezir.fr/ "Les péripéties d'un linuxien sur frugalware")
 
 <!-- Useless links
+* [fabienwang](http://www.fabienwang.fr/ "Adepte et développeur de logiciels Libres")
+* [L'antre de Lenezir](http://blog.lenezir.fr/ "Les péripéties d'un linuxien sur frugalware")
 <a href="http://thebubblelove10.skyrock.com/" title="Journal de Frenchlover">Frenchlover</a><br />
 <a href="http://zmeuh.net/" title="Oh la vache !">Zmeuh.NET</a><br />
 <a href="http://dany-the-red.net/" title="Le blog de Dany the red">Dany the Red</a><br />
@@ -24,7 +25,6 @@
 ## Nanoblogger préférés
 
   * [Nanoblogger FR](http://oceamer.com/~nanoblogger/ "Le site non officiel francophone du c&eacute;l&egrave;bre outil de publication en mode console : Nanoblogger")
-  * [L'appel du Gnou](http://blog.wolf.am/ "Le blog d'un vadrouilleur libre, explorateur de gnu/linux et d'autres horizons")
 
 ## Informatique
 
