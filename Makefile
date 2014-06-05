@@ -185,7 +185,7 @@ theme: ${TMPLDIR}
 .endif
 
 # Create post: simple post creation
-# note: create_post.sh -q 1 do not display any editor
+# note: create_post.sh -q do not display any editor
 # You can automatically add a post by using this method:
 # content="This a quick content" pmake add < <(echo "author"; echo "title"; echo "description"; echo "tag1, tag2"; echo "type"; echo "keywords")
 createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
@@ -193,7 +193,7 @@ createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 		"DBDIR=${DBDIR}" \
 		"SRCDIR=${SRCDIR}" > ${TMPDIR}/create_post.sh && \
 		chmod +x ${TMPDIR}/create_post.sh && \
-		content="${content}" ${TMPDIR}/create_post.sh -q 0 && \
+		content="${content}" ${TMPDIR}/create_post.sh -q && \
 		${rm} ${TMPDIR}/create_post.sh || \
 		{ \
 			${rm} -rf ${TMPDIR}/create_post.sh && \
