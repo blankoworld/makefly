@@ -402,7 +402,7 @@ end
 -------------------------------------------------------------------------------
 function deleteStringDuplicate(string, char)
   local char = char or '_'
-  local res = string.gsub(string, char .. char, char) or string
+  local res = string.gsub(string, char .. '+', char) or string
   return res
 end
 
