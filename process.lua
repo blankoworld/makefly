@@ -236,7 +236,7 @@ function createPost(file, config, template_file, template_tag_file)
       POST_TITLE = config['TITLE'],
       ARTICLE_CLASS_TYPE = config['TYPE'] or '',
       CONTENT = markdown_content,
-      POST_FILE = title .. resultextension,
+      POST_FILE = keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
       TAG_LINKS_LIST = post_tag_links and replace(post_tag_links, replacements) or '',
       DATE = os.date(date_format, timestamp) or '',
       DATETIME = os.date(datetime_format_default, timestamp) or '',
@@ -367,7 +367,7 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
       -- local substitutions
       local metadata = {
         POST_TITLE = v['conf']['TITLE'],
-        POST_FILE = title .. resultextension,
+        POST_FILE = keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
         POST_AUTHOR = v['conf']['AUTHOR'],
         POST_DESCRIPTION = v['conf']['DESCRIPTION'] or '',
         SHORT_DATE = os.date(short_date_format, timestamp) or '',
