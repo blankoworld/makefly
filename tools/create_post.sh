@@ -66,17 +66,17 @@ fi
 
 # Fetch data
 while [ -z "$author" ]; do
-  read -p "Author: " author
+  read -e -p "Author: " author
 done
 while [ -z "$title" ]; do
-  read -p "Title: " title
+  read -e -p "Title: " title
 done
-read -p "Description: " desc
+read -e -p "Description: " desc
 while [ -z "$tags" ]; do
-  read -p "Tags (use comma as separator): " tags
+  read -e -p "Tags (use comma as separator): " tags
 done
-read -p "Special post type (normal, special, news, etc.): " post_type
-read -p "Keywords: " keywords
+read -e -p "Special post type (normal, special, news, etc.): " post_type
+read -e -p "Keywords: " keywords
 timestamp=`date +'%s'`
 
 # code retrived from Nanoblogger translit_text method with a little improvement for double "_"
