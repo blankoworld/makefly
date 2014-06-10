@@ -204,6 +204,23 @@ function getKeywords(config)
 end
 
 -------------------------------------------------------------------------------
+-- Add specific comments substitutions (JSKOMMENT_CONTENT variable)
+-- @param sub Substitutions table
+-- @param config Post configuration table
+-- @param title Post title
+-- @return Substitutions table with JSKOMMENT_CONTENT if needed
+-------------------------------------------------------------------------------
+function commentSubstitutions(sub, config, title)
+  if template_comment then
+    local jskomment_prefix = config['JSKOMMENT_PREFIX'] and config['JSKOMMENT_PREFIX'] ~= '' and config['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
+    local jskomment_id = jskomment_prefix .. '/' .. title
+    local jskomment_content = utils.replace(template_comment, {JSKOMMENT_ID=jskomment_id})
+    sub['JSKOMMENT_CONTENT'] = jskomment_content
+  end
+  return sub
+end
+
+-------------------------------------------------------------------------------
 -- Create post page for given '@file'
 -- @param file filename of post in db directory
 -- @param config configuration elements as TITLE, TAGS, TYPE, etc.
@@ -251,20 +268,13 @@ function createPost(file, config, data)
     -- create substitutions list
     local substitutions = utils.getSubstitutions(replacements, post_replacements)
     -- add comment block if comment system is activated
-    if template_comment then
-      local jskomment_prefix = config['JSKOMMENT_PREFIX'] and config['JSKOMMENT_PREFIX'] ~= '' and config['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
-      local jskomment_id = jskomment_prefix .. '/' .. title
-      local jskomment_content = utils.replace(template_comment, {JSKOMMENT_ID=jskomment_id})
-      substitutions['JSKOMMENT_CONTENT'] = jskomment_content
-    end
+    substitutions = commentSubstitutions(substitutions, config, title)
     -- ${VARIABLES} substitution on markdown content
     local flatten_final_content = post:flatten()
     local final_content = utils.replace(flatten_final_content, substitutions)
     -- First time we replace element, CONTENT will get markdown_content. But markdown_content was not replaced itself with replacements elements. The next line is here to do that
     final_content = utils.replace(final_content, substitutions)
-    -- write result to output file
     out:write(final_content)
-    -- close output file
     assert(out:close())
     -- Print post title
     print (string.format(_("-- [%s] New post: %s"), display_success, config['TITLE']))
