@@ -17,6 +17,7 @@ function string:split(sep)
   return fields
 end
 
+local utils = { }
 -------------------------------------------------------------------------------
 --- Cut off trailing spaces from string's beginning
 -- @param string string to be replaced
@@ -25,7 +26,7 @@ end
 -- @usage deleteBeginSpace('   a string    ') => 'a string    '
 -- @return a string without any space at the beginning
 -------------------------------------------------------------------------------
-function deleteBeginSpace(string)
+function utils.deleteBeginSpace(string)
   local res = string.gsub(string, "^ *", '')
   return res
 end
@@ -38,7 +39,7 @@ end
 -- @usage deleteEndSpace('   a string    ') => '   a string'
 -- @return a string without any space at the end
 -------------------------------------------------------------------------------
-function deleteEndSpace(string)
+function utils.deleteEndSpace(string)
   local res = string.gsub(string, " *$", '')
   return res
 end
@@ -51,7 +52,7 @@ end
 -- @return a table with key/value where values are file's name
 -- @return nil if path does not exist
 -------------------------------------------------------------------------------
-function listing (path, extension)
+function utils.listing (path, extension)
   local files = {}
   if lfs.attributes(path) then
     for file in lfs.dir(path) do
@@ -76,7 +77,7 @@ end
 -- @usage getConfig('/home/olivier/config.rc')
 -- @return a table with key/value where key = VARIABLE_NAME and value = value
 -------------------------------------------------------------------------------
-function getConfig(file)
+function utils.getConfig(file)
   local result = {}
   local f = assert(io.open(file, 'r'))
   while true do
@@ -103,7 +104,7 @@ end
 -- @usage replace('Hello, my name is ${NAME}. I am ${AGE}.', {NAME='Olivier', AGE='18', TALL='1m80'})
 -- @return the replaced string
 -------------------------------------------------------------------------------
-function replace(string, table)
+function utils.replace(string, table)
   return string:gsub("$(%b{})", function(string)
     return table[string:sub(2,-2)]
    end)
@@ -115,7 +116,7 @@ end
 -- @usage checkDirectory('/home/olivier/new_directory')
 -- @return Nothing. The result is just a directory.
 -------------------------------------------------------------------------------
-function checkDirectory(path)
+function utils.checkDirectory(path)
   if lfs.attributes(path) == nil then
     assert(lfs.mkdir(path))
     -- Display created directory
@@ -132,7 +133,7 @@ end
 -- @return file's content if exists
 -- @return an empty string if file does not exist (or is not a file)
 -------------------------------------------------------------------------------
-function readFile(path, mode)
+function utils.readFile(path, mode)
   local result = ''
   if mode == nil then
     local mode = 'r'
@@ -157,10 +158,10 @@ end
 -- @usage headFile('/home/olivier/document.txt', '15') => read the 15 first lines from document.txt file
 -- @return the first lines from given file
 -------------------------------------------------------------------------------
-function headFile(path, number)
+function utils.headFile(path, number)
   local result = ''
   if not number then
-    return readFile(path, 'r')
+    return utils.readFile(path, 'r')
   else
     local attr = lfs.attributes(path)
     if attr and attr.mode == 'file' then
@@ -186,11 +187,11 @@ end
 -- @usage copyFile('/home/olivier/document.txt', '/home/olivier/document3.txt', {TITLE='My title'}) => will copy document.txt to document3.txt and will replace all ${TITLE} by 'My title' string.
 -- @return Nothing. The result is the '@destination' file.
 -------------------------------------------------------------------------------
-function copyFile(origin, destination, freplace)
+function utils.copyFile(origin, destination, freplace)
   local content = ''
   if lfs.attributes(origin) and lfs.attributes(origin).mode == 'file' then
     -- open the file
-    content = readFile(origin, 'r')
+    content = utils.readFile(origin, 'r')
   end
   -- write in destination
   local result = assert(io.open(destination, 'wb'))
@@ -198,7 +199,7 @@ function copyFile(origin, destination, freplace)
     result:close()
   else
     if freplace then
-      content_replaced = replace(content, freplace)
+      content_replaced = utils.replace(content, freplace)
       result:write(content_replaced)
     else
       result:write(content)
@@ -215,7 +216,7 @@ end
 -- @usage copy('/home/olivier/Pictures', '/home/olivier/Pictures2') => will copy all Pictures' content to Pictures2
 -- @return Nothing. The '@destination' directory should be created.
 -------------------------------------------------------------------------------
-function copy(origin, destination, sreplace)
+function utils.copy(origin, destination, sreplace)
   local attr = lfs.attributes(origin)
   if attr and attr.mode == 'directory' then
     -- create destination if no one exists
@@ -228,15 +229,15 @@ function copy(origin, destination, sreplace)
         local path = origin .. '/' .. element
         -- launch copy directory if element is a directory, otherwise copy file
         if lfs.attributes(path) and lfs.attributes(path).mode == 'directory' then
-          copy(path, destination .. '/' .. element, sreplace)
+          utils.copy(path, destination .. '/' .. element, sreplace)
         else
-          copyFile(path, destination .. '/' .. element, sreplace)
+          utils.copyFile(path, destination .. '/' .. element, sreplace)
         end
       end
     end
   -- if origin is a file, just launch copyFile function
   elseif attr and attr.mode == 'file' then
-    copyFile(origin, destination, sreplace)
+    utils.copyFile(origin, destination, sreplace)
   else
     print (string.format(_("-- [%s] %s not found in copy method!"), display_error, origin))
     os.exit(1)
@@ -250,7 +251,7 @@ end
 -- @usage getSubstitutions({TITLE='My title', NAME='Olivier'}, {AGE='18', NAME='MiniMe'}) => {TITLE='My title', NAME='MiniMe', AGE='18'}
 -- @return a table containing replaces + local_replaces, otherwise return an empty table
 -------------------------------------------------------------------------------
-function getSubstitutions(replaces, local_replaces)
+function utils.getSubstitutions(replaces, local_replaces)
   -- create substitutions list
   local result = {}
   for k, v in pairs(replaces) do 
@@ -267,7 +268,7 @@ end
 -- @use dispatcher()
 -- @return Nothing
 -------------------------------------------------------------------------------
-function dispatcher ()
+function utils.dispatcher ()
   while true do
     local n = #threads
     if n == 0 then break end   -- no more threads to run
@@ -297,7 +298,7 @@ end
 -- @return false if a after b with asc
 -- @return false if a before b with desc
 -------------------------------------------------------------------------------
-function compare_post(a, b, order)
+function utils.compare_post(a, b, order)
   local r = a['file'] > b['file']
   if order == nil then
     r = a['file'] > b['file']
@@ -318,7 +319,7 @@ end
 -- @param f alternative order (function)
 -- @usage for name, line in pairsByKeys(lines) do print(name, line) end => print name, line in alphabetical order
 -------------------------------------------------------------------------------
-function pairsByKeys (t, f)
+function utils.pairsByKeys (t, f)
   local a = {}
   for n in pairs(t) do table.insert(a, n) end
   table.sort(a, f)
@@ -340,7 +341,7 @@ end
 -- @return an empty table if all mandatories elements are present in origin
 -- @return a table with missing elements if some elements are missing in '@origin' table
 -------------------------------------------------------------------------------
-function missingMandatories(origin, mandatories)
+function utils.missingMandatories(origin, mandatories)
   local res = {}
   for i, j in ipairs(mandatories) do
     if origin[j] == nil or origin[j] == '' then
@@ -356,7 +357,7 @@ end
 -- @usage displayMissing({'TITLE', 'DATE'}) => return 'TITLE, DATE'
 -- @return a string containing all elements with a coma separator and a space (could be changed regarding language)
 -------------------------------------------------------------------------------
-function displayMissing(missingTable)
+function utils.displayMissing(missingTable)
   local res = ''
   for i, j in ipairs(missingTable) do
     separator = _(', ')
@@ -377,9 +378,9 @@ end
 -- @return a string containing missing elements if case appears
 -- @return an empty string if no element missed
 -------------------------------------------------------------------------------
-function processMissingInfo(origin, mandatories)
-  local missing = missingMandatories(origin, mandatories)
-  local res = displayMissing(missing) or ''
+function utils.processMissingInfo(origin, mandatories)
+  local missing = utils.missingMandatories(origin, mandatories)
+  local res = utils.displayMissing(missing) or ''
   return res
 end
 
@@ -389,7 +390,7 @@ end
 -- @param string String to test
 -- @return replaced string and number of replacements
 -------------------------------------------------------------------------------
-function keepUnreservedChars(string)
+function utils.keepUnreservedChars(string)
   local res = string.gsub(string, '[^0-9A-Za-z%-._~]', '_') or string
   return res
 end
@@ -400,7 +401,7 @@ end
 -- @param char The char that would be simplified
 -- @return replaced string and number of replacements
 -------------------------------------------------------------------------------
-function deleteStringDuplicate(string, char)
+function utils.deleteStringDuplicate(string, char)
   local char = char or '_'
   local res = string.gsub(string, char .. '+', char) or string
   return res
@@ -414,7 +415,9 @@ end
 -- @param char The char that would be simplified
 -- @return replaced string and number of replacements
 -------------------------------------------------------------------------------
-function keepUnreservedCharsAndDeleteDuplicate(string, char)
-  return deleteStringDuplicate(keepUnreservedChars(string), char)
+function utils.keepUnreservedCharsAndDeleteDuplicate(string, char)
+  return utils.deleteStringDuplicate(utils.keepUnreservedChars(string), char)
 end
+
+return utils
 -- vim:expandtab:smartindent:tabstop=2:softtabstop=2:shiftwidth=2:
