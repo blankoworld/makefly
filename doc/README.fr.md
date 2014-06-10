@@ -320,6 +320,7 @@ Voici quelques options que vous pouvez changer :
   * COMPRESS_TOOL (optionnel) : Outil console utilis&eacute; pour la compression lors des sauvegardes via la commande *backup* (Cf. Chapitre *Sauvegardes*). Exemple : **gzip**.
   * COMPRESS_EXT (optionnel) : Extension des fichiers de sauvegarde. Attention &agrave; ne pas oublier le caract&egrave;re point. Exemple : **.gz**.
   * SORT (optionnel) : Tri la liste des billets. Utilisez ASC pour que les billets soient triés du plus anciens au plus récent. DESC (valeur par défaut) tri les billets du plus récent au plus ancien.
+  * AUTO\_EDIT (optionnel) : Permet d'&eacute;diter automatiquement les billets apr&egrave;s leur cr&eacute;ation. Utilise le contenu de la variable EDITOR pour savoir quel &eacute;diteur utiliser.
 
 # Migration depuis Nanoblogger
 

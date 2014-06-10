@@ -318,6 +318,7 @@ Here is some options you can change:
   * COMPRESS_TOOL (optional) : Shell tool used for backup compression via *backup* command (Cf. *Backup* section). Example : **gzip**.
   * COMPRESS_EXT (optional) : Backup file extension. Warning: do not forget the point char. Example: **.gz**.
   * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
+  * AUTO\_EDIT (optionnel) : Allow to edit automatically posts after their creation. Use the EDITOR variable content to know which editor to use.
 
 # Migrate from Nanoblogger
 

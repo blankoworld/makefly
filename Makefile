@@ -74,6 +74,11 @@ BLOG_URL ?= http://localhost/~${USER}
 # then theme VARIABLES
 THEMEDIR = ${TMPLDIR}/${THEME}
 theme_config ?= ${THEMEDIR}/config.mk
+# Miscellaneous
+EDIT_OPTS = -q
+.if defined(AUTO_EDIT) && ${AUTO_EDIT} == 1
+EDIT_OPTS = ''
+.endif
 
 # some files'list
 DOCFILES := ${DOCDIR}/*.md
@@ -193,7 +198,7 @@ createpost: ${DBDIR} ${SRCDIR} ${TMPDIR}
 		"DBDIR=${DBDIR}" \
 		"SRCDIR=${SRCDIR}" > ${TMPDIR}/create_post.sh && \
 		chmod +x ${TMPDIR}/create_post.sh && \
-		content="${content}" ${TMPDIR}/create_post.sh -q && \
+		content="${content}" ${TMPDIR}/create_post.sh ${EDIT_OPTS} && \
 		${rm} ${TMPDIR}/create_post.sh || \
 		{ \
 			${rm} -rf ${TMPDIR}/create_post.sh && \
