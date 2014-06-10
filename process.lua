@@ -308,14 +308,13 @@ end
 -------------------------------------------------------------------------------
 -- Create post index page
 -- @param posts list of posts {{file='123456,the_title_of_post.mk', conf={TITLE='The title of post', TAGS='something, other'}}, {file='234567,anything_else.mk', conf={TITLE='Anythin else', TAGS='anything'}}}
--- @param index_file filename you want for the post index page. Example: pub/posts/index.html
--- @param template_index_file path to the template to use for the index's page
--- @param template_element_file path to the template to use for each post that appears on tag's page
--- @param template_taglink_file path to the template to use for list of links to the tags
--- @param template_article_index_file path to the template to use for each post that appears on index's page
+-- @param data.template_index_file path to the template to use for the index's page
+-- @param data.template_element_file path to the template to use for each post that appears on tag's page
+-- @param data.template_taglink_file path to the template to use for list of links to the tags
+-- @param data.template_article_index_file path to the template to use for each post that appears on index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function createPostIndex(posts, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
+function createPostIndex(posts, data)
   -- check directory
   utils.checkDirectory(postpath)
   -- open result file
@@ -332,12 +331,12 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
   index:push (header)
   rss:push (rss_header)
   -- get post index general content
-  local post_content = utils.readFile(template_index_file, 'r')
+  local post_content = utils.readFile(data.template_index_file, 'r')
   index:push (post_content)
   -- get info for each post
-  local post_element = utils.readFile(template_element_file, 'r')
+  local post_element = utils.readFile(data.template_element_file, 'r')
   -- open template for posts that appears on index
-  local template_article_index = utils.readFile(template_article_index_file, 'r')
+  local template_article_index = utils.readFile(data.template_article_index_file, 'r')
   -- sort posts in a given order
   table.sort(posts, function(a, b) return utils.compare_post(a,b, user_sort_choice) end)
   -- prepare some values
@@ -404,7 +403,7 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
           end
         end
         -- create tag links
-        local tag_links = createTagLinks(post_tags, template_taglink_file)
+        local tag_links = createTagLinks(post_tags, data.template_taglink_file)
         if tag_links then
           metadata['TAG_LINKS_LIST'] = tag_links
         end
@@ -1041,7 +1040,12 @@ end
 utils.dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index)
+createPostIndex(post_files, {
+  template_index_file = themepath .. '/' .. page_posts_name,
+  template_element_file = page_post_element,
+  template_taglink_file = page_tag_link,
+  template_article_index_file = page_article_index
+})
 
 -- Create tag's files: index and each tag's page
 createTagIndex(index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
