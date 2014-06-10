@@ -179,27 +179,46 @@ function stuffTemplate(filepath, content, variable, option, double_replacement)
 end
 
 -------------------------------------------------------------------------------
+-- Check config to generate keywords
+-- @param config post configuration (table)
+-- @return A keywords rope()
+-------------------------------------------------------------------------------
+function getKeywords(config)
+  local result = rope()
+  if config['KEYWORDS'] ~= nil then
+    result:push (config['KEYWORDS'])
+  end
+  if config['TAGS'] then
+    if result:flatten() ~= '' then
+      result:push(',')
+    end
+    result:push(config['TAGS'])
+  end
+  if makeflyrc['BLOG_KEYWORDS'] then
+    if result:flatten() ~= '' then
+      result:push(',')
+    end
+    result:push (makeflyrc['BLOG_KEYWORDS'])
+  end
+  return result
+end
+
+-------------------------------------------------------------------------------
 -- Create post page for given '@file'
 -- @param file filename of post in db directory
 -- @param config configuration elements as TITLE, TAGS, TYPE, etc.
--- @param template_file file to use as template for a post
--- @param template_tag_file file to use as template for tag in a post page
+-- @param data.template_file file to use as template for a post
+-- @param data.template_tag_file file to use as template for tag in a post page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function createPost(file, config, template_file, template_tag_file)
-  -- get post's title and timestamp
+function createPost(file, config, data)
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
   if today > tonumber(timestamp) then
-    -- open template file
-    local template = utils.readFile(template_file, 'r')
-    -- open post output file
+    local template = utils.readFile(data.template_file, 'r')
     local out = assert(io.open(postpath .. "/" .. utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension, 'wb'))
-    -- create a rope for post's result
     local post = rope()
-    -- open content of post (SRC file)
     local content = utils.readFile(srcpath .. "/" .. title .. source_extension, 'r')
-    -- markdown process on content
     local markdown_content = markdown(content)
     -- process tags
     local post_tags = {}
@@ -208,28 +227,13 @@ function createPost(file, config, template_file, template_tag_file)
       table.insert(post_tags, post_tagname)
     end
     -- create tag links
-    local post_tag_links = createTagLinks(post_tags, template_tag_file)
+    local post_tag_links = createTagLinks(post_tags, data.template_tag_file)
     -- concatenate all final post subelements
     post:push (header)
     post:push (template)
     post:push (footer)
     -- keywords
-    local keywords = rope()
-    if config['KEYWORDS'] ~= nil then
-      keywords:push (config['KEYWORDS'])
-    end
-    if config['TAGS'] then
-      if keywords:flatten() ~= '' then
-        keywords:push(',')
-      end
-      keywords:push(config['TAGS'])
-    end
-    if makeflyrc['BLOG_KEYWORDS'] then
-      if keywords:flatten() ~= '' then
-        keywords:push(',')
-      end
-      keywords:push (makeflyrc['BLOG_KEYWORDS'])
-    end
+    local keywords = getKeywords(config)
     -- local replacements
     local post_replacements = {
       TITLE = config['TITLE'],
@@ -1003,7 +1007,7 @@ if dbresult then
       os.exit(1)
     end
     table.insert(post_files, {file=v, conf=postConf})
-    local co = coroutine.create(function () createPost(v, utils.getConfig(v), page_article_single, page_tag_link) end)
+    local co = coroutine.create(function () createPost(v, postConf, {template_file=page_article_single, template_tag_file=page_tag_link}) end)
     table.insert(threads, co)
   end
 else
