@@ -608,20 +608,20 @@ end
 -------------------------------------------------------------------------------
 -- Create the tag index's page
 -- @param index_filename path of file to use to write result into
--- @param template_index_filename path to the template to use for tag index's page
--- @param template_element_filename path to the template to use for each tag on tag index's page
+-- @param data.template_index_filename path to the template to use for tag index's page
+-- @param data.template_element_filename path to the template to use for each tag on tag index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function createTagIndex(index_filename, template_index_filename, template_element_filename)
+function createTagIndex(index_filename, data)
   local index = rope()
   index:push(header)
   -- check tagpath directory
   utils.checkDirectory(tagpath)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
   -- read general tag index template file
-  local template_index = utils.readFile(template_index_filename, 'r')
+  local template_index = utils.readFile(data.template_index_filename, 'r')
   -- read tage element template file
-  local template_element = utils.readFile(template_element_filename, 'r')
+  local template_element = utils.readFile(data.template_element_filename, 'r')
   -- browse all tags
   local taglist_content = ''
   for tag, posts in utils.pairsByKeys(tags) do
@@ -1043,7 +1043,11 @@ createPostIndex(post_files, {
 })
 
 -- Create tag's files: index and each tag's page
-createTagIndex(index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
+-- {template_index_filename, template_element_filename})
+createTagIndex(index_filename, {
+  template_index_filename = themepath .. '/' .. page_tag_index_name,
+  template_element_filename = page_tag_element
+})
 
 -- Create index
 createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
