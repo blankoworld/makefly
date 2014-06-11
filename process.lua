@@ -335,7 +335,9 @@ end
 -- @param posts List of posts
 -- @param index_rope Rope of the post index file
 -- @param number.post_nb Current post number. Begin to 1
--- @param number.page_number Current page number on post list.
+-- @param number.page_number Current page number in the code. Begin to 0.
+-- @param number.pages Total number of pages we should have for pagination
+-- @param number.page_current Current page real number for blog readers.
 -- @param data.element_template Template of an element that represents a short post description/info
 -- @param data.article_template Template of post index
 -- @return index_rope after its modifications
@@ -478,7 +480,7 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
           PAGE_NEXT_LINK=page_sub_next,
           PAGE_LAST_LINK=page_sub_last,
           PAGE_CURRENT=page_current,
-          PAGE_TOTAL=page_sub_total,
+          PAGE_TOTAL=number.pages,
         }
         index_substitutions = utils.getSubstitutions(replacements, index_sub_table)
         index_content = utils.replace(index_rope:flatten(), index_substitutions)
@@ -488,7 +490,7 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
         ------ END: closeIndex()
         indexfile = nil
         index_rope = nil
-        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, page_sub_total))
+        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, number.pages))
         -- increment page number
         number.page_number = number.page_number + 1
         -- CREATE NEW INDEX
@@ -499,7 +501,7 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
       end
     end
   end
-  return indexfile, index_rope, number.post_nb, number.page_number, number.pages
+  return indexfile, index_rope, number.post_nb, number.page_number, number.pages, number.page_current
 end
 
 -------------------------------------------------------------------------------
@@ -543,10 +545,16 @@ function createPostIndex(posts, data)
   -- Some common pagination numbers/files
   local page_sub_first = index_name .. resultextension
   local page_sub_last = index_name .. (pages - 1) .. resultextension
-  local page_sub_total = pages
   local page_pagination = utils.readFile(themepath .. '/' .. page_pagination_name, 'r')
   -- process posts
-  post_index, index, page_post_nb, page_number, pages = postsIndexing(posts, post_index, index, {post_nb = page_post_nb, page_number = page_number, pages = pages}, {
+  post_index, index, page_post_nb, page_number, pages, page_current = postsIndexing(posts, post_index, index, 
+  {
+    post_nb = page_post_nb,
+    page_number = page_number,
+    pages = pages,
+    page_current = page_current,
+  },
+  {
     article_template = template_article_index,
     element_template = data.template_element_file,
     tag_template = data.template_taglink_file,
@@ -554,7 +562,7 @@ function createPostIndex(posts, data)
   -- If last post, finish index writing (to close file)
   if page_post_nb >= post_nb or (max_page and page_post_nb <= max_page) then
     -- Prepare page substitution elements
-    if max_page and max_page > 0 and page_sub_total > 1 then
+    if max_page and max_page > 0 and pages > 1 then
       page_current = page_number + 1
       page_previous = (page_number - 1) > 0 and (page_number - 1) or 0
       page_next = (page_number + 1) < pages and (page_number + 1) or pages - 1
@@ -579,7 +587,7 @@ function createPostIndex(posts, data)
       PAGE_NEXT_LINK=page_sub_next,
       PAGE_LAST_LINK=page_sub_last,
       PAGE_CURRENT=page_current,
-      PAGE_TOTAL=page_sub_total,
+      PAGE_TOTAL=pages,
     }
     local index_substitutions = utils.getSubstitutions(replacements, index_sub_table)
     local index_content = utils.replace(index:flatten(), index_substitutions)
@@ -587,8 +595,8 @@ function createPostIndex(posts, data)
     -- Close post's index
     post_index:close()
     ------ END: closeIndex()
-    if max_page and max_page > 0 and page_sub_total > 1 then
-      print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, page_sub_total))
+    if max_page and max_page > 0 and pages > 1 then
+      print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, pages))
     end
   end
   -- rss process
