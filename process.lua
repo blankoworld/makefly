@@ -437,12 +437,7 @@ function createPostIndex(posts, data)
         post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE'] or ''
         post_substitutions['POST_ESCAPED_TITLE'] = title
         -- add comment block if comment system is activated
-        if template_comment then
-          local jskomment_prefix = v['conf']['JSKOMMENT_PREFIX'] and v['conf']['JSKOMMENT_PREFIX'] ~= '' and v['conf']['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
-          local jskomment_id = jskomment_prefix .. '/' .. title
-          local jskomment_content = utils.replace(template_comment, {JSKOMMENT_ID=jskomment_id})
-          post_substitutions['JSKOMMENT_CONTENT'] = jskomment_content
-        end
+        post_substitutions = commentSubstitutions(post_substitutions, v['conf'], title)
         local content4index = utils.replace(post_content, post_substitutions)
         -- create temporary file for Homepage
         if increment then
