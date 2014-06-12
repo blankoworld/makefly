@@ -331,25 +331,57 @@ function createTagLinks(post_tags, file)
 end
 
 -------------------------------------------------------------------------------
+-- For given index, close it with a footer.
+-- @param indexfile File in which we write result
+-- @param result Content of index
+-- @param title Title of the page
+-- @param body_class Name of the class that will be add into BODY tag
+-- @param pagin Pagination object in which you have next/first/last/previous page
+-- @param page_number Number of current page in the code (start at 0)
+-- @return Nothing (process method)
+-------------------------------------------------------------------------------
+function closeIndex(indexfile, result, title, body_class, pagin, page_number)
+  result:push (footer)
+  -- do substitutions on page
+  local page_sub_first = index_name .. resultextension
+  local page_sub_last = index_name .. (pagin.total - 1) .. resultextension
+  local page_sub_previous = index_name .. pagin:previous_page(page_number) .. resultextension
+  local page_sub_next = index_name .. pagin:next_page(page_number) .. resultextension
+  local index_sub_table = {
+    TITLE=title,
+    BODY_CLASS=body_class,
+    PAGE_FIRST_LINK=page_sub_first,
+    PAGE_PREV_LINK=page_sub_previous,
+    PAGE_NEXT_LINK=page_sub_next,
+    PAGE_LAST_LINK=page_sub_last,
+    PAGE_CURRENT=page_number + 1,
+    PAGE_TOTAL=pagin.total,
+  }
+  local index_substitutions = utils.getSubstitutions(replacements, index_sub_table)
+  local index_content = utils.replace(result:flatten(), index_substitutions)
+  indexfile:write(index_content)
+  -- Close index
+  indexfile:close()
+end
+
+-------------------------------------------------------------------------------
 -- Parse all given posts to create the Index page and a RSS file
 -- @param posts List of posts
--- @param index_rope Rope of the post index file
+-- @param result Rope of the post index file (result of the final page)
+-- @param pagin Pagination object in which you have next/first/last/previous page
 -- @param number.post_nb Current post number. Begin to 1
 -- @param number.page_number Current page number in the code. Begin to 0.
--- @param number.pages Total number of pages we should have for pagination
--- @param number.page_current Current page real number for blog readers.
--- @param number.page_sub_first First page index
--- @param number.page_sub_previous Previous page index
--- @param number.page_sub_next Next page index
--- @param number.page_sub_last Last page index
--- @param data.element_template Template of an element that represents a short post description/info
--- @param data.article_template Template of post index
--- @param data.tag_template Template for tags
--- @param data.pagination_page Content of the template for pagination
--- @return index_rope after its modifications
--- @return post_nb after its modifications
+-- @param template.element Template of an element that represents a short post description/info
+-- @param template.article Template of post index
+-- @param template.tag Template for tags
+-- @param template.pagination Content of the template for pagination
+-- @return indexfile after its modification
+-- @return result after its modifications
+-- @return number.post_nb after its modifications
+-- @return number.page_number after its modifications
+-- @return pagin after its modifications
 -------------------------------------------------------------------------------
-function postsIndexing(posts, indexfile, index_rope, number, data)
+function postsIndexing(posts, indexfile, result, pagin, number, template)
   -- prepare some variables
   local index_nb = 0 -- number of post in all posts
   local increment = true
@@ -368,7 +400,7 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
     rss_max = number.post_nb + 1
     rss_index_nb = max_post + 1
   end
-  local post_element = utils.readFile(data.element_template, 'r')
+  local post_element = utils.readFile(template.element, 'r')
   local rss_element = utils.readFile(page_rss_element, 'r')
   for k, v in pairs(posts) do
     -- get post's title
@@ -387,7 +419,7 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
       }
       -- registering tags
       local post_conf_tags = v['conf']['TAGS'] or nil
-      metadata = parseTags(post_conf_tags, metadata, data.tag_template, true)
+      metadata = parseTags(post_conf_tags, metadata, template.tag, true)
       -- prepare substitutions for the post
       local post_substitutions = utils.getSubstitutions(v, metadata)
       -- remember this post's element for each tag page
@@ -396,7 +428,7 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
       assert(remember_file:write(post_element_content))
       assert(remember_file:close())
       -- push result into index
-      index_rope:push(post_element_content)
+      result:push(post_element_content)
       -- read post real content
       local post_content_file = srcpath .. '/' .. title .. source_extension
       local real_post_content = utils.readFile(post_content_file, 'r')
@@ -415,7 +447,7 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
             final_post_content = final_post_content .. page_read_more
           end
         end
-        local post_content = utils.replace(data.article_template, {CONTENT=markdown(final_post_content)})
+        local post_content = utils.replace(template.article, {CONTENT=markdown(final_post_content)})
         -- complete missing info
         post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE'] or ''
         post_substitutions['POST_ESCAPED_TITLE'] = title
@@ -460,71 +492,43 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
       index_nb = index_nb + 1
       -- Page process
       number.post_nb = number.post_nb + 1
-      if max_page and number.post_nb > max_page then
+      if pagin.max and number.post_nb > pagin.max and pagin.total > 1 then
         number.post_nb = 1
-        -- Prepare page substitution elements
-        number.page_current = number.page_number + 1
-        page_previous = (number.page_number - 1) > 0 and (number.page_number - 1) or 0
-        page_next = (number.page_number + 1) < number.pages and (number.page_number + 1) or number.pages - 1
-        if page_previous == 0 then
-          page_previous = ''
-        end
-        number.page_sub_previous = index_name .. page_previous .. resultextension
-        number.page_sub_next = index_name .. page_next .. resultextension
         -- Add pagination template
-        index_rope:push (data.pagination_page)
+        result:push (template.pagination)
         -- CLOSE CURRENT INDEX
-        ------ NEW: closeIndex()
-        ---- NB: see other closeIndex()
-        index_rope:push (footer)
-        -- do substitutions on page
-        index_sub_table = {
-          TITLE=replacements['POST_LIST_TITLE'],
-          BODY_CLASS="posts",
-          PAGE_FIRST_LINK=number.page_sub_first,
-          PAGE_PREV_LINK=number.page_sub_previous,
-          PAGE_NEXT_LINK=number.page_sub_next,
-          PAGE_LAST_LINK=number.page_sub_last,
-          PAGE_CURRENT=number.page_current,
-          PAGE_TOTAL=number.pages,
-        }
-        index_substitutions = utils.getSubstitutions(replacements, index_sub_table)
-        index_content = utils.replace(index_rope:flatten(), index_substitutions)
-        indexfile:write(index_content)
-        -- Close post's index
-        indexfile:close()
-        ------ END: closeIndex()
+        closeIndex(indexfile, result, replacements['POST_LIST_TITLE'], 'posts', pagin, number.page_number)
         indexfile = nil
-        index_rope = nil
-        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, number.page_current, number.pages))
+        result = nil
+        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, number.page_number + 1, pagin.total))
         -- increment page number
         number.page_number = number.page_number + 1
         -- CREATE NEW INDEX
         indexfile = io.open(postpath .. '/' .. index_name .. number.page_number .. resultextension, 'wb')
-        index_rope = rope()
-        index_rope:push (header)
-        index_rope:push (post_content)
+        result = rope()
+        result:push (header)
+        result:push (post_content)
       end
     end
   end
-  return indexfile, index_rope, number.post_nb, number.page_number, number.pages, number.page_current, number.page_sub_first, number.page_sub_previous, number.page_sub_next, number.page_sub_last
+  return indexfile, result, number.post_nb, number.page_number, pagin
 end
 
 -------------------------------------------------------------------------------
 -- Create post index page
 -- @param posts list of posts {{file='123456,the_title_of_post.mk', conf={TITLE='The title of post', TAGS='something, other'}}, {file='234567,anything_else.mk', conf={TITLE='Anythin else', TAGS='anything'}}}
--- @param data.template_index_file path to the template to use for the index's page
--- @param data.template_element_file path to the template to use for each post that appears on tag's page
--- @param data.template_taglink_file path to the template to use for list of links to the tags
--- @param data.template_article_index_file path to the template to use for each post that appears on index's page
+-- @param template.index_file path to the template to use for the index's page
+-- @param template.element_file path to the template to use for each post that appears on tag's page
+-- @param template.taglink_file path to the template to use for list of links to the tags
+-- @param template.article_index_file path to the template to use for each post that appears on index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function createPostIndex(posts, data)
+function createPostIndex(posts, template)
   -- check directory
   utils.checkDirectory(postpath)
   -- prepare some values
-  local post_index = io.open(postpath .. '/' .. index_name .. resultextension, 'wb')
-  local rss_index = io.open(publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(rss_name_default) .. rss_extension_default, 'wb')
+  local indexfile = io.open(postpath .. '/' .. index_name .. resultextension, 'wb')
+  local rssfile = io.open(publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(rss_name_default) .. rss_extension_default, 'wb')
   local rss_header = utils.readFile(page_rss_header, 'r')
   local rss_footer = utils.readFile(page_rss_footer, 'r')
   -- create a rope to merge all text
@@ -533,88 +537,32 @@ function createPostIndex(posts, data)
   -- get header for results
   index:push (header)
   rss:push (rss_header)
-  local post_content = utils.readFile(data.template_index_file, 'r')
+  local post_content = utils.readFile(template.index_file, 'r')
   index:push (post_content)
-  local template_article_index = utils.readFile(data.template_article_index_file, 'r')
+  local template_article_index = utils.readFile(template.article_index_file, 'r')
   -- sort posts in a given order
   table.sort(posts, function(a, b) return utils.compare_post(a,b, user_sort_choice) end)
   -- prepare some values
+  local pagination = require "lib.pagination"
+  local pagin = pagination.new(#posts, max_page)
   local post_nb = #posts
   local page_number = 0
   local page_post_nb = 1
-  local pages = 1 -- default number
-  if max_page and max_page > 0 then
-    if post_nb > max_page then
-      local remains = post_nb%max_page
-      if remains > 0 then
-        pages = (post_nb - (remains))/max_page + 1
-      else
-        pages = post_nb/max_page
-      end
-    end
-  elseif max_page == 0 then
-    max_page = nil
-  end
   -- Some common pagination numbers/files
-  local page_sub_first = index_name .. resultextension
-  local page_sub_last = index_name .. (pages - 1) .. resultextension
   local page_pagination = utils.readFile(themepath .. '/' .. page_pagination_name, 'r')
   -- process posts
-  post_index, index, page_post_nb, page_number, pages, page_current, page_sub_first, page_sub_previous, page_sub_next, page_sub_last = postsIndexing(posts, post_index, index, 
-  {
-    post_nb = page_post_nb,
-    page_number = page_number,
-    pages = pages,
-    page_current = page_current,
-    page_sub_first = page_sub_first,
-    page_sub_previous = page_sub_previous,
-    page_sub_next = page_sub_next,
-    page_sub_last = page_sub_last
-  },
-  {
-    article_template = template_article_index,
-    element_template = data.template_element_file,
-    tag_template = data.template_taglink_file,
-    pagination_page = page_pagination,
-  })
+  indexfile, index, page_post_nb, page_number, pagin = postsIndexing(posts, indexfile, index, pagin, { post_nb = page_post_nb, page_number = page_number }, { article = template_article_index, element = template.element_file, tag = template.taglink_file, pagination = page_pagination })
   -- If last post, finish index writing (to close file)
-  if page_post_nb >= post_nb or (max_page and page_post_nb <= max_page) then
+  if page_post_nb >= post_nb or (pagin.max and page_post_nb <= pagin.max) then
     -- Prepare page substitution elements
-    if max_page and max_page > 0 and pages > 1 then
-      page_current = page_number + 1
-      page_previous = (page_number - 1) > 0 and (page_number - 1) or 0
-      page_next = (page_number + 1) < pages and (page_number + 1) or pages - 1
-      if page_previous == 0 then
-        page_previous = ''
-      end
-      page_sub_previous = index_name .. page_previous .. resultextension
-      page_sub_next = index_name .. page_next .. resultextension
+    if pagin.max and pagin.max > 0 and pagin.total > 1 then
       -- Add pagination template
       index:push (page_pagination)
     end
     -- CLOSE FINAL INDEX
-    ------ NEW: closeIndex()
-    ---- NB: index, footer, page_sub_*, page_current, replacements (or just POST_LIST_TITLE) and post_index variable
-    index:push (footer)
-    -- do substitutions on page
-    index_sub_table = {
-      TITLE=replacements['POST_LIST_TITLE'],
-      BODY_CLASS="posts",
-      PAGE_FIRST_LINK=page_sub_first,
-      PAGE_PREV_LINK=page_sub_previous,
-      PAGE_NEXT_LINK=page_sub_next,
-      PAGE_LAST_LINK=page_sub_last,
-      PAGE_CURRENT=page_current,
-      PAGE_TOTAL=pages,
-    }
-    local index_substitutions = utils.getSubstitutions(replacements, index_sub_table)
-    local index_content = utils.replace(index:flatten(), index_substitutions)
-    post_index:write(index_content)
-    -- Close post's index
-    post_index:close()
-    ------ END: closeIndex()
-    if max_page and max_page > 0 and pages > 1 then
-      print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, pages))
+    closeIndex(indexfile, index, replacements['POST_LIST_TITLE'], 'posts', pagin, page_number)
+    if pagin.max and pagin.max > 0 and pagin.total > 1 then
+      print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_number + 1, pagin.total))
     end
   end
   -- rss process
@@ -626,8 +574,8 @@ function createPostIndex(posts, data)
   end
   rss:push (rss_footer)
   rss_replace = utils.replace(rss:flatten(), replacements)
-  rss_index:write(rss_replace)
-  rss_index:close()
+  rssfile:write(rss_replace)
+  rssfile:close()
   -- Display that RSS file was created
   print (string.format(_("-- [%s] RSS feed: BUILT."), display_success))
   -- Display that post index was created
@@ -1102,10 +1050,10 @@ utils.dispatcher()
 
 -- Create post's index
 createPostIndex(post_files, {
-  template_index_file = themepath .. '/' .. page_posts_name,
-  template_element_file = page_post_element,
-  template_taglink_file = page_tag_link,
-  template_article_index_file = page_article_index
+  index_file = themepath .. '/' .. page_posts_name,
+  element_file = page_post_element,
+  taglink_file = page_tag_link,
+  article_index_file = page_article_index
 })
 
 -- Create tag's files: index and each tag's page
