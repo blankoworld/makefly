@@ -338,8 +338,14 @@ end
 -- @param number.page_number Current page number in the code. Begin to 0.
 -- @param number.pages Total number of pages we should have for pagination
 -- @param number.page_current Current page real number for blog readers.
+-- @param number.page_sub_first First page index
+-- @param number.page_sub_previous Previous page index
+-- @param number.page_sub_next Next page index
+-- @param number.page_sub_last Last page index
 -- @param data.element_template Template of an element that represents a short post description/info
 -- @param data.article_template Template of post index
+-- @param data.tag_template Template for tags
+-- @param data.pagination_page Content of the template for pagination
 -- @return index_rope after its modifications
 -- @return post_nb after its modifications
 -------------------------------------------------------------------------------
@@ -457,16 +463,16 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
       if max_page and number.post_nb > max_page then
         number.post_nb = 1
         -- Prepare page substitution elements
-        page_current = number.page_number + 1
+        number.page_current = number.page_number + 1
         page_previous = (number.page_number - 1) > 0 and (number.page_number - 1) or 0
         page_next = (number.page_number + 1) < number.pages and (number.page_number + 1) or number.pages - 1
         if page_previous == 0 then
           page_previous = ''
         end
-        page_sub_previous = index_name .. page_previous .. resultextension
-        page_sub_next = index_name .. page_next .. resultextension
+        number.page_sub_previous = index_name .. page_previous .. resultextension
+        number.page_sub_next = index_name .. page_next .. resultextension
         -- Add pagination template
-        index_rope:push (page_pagination)
+        index_rope:push (data.pagination_page)
         -- CLOSE CURRENT INDEX
         ------ NEW: closeIndex()
         ---- NB: see other closeIndex()
@@ -475,11 +481,11 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
         index_sub_table = {
           TITLE=replacements['POST_LIST_TITLE'],
           BODY_CLASS="posts",
-          PAGE_FIRST_LINK=page_sub_first,
-          PAGE_PREV_LINK=page_sub_previous,
-          PAGE_NEXT_LINK=page_sub_next,
-          PAGE_LAST_LINK=page_sub_last,
-          PAGE_CURRENT=page_current,
+          PAGE_FIRST_LINK=number.page_sub_first,
+          PAGE_PREV_LINK=number.page_sub_previous,
+          PAGE_NEXT_LINK=number.page_sub_next,
+          PAGE_LAST_LINK=number.page_sub_last,
+          PAGE_CURRENT=number.page_current,
           PAGE_TOTAL=number.pages,
         }
         index_substitutions = utils.getSubstitutions(replacements, index_sub_table)
@@ -490,7 +496,7 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
         ------ END: closeIndex()
         indexfile = nil
         index_rope = nil
-        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, number.pages))
+        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, number.page_current, number.pages))
         -- increment page number
         number.page_number = number.page_number + 1
         -- CREATE NEW INDEX
@@ -501,7 +507,7 @@ function postsIndexing(posts, indexfile, index_rope, number, data)
       end
     end
   end
-  return indexfile, index_rope, number.post_nb, number.page_number, number.pages, number.page_current
+  return indexfile, index_rope, number.post_nb, number.page_number, number.pages, number.page_current, number.page_sub_first, number.page_sub_previous, number.page_sub_next, number.page_sub_last
 end
 
 -------------------------------------------------------------------------------
@@ -536,9 +542,16 @@ function createPostIndex(posts, data)
   local post_nb = #posts
   local page_number = 0
   local page_post_nb = 1
-  local pages = 1
+  local pages = 1 -- default number
   if max_page and max_page > 0 then
-    pages = (post_nb - (post_nb%max_page))/max_page + 1
+    if post_nb > max_page then
+      local remains = post_nb%max_page
+      if remains > 0 then
+        pages = (post_nb - (remains))/max_page + 1
+      else
+        pages = post_nb/max_page
+      end
+    end
   elseif max_page == 0 then
     max_page = nil
   end
@@ -547,17 +560,22 @@ function createPostIndex(posts, data)
   local page_sub_last = index_name .. (pages - 1) .. resultextension
   local page_pagination = utils.readFile(themepath .. '/' .. page_pagination_name, 'r')
   -- process posts
-  post_index, index, page_post_nb, page_number, pages, page_current = postsIndexing(posts, post_index, index, 
+  post_index, index, page_post_nb, page_number, pages, page_current, page_sub_first, page_sub_previous, page_sub_next, page_sub_last = postsIndexing(posts, post_index, index, 
   {
     post_nb = page_post_nb,
     page_number = page_number,
     pages = pages,
     page_current = page_current,
+    page_sub_first = page_sub_first,
+    page_sub_previous = page_sub_previous,
+    page_sub_next = page_sub_next,
+    page_sub_last = page_sub_last
   },
   {
     article_template = template_article_index,
     element_template = data.template_element_file,
     tag_template = data.template_taglink_file,
+    pagination_page = page_pagination,
   })
   -- If last post, finish index writing (to close file)
   if page_post_nb >= post_nb or (max_page and page_post_nb <= max_page) then
@@ -1051,14 +1069,16 @@ if dbresult then
     -- Check some variables presence
     local missing_post_info = utils.processMissingInfo(postConf, mandatories_post_vars)
     -- Check that all is OK, otherwise display an error message and quit the program
+    local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
     if missing_post_info ~= '' then
-      local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
       print(string.format(_("-- [%s] Missing information in '%s' post: %s"), display_error, postTitle, missing_post_info))
       os.exit(1)
     end
-    table.insert(post_files, {file=v, conf=postConf})
-    local co = coroutine.create(function () createPost(v, postConf, {template_file=page_article_single, template_tag_file=page_tag_link}) end)
-    table.insert(threads, co)
+    if today > tonumber(timestamp) then
+      table.insert(post_files, {file=v, conf=postConf})
+      local co = coroutine.create(function () createPost(v, postConf, {template_file=page_article_single, template_tag_file=page_tag_link}) end)
+      table.insert(threads, co)
+    end
   end
 else
   print (string.format(_("-- [%s] No DB file(s) found!"), display_warning))
