@@ -369,15 +369,7 @@ end
 -- @param 
 -- @return
 -------------------------------------------------------------------------------
-function createPostForHomepage(post_content_file, real_post_content, index_nb, increment, number, pagin, post_substitutions, config, title, template)
-  local home_min = 0 -- minimal index_nb in all posts to appear on homepage
-  local home_max = home_min + max_post + 1 -- max index_nb in all posts to appear on homepage
-  local home_index = 0 -- index process for posts that will appear on homepage
-  if user_sort_choice == 'asc' then
-    home_min = number.post_nb - pagin.max - 1
-    home_max = number.post_nb + 1
-    home_index = pagin.max + 1
-  end
+function createPostForHomepage(post_content_file, real_post_content, index_nb, increment, number, pagin, post_substitutions, config, title, template, home_min, home_max, home_index)
   local final_post_content = utils.readFile(post_content_file, 'r')
   if index_nb >= home_min and index_nb <= home_max then
     if max_post_lines then
@@ -407,6 +399,7 @@ function createPostForHomepage(post_content_file, real_post_content, index_nb, i
     -- close first_posts file
     assert(homepage_file:close())
   end
+  return home_index
 end
 
 -------------------------------------------------------------------------------
@@ -430,14 +423,20 @@ function postsIndexing(posts, indexfile, result, pagin, number, template)
   -- prepare some variables
   local index_nb = 0 -- number of post in all posts
   local increment = true
+  local home_min = 0 -- minimal index_nb in all posts to appear on homepage
+  local home_max = home_min + max_post + 1 -- max index_nb in all posts to appear on homepage
+  local home_index = 0 -- index process for posts that will appear on homepage
   local rss_min = 0
   local rss_max = rss_min + max_rss + 1
   local rss_index_nb = 0
   if user_sort_choice == 'asc' then
     increment = false
+    home_min = number.post_nb - max_post - 1
+    home_max = number.post_nb + 1
+    home_index = max_post + 1
     rss_min = number.post_nb - max_rss - 1
     rss_max = number.post_nb + 1
-    rss_index_nb = pagin.total + 1
+    rss_index_nb = max_post + 1
   end
   local post_element = utils.readFile(template.element, 'r')
   local rss_element = utils.readFile(page_rss_element, 'r')
@@ -472,40 +471,7 @@ function postsIndexing(posts, indexfile, result, pagin, number, template)
       local post_content_file = srcpath .. '/' .. title .. source_extension
       local real_post_content = utils.readFile(post_content_file, 'r')
       -- process post to be displayed on HOMEPAGE
-      index_nb = createPostForHomepage(post_content_file, real_post_content, index_nb, increment, number, pagin, post_substitutions, v['conf'], title, template.article)
---      ------ NEW: createPostForHomepage
---      ---- params: index_nb, real_post_content, post_content_file
---      ---- NB: home_index is incremented/decremented regarding 'increment' variable
---      local final_post_content = utils.readFile(post_content_file, 'r')
---      if index_nb >= home_min and index_nb <= home_max then
---        if max_post_lines then
---          local n = 0
---          for i in real_post_content:gmatch("\n") do n=n+1 end
---          final_post_content = utils.headFile(post_content_file, max_post_lines)
---          if max_post_lines < n then
---            local page_read_more = utils.readFile(themepath .. '/' .. page_read_more_name, 'r')
---            final_post_content = final_post_content .. page_read_more
---          end
---        end
---        local post_content = utils.replace(template.article, {CONTENT=markdown(final_post_content)})
---        -- complete missing info
---        post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE'] or ''
---        post_substitutions['POST_ESCAPED_TITLE'] = title
---        -- add comment block if comment system is activated
---        post_substitutions = commentSubstitutions(post_substitutions, v['conf'], title)
---        local content4index = utils.replace(post_content, post_substitutions)
---        -- create temporary file for Homepage
---        if increment then
---          home_index = home_index + 1
---        else
---          home_index = home_index - 1
---        end
---        local homepage_file = io.open(tmppath .. '/index.' .. home_index .. '.tmp', 'wb')
---        assert(homepage_file:write(content4index))
---        -- close first_posts file
---        assert(homepage_file:close())
---      end
---      ------ END: createPostForHomepage
+      home_index = createPostForHomepage(post_content_file, real_post_content, index_nb, increment, number, pagin, post_substitutions, v['conf'], title, template.article, home_min, home_max, home_index)
       -- process post to be used in RSS file
       ------ NEW: createPostForRSS
       ---- NB: increment/decrement rss_index_nb regarding 'increment' variable
