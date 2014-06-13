@@ -97,6 +97,32 @@ function utils.getConfig(file)
 end
 
 -------------------------------------------------------------------------------
+-- Check that configuration exists. If yes, load it.
+-- @param file Path of file to check and load
+-- @return Table that contains the filepath content
+-------------------------------------------------------------------------------
+function utils.checkConfig(filepath)
+  if lfs.attributes(filepath) == nil then
+    error(string.format(_('[%s] %s file not found!'), display_error, filepath))
+  end
+  return utils.getConfig(filepath)
+end
+
+-------------------------------------------------------------------------------
+-- Merge the 2 tables
+-- @param conf1 The first configuration table
+-- @param conf2 The second configuration table
+-- @return Table that contains the merge of 2 configuration files
+-------------------------------------------------------------------------------
+function utils.mergeConfig(conf1, conf2)
+  res = conf1
+  for k, v in pairs(conf2) do
+    conf1[k] = v
+  end
+  return conf1
+end
+
+-------------------------------------------------------------------------------
 -- Get '@string' and replace all '${KEY}' by its value given in '@table'
 -- @param string the string in which you will replace some elements
 -- @param table a table composed of KEY/VALUE where KEY is the ${KEY} to replace and VALUE its replacement
@@ -241,6 +267,38 @@ function utils.copy(origin, destination, sreplace)
   else
     print (string.format(_("-- [%s] %s not found in copy method!"), display_error, origin))
     os.exit(1)
+  end
+end
+
+-------------------------------------------------------------------------------
+-- Remove recursively a given directory
+-- @param origin Original path to delete recursively
+-- @return Nothing (process method)
+-------------------------------------------------------------------------------
+function utils.rm(origin)
+  local attr = lfs.attributes(origin)
+  if origin ~= '.' and origin ~= '..' then
+    if attr and attr.mode == 'directory' then
+      -- browse origin directory
+      for element in lfs.dir(origin) do
+        if element ~= '.' and element ~= '..' then
+          local path = origin .. '/' .. element
+          -- launch copy directory if element is a directory, otherwise copy file
+          if lfs.attributes(path) and lfs.attributes(path).mode == 'directory' then
+            utils.rm(path)
+          else
+            os.remove(path)
+          end
+        end
+      end
+      lfs.rmdir(origin)
+    -- if origin is a file, just launch copyFile function
+    elseif attr and attr.mode == 'file' then
+      os.remove(origin)
+    else
+      print (string.format(_("-- [%s] %s not found (in remove process)!"), display_error, origin))
+      os.exit(1)
+    end
   end
 end
 

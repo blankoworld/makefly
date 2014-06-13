@@ -31,12 +31,25 @@ In main program:
 
 ]]--
 
+--[[ DEPENDANCIES ]]--
+
+require 'lib/init'
+local utils = require 'lib.utils'
+local Command = require 'lib.command'
+
 --[[ VARIABLES ]]--
 VERSION = '0.4-trunk'
-Command = require 'lib.command'
+local configfile = os.getenv('CONFIG') or currentpath .. '/config'
+-- default display values
+display_info =    _('  INFO   ')
+display_success = _(' SUCCESS ')
+display_enable =  _(' ENABLE  ')
+display_disable = _(' DISABLE ')
+display_warning = _(' WARNING ')
+display_error =   _('  ERROR  ')
 
 -- Create commands
-commands = { }
+local commands = { }
 table.insert(commands, Command.new('clean', 'clean up result directory'))
 table.insert(commands, Command.new('list', 'list all available commands'))
 table.insert(commands, Command.new('publish', 'publish your weblog using tools/publish.sh script'))
@@ -49,10 +62,41 @@ table.insert(commands, Command.new('install', 'install \'pub\' directory into IN
 table.insert(commands, Command.new('migratefrom', 'will update all DB files with given [url]'))
 table.insert(commands, Command.new('theme', 'will copy \'base\' theme to the new one given with [name]'))
 table.insert(commands, Command.new('version', 'give current program version'))
+table.insert(commands, Command.new('doc', 'generate the documentation in \'doc\' directory'))
 
 --[[ FUNCTIONS ]]--
+
+function error(message)
+  print(message)
+  os.exit(1)
+end
+
 function clean()
-  print("cleaning")
+  -- checks
+  if config.template_extension == config.page_extension then
+    error(string.format(_('[%s] You cannot choose an extension (%s) similar to template\'s one (%s).'), display_error, config.page_extension, config.template_extension))
+  end
+  -- cleaning
+  local pubpath = currentpath .. '/' .. config.destdir
+  local tmppath = currentpath .. '/' .. config.tmpdir
+  if lfs.attributes(pubpath) ~= nil then
+    utils.rm(pubpath)
+    print(string.format(_('[%s] Removed: %s directory'), display_info, pubpath))
+  else
+    print(string.format(_('[%s] Missing: %s directory'), display_warning, pubpath))
+  end
+  if lfs.attributes(tmppath) ~= nil then
+    utils.rm(tmppath)
+    print(string.format(_('[%s] Removed: %s directory'), display_info, tmppath))
+  else
+    print(string.format(_('[%s] Missing: %s directory'), display_warning, tmppath))
+  end
+  local docpath = currentpath .. '/' .. config.docdir
+  docfiles = utils.listing(docpath, config.page_extension)
+  for _, file in pairs(docfiles) do
+    os.remove(docpath .. '/' .. file)
+  end
+  print(string.format(_('[%s] Removed: %s/*%s files'), display_info, docpath, config.page_extension))
 end
 
 function compile()
@@ -109,6 +153,9 @@ function version()
   print(VERSION)
 end
 
+function doc()
+  print('creating doc')
+end
 
 function allowed(command)
   res = false
@@ -127,6 +174,11 @@ end
 
 --[[ MAIN ]]--
 
+-- check configuration files
+local config_default = utils.checkConfig(configfile)
+local config_user = utils.checkConfig(config_default.configurationfile)
+config = utils.mergeConfig(config_default, config_user)
+-- check command
 local command = arg[1]
 if command ~= nil then
   if allowed(command) == true then

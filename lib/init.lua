@@ -1,9 +1,7 @@
 -------------------------------------------------------------------------------
 -- Initialization:
 -- Import luafilesystem to work.
--- Use a getConfig function to get default configuration.
--- Fetch default configuration
--- Get user's language
+-- Get user's environment language
 -- @author Olivier DOSSMANN
 -------------------------------------------------------------------------------
 

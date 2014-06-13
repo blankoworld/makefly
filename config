@@ -1,0 +1,15 @@
+configurationfile = makefly.rc
+tmpldir = template
+bindir = bin
+langdir = lang
+srcdir = src
+destdir = pub
+dbdir = db
+tmpdir = tmp
+docdir = doc
+staticdir = static
+specialdir = special
+backupdir = mbackup
+toolsdir = tools
+template_extension = .tmpl
+page_extension = .html
