@@ -8,6 +8,9 @@ Refactoring:
 - In this number/pagination object, see if "decrementation" is needed
 - Think about a method to launch process.lua via just some commands as "makefly = Makefly(); makefly:compile()" or similar
 
+Next DEV:
+- ConfigParser: https://raw.githubusercontent.com/adolgert/FortLua/master/ConfigParser.lua
+
 Version 0.3.1:
 - add documentation for static pages directory
 - replace space (and other special chars) by '_' for pages (static pages) name. Use filename as HTML page's title, but replace space for HTML file. Example: "Another essay.md" should give "Another essay" as title but "another_essay.html" as filename.
