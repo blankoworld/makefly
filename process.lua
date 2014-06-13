@@ -407,6 +407,41 @@ function createPostForHomepage(file, title, config, content, sub, post_template,
 end
 
 -------------------------------------------------------------------------------
+-- Create RSS index page
+-- @param content Content of the post to add in the RSS (if can be included)
+-- @param config Metadata from the post
+-- @param title Title of the post to be saved into temporary directory
+-- @param template Template of RSS element
+-- @param data.min Number minimum that the post number should have to be on RSS page
+-- @param data.max Number maximum that the post number should have to be on RSS page
+-- @param data.increment If true, increment, otherwise decrement number
+-- @param data.index_nb Number (in the code) of the post for the result RSS. Cannot be superior to 'data.max'
+-- @param data.num Number (in the code) of the post
+-- @return data.num which is the number of the RSS
+-------------------------------------------------------------------------------
+function createPostForRSS(content, config, title, template, data)
+  if data.index_nb >= data.min and data.index_nb <= data.max then
+    -- create temporary file for RSS
+    if data.increment then
+      data.num = data.num + 1
+    else
+      data.num = data.num - 1
+    end
+    local rss_file = io.open(tmppath .. '/rss.' .. data.num .. '.tmp', 'wb')
+    local rss_post_html_link = blog_url .. '/' .. postdir_name .. '/' .. title .. resultextension
+    -- Change temporarly locale
+    assert(os.setlocale('C'))
+    local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
+    assert(os.setlocale(lang))
+    local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=config['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
+    assert(rss_file:write(rss_post))
+    -- close first_posts file
+    assert(rss_file:close())
+  end
+  return data.num
+end
+
+-------------------------------------------------------------------------------
 -- Parse all given posts to create the Index page and a RSS file
 -- @param posts List of posts
 -- @param result Rope of the post index file (result of the final page)
@@ -477,27 +512,7 @@ function postsIndexing(posts, indexfile, result, pagin, number, template, post_l
       -- process post to be displayed on HOMEPAGE
       home_index = createPostForHomepage(postfile, title, v['conf'], content, post_substitutions, template.article, { min = home_min, max = home_max, num = home_index, index_nb = index_nb, increment = increment })
       -- process post to be used in RSS file
-      ------ NEW: createPostForRSS
-      ---- NB: increment/decrement rss_index_nb regarding 'increment' variable
-      if index_nb >= rss_min and index_nb <= rss_max then
-        -- create temporary file for RSS
-        if increment then
-          rss_index_nb = rss_index_nb + 1
-        else
-          rss_index_nb = rss_index_nb - 1
-        end
-        local rss_file = io.open(tmppath .. '/rss.' .. rss_index_nb .. '.tmp', 'wb')
-        local rss_post_html_link = blog_url .. '/' .. postdir_name .. '/' .. title .. resultextension
-        -- Change temporarly locale
-        assert(os.setlocale('C'))
-        local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
-        assert(os.setlocale(lang))
-        local rss_post = utils.replace(rss_element, {DESCRIPTION=markdown(content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
-        assert(rss_file:write(rss_post))
-        -- close first_posts file
-        assert(rss_file:close())
-      end
-      ------ END: createPostForRSS
+      rss_index_nb = createPostForRSS(content, v['conf'], title, rss_element, { min = rss_min, max = rss_max, num = rss_index_nb, index_nb = index_nb, increment = increment })
       -- incrementation
       index_nb = index_nb + 1
       -- Page process
