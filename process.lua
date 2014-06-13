@@ -332,7 +332,7 @@ end
 
 -------------------------------------------------------------------------------
 -- For given index, close it with a footer.
--- @param indexfile File in which we write result
+-- @param file File in which we write result
 -- @param result Content of index
 -- @param title Title of the page
 -- @param body_class Name of the class that will be add into BODY tag
@@ -340,7 +340,7 @@ end
 -- @param page_number Number of current page in the code (start at 0)
 -- @return Nothing (process method)
 -------------------------------------------------------------------------------
-function closeIndex(indexfile, result, title, body_class, pagin, page_number)
+function closeIndex(file, result, title, body_class, pagin, page_number)
   result:push (footer)
   -- do substitutions on page
   local page_sub_first = index_name .. resultextension
@@ -359,47 +359,51 @@ function closeIndex(indexfile, result, title, body_class, pagin, page_number)
   }
   local index_substitutions = utils.getSubstitutions(replacements, index_sub_table)
   local index_content = utils.replace(result:flatten(), index_substitutions)
-  indexfile:write(index_content)
+  file:write(index_content)
   -- Close index
-  indexfile:close()
+  file:close()
 end
 
 -------------------------------------------------------------------------------
--- Create temporary files to be included in Homepage
--- @param 
--- @return
+-- Create temporary elements (post content and post summary) to be included in Homepage and post list
+-- @param data.index_nb Number of current index page (in the code)
+-- @param data.increment If we do incrementation or decrementation of 'num'
+-- @param data.min Homepage index minimum number
+-- @param data.max Homepage index maximum number
+-- @param data.num Real displayed number for index page
+-- @return data.num, the number of new real displayed index number
 -------------------------------------------------------------------------------
-function createPostForHomepage(post_content_file, real_post_content, index_nb, increment, number, pagin, post_substitutions, config, title, template, home_min, home_max, home_index)
-  local final_post_content = utils.readFile(post_content_file, 'r')
-  if index_nb >= home_min and index_nb <= home_max then
+function createPostForHomepage(file, title, config, content, sub, post_template, data)
+  local final_content = utils.readFile(file, 'r')
+  if data.index_nb >= data.min and data.index_nb <= data.max then
     if max_post_lines then
       local n = 0
-      for i in real_post_content:gmatch("\n") do n=n+1 end
-      final_post_content = utils.headFile(post_content_file, max_post_lines)
+      for i in content:gmatch("\n") do n=n+1 end
+      final_content = utils.headFile(file, max_post_lines)
       if max_post_lines < n then
         local page_read_more = utils.readFile(themepath .. '/' .. page_read_more_name, 'r')
-        final_post_content = final_post_content .. page_read_more
+        final_content = final_content .. page_read_more
       end
     end
-    local post_content = utils.replace(template, {CONTENT=markdown(final_post_content)})
+    local post_content = utils.replace(post_template, {CONTENT=markdown(final_content)})
     -- complete missing info
-    post_substitutions['ARTICLE_CLASS_TYPE'] = config['TYPE'] or ''
-    post_substitutions['POST_ESCAPED_TITLE'] = title
+    sub['ARTICLE_CLASS_TYPE'] = config['TYPE'] or ''
+    sub['POST_ESCAPED_TITLE'] = title
     -- add comment block if comment system is activated
-    post_substitutions = commentSubstitutions(post_substitutions, config, title)
-    local content4index = utils.replace(post_content, post_substitutions)
+    sub = commentSubstitutions(sub, config, title)
+    local content4index = utils.replace(post_content, sub)
     -- create temporary file for Homepage
-    if increment then
-      home_index = home_index + 1
+    if data.increment then
+      data.num = data.num + 1
     else
-      home_index = home_index - 1
+      data.num = data.num - 1
     end
-    local homepage_file = io.open(tmppath .. '/index.' .. home_index .. '.tmp', 'wb')
+    local homepage_file = io.open(tmppath .. '/index.' .. data.num .. '.tmp', 'wb')
     assert(homepage_file:write(content4index))
     -- close first_posts file
     assert(homepage_file:close())
   end
-  return home_index
+  return data.num
 end
 
 -------------------------------------------------------------------------------
@@ -419,7 +423,7 @@ end
 -- @return number.page_number after its modifications
 -- @return pagin after its modifications
 -------------------------------------------------------------------------------
-function postsIndexing(posts, indexfile, result, pagin, number, template)
+function postsIndexing(posts, indexfile, result, pagin, number, template, post_list_title)
   -- prepare some variables
   local index_nb = 0 -- number of post in all posts
   local increment = true
@@ -468,10 +472,10 @@ function postsIndexing(posts, indexfile, result, pagin, number, template)
       -- push result into index
       result:push(post_element_content)
       -- read post real content
-      local post_content_file = srcpath .. '/' .. title .. source_extension
-      local real_post_content = utils.readFile(post_content_file, 'r')
+      local postfile = srcpath .. '/' .. title .. source_extension
+      local content = utils.readFile(postfile, 'r')
       -- process post to be displayed on HOMEPAGE
-      home_index = createPostForHomepage(post_content_file, real_post_content, index_nb, increment, number, pagin, post_substitutions, v['conf'], title, template.article, home_min, home_max, home_index)
+      home_index = createPostForHomepage(postfile, title, v['conf'], content, post_substitutions, template.article, { min = home_min, max = home_max, num = home_index, index_nb = index_nb, increment = increment })
       -- process post to be used in RSS file
       ------ NEW: createPostForRSS
       ---- NB: increment/decrement rss_index_nb regarding 'increment' variable
@@ -488,7 +492,7 @@ function postsIndexing(posts, indexfile, result, pagin, number, template)
         assert(os.setlocale('C'))
         local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
         assert(os.setlocale(lang))
-        local rss_post = utils.replace(rss_element, {DESCRIPTION=markdown(real_post_content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
+        local rss_post = utils.replace(rss_element, {DESCRIPTION=markdown(content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
         assert(rss_file:write(rss_post))
         -- close first_posts file
         assert(rss_file:close())
@@ -513,7 +517,8 @@ function postsIndexing(posts, indexfile, result, pagin, number, template)
         indexfile = io.open(postpath .. '/' .. index_name .. number.page_number .. resultextension, 'wb')
         result = rope()
         result:push (header)
-        result:push (post_content)
+        -- Add title of the post list on the result
+        result:push (post_list_title)
       end
     end
   end
@@ -543,8 +548,8 @@ function createPostIndex(posts, template)
   -- get header for results
   index:push (header)
   rss:push (rss_header)
-  local post_content = utils.readFile(template.index_file, 'r')
-  index:push (post_content)
+  local post_list_title = utils.readFile(template.index_file, 'r')
+  index:push (post_list_title)
   local template_article_index = utils.readFile(template.article_index_file, 'r')
   -- sort posts in a given order
   table.sort(posts, function(a, b) return utils.compare_post(a,b, user_sort_choice) end)
@@ -557,7 +562,7 @@ function createPostIndex(posts, template)
   -- Some common pagination numbers/files
   local page_pagination = utils.readFile(themepath .. '/' .. page_pagination_name, 'r')
   -- process posts
-  indexfile, index, page_post_nb, page_number, pagin = postsIndexing(posts, indexfile, index, pagin, { post_nb = page_post_nb, page_number = page_number }, { article = template_article_index, element = template.element_file, tag = template.taglink_file, pagination = page_pagination })
+  indexfile, index, page_post_nb, page_number, pagin = postsIndexing(posts, indexfile, index, pagin, { post_nb = page_post_nb, page_number = page_number }, { article = template_article_index, element = template.element_file, tag = template.taglink_file, pagination = page_pagination }, post_list_title)
   -- If last post, finish index writing (to close file)
   if page_post_nb >= post_nb or (pagin.max and page_post_nb <= pagin.max) then
     -- Prepare page substitution elements
