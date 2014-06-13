@@ -1,9 +1,5 @@
 #!/usr/bin/lua
 
-
---dofile('process.lua')
-
-
 --[[
 
 TODO:
@@ -21,6 +17,9 @@ TODO:
     config = require 'config'
     print(config.ext)
 
+  * QUIET mode
+  * Display help in few languages
+
 In main program:
 
   * Import gettext
@@ -32,20 +31,89 @@ In main program:
 
 ]]--
 
-allowed_command = {
-  clean = 'clean',
-  compile = 'nawak'
-}
+--[[ VARIABLES ]]--
+VERSION = '0.4-trunk'
+Command = require 'lib.command'
 
+-- Create commands
+commands = { }
+table.insert(commands, Command.new('clean', 'clean up result directory'))
+table.insert(commands, Command.new('list', 'list all available commands'))
+table.insert(commands, Command.new('publish', 'publish your weblog using tools/publish.sh script'))
+table.insert(commands, Command.new('refresh', 'same as clean + compile commands'))
+table.insert(commands, Command.new('add', 'create a new post'))
+table.insert(commands, Command.new('help', 'same as \'list\''))
+table.insert(commands, Command.new('createpost', 'same as \'add\''))
+table.insert(commands, Command.new('backup', 'make a backup from your current makefly directory'))
+table.insert(commands, Command.new('install', 'install \'pub\' directory into INSTALLDIR directory (set in makefly.rc file)'))
+table.insert(commands, Command.new('migratefrom', 'will update all DB files with given [url]'))
+table.insert(commands, Command.new('theme', 'will copy \'base\' theme to the new one given with [name]'))
+table.insert(commands, Command.new('version', 'give current program version'))
+
+--[[ FUNCTIONS ]]--
 function clean()
-  print("oh yeah, I'm cleaning!")
+  print("cleaning")
+end
+
+function compile()
+  print('compiling')
+end
+
+function publish()
+  print('publishing')
+end
+
+function refresh()
+  clean()
+  compile()
+end
+
+function add()
+  print('adding')
+end
+
+function list()
+  res = 'List of available commands: '
+  for _, command in pairs(commands) do
+    res = res .. string.format('\n\t%s\t\t%s', command.name, command.description)
+  end
+  print(res)
+end
+
+function help()
+  return list()
+end
+
+function createpost()
+  return add()
+end
+
+function backup()
+  print('backuping')
+end
+
+function install()
+  print('installing')
+end
+
+function migratefrom()
+  -- TODO: check second argument to see if an URL was set. If not raise an error
+  print('migrating')
+end
+
+function theme()
+  print('theming')
+end
+
+function version()
+  print(VERSION)
 end
 
 
 function allowed(command)
   res = false
-  for i,_ in pairs(allowed_command) do
-    if i == command then
+  for _,v in pairs(commands) do
+    if v.name == command then
       res = true
       break
     end
@@ -57,14 +125,17 @@ function compilation()
   print("do compilation")
 end
 
-command = arg[1]
+--[[ MAIN ]]--
+
+local command = arg[1]
 if command ~= nil then
   if allowed(command) == true then
-    _G[allowed_command['clean']]()
+    _G[command]()
   else
-    print('option % not found')
+    print(string.format("'%s' option not found!", command))
   end
 else
   compilation()
 end
+
 return 0
