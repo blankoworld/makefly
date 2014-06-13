@@ -9,7 +9,9 @@
 -- @see http://www.gnu.org/software/hello/manual/gettext/MO-Files.html
 -- @see http://lua.2524044.n2.nabble.com/State-of-Lua-and-GNU-gettext-tt4797364.html#a4835939
 -------------------------------------------------------------------------------
-function load_mo_file(mo_file)
+local gettext = { }
+
+function gettext.load_mo_file(mo_file)
     --------------------------------
     -- open file and read data
     --------------------------------
@@ -70,3 +72,5 @@ function load_mo_file(mo_file)
         return hash[text] or text
     end
 end
+
+return gettext

@@ -34,7 +34,7 @@ luarocks install markdown
 ]]--
 
 require 'lib.init'
-require 'lib.utils'
+local utils = require 'lib.utils'
 require 'lib.rope'
 
 require 'markdown'
@@ -159,7 +159,7 @@ function stuffTemplate(filepath, content, variable, option, double_replacement)
     double = true
   end
   -- get file content
-  file = readFile(filepath, 'r')
+  file = utils.readFile(filepath, 'r')
   if file then
     local template_table = {}
     -- if no content or no variable, it's useless to complete template_table
@@ -167,100 +167,139 @@ function stuffTemplate(filepath, content, variable, option, double_replacement)
       template_table[variable] = markdown_content
     end
     -- do replacements
-    local substitutions = getSubstitutions(replacements, template_table)
+    local substitutions = utils.getSubstitutions(replacements, template_table)
     if double then
-      local tmp_result = replace(file, substitutions)
-      result = replace(tmp_result, replacements)
+      local tmp_result = utils.replace(file, substitutions)
+      result = utils.replace(tmp_result, replacements)
     else
-      result = replace(file, substitutions)
+      result = utils.replace(file, substitutions)
     end
   end
   return result
 end
 
 -------------------------------------------------------------------------------
+-- Check config to generate keywords
+-- @param config post configuration (table)
+-- @return A keywords rope()
+-------------------------------------------------------------------------------
+function getKeywords(config)
+  local result = rope()
+  if config['KEYWORDS'] ~= nil then
+    result:push (config['KEYWORDS'])
+  end
+  if config['TAGS'] then
+    if result:flatten() ~= '' then
+      result:push(',')
+    end
+    result:push(config['TAGS'])
+  end
+  if makeflyrc['BLOG_KEYWORDS'] then
+    if result:flatten() ~= '' then
+      result:push(',')
+    end
+    result:push (makeflyrc['BLOG_KEYWORDS'])
+  end
+  return result
+end
+
+-------------------------------------------------------------------------------
+-- Add specific comments substitutions (JSKOMMENT_CONTENT variable)
+-- @param sub Substitutions table
+-- @param config Post configuration table
+-- @param title Post title
+-- @return Substitutions table with JSKOMMENT_CONTENT if needed
+-------------------------------------------------------------------------------
+function commentSubstitutions(sub, config, title)
+  if template_comment then
+    local jskomment_prefix = config['JSKOMMENT_PREFIX'] and config['JSKOMMENT_PREFIX'] ~= '' and config['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
+    local jskomment_id = jskomment_prefix .. '/' .. title
+    local jskomment_content = utils.replace(template_comment, {JSKOMMENT_ID=jskomment_id})
+    sub['JSKOMMENT_CONTENT'] = jskomment_content
+  end
+  return sub
+end
+
+-------------------------------------------------------------------------------
+-- List tags from '@taglist' table and create a link list of tags to add them into TAG_LINKS_LIST variable in '@metadata'. If remember is true, add tags into tags global variable.
+-- @param taglist list of tags' name
+-- @param metadata A table containing some replacement elements for posts
+-- @param remember If true, set tag name into all tags list.
+-- @return metadata (completed or not regarding taglist content)
+-------------------------------------------------------------------------------
+function parseTags(taglist, metadata, template, remember)
+  if taglist then
+    local post_tags = {}
+    for i, tag in pairs(taglist:split(',')) do
+      local tagname = utils.deleteEndSpace(utils.deleteBeginSpace(tag))
+      -- remember the tagname to create tag links
+      table.insert(post_tags, tagname)
+      -- add tag to list of all tags if remember is true.
+      if remember and remember == true then
+        if tags[tagname] == nil then
+          tags[tagname] = {title}
+        else
+          table.insert(tags[tagname], title)
+        end
+      end
+    end
+    -- create tag links
+    local tag_links = createTagLinks(post_tags, template)
+    if tag_links then
+      metadata['TAG_LINKS_LIST'] = tag_links and utils.replace(tag_links, replacements) or ''
+    end
+  end
+  return metadata
+end
+
+-------------------------------------------------------------------------------
 -- Create post page for given '@file'
 -- @param file filename of post in db directory
 -- @param config configuration elements as TITLE, TAGS, TYPE, etc.
--- @param template_file file to use as template for a post
--- @param template_tag_file file to use as template for tag in a post page
+-- @param data.template_file file to use as template for a post
+-- @param data.template_tag_file file to use as template for tag in a post page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function createPost(file, config, template_file, template_tag_file)
-  -- get post's title and timestamp
+function createPost(file, config, data)
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
   if today > tonumber(timestamp) then
-    -- open template file
-    local template = readFile(template_file, 'r')
-    -- open post output file
-    local out = assert(io.open(postpath .. "/" .. keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension, 'wb'))
-    -- create a rope for post's result
+    local template = utils.readFile(data.template_file, 'r')
+    local out = assert(io.open(postpath .. "/" .. utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension, 'wb'))
     local post = rope()
-    -- open content of post (SRC file)
-    local content = readFile(srcpath .. "/" .. title .. source_extension, 'r')
-    -- markdown process on content
+    local content = utils.readFile(srcpath .. "/" .. title .. source_extension, 'r')
     local markdown_content = markdown(content)
-    -- process tags
-    local post_tags = {}
-    for i, tag in pairs(config['TAGS']:split(',')) do
-      local post_tagname = deleteEndSpace(deleteBeginSpace(tag))
-      table.insert(post_tags, post_tagname)
-    end
-    -- create tag links
-    local post_tag_links = createTagLinks(post_tags, template_tag_file)
     -- concatenate all final post subelements
     post:push (header)
     post:push (template)
     post:push (footer)
     -- keywords
-    local keywords = rope()
-    if config['KEYWORDS'] ~= nil then
-      keywords:push (config['KEYWORDS'])
-    end
-    if config['TAGS'] then
-      if keywords:flatten() ~= '' then
-        keywords:push(',')
-      end
-      keywords:push(config['TAGS'])
-    end
-    if makeflyrc['BLOG_KEYWORDS'] then
-      if keywords:flatten() ~= '' then
-        keywords:push(',')
-      end
-      keywords:push (makeflyrc['BLOG_KEYWORDS'])
-    end
+    local keywords = getKeywords(config)
     -- local replacements
     local post_replacements = {
       TITLE = config['TITLE'],
       POST_TITLE = config['TITLE'],
       ARTICLE_CLASS_TYPE = config['TYPE'] or '',
       CONTENT = markdown_content,
-      POST_FILE = keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
-      TAG_LINKS_LIST = post_tag_links and replace(post_tag_links, replacements) or '',
+      POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
       DATE = os.date(date_format, timestamp) or '',
       DATETIME = os.date(datetime_format_default, timestamp) or '',
       POST_AUTHOR = config['AUTHOR'],
       POST_ESCAPED_TITLE = title,
       KEYWORDS = keywords:flatten(),
     }
+    -- process tags
+    post_replacements = parseTags(config['TAGS'], post_replacements, data.template_tag_file, nil)
     -- create substitutions list
-    local substitutions = getSubstitutions(replacements, post_replacements)
+    local substitutions = utils.getSubstitutions(replacements, post_replacements)
     -- add comment block if comment system is activated
-    if template_comment then
-      local jskomment_prefix = config['JSKOMMENT_PREFIX'] and config['JSKOMMENT_PREFIX'] ~= '' and config['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
-      local jskomment_id = jskomment_prefix .. '/' .. title
-      local jskomment_content = replace(template_comment, {JSKOMMENT_ID=jskomment_id})
-      substitutions['JSKOMMENT_CONTENT'] = jskomment_content
-    end
+    substitutions = commentSubstitutions(substitutions, config, title)
     -- ${VARIABLES} substitution on markdown content
     local flatten_final_content = post:flatten()
-    local final_content = replace(flatten_final_content, substitutions)
+    local final_content = utils.replace(flatten_final_content, substitutions)
     -- First time we replace element, CONTENT will get markdown_content. But markdown_content was not replaced itself with replacements elements. The next line is here to do that
-    final_content = replace(final_content, substitutions)
-    -- write result to output file
+    final_content = utils.replace(final_content, substitutions)
     out:write(final_content)
-    -- close output file
     assert(out:close())
     -- Print post title
     print (string.format(_("-- [%s] New post: %s"), display_success, config['TITLE']))
@@ -278,7 +317,7 @@ function createTagLinks(post_tags, file)
   -- prepare some values
   local result = ''
   -- get single tag element template
-  local template = readFile(file, 'r')
+  local template = utils.readFile(file, 'r')
   template = string.gsub(template, '\n$', '')
   -- add each tag
   for k, v in pairs(post_tags) do
@@ -286,79 +325,160 @@ function createTagLinks(post_tags, file)
       result = result .. ', '
     end
     local tag_page = string.gsub(v, '%s', '_') .. resultextension
-    result = result .. replace(template, {TAG_PAGE=tag_page, TAG_NAME=v})
+    result = result .. utils.replace(template, {TAG_PAGE=tag_page, TAG_NAME=v})
   end
   return result
 end
 
 -------------------------------------------------------------------------------
--- Create post index page
--- @param posts list of posts {{file='123456,the_title_of_post.mk', conf={TITLE='The title of post', TAGS='something, other'}}, {file='234567,anything_else.mk', conf={TITLE='Anythin else', TAGS='anything'}}}
--- @param index_file filename you want for the post index page. Example: pub/posts/index.html
--- @param template_index_file path to the template to use for the index's page
--- @param template_element_file path to the template to use for each post that appears on tag's page
--- @param template_taglink_file path to the template to use for list of links to the tags
--- @param template_article_index_file path to the template to use for each post that appears on index's page
--- @return Nothing (process function)
+-- For given index, close it with a footer.
+-- @param file File in which we write result
+-- @param result Content of index
+-- @param title Title of the page
+-- @param body_class Name of the class that will be add into BODY tag
+-- @param pagin Pagination object in which you have next/first/last/previous page
+-- @param page_number Number of current page in the code (start at 0)
+-- @return Nothing (process method)
 -------------------------------------------------------------------------------
-function createPostIndex(posts, template_index_file, template_element_file, template_taglink_file, template_article_index_file)
-  -- check directory
-  checkDirectory(postpath)
-  -- open result file
-  local post_index = io.open(postpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(index_name) .. resultextension, 'wb')
-  -- prepare rss elements
-  local rss_index = io.open(publicpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(rss_name_default) .. rss_extension_default, 'wb')
-  local rss_header = readFile(page_rss_header, 'r')
-  local rss_footer = readFile(page_rss_footer, 'r')
-  local rss_element = readFile(page_rss_element, 'r')
-  -- create a rope to merge all text
-  local index = rope()
-  local rss = rope()
-  -- get header for results
-  index:push (header)
-  rss:push (rss_header)
-  -- get post index general content
-  local post_content = readFile(template_index_file, 'r')
-  index:push (post_content)
-  -- get info for each post
-  local post_element = readFile(template_element_file, 'r')
-  -- open template for posts that appears on index
-  local template_article_index = readFile(template_article_index_file, 'r')
-  -- sort posts in a given order
-  table.sort(posts, function(a, b) return compare_post(a,b, user_sort_choice) end)
-  -- prepare some values
+function closeIndex(file, result, title, body_class, pagin, page_number)
+  result:push (footer)
+  -- do substitutions on page
+  local page_sub_first = index_name .. resultextension
+  local page_sub_last = index_name .. (pagin.total - 1) .. resultextension
+  local page_sub_previous = index_name .. pagin:previous_page(page_number) .. resultextension
+  local page_sub_next = index_name .. pagin:next_page(page_number) .. resultextension
+  local index_sub_table = {
+    TITLE=title,
+    BODY_CLASS=body_class,
+    PAGE_FIRST_LINK=page_sub_first,
+    PAGE_PREV_LINK=page_sub_previous,
+    PAGE_NEXT_LINK=page_sub_next,
+    PAGE_LAST_LINK=page_sub_last,
+    PAGE_CURRENT=page_number + 1,
+    PAGE_TOTAL=pagin.total,
+  }
+  local index_substitutions = utils.getSubstitutions(replacements, index_sub_table)
+  local index_content = utils.replace(result:flatten(), index_substitutions)
+  file:write(index_content)
+  -- Close index
+  file:close()
+end
+
+-------------------------------------------------------------------------------
+-- Create temporary elements (post content and post summary) to be included in Homepage and post list
+-- @param data.index_nb Number of current index page (in the code)
+-- @param data.increment If we do incrementation or decrementation of 'num'
+-- @param data.min Homepage index minimum number
+-- @param data.max Homepage index maximum number
+-- @param data.num Real displayed number for index page
+-- @return data.num, the number of new real displayed index number
+-------------------------------------------------------------------------------
+function createPostForHomepage(file, title, config, content, sub, post_template, data)
+  local final_content = utils.readFile(file, 'r')
+  if data.index_nb >= data.min and data.index_nb <= data.max then
+    if max_post_lines then
+      local n = 0
+      for i in content:gmatch("\n") do n=n+1 end
+      final_content = utils.headFile(file, max_post_lines)
+      if max_post_lines < n then
+        local page_read_more = utils.readFile(themepath .. '/' .. page_read_more_name, 'r')
+        final_content = final_content .. page_read_more
+      end
+    end
+    local post_content = utils.replace(post_template, {CONTENT=markdown(final_content)})
+    -- complete missing info
+    sub['ARTICLE_CLASS_TYPE'] = config['TYPE'] or ''
+    sub['POST_ESCAPED_TITLE'] = title
+    -- add comment block if comment system is activated
+    sub = commentSubstitutions(sub, config, title)
+    local content4index = utils.replace(post_content, sub)
+    -- create temporary file for Homepage
+    if data.increment then
+      data.num = data.num + 1
+    else
+      data.num = data.num - 1
+    end
+    local homepage_file = io.open(tmppath .. '/index.' .. data.num .. '.tmp', 'wb')
+    assert(homepage_file:write(content4index))
+    -- close first_posts file
+    assert(homepage_file:close())
+  end
+  return data.num
+end
+
+-------------------------------------------------------------------------------
+-- Create RSS index page
+-- @param content Content of the post to add in the RSS (if can be included)
+-- @param config Metadata from the post
+-- @param title Title of the post to be saved into temporary directory
+-- @param template Template of RSS element
+-- @param data.min Number minimum that the post number should have to be on RSS page
+-- @param data.max Number maximum that the post number should have to be on RSS page
+-- @param data.increment If true, increment, otherwise decrement number
+-- @param data.index_nb Number (in the code) of the post for the result RSS. Cannot be superior to 'data.max'
+-- @param data.num Number (in the code) of the post
+-- @return data.num which is the number of the RSS
+-------------------------------------------------------------------------------
+function createPostForRSS(content, config, title, template, data)
+  if data.index_nb >= data.min and data.index_nb <= data.max then
+    -- create temporary file for RSS
+    if data.increment then
+      data.num = data.num + 1
+    else
+      data.num = data.num - 1
+    end
+    local rss_file = io.open(tmppath .. '/rss.' .. data.num .. '.tmp', 'wb')
+    local rss_post_html_link = blog_url .. '/' .. postdir_name .. '/' .. title .. resultextension
+    -- Change temporarly locale
+    assert(os.setlocale('C'))
+    local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
+    assert(os.setlocale(lang))
+    local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=config['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
+    assert(rss_file:write(rss_post))
+    -- close first_posts file
+    assert(rss_file:close())
+  end
+  return data.num
+end
+
+-------------------------------------------------------------------------------
+-- Parse all given posts to create the Index page and a RSS file
+-- @param posts List of posts
+-- @param result Rope of the post index file (result of the final page)
+-- @param pagin Pagination object in which you have next/first/last/previous page
+-- @param number.post_nb Current post number. Begin to 1
+-- @param number.page_number Current page number in the code. Begin to 0.
+-- @param template.element Template of an element that represents a short post description/info
+-- @param template.article Template of post index
+-- @param template.tag Template for tags
+-- @param template.pagination Content of the template for pagination
+-- @return indexfile after its modification
+-- @return result after its modifications
+-- @return number.post_nb after its modifications
+-- @return number.page_number after its modifications
+-- @return pagin after its modifications
+-------------------------------------------------------------------------------
+function postsIndexing(posts, indexfile, result, pagin, number, template, post_list_title)
+  -- prepare some variables
   local index_nb = 0 -- number of post in all posts
+  local increment = true
   local home_min = 0 -- minimal index_nb in all posts to appear on homepage
   local home_max = home_min + max_post + 1 -- max index_nb in all posts to appear on homepage
   local home_index = 0 -- index process for posts that will appear on homepage
   local rss_min = 0
   local rss_max = rss_min + max_rss + 1
   local rss_index_nb = 0
-  local post_nb = #posts
-  local increment = true
-  local page_number = 0
-  local page_post_nb = 1
-  local pages = 1
-  if max_page and max_page > 0 then
-    pages = (post_nb - (post_nb%max_page))/max_page + 1
-  elseif max_page == 0 then
-    max_page = nil
-  end
-  -- Some common pagination numbers/files
-  local page_sub_first = index_name .. resultextension
-  local page_sub_last = index_name .. (pages - 1) .. resultextension
-  local page_sub_total = pages
-  local page_pagination = readFile(themepath .. '/' .. page_pagination_name, 'r')
   if user_sort_choice == 'asc' then
     increment = false
-    home_min = post_nb - max_post - 1
-    home_max = post_nb + 1
+    home_min = number.post_nb - max_post - 1
+    home_max = number.post_nb + 1
     home_index = max_post + 1
-    rss_min = post_nb - max_rss - 1
-    rss_max = post_nb + 1
+    rss_min = number.post_nb - max_rss - 1
+    rss_max = number.post_nb + 1
     rss_index_nb = max_post + 1
   end
-  -- process posts
+  local post_element = utils.readFile(template.element, 'r')
+  local rss_element = utils.readFile(page_rss_element, 'r')
   for k, v in pairs(posts) do
     -- get post's title
     local timestamp, title = string.match(v['file'], "(%d+),(.+)%.mk")
@@ -367,7 +487,7 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
       -- local substitutions
       local metadata = {
         POST_TITLE = v['conf']['TITLE'],
-        POST_FILE = keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
+        POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
         POST_AUTHOR = v['conf']['AUTHOR'],
         POST_DESCRIPTION = v['conf']['DESCRIPTION'] or '',
         SHORT_DATE = os.date(short_date_format, timestamp) or '',
@@ -376,187 +496,112 @@ function createPostIndex(posts, template_index_file, template_element_file, temp
       }
       -- registering tags
       local post_conf_tags = v['conf']['TAGS'] or nil
-      if post_conf_tags then
-        local post_tags = {}
-        for i, tag in pairs(post_conf_tags:split(',')) do
-          local tagname = deleteEndSpace(deleteBeginSpace(tag))
-          -- remember the tagname to create tag links
-          table.insert(post_tags, tagname)
-          -- add tag to list of all tags
-          if tags[tagname] == nil then
-            tags[tagname] = {title}
-          else
-            table.insert(tags[tagname], title)
-          end
-        end
-        -- create tag links
-        local tag_links = createTagLinks(post_tags, template_taglink_file)
-        if tag_links then
-          metadata['TAG_LINKS_LIST'] = tag_links
-        end
-      end
+      metadata = parseTags(post_conf_tags, metadata, template.tag, true)
       -- prepare substitutions for the post
-      local post_substitutions = getSubstitutions(v, metadata)
+      local post_substitutions = utils.getSubstitutions(v, metadata)
       -- remember this post's element for each tag page
-      local post_element_content = replace(post_element, post_substitutions)
-      local remember_file = assert(io.open(tmppath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(title), 'wb'))
+      local post_element_content = utils.replace(post_element, post_substitutions)
+      local remember_file = assert(io.open(tmppath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(title), 'wb'))
       assert(remember_file:write(post_element_content))
       assert(remember_file:close())
       -- push result into index
-      index:push(post_element_content)
+      result:push(post_element_content)
       -- read post real content
-      local post_content_file = srcpath .. '/' .. title .. source_extension
-      local real_post_content = readFile(post_content_file, 'r')
+      local postfile = srcpath .. '/' .. title .. source_extension
+      local content = utils.readFile(postfile, 'r')
       -- process post to be displayed on HOMEPAGE
-      local final_post_content = readFile(post_content_file, 'r')
-      if index_nb >= home_min and index_nb <= home_max then
-        if max_post_lines then
-          local n = 0
-          for i in real_post_content:gmatch("\n") do n=n+1 end
-          final_post_content = headFile(post_content_file, max_post_lines)
-          if max_post_lines < n then
-            local page_read_more = readFile(themepath .. '/' .. page_read_more_name, 'r')
-            final_post_content = final_post_content .. page_read_more
-          end
-        end
-        local post_content = replace(template_article_index, {CONTENT=markdown(final_post_content)})
-        -- complete missing info
-        post_substitutions['ARTICLE_CLASS_TYPE'] = v['conf']['TYPE'] or ''
-        post_substitutions['POST_ESCAPED_TITLE'] = title
-        -- add comment block if comment system is activated
-        if template_comment then
-          local jskomment_prefix = v['conf']['JSKOMMENT_PREFIX'] and v['conf']['JSKOMMENT_PREFIX'] ~= '' and v['conf']['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
-          local jskomment_id = jskomment_prefix .. '/' .. title
-          local jskomment_content = replace(template_comment, {JSKOMMENT_ID=jskomment_id})
-          post_substitutions['JSKOMMENT_CONTENT'] = jskomment_content
-        end
-        local content4index = replace(post_content, post_substitutions)
-        -- create temporary file for Homepage
-        if increment then
-          home_index = home_index + 1
-        else
-          home_index = home_index - 1
-        end
-        local homepage_file = io.open(tmppath .. '/index.' .. home_index .. '.tmp', 'wb')
-        assert(homepage_file:write(content4index))
-        -- close first_posts file
-        assert(homepage_file:close())
-      end
+      home_index = createPostForHomepage(postfile, title, v['conf'], content, post_substitutions, template.article, { min = home_min, max = home_max, num = home_index, index_nb = index_nb, increment = increment })
       -- process post to be used in RSS file
-      if index_nb >= rss_min and index_nb <= rss_max then
-        -- create temporary file for RSS
-        if increment then
-          rss_index_nb = rss_index_nb + 1
-        else
-          rss_index_nb = rss_index_nb - 1
-        end
-        local rss_file = io.open(tmppath .. '/rss.' .. rss_index_nb .. '.tmp', 'wb')
-        local rss_post_html_link = blog_url .. '/' .. postdir_name .. '/' .. title .. resultextension
-        -- Change temporarly locale
-        assert(os.setlocale('C'))
-        local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
-        assert(os.setlocale(lang))
-        local rss_post = replace(rss_element, {DESCRIPTION=markdown(real_post_content), TITLE=v['conf']['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
-        assert(rss_file:write(rss_post))
-        -- close first_posts file
-        assert(rss_file:close())
-      end
+      rss_index_nb = createPostForRSS(content, v['conf'], title, rss_element, { min = rss_min, max = rss_max, num = rss_index_nb, index_nb = index_nb, increment = increment })
       -- incrementation
       index_nb = index_nb + 1
       -- Page process
-      page_post_nb = page_post_nb + 1
-      if max_page and page_post_nb > max_page then
-        page_post_nb = 1
-        -- Prepare page substitution elements
-        page_current = page_number + 1
-        page_previous = (page_number - 1) > 0 and (page_number - 1) or 0
-        page_next = (page_number + 1) < pages and (page_number + 1) or pages - 1
-        if page_previous == 0 then
-          page_previous = ''
-        end
-        page_sub_previous = index_name .. page_previous .. resultextension
-        page_sub_next = index_name .. page_next .. resultextension
+      number.post_nb = number.post_nb + 1
+      if pagin.max and number.post_nb > pagin.max and pagin.total > 1 then
+        number.post_nb = 1
         -- Add pagination template
-        index:push (page_pagination)
+        result:push (template.pagination)
         -- CLOSE CURRENT INDEX
-        index:push (footer)
-        -- do substitutions on page
-        index_sub_table = {
-          TITLE=replacements['POST_LIST_TITLE'],
-          BODY_CLASS="posts",
-          PAGE_FIRST_LINK=page_sub_first,
-          PAGE_PREV_LINK=page_sub_previous,
-          PAGE_NEXT_LINK=page_sub_next,
-          PAGE_LAST_LINK=page_sub_last,
-          PAGE_CURRENT=page_current,
-          PAGE_TOTAL=page_sub_total,
-        }
-        index_substitutions = getSubstitutions(replacements, index_sub_table)
-        index_content = replace(index:flatten(), index_substitutions)
-        post_index:write(index_content)
-        -- Close post's index
-        post_index:close()
-        post_index = nil
-        index = nil
-        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, page_sub_total))
+        closeIndex(indexfile, result, replacements['POST_LIST_TITLE'], 'posts', pagin, number.page_number)
+        indexfile = nil
+        result = nil
+        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, number.page_number + 1, pagin.total))
         -- increment page number
-        page_number = page_number + 1
+        number.page_number = number.page_number + 1
         -- CREATE NEW INDEX
-        post_index = io.open(postpath .. '/' .. index_name .. page_number .. resultextension, 'wb')
-        index = rope()
-        index:push (header)
-        index:push (post_content)
+        indexfile = io.open(postpath .. '/' .. index_name .. number.page_number .. resultextension, 'wb')
+        result = rope()
+        result:push (header)
+        -- Add title of the post list on the result
+        result:push (post_list_title)
       end
     end
   end
+  return indexfile, result, number.post_nb, number.page_number, pagin
+end
+
+-------------------------------------------------------------------------------
+-- Create post index page
+-- @param posts list of posts {{file='123456,the_title_of_post.mk', conf={TITLE='The title of post', TAGS='something, other'}}, {file='234567,anything_else.mk', conf={TITLE='Anythin else', TAGS='anything'}}}
+-- @param template.index_file path to the template to use for the index's page
+-- @param template.element_file path to the template to use for each post that appears on tag's page
+-- @param template.taglink_file path to the template to use for list of links to the tags
+-- @param template.article_index_file path to the template to use for each post that appears on index's page
+-- @return Nothing (process function)
+-------------------------------------------------------------------------------
+function createPostIndex(posts, template)
+  -- check directory
+  utils.checkDirectory(postpath)
+  -- prepare some values
+  local indexfile = io.open(postpath .. '/' .. index_name .. resultextension, 'wb')
+  local rssfile = io.open(publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(rss_name_default) .. rss_extension_default, 'wb')
+  local rss_header = utils.readFile(page_rss_header, 'r')
+  local rss_footer = utils.readFile(page_rss_footer, 'r')
+  -- create a rope to merge all text
+  local index = rope()
+  local rss = rope()
+  -- get header for results
+  index:push (header)
+  rss:push (rss_header)
+  local post_list_title = utils.readFile(template.index_file, 'r')
+  index:push (post_list_title)
+  local template_article_index = utils.readFile(template.article_index_file, 'r')
+  -- sort posts in a given order
+  table.sort(posts, function(a, b) return utils.compare_post(a,b, user_sort_choice) end)
+  -- prepare some values
+  local pagination = require "lib.pagination"
+  local pagin = pagination.new(#posts, max_page)
+  local post_nb = #posts
+  local page_number = 0
+  local page_post_nb = 1
+  -- Some common pagination numbers/files
+  local page_pagination = utils.readFile(themepath .. '/' .. page_pagination_name, 'r')
+  -- process posts
+  indexfile, index, page_post_nb, page_number, pagin = postsIndexing(posts, indexfile, index, pagin, { post_nb = page_post_nb, page_number = page_number }, { article = template_article_index, element = template.element_file, tag = template.taglink_file, pagination = page_pagination }, post_list_title)
   -- If last post, finish index writing (to close file)
-  if page_post_nb >= post_nb or (max_page and page_post_nb <= max_page) then
+  if page_post_nb >= post_nb or (pagin.max and page_post_nb <= pagin.max) then
     -- Prepare page substitution elements
-    if max_page and max_page > 0 and page_sub_total > 1 then
-      page_current = page_number + 1
-      page_previous = (page_number - 1) > 0 and (page_number - 1) or 0
-      page_next = (page_number + 1) < pages and (page_number + 1) or pages - 1
-      if page_previous == 0 then
-        page_previous = ''
-      end
-      page_sub_previous = index_name .. page_previous .. resultextension
-      page_sub_next = index_name .. page_next .. resultextension
+    if pagin.max and pagin.max > 0 and pagin.total > 1 then
       -- Add pagination template
       index:push (page_pagination)
     end
     -- CLOSE FINAL INDEX
-    index:push (footer)
-    -- do substitutions on page
-    index_sub_table = {
-      TITLE=replacements['POST_LIST_TITLE'],
-      BODY_CLASS="posts",
-      PAGE_FIRST_LINK=page_sub_first,
-      PAGE_PREV_LINK=page_sub_previous,
-      PAGE_NEXT_LINK=page_sub_next,
-      PAGE_LAST_LINK=page_sub_last,
-      PAGE_CURRENT=page_current,
-      PAGE_TOTAL=page_sub_total,
-    }
-    local index_substitutions = getSubstitutions(replacements, index_sub_table)
-    local index_content = replace(index:flatten(), index_substitutions)
-    post_index:write(index_content)
-    -- Close post's index
-    post_index:close()
-    if max_page and max_page > 0 and page_sub_total > 1 then
-      print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_current, page_sub_total))
+    closeIndex(indexfile, index, replacements['POST_LIST_TITLE'], 'posts', pagin, page_number)
+    if pagin.max and pagin.max > 0 and pagin.total > 1 then
+      print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_number + 1, pagin.total))
     end
   end
   -- rss process
   local index_rss_nb = 1
   while index_rss_nb <= max_rss do
-    local rss_content = readFile(tmppath .. '/' .. 'rss.' .. index_rss_nb .. '.tmp', 'r')
+    local rss_content = utils.readFile(tmppath .. '/' .. 'rss.' .. index_rss_nb .. '.tmp', 'r')
     rss:push (rss_content)
     index_rss_nb = index_rss_nb + 1
   end
   rss:push (rss_footer)
-  rss_replace = replace(rss:flatten(), replacements)
-  rss_index:write(rss_replace)
-  rss_index:close()
+  rss_replace = utils.replace(rss:flatten(), replacements)
+  rssfile:write(rss_replace)
+  rssfile:close()
   -- Display that RSS file was created
   print (string.format(_("-- [%s] RSS feed: BUILT."), display_success))
   -- Display that post index was created
@@ -575,7 +620,7 @@ function createTag(filename, title, posts)
   -- insert content (all posts linked to this tag)
   for k, post in pairs(posts) do
     local content = ''
-    content = readFile(tmppath .. '/' .. post, 'r')
+    content = utils.readFile(tmppath .. '/' .. post, 'r')
     if content then
       page:push(content)
     end
@@ -589,8 +634,8 @@ function createTag(filename, title, posts)
     keywords:push (',' .. makeflyrc['BLOG_KEYWORDS'])
   end
   -- do substitutions on page
-  local substitutions = getSubstitutions(replacements, {TITLE=title, KEYWORDS=keywords:flatten()})
-  local final_content = replace(page:flatten(), substitutions)
+  local substitutions = utils.getSubstitutions(replacements, {TITLE=title, KEYWORDS=keywords:flatten()})
+  local final_content = utils.replace(page:flatten(), substitutions)
   page_file:write(final_content)
   page_file:close()
   -- Print tag title
@@ -600,32 +645,32 @@ end
 -------------------------------------------------------------------------------
 -- Create the tag index's page
 -- @param index_filename path of file to use to write result into
--- @param template_index_filename path to the template to use for tag index's page
--- @param template_element_filename path to the template to use for each tag on tag index's page
+-- @param data.template_index_filename path to the template to use for tag index's page
+-- @param data.template_element_filename path to the template to use for each tag on tag index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function createTagIndex(index_filename, template_index_filename, template_element_filename)
+function createTagIndex(index_filename, data)
   local index = rope()
   index:push(header)
   -- check tagpath directory
-  checkDirectory(tagpath)
+  utils.checkDirectory(tagpath)
   local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
   -- read general tag index template file
-  local template_index = readFile(template_index_filename, 'r')
+  local template_index = utils.readFile(data.template_index_filename, 'r')
   -- read tage element template file
-  local template_element = readFile(template_element_filename, 'r')
+  local template_element = utils.readFile(data.template_element_filename, 'r')
   -- browse all tags
   local taglist_content = ''
-  for tag, posts in pairsByKeys(tags) do
+  for tag, posts in utils.pairsByKeys(tags) do
     local tag_page = string.gsub(tag, '%s', '_') .. resultextension
-    taglist_content = taglist_content .. replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
-    createTag(tagpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts)
+    taglist_content = taglist_content .. utils.replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
+    createTag(tagpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts)
   end
-  index:push(replace(template_index, {TAGLIST_CONTENT=taglist_content}))
+  index:push(utils.replace(template_index, {TAGLIST_CONTENT=taglist_content}))
   index:push(footer)
   -- do substitutions on page
-  local substitutions = getSubstitutions(replacements, {TITLE=replacements['TAG_LIST_TITLE'], BODY_CLASS='tags'})
-  local index_content = replace(index:flatten(), substitutions)
+  local substitutions = utils.getSubstitutions(replacements, {TITLE=replacements['TAG_LIST_TITLE'], BODY_CLASS='tags'})
+  local index_content = utils.replace(index:flatten(), substitutions)
   index_file:write(index_content)
   -- Close post's index
   assert(index_file:close())
@@ -646,13 +691,13 @@ function createHomepage(file, title)
   -- push content from all temporary files
   local index_nb = 1
   while index_nb <= max_post do
-    local content = readFile(tmppath .. '/' .. 'index.' .. index_nb .. '.tmp', 'r')
+    local content = utils.readFile(tmppath .. '/' .. 'index.' .. index_nb .. '.tmp', 'r')
     index:push(content)
     index_nb = index_nb + 1
   end
   index:push(footer)
-  local substitutions = getSubstitutions(replacements, {BODY_CLASS='home', TITLE=title})
-  local final_content = replace(index:flatten(), substitutions)
+  local substitutions = utils.getSubstitutions(replacements, {BODY_CLASS='home', TITLE=title})
+  local final_content = utils.replace(index:flatten(), substitutions)
   index_file:write(final_content)
   assert(index_file:close())
   -- Display that homepage was created
@@ -668,13 +713,13 @@ function createPage(origin, destination, title)
   local page_file = io.open(destination, 'wb')
   page:push(header)
   -- add page content
-  local content = readFile(origin, 'r')
+  local content = utils.readFile(origin, 'r')
   local markdown_content = markdown(content)
   page:push(markdown_content)
   -- add footer and close file
   page:push(footer)
-  local substitutions = getSubstitutions(replacements, {BODY_CLASS='page', TITLE=title})
-  local final_content = replace(page:flatten(), substitutions)
+  local substitutions = utils.getSubstitutions(replacements, {BODY_CLASS='page', TITLE=title})
+  local final_content = utils.replace(page:flatten(), substitutions)
   page_file:write(final_content)
   assert(page_file:close())
   -- Display that this page have been created
@@ -686,7 +731,7 @@ end
 threads = {}
 
 -- Get makefly's configuration
-makeflyrc = getConfig(makeflyrcfile)
+makeflyrc = utils.getConfig(makeflyrcfile)
 language = makeflyrc['BLOG_LANG'] or language_default
 -- FIXME: permit user to choose its own extension
 source_extension = source_extension_default
@@ -695,7 +740,7 @@ source_extension = source_extension_default
 
 -- Check some variables presence
 print (string.format(_("-- [%s] Check mandatories information"), display_info))
-local missing_makeflyrc_info = processMissingInfo(makeflyrc, mandatories_makeflyrc_vars)
+local missing_makeflyrc_info = utils.processMissingInfo(makeflyrc, mandatories_makeflyrc_vars)
 -- Check that all is OK, otherwise display an error message and quit the program
 if missing_makeflyrc_info ~= '' then
   print(string.format(_("-- [%s] Missing information in %s file: %s"), display_error, makeflyrcfile, missing_makeflyrc_info))
@@ -703,7 +748,8 @@ if missing_makeflyrc_info ~= '' then
 end
 
 -- Set variables regarding user configuration
-index_name = makeflyrc['INDEX_FILENAME'] or index_name_default
+index_tmp_name = makeflyrc['INDEX_FILENAME'] or index_name_default
+index_name = utils.keepUnreservedCharsAndDeleteDuplicate(index_tmp_name)
 resultextension = makeflyrc['PAGE_EXT'] or extension_default
 theme = makeflyrc['THEME'] or theme_default
 themepath = templatepath .. '/' .. theme
@@ -712,7 +758,7 @@ tagdir_name = makeflyrc['TAGDIR_NAME'] or tagdir_name_default
 bodyclass = makeflyrc['BODY_CLASS'] or bodyclass_default
 postpath = publicpath .. '/' .. postdir_name
 tagpath = publicpath .. '/' .. tagdir_name
-index_filename = keepUnreservedCharsAndDeleteDuplicate(index_name) .. resultextension
+index_filename = index_name .. resultextension
 date_format = makeflyrc['DATE_FORMAT'] or date_format_default
 short_date_format = makeflyrc['SHORT_DATE_FORMAT'] or short_date_format_default
 max_post = makeflyrc['MAX_POST'] and tonumber(makeflyrc['MAX_POST']) or max_post_default
@@ -751,11 +797,11 @@ if lfs.attributes(languagefile) == nil then
   languagefile = langpath .. '/translate.' .. language_default
   print(string.format(_("-- [%s] No '%s' translation. Use default one: %s."), display_warning, language, language_default))
 end
-languagerc = getConfig(languagefile)
+languagerc = utils.getConfig(languagefile)
 
 -- Check if needed directories exists. Otherwise create them
 for k,v in pairs({tmppath, publicpath, postpath, tagpath}) do
-  checkDirectory(v)
+  utils.checkDirectory(v)
 end
 
 -- Create path for template's files
@@ -770,14 +816,14 @@ local page_searchbar = themepath .. '/' .. page_searchbar_name
 local page_article_index = themepath .. '/' .. page_homepage_article_name
 
 -- Read template configuration file
-local themerc = getConfig(themepath .. '/' .. themercfile)
+local themerc = utils.getConfig(themepath .. '/' .. themercfile)
 
 -- Some values that comes from template configuration file
 local jskomment_captcha_theme = makeflyrc['JSKOMMENT_CAPTCHA_THEME'] or themerc['JSKOMMENT_CAPTCHA_THEME'] or jskomment_captcha_theme_default
 
 -- Read template's mandatory files
-header = readFile(page_header, 'r')
-footer = readFile(page_footer, 'r')
+header = utils.readFile(page_header, 'r')
+footer = utils.readFile(page_footer, 'r')
 
 -- Create CSS files
 css_file = themepath .. '/style/' .. themerc['CSS_FILE']
@@ -800,11 +846,11 @@ else
   jskomment_css_file = templatepath .. '/' .. page_jskomment_css_name
   jskomment_css_filename = page_jskomment_css_name
 end
-table.insert(threads, coroutine.create(function () copyFile(css_file, publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = blog_url }) end))
-table.insert(threads, coroutine.create(function () copyFile(css_color_file, publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
+table.insert(threads, coroutine.create(function () utils.copyFile(css_file, publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = blog_url }) end))
+table.insert(threads, coroutine.create(function () utils.copyFile(css_color_file, publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
 -- Copy static theme directory
 theme_static_directory = themepath .. '/static'
-table.insert(threads, coroutine.create(function () copy(theme_static_directory, publicpath, { BLOG_URL = blog_url }) end))
+table.insert(threads, coroutine.create(function () utils.copy(theme_static_directory, publicpath, { BLOG_URL = blog_url }) end))
 
 -- Add result to replacements table (to substitute ${VARIABLES} in files)
 replacements = {
@@ -853,7 +899,7 @@ end
 -- Check about's page presence
 about_filename = makeflyrc['ABOUT_FILENAME'] or about_default
 about_file_path = specialpath .. '/' .. about_filename .. source_extension
-about_file = readFile(about_file_path, 'r')
+about_file = utils.readFile(about_file_path, 'r')
 if about_file ~= '' then
   print (string.format(_("-- [%s] About's page available"), display_enable))
   replacements['ABOUT_INDEX'] = about_filename .. resultextension
@@ -869,27 +915,27 @@ if makeflyrc['ELI_USER'] and makeflyrc['ELI_API'] then
   eli_max = makeflyrc['ELI_MAX'] and tonumber(makeflyrc['ELI_MAX']) or eli_max_default
   eli_type = makeflyrc['ELI_TYPE'] or eli_type_default
   -- copy ELI css file
-  table.insert(threads, coroutine.create(function () copyFile(page_eli_css, publicpath .. '/' .. eli_css_name) end))
+  table.insert(threads, coroutine.create(function () utils.copyFile(page_eli_css, publicpath .. '/' .. eli_css_name) end))
   replacements['ELI_CSS'] = eli_css_name
   -- copy ELI script to public directory
-  local template_eli_script = readFile(page_eli_script, 'r')
+  local template_eli_script = utils.readFile(page_eli_script, 'r')
   local eli_script = assert(io.open(publicpath .. '/' .. eli_js_filename, 'wb'))
-  eli_script_substitutions = getSubstitutions(replacements, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER']})
-  local eli_script_replace = replace(template_eli_script, eli_script_substitutions)
+  eli_script_substitutions = utils.getSubstitutions(replacements, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER']})
+  local eli_script_replace = utils.replace(template_eli_script, eli_script_substitutions)
   eli_script:write(eli_script_replace)
   assert(eli_script:close())
   -- ELI script declaration in all pages
-  local template_eli_declaration = readFile(page_eli_declaration, 'r')
-  replacements['ELI_SCRIPT'] = replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL=blog_url})
+  local template_eli_declaration = utils.readFile(page_eli_declaration, 'r')
+  replacements['ELI_SCRIPT'] = utils.replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL=blog_url})
   -- ELI CSS declaration in all pages
-  local template_eli_css_declaration = readFile(page_eli_css_declaration, 'r')
-  replacements['ELI_CSS_DECLARATION'] = replace(template_eli_css_declaration, replacements)
+  local template_eli_css_declaration = utils.readFile(page_eli_css_declaration, 'r')
+  replacements['ELI_CSS_DECLARATION'] = utils.replace(template_eli_css_declaration, replacements)
   -- FIXME: get ELI status (with lua socket or anything else)
 --  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmp_file}'
---  eli_cmd = replace(eli_cmd, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER'], eli_tmp_file=eli_tmp_file})
+--  eli_cmd = utils.replace(eli_cmd, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=makeflyrc['ELI_API'],ELI_USER=makeflyrc['ELI_USER'], eli_tmp_file=eli_tmp_file})
 --  status_return = assert(os.execute(eli_cmd))
 --  if status_return == 0 then
---    local eli_status = readFile(eli_tmp_file, 'r')
+--    local eli_status = utils.readFile(eli_tmp_file, 'r')
 --    replacements['ELI_STATUS'] = eli_status
 --  end
   replacements['ELI_STATUS'] = languagerc['ELI_DEFAULT_STATUS'] or ''
@@ -903,7 +949,7 @@ end
 local sidebar_filename = (makeflyrc['SIDEBAR_FILENAME'] or sidebar_default) .. source_extension
 if (makeflyrc['SIDEBAR'] and makeflyrc['SIDEBAR'] == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
   print (string.format(_("-- [%s] Sidebar"), display_enable))
-  local sidebar_content = readFile(specialpath .. '/' .. sidebar_filename, 'r')
+  local sidebar_content = utils.readFile(specialpath .. '/' .. sidebar_filename, 'r')
   replacements['SIDEBAR'] = stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
 else
   print (string.format(_("-- [%s] Sidebar"), display_disable))
@@ -922,23 +968,23 @@ end
 if makeflyrc['JSKOMMENT'] and makeflyrc['JSKOMMENT'] == '1' then
   print (string.format(_("-- [%s] Comment system"), display_enable))
   -- copy jskomment css file
-  table.insert(threads, coroutine.create(function () copyFile(jskomment_css_file, publicpath .. '/' .. jskomment_css_filename) end))
+  table.insert(threads, coroutine.create(function () utils.copyFile(jskomment_css_file, publicpath .. '/' .. jskomment_css_filename) end))
   replacements['JSKOMMENT_CSS'] = jskomment_css_filename
   -- copy jskomment javascript
-  local template_jskomment_script = readFile(page_jskomment_script, 'r')
+  local template_jskomment_script = utils.readFile(page_jskomment_script, 'r')
   local jskomment_script = assert(io.open(publicpath .. '/' .. jskomment_js_filename, 'wb'))
-  jskomment_script_substitutions = getSubstitutions(replacements, {JSKOMMENT_URL=jskomment_url,JSKOMMENT_MAX=jskomment_max,JSKOMMENT_CAPTCHA_THEME=jskomment_captcha_theme})
-  jskomment_script_content = replace(template_jskomment_script, jskomment_script_substitutions)
+  jskomment_script_substitutions = utils.getSubstitutions(replacements, {JSKOMMENT_URL=jskomment_url,JSKOMMENT_MAX=jskomment_max,JSKOMMENT_CAPTCHA_THEME=jskomment_captcha_theme})
+  jskomment_script_content = utils.replace(template_jskomment_script, jskomment_script_substitutions)
   jskomment_script:write(jskomment_script_content)
   assert(jskomment_script:close())
   -- jskomment javascript declaration in all pages
-  local template_jskomment_declaration = readFile(page_jskomment_declaration, 'r')
-  replacements['JSKOMMENT_SCRIPT'] = replace(template_jskomment_declaration, {jskom_name=jskomment_js_filename, BLOG_URL=blog_url})
+  local template_jskomment_declaration = utils.readFile(page_jskomment_declaration, 'r')
+  replacements['JSKOMMENT_SCRIPT'] = utils.replace(template_jskomment_declaration, {jskom_name=jskomment_js_filename, BLOG_URL=blog_url})
   -- jskomment css declaration in all pages
-  local template_jskomment_css_declaration = readFile(page_jskomment_css_declaration, 'r')
-  replacements['JSKOMMENT_CSS_DECLARATION'] = replace(template_jskomment_css_declaration, replacements)
+  local template_jskomment_css_declaration = utils.readFile(page_jskomment_css_declaration, 'r')
+  replacements['JSKOMMENT_CSS_DECLARATION'] = utils.replace(template_jskomment_css_declaration, replacements)
   -- read different templates for next processes
-  template_comment = readFile(page_jskomment, 'r')
+  template_comment = utils.readFile(page_jskomment, 'r')
 else
   print (string.format(_("-- [%s] Comment system"), display_disable))
 end
@@ -953,10 +999,10 @@ special_files = {
 for i, j in pairs(special_files) do
   -- read special file if exists
   local special_file_path = specialpath .. '/' .. j
-  local special_file = readFile(special_file_path, 'r')
+  local special_file = utils.readFile(special_file_path, 'r')
   if special_file and special_file ~= '' then
     print (string.format(_("-- [%s] %s"), display_enable, i))
-    local special_file_final_content = replace(markdown(special_file), replacements)
+    local special_file_final_content = utils.replace(markdown(special_file), replacements)
     replacements[i .. '_CONTENT'] = special_file_final_content
   else
     print (string.format(_("-- [%s] %s"), display_disable, i))
@@ -967,55 +1013,57 @@ end
 if about_file then
   -- create content
   about_markdown = markdown(about_file)
-  about_replaced = replace(about_markdown, replacements)
+  about_replaced = utils.replace(about_markdown, replacements)
   -- construct about's page
   about = rope()
   about:push(header)
   about:push(about_replaced)
   about:push(footer)
   -- do replacements
-  about_substitutions = getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE'], BODY_CLASS='about'})
-  about_content = replace(about:flatten(), about_substitutions)
+  about_substitutions = utils.getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE'], BODY_CLASS='about'})
+  about_content = utils.replace(about:flatten(), about_substitutions)
   -- write changes
-  about_file_result = assert(io.open(publicpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default, 'wb'))
+  about_file_result = assert(io.open(publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(makeflyrc['ABOUT_FILENAME'] or about_default) .. extension_default, 'wb'))
   about_file_result:write(about_content)
   about_file_result:close()
 end
 
 -- Copy static directory content to public path
 static_directory = staticpath
-copy(static_directory, publicpath, { BLOG_URL = blog_url })
+utils.copy(static_directory, publicpath, { BLOG_URL = blog_url })
 print (string.format(_("-- [%s] Folder content copied: %s"), display_success, staticpath))
 
 -- Browse DB files
 local post_files = {}
-dbresult = listing (dbpath, "mk")
+dbresult = utils.listing (dbpath, "mk")
 if dbresult then
   for k,v in pairs(dbresult) do
     -- parse DB files to get metadata and posts'title
-    local postConf = getConfig(v)
+    local postConf = utils.getConfig(v)
     -- Check some variables presence
-    local missing_post_info = processMissingInfo(postConf, mandatories_post_vars)
+    local missing_post_info = utils.processMissingInfo(postConf, mandatories_post_vars)
     -- Check that all is OK, otherwise display an error message and quit the program
+    local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
     if missing_post_info ~= '' then
-      local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
       print(string.format(_("-- [%s] Missing information in '%s' post: %s"), display_error, postTitle, missing_post_info))
       os.exit(1)
     end
-    table.insert(post_files, {file=v, conf=postConf})
-    local co = coroutine.create(function () createPost(v, getConfig(v), page_article_single, page_tag_link) end)
-    table.insert(threads, co)
+    if today > tonumber(timestamp) then
+      table.insert(post_files, {file=v, conf=postConf})
+      local co = coroutine.create(function () createPost(v, postConf, {template_file=page_article_single, template_tag_file=page_tag_link}) end)
+      table.insert(threads, co)
+    end
   end
 else
   print (string.format(_("-- [%s] No DB file(s) found!"), display_warning))
 end
 
 -- Add static pages to the dispatcher
-pages_result = listing(pagepath, 'md')
+pages_result = utils.listing(pagepath, 'md')
 if pages_result then
   for k,v in pairs(pages_result) do
     local pagetitle = string.match(v, ".+/(.+)%.md")
-    local pagefile = publicpath .. '/' .. keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. resultextension
+    local pagefile = publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. resultextension
     local co = coroutine.create(function () createPage(v, pagefile, pagetitle) end)
     table.insert(threads, co)
   end
@@ -1024,13 +1072,22 @@ else
 end
 
 -- launch dispatcher to create each post and more (copy needed directories/files, etc.)
-dispatcher()
+utils.dispatcher()
 
 -- Create post's index
-createPostIndex(post_files, themepath .. '/' .. page_posts_name, page_post_element, page_tag_link, page_article_index)
+createPostIndex(post_files, {
+  index_file = themepath .. '/' .. page_posts_name,
+  element_file = page_post_element,
+  taglink_file = page_tag_link,
+  article_index_file = page_article_index
+})
 
 -- Create tag's files: index and each tag's page
-createTagIndex(index_filename, themepath .. '/' .. page_tag_index_name, page_tag_element)
+-- {template_index_filename, template_element_filename})
+createTagIndex(index_filename, {
+  template_index_filename = themepath .. '/' .. page_tag_index_name,
+  template_element_filename = page_tag_element
+})
 
 -- Create index
 createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
