@@ -1,0 +1,70 @@
+#!/usr/bin/lua
+
+
+--dofile('process.lua')
+
+
+--[[
+
+TODO:
+
+  * Change process.lua to be into a lib named "blog" (for an example)
+  * Export default variables from process.lua into a specific file. Example:
+
+    config = {
+      ext = .html
+      index_name = index
+    }
+
+    Then:
+
+    config = require 'config'
+    print(config.ext)
+
+In main program:
+
+  * Import gettext
+  * Include default configuration variables
+  * Check that makefly.rc configuration file exists. If not raise an error.
+  * Read makefly.rc configuration file (with a ConfigParser that include it in a metatable)
+  * Read args to see which one is asked
+  * Launch the specific method regarding args
+
+]]--
+
+allowed_command = {
+  clean = 'clean',
+  compile = 'nawak'
+}
+
+function clean()
+  print("oh yeah, I'm cleaning!")
+end
+
+
+function allowed(command)
+  res = false
+  for i,_ in pairs(allowed_command) do
+    if i == command then
+      res = true
+      break
+    end
+  end
+  return res
+end
+
+function compilation()
+  print("do compilation")
+end
+
+command = arg[1]
+if command ~= nil then
+  if allowed(command) == true then
+    _G[allowed_command['clean']]()
+  else
+    print('option % not found')
+  end
+else
+  compilation()
+end
+return 0
