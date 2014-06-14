@@ -33,8 +33,9 @@ In main program:
 
 --[[ DEPENDANCIES ]]--
 
-require 'lib/init'
+require 'lib.init'
 local utils = require 'lib.utils'
+require 'lib.rope'
 
 --[[ VARIABLES ]]--
 VERSION = '0.4-trunk'
@@ -75,9 +76,10 @@ local function clean(args)
     print(string.format(_('[%s] Missing: %s directory'), display_warning, tmppath))
   end
   local docpath = currentpath .. '/' .. config.docdir
-  docfiles = utils.listing(docpath, config.page_extension)
-  for _, file in pairs(docfiles) do
-    os.remove(docpath .. '/' .. file)
+  local docextension = string.gsub(config.page_extension, '\.(.*)', '%1')
+  local docfiles = utils.listing(docpath, docextension)
+  for _, filepath in pairs(docfiles) do
+    os.remove(filepath)
   end
   print(string.format(_('[%s] Removed: %s/*%s files'), display_info, docpath, config.page_extension))
 end
@@ -140,7 +142,28 @@ local function version(args)
 end
 
 local function doc(args)
-  print('creating doc')
+  local directory = currentpath .. '/' .. config.docdir
+  local header = utils.readFile(directory .. '/header.tmpl', 'r')
+  local footer = utils.readFile(directory .. '/footer.tmpl', 'r')
+  local version = string.format(_('Version %s'), VERSION)
+  local tocreate = utils.listing(directory, 'md')
+  local markdown = require 'markdown'
+  for _, path in pairs(tocreate) do
+    -- create content for final content
+    local final = rope()
+    final:push(header)
+    final:push(version)
+    local content = utils.readFile(path, 'r')
+    final:push(markdown(content))
+    final:push(footer)
+    -- write result into a file
+    local name = string.gsub(path, "(.*/)(.*)(\.md)", "%2")
+    local filepath = directory .. '/' .. name .. config.page_extension
+    local file = assert(io.open(filepath, 'wb'))
+    file:write(final:flatten())
+    assert(file:close())
+  end
+  print(string.format(_('[%s] Built: documentation files.'), display_info))
 end
 
 local function allowed(commands, command)
