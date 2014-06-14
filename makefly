@@ -112,7 +112,7 @@ local function list(args, commands)
   table.sort(sorted_commands, function (a, b) return a[1] < b[1] end)
 
   -- making result
-  local res = 'List of available commands: '
+  local res = _('List of available commands: ')
   for _, command in pairs(sorted_commands) do
     res = res .. string.format('\n%s\t\t%s', command[1], command[2].description)
   end
@@ -184,59 +184,59 @@ end
 -- Create commands
 local commands = { }
 commands['clean'] = {
-    description = 'clean up result directory',
+    description = _('clean up result directory'),
     launch = function (args) clean(args) end
   }
 commands['list'] = {
-    description = 'list all available commands',
+    description = _('list all available commands'),
     launch = function (args) list(args, commands) end
   }
 commands['publish'] = {
-  description = 'publish your weblog using tools/publish.sh script',
+  description = _('publish your weblog using tools/publish.sh script'),
   launch = function (args) publish(args) end
 }
 commands['refresh'] = {
-  description = 'same as clean + compile commands',
+  description = _('same as clean + compile commands'),
   launch = function (args) refresh(args) end
 }
 commands['add'] = {
-  description = 'create a new post',
+  description = _('create a new post'),
   launch = function (args) add(args) end
 }
 commands['help'] = {
-  description = 'same as \'list\'',
+  description = _('same as \'list\''),
   launch = function (args) list(args, commands) end
 }
 commands['createpost'] = {
-  description = 'same as \'add\'',
+  description = _('same as \'add\''),
   launch = function (args) add(args) end
 }
 commands['backup'] = {
-  description = 'make a backup from your current makefly directory',
+  description = _('make a backup from your current makefly directory'),
   launch = function (args) backup(args) end
 }
 commands['install'] = {
-  description = 'install \'pub\' directory into INSTALLDIR directory (set in makefly.rc file)',
+  description = _('install \'pub\' directory into INSTALLDIR directory (set in makefly.rc file)'),
   launch = function (args) install(args) end
 }
 commands['migratefrom'] = {
-  description = 'will update all DB files with given [url]',
+  description = _('will update all DB files with given [url]'),
   launch = function (args) migratefrom(args) end
 }
 commands['theme'] = {
-  description = 'will copy \'base\' theme to the new one given with [name]',
+  description = _('will copy \'base\' theme to the new one given with [name]'),
   launch = function (args) theme(args) end
 }
 commands['version'] = {
-  description = 'give current program version',
+  description = _('give current program version'),
   launch = function (args) version(args) end
 }
 commands['doc'] = {
-  description = 'generate the documentation in \'doc\' directory',
+  description = _('generate the documentation in \'doc\' directory'),
   launch = function (args) doc(args) end
 }
 commands['compile'] = {
-  description = 'generate the weblog',
+  description = _('generate the weblog'),
   launch = function (args) compile(args) end
 }
 
@@ -254,7 +254,7 @@ if command ~= nil then
     -- launch user given command
     commands[command].launch(args)
   else
-    print(string.format("'%s' option not found!", command))
+    print(string.format(_("'%s' option not found!"), command))
   end
 else
   -- display list of commands by default
