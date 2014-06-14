@@ -138,7 +138,7 @@ local function theme(args)
 end
 
 local function version(args)
-  print(VERSION)
+  print(string.format(_('Makefly %s using %s'), VERSION, _VERSION))
 end
 
 local function doc(args)
