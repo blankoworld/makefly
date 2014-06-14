@@ -112,7 +112,7 @@ local function list(args, commands)
   -- making result
   local res = 'List of available commands: '
   for _, command in pairs(sorted_commands) do
-    res = res .. string.format('\n\t%s\t\t%s', command[1], command[2].description)
+    res = res .. string.format('\n%s\t\t%s', command[1], command[2].description)
   end
   -- display result on screen
   print(res)
