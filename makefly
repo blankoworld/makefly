@@ -212,6 +212,10 @@ commands['doc'] = {
   description = 'generate the documentation in \'doc\' directory',
   launch = function (args) doc(args) end
 }
+commands['compile'] = {
+  description = 'generate the weblog',
+  launch = function (args) compile(args) end
+}
 
 --[[ MAIN ]]--
 
@@ -224,12 +228,14 @@ local args = {...}
 local command = args[1]
 if command ~= nil then
   if allowed(commands, command) == true then
+    -- launch user given command
     commands[command].launch(args)
   else
     print(string.format("'%s' option not found!", command))
   end
 else
-  compilation()
+  -- display list of commands by default
+  list(args, commands)
 end
 
 return 0
