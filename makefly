@@ -35,7 +35,6 @@ In main program:
 
 require 'lib/init'
 local utils = require 'lib.utils'
-local Command = require 'lib.command'
 
 --[[ VARIABLES ]]--
 VERSION = '0.4-trunk'
@@ -48,30 +47,14 @@ display_disable = _(' DISABLE ')
 display_warning = _(' WARNING ')
 display_error =   _('  ERROR  ')
 
--- Create commands
-local commands = { }
-table.insert(commands, Command.new('clean', 'clean up result directory'))
-table.insert(commands, Command.new('list', 'list all available commands'))
-table.insert(commands, Command.new('publish', 'publish your weblog using tools/publish.sh script'))
-table.insert(commands, Command.new('refresh', 'same as clean + compile commands'))
-table.insert(commands, Command.new('add', 'create a new post'))
-table.insert(commands, Command.new('help', 'same as \'list\''))
-table.insert(commands, Command.new('createpost', 'same as \'add\''))
-table.insert(commands, Command.new('backup', 'make a backup from your current makefly directory'))
-table.insert(commands, Command.new('install', 'install \'pub\' directory into INSTALLDIR directory (set in makefly.rc file)'))
-table.insert(commands, Command.new('migratefrom', 'will update all DB files with given [url]'))
-table.insert(commands, Command.new('theme', 'will copy \'base\' theme to the new one given with [name]'))
-table.insert(commands, Command.new('version', 'give current program version'))
-table.insert(commands, Command.new('doc', 'generate the documentation in \'doc\' directory'))
-
 --[[ FUNCTIONS ]]--
 
-function error(message)
+local function error(message)
   print(message)
   os.exit(1)
 end
 
-function clean(args)
+local function clean(args)
   -- checks
   if config.template_extension == config.page_extension then
     error(string.format(_('[%s] You cannot choose an extension (%s) similar to template\'s one (%s).'), display_error, config.page_extension, config.template_extension))
@@ -99,68 +82,60 @@ function clean(args)
   print(string.format(_('[%s] Removed: %s/*%s files'), display_info, docpath, config.page_extension))
 end
 
-function compile(args)
+local function compile(args)
   print('compiling')
 end
 
-function publish(args)
+local function publish(args)
   print('publishing')
 end
 
-function refresh(args)
+local function refresh(args)
   clean()
   compile()
 end
 
-function add(args)
+local function add(args)
   print('adding')
 end
 
-function list(args)
+local function list(args, commands)
   res = 'List of available commands: '
-  for _, command in pairs(commands) do
-    res = res .. string.format('\n\t%s\t\t%s', command.name, command.description)
+  for command, info in pairs(commands) do
+    res = res .. string.format('\n\t%s\t\t%s', command, info.description)
   end
   print(res)
 end
 
-function help(args)
-  return list()
-end
-
-function createpost(args)
-  return add()
-end
-
-function backup(args)
+local function backup(args)
   print('backuping')
 end
 
-function install(args)
+local function install(args)
   print('installing')
 end
 
-function migratefrom(args)
+local function migratefrom(args)
   -- TODO: check second argument to see if an URL was set. If not raise an error
   print('migrating')
 end
 
-function theme(args)
+local function theme(args)
   print('theming')
 end
 
-function version(args)
+local function version(args)
   print(VERSION)
 end
 
-function doc(args)
+local function doc(args)
   print('creating doc')
 end
 
-function allowed(command)
+local function allowed(commands, command)
   res = false
-  for _,v in pairs(commands) do
-    if v.name == command then
+  for v,_ in pairs(commands) do
+    if v == command then
       res = true
       break
     end
@@ -168,9 +143,64 @@ function allowed(command)
   return res
 end
 
-function compilation()
+local function compilation()
   print("do compilation")
 end
+
+-- Create commands
+local commands = { }
+commands['clean'] = {
+    description = 'clean up result directory',
+    launch = function (args) clean(args) end
+  }
+commands['list'] = {
+    description = 'list all available commands',
+    launch = function (args) list(args, commands) end
+  }
+commands['publish'] = {
+  description = 'publish your weblog using tools/publish.sh script',
+  launch = function (args) publish(args) end
+}
+commands['refresh'] = {
+  description = 'same as clean + compile commands',
+  launch = function (args) refresh(args) end
+}
+commands['add'] = {
+  description = 'create a new post',
+  launch = function (args) add(args) end
+}
+commands['help'] = {
+  description = 'same as \'list\'',
+  launch = function (args) list(args, commands) end
+}
+commands['createpost'] = {
+  description = 'same as \'add\'',
+  launch = function (args) add(args) end
+}
+commands['backup'] = {
+  description = 'make a backup from your current makefly directory',
+  launch = function (args) backup(args) end
+}
+commands['install'] = {
+  description = 'install \'pub\' directory into INSTALLDIR directory (set in makefly.rc file)',
+  launch = function (args) install(args) end
+}
+commands['migratefrom'] = {
+  description = 'will update all DB files with given [url]',
+  launch = function (args) migratefrom(args) end
+}
+commands['theme'] = {
+  description = 'will copy \'base\' theme to the new one given with [name]',
+  launch = function (args) theme(args) end
+}
+commands['version'] = {
+  description = 'give current program version',
+  launch = function (args) version(args) end
+}
+commands['doc'] = {
+  description = 'generate the documentation in \'doc\' directory',
+  launch = function (args) doc(args) end
+}
 
 --[[ MAIN ]]--
 
@@ -182,8 +212,8 @@ config = utils.mergeConfig(config_default, config_user)
 local args = {...}
 local command = args[1]
 if command ~= nil then
-  if allowed(command) == true then
-    _G[command](args)
+  if allowed(commands, command) == true then
+    commands[command].launch(args)
   else
     print(string.format("'%s' option not found!", command))
   end
