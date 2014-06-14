@@ -71,7 +71,7 @@ function error(message)
   os.exit(1)
 end
 
-function clean()
+function clean(args)
   -- checks
   if config.template_extension == config.page_extension then
     error(string.format(_('[%s] You cannot choose an extension (%s) similar to template\'s one (%s).'), display_error, config.page_extension, config.template_extension))
@@ -99,24 +99,24 @@ function clean()
   print(string.format(_('[%s] Removed: %s/*%s files'), display_info, docpath, config.page_extension))
 end
 
-function compile()
+function compile(args)
   print('compiling')
 end
 
-function publish()
+function publish(args)
   print('publishing')
 end
 
-function refresh()
+function refresh(args)
   clean()
   compile()
 end
 
-function add()
+function add(args)
   print('adding')
 end
 
-function list()
+function list(args)
   res = 'List of available commands: '
   for _, command in pairs(commands) do
     res = res .. string.format('\n\t%s\t\t%s', command.name, command.description)
@@ -124,36 +124,36 @@ function list()
   print(res)
 end
 
-function help()
+function help(args)
   return list()
 end
 
-function createpost()
+function createpost(args)
   return add()
 end
 
-function backup()
+function backup(args)
   print('backuping')
 end
 
-function install()
+function install(args)
   print('installing')
 end
 
-function migratefrom()
+function migratefrom(args)
   -- TODO: check second argument to see if an URL was set. If not raise an error
   print('migrating')
 end
 
-function theme()
+function theme(args)
   print('theming')
 end
 
-function version()
+function version(args)
   print(VERSION)
 end
 
-function doc()
+function doc(args)
   print('creating doc')
 end
 
@@ -179,10 +179,11 @@ local config_default = utils.checkConfig(configfile)
 local config_user = utils.checkConfig(config_default.configurationfile)
 config = utils.mergeConfig(config_default, config_user)
 -- check command
-local command = arg[1]
+local args = {...}
+local command = args[1]
 if command ~= nil then
   if allowed(command) == true then
-    _G[command]()
+    _G[command](args)
   else
     print(string.format("'%s' option not found!", command))
   end
