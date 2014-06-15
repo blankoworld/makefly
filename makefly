@@ -134,7 +134,53 @@ local function migratefrom(args)
 end
 
 local function theme(args)
-  print('theming')
+  -- check name
+  if #args < 2 then
+    error(string.format(_('[%s] Give a name.'), display_warning))
+  end
+  local name = args[2]
+  -- check existing themes
+  local directory = currentpath .. '/' .. config.tmpldir
+  local themes = { }
+  for element in lfs.dir(directory) do
+    if element ~= '.' and element ~= '..' then
+      local path = directory .. '/' .. element
+      if lfs.attributes(path) and lfs.attributes(path).mode == 'directory' then
+        table.insert(themes, element)
+      end
+    end
+  end
+  -- if theme is same as an existing one, raise an error
+  if themes ~= nil then
+    for idx, theme in pairs(themes) do
+      if theme == name then
+        error(string.format(_('[%s] Theme already exists: %s'), display_error, name))
+      end
+    end
+  end
+  -- copy 'base' directory to the new one
+  local basedir = directory .. '/base'
+  if lfs.attributes(basedir) and lfs.attributes(basedir).mode == 'directory' then
+    local destination = currentpath .. '/' .. config.tmpldir .. '/' .. name
+    utils.copy(basedir, destination)
+    -- read configuration file
+    local configfile = destination .. '/config.mk'
+    local newconfig = utils.getConfig(configfile)
+    newconfig['CSS_NAME'] = name
+    -- write result in config file
+    local result = rope()
+    for param, value in ipairs(newconfig) do
+      result:push(param .. ' = ' .. value)
+    end
+    local out = assert(io.open(configfile, 'wb'))
+    local content = result:flatten()
+    print(content)
+    out:write(content)
+    assert(out:close())
+  else
+    error(string.format(_('[%s] Missing \'base\' directory'), display_error))
+  end
+  print(string.format(_('[%s] Created: New theme %s is available in \'%s\' directory.'), display_success, name, currentpath .. '/' .. config.tmpldir .. '/' .. name))
 end
 
 local function version(args)
