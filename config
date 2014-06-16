@@ -15,3 +15,4 @@ template_extension = .tmpl
 page_extension = .html
 compression_command = gzip
 compression_extension = .gz
+publish_script = publish.sh

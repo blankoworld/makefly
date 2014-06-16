@@ -89,7 +89,29 @@ local function compile(args)
 end
 
 local function publish(args)
-  print('publishing')
+  -- copy script into temporary directory
+  local script = currentpath .. '/' .. config.toolsdir .. '/' .. config.publish_script
+  local content = utils.readFile(script, 'r')
+  local substitutions = {
+    DESTDIR = currentpath .. '/' .. config.destdir,
+    PUBLISH_DESTINATION = config.PUBLISH_DESTINATION
+  }
+  local replaced_content = utils.replace(content, substitutions)
+  utils.checkDirectory(config.tmpdir)
+  local scriptfilepath = currentpath .. '/' .. config.tmpdir .. '/' .. config.publish_script
+  local scriptfile = assert(io.open(scriptfilepath, 'wb'))
+  scriptfile:write(replaced_content)
+  assert(scriptfile:close())
+  -- load script
+  local command = 'chmod +x ' .. scriptfilepath .. ' && ' .. scriptfilepath
+  local ret = os.execute(command)
+  if ret and ret > 0 then
+    os.remove(scriptfilepath)
+    error(string.format(_('[%s] Publication failed!'), display_error))
+  end
+  -- remove script
+  os.remove(scriptfilepath)
+  print(string.format(_('[%s] Publish: %s content with %s'), display_success, config.destdir, script))
 end
 
 local function refresh(args)
@@ -138,7 +160,7 @@ local function backup(args)
   end
   command = command .. string.format(_('| %s > %s'), config.compression_command, filepath)
   local ret = os.execute(command)
-  if ret and ret ~= nil then
+  if ret and ret == 0 then
     print(string.format(_('[%s] Backup: Files successfully saved in %s: makefly.rc, %s, %s, %s, %s and %s'), display_success, config.backupdir, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))
   else
     error(string.format(_('[%s] Backup failed!'), display_error))
