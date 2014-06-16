@@ -151,6 +151,24 @@ function utils.checkDirectory(path)
 end
 
 -------------------------------------------------------------------------------
+-- Check if directory exists. If yes, return true. If not a dir, raise an error
+-- @param checkingdir the absolute/relative path in which we do the check
+-- @usage dir_exists('/home/olivier/probably_directory', 'some_directory_name')
+-- @return true if checkingdir exists. Otherwise false.
+-------------------------------------------------------------------------------
+function utils.dir_exists(checkingdir)
+  local result = false
+  local attrs = lfs.attributes(checkingdir)
+  if attrs ~= nil and attrs.mode == 'directory' then
+    result = true
+  elseif attrs ~= nil and attrs.mode ~= 'directory' then
+    print(string.format(_('[%s] Not a directory: %s'), display_error, checkingdir))
+    os.exit(1)
+  end
+  return result
+end
+
+-------------------------------------------------------------------------------
 -- Read the file and return its content
 -- @param path the absolute/relative path to the file to read
 -- @param mode read mode among 'r', 'rb', etc.
