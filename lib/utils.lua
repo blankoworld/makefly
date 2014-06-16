@@ -103,7 +103,8 @@ end
 -------------------------------------------------------------------------------
 function utils.checkConfig(filepath)
   if lfs.attributes(filepath) == nil then
-    error(string.format(_('[%s] %s file not found!'), display_error, filepath))
+    print(string.format(_('[%s] %s file not found!'), display_error, filepath))
+    os.exit(1)
   end
   return utils.getConfig(filepath)
 end
