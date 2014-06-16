@@ -168,7 +168,29 @@ local function backup(args)
 end
 
 local function install(args)
-  print('installing')
+  local origin = config.destdir
+  local destination = config.INSTALLDIR
+  -- replace only "$USER" variable in destination path
+  destination = utils.replace(destination, { USER = os.getenv('USER') })
+  if destination == nil then
+    error(string.format(_('[%s] No INSTALLDIR found. Please add INSTALLDIR= in your makefly.rc'), display_error))
+  end
+  for idx, dir in pairs({origin, destination}) do
+    if lfs.attributes(dir) == nil then
+      error(string.format(_('[%s] %s directory not found!'), display_error, dir))
+    end
+  end
+  print(string.format(_('This will delete %s content and copy all files from %s into this directory. Are you sure [y/n]?'), destination, origin))
+  local answer = io.read()
+  if answer == 'y' then
+    -- first delete destination directory. Then create it and finally copy all files from origin to destination.
+    utils.rm(destination)
+    lfs.mkdir(destination)
+    utils.copy(origin, destination)
+    print(string.format(_('[%s] Installation: achieved.'), display_info))
+  else
+    print(string.format(_('[%s] Installation failed!'), display_warning))
+  end
 end
 
 local function migratefrom(args)
