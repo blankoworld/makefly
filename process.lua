@@ -223,11 +223,12 @@ end
 -------------------------------------------------------------------------------
 -- List tags from '@taglist' table and create a link list of tags to add them into TAG_LINKS_LIST variable in '@metadata'. If remember is true, add tags into tags global variable.
 -- @param taglist list of tags' name
+-- @param title name of post
 -- @param metadata A table containing some replacement elements for posts
 -- @param remember If true, set tag name into all tags list.
 -- @return metadata (completed or not regarding taglist content)
 -------------------------------------------------------------------------------
-function parseTags(taglist, metadata, template, remember)
+function parseTags(taglist, metadata, title, template, remember)
   if taglist then
     local post_tags = {}
     for i, tag in pairs(taglist:split(',')) do
@@ -289,7 +290,7 @@ function createPost(file, config, data)
       KEYWORDS = keywords:flatten(),
     }
     -- process tags
-    post_replacements = parseTags(config['TAGS'], post_replacements, data.template_tag_file, nil)
+    post_replacements = parseTags(config['TAGS'], post_replacements, title, data.template_tag_file, nil)
     -- create substitutions list
     local substitutions = utils.getSubstitutions(replacements, post_replacements)
     -- add comment block if comment system is activated
@@ -496,7 +497,7 @@ function postsIndexing(posts, indexfile, result, pagin, number, template, post_l
       }
       -- registering tags
       local post_conf_tags = v['conf']['TAGS'] or nil
-      metadata = parseTags(post_conf_tags, metadata, template.tag, true)
+      metadata = parseTags(post_conf_tags, metadata, title, template.tag, true)
       -- prepare substitutions for the post
       local post_substitutions = utils.getSubstitutions(v, metadata)
       -- remember this post's element for each tag page
