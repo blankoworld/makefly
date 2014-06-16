@@ -121,7 +121,28 @@ local function list(args, commands)
 end
 
 local function backup(args)
-  print('backuping')
+  utils.checkDirectory(currentpath .. '/' .. config.backupdir)
+  -- create zipfile
+  local today = os.date('%Y%m%d', os.time())
+  local filepath = currentpath .. '/' .. config.backupdir .. '/' .. today .. '_makefly.tar' .. config.compression_extension
+  local to_save = {
+    config.staticdir,
+    config.dbdir,
+    config.srcdir,
+    config.specialdir,
+    config.tmpldir,
+  }
+  local command = 'tar cf - makefly.rc'
+  for idx, dir in ipairs(to_save) do
+    command = command .. ' ' .. dir
+  end
+  command = command .. string.format(_('| %s > %s'), config.compression_command, filepath)
+  local ret = os.execute(command)
+  if ret and ret ~= nil then
+    print(string.format(_('[%s] Backup: Files successfully saved in %s: makefly.rc, %s, %s, %s, %s and %s'), display_success, config.backupdir, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))
+  else
+    error(string.format(_('[%s] Backup failed!'), display_error))
+  end
 end
 
 local function install(args)
