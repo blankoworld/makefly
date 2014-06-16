@@ -594,9 +594,11 @@ function createPostIndex(posts, template)
   -- rss process
   local index_rss_nb = 1
   while index_rss_nb <= max_rss do
-    local rss_content = utils.readFile(tmppath .. '/' .. 'rss.' .. index_rss_nb .. '.tmp', 'r')
+    local rsspath = tmppath .. '/' .. 'rss.' .. index_rss_nb .. '.tmp'
+    local rss_content = utils.readFile(rsspath, 'r')
     rss:push (rss_content)
     index_rss_nb = index_rss_nb + 1
+    os.remove(rsspath)
   end
   rss:push (rss_footer)
   rss_replace = utils.replace(rss:flatten(), replacements)
