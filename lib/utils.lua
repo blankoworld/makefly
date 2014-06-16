@@ -147,7 +147,7 @@ function utils.checkDirectory(path)
   if lfs.attributes(path) == nil then
     assert(lfs.mkdir(path))
     -- Display created directory
-    print (string.format(_("-- [%s] New folder: %s"), display_success, path))
+    print (string.format(_("[%s] New folder: %s"), display_success, path))
   end
 end
 
@@ -338,6 +338,36 @@ function utils.getSubstitutions(replaces, local_replaces)
     result[k] = v
   end
   return result
+end
+
+-------------------------------------------------------------------------------
+-- Copy 'path' script into 'tmpdir' directory by changing some variables
+-- @param path the path of script to launch
+-- @param tmpdir the directory in which copy temporarly the script
+-- @param sub a table that contains some variable to change in the given script
+-- @param opts options to add when you launch the command
+-- @return command return
+-------------------------------------------------------------------------------
+function utils.launch_script(path, tmpdir, sub, opts)
+  -- copy script into temporary directory
+  local content = utils.readFile(path, 'r')
+  local replaced_content = utils.replace(content, sub)
+  utils.checkDirectory(tmpdir)
+  local basename = string.gsub(path, "(.*/)(.*)", "%2")
+  local scriptfilepath = tmpdir .. '/' .. basename
+  local scriptfile = assert(io.open(scriptfilepath, 'wb'))
+  scriptfile:write(replaced_content)
+  assert(scriptfile:close())
+  -- load script
+  local command = 'chmod +x ' .. scriptfilepath .. ' && ' .. scriptfilepath
+  if opts == nil then
+    opts = ''
+  end
+  local ret = os.execute(command .. ' ' .. opts)
+  -- delete script
+  os.remove(scriptfilepath)
+  -- return result
+  return ret
 end
 
 -------------------------------------------------------------------------------

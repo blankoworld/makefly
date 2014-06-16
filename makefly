@@ -89,28 +89,15 @@ local function compile(args)
 end
 
 local function publish(args)
-  -- copy script into temporary directory
   local script = currentpath .. '/' .. config.toolsdir .. '/' .. config.publish_script
-  local content = utils.readFile(script, 'r')
   local substitutions = {
     DESTDIR = currentpath .. '/' .. config.destdir,
     PUBLISH_DESTINATION = config.PUBLISH_DESTINATION
   }
-  local replaced_content = utils.replace(content, substitutions)
-  utils.checkDirectory(config.tmpdir)
-  local scriptfilepath = currentpath .. '/' .. config.tmpdir .. '/' .. config.publish_script
-  local scriptfile = assert(io.open(scriptfilepath, 'wb'))
-  scriptfile:write(replaced_content)
-  assert(scriptfile:close())
-  -- load script
-  local command = 'chmod +x ' .. scriptfilepath .. ' && ' .. scriptfilepath
-  local ret = os.execute(command)
+  local ret = utils.launch_script(script, config.tmpdir, substitutions)
   if ret and ret > 0 then
-    os.remove(scriptfilepath)
     error(string.format(_('[%s] Publication failed!'), display_error))
   end
-  -- remove script
-  os.remove(scriptfilepath)
   print(string.format(_('[%s] Publish: %s content with %s'), display_success, config.destdir, script))
 end
 
@@ -120,7 +107,21 @@ local function refresh(args)
 end
 
 local function add(args)
-  print('adding')
+  local script = currentpath .. '/' .. config.toolsdir .. '/create_post.sh'
+  local substitutions = {
+    DBDIR = currentpath .. '/' .. config.dbdir,
+    SRCDIR = currentpath .. '/' .. config.srcdir,
+  }
+  local user_choice = config.AUTO_EDIT
+  local option = '-q'
+  if user_choice and user_choice == 1 then
+    option = ''
+  end
+  local ret = utils.launch_script(script, config.tmpdir, substitutions, option)
+  if ret and ret > 0 then
+    error(string.format(_('[%s] New post failed!'), display_error))
+  end
+  print(string.format(_('[%s] New post added successfully.'), display_success))
 end
 
 local function list(args, commands)
