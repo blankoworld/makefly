@@ -32,7 +32,7 @@
 ## TEST
 ###
 
-if [ -z "$DBDIR" ]; then
+if [ -z "${DBDIR}" ]; then
   echo "No database directory found. Please use 'migratefrom' command"
   exit 1
 fi

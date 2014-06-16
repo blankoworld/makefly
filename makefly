@@ -195,8 +195,19 @@ local function install(args)
 end
 
 local function migratefrom(args)
-  -- TODO: check second argument to see if an URL was set. If not raise an error
-  print('migrating')
+  if #args < 2 then
+    error(string.format(_('[%s] Migration: missing URL parameter.'), display_error))
+  end
+  local name = args[2]
+  local script = currentpath .. '/' .. config.toolsdir .. '/migrate_domain_from.sh'
+  local substitutions = {
+    DBDIR = currentpath .. '/' .. config.dbdir,
+  }
+  local ret = utils.launch_script(script, config.tmpdir, substitutions, name)
+  if ret and ret > 0 then
+    error(string.format(_('[%s] Migration failed!'), display_error))
+  end
+  print(string.format(_('[%s] Migration achieved.'), display_success))
 end
 
 local function theme(args)
