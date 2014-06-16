@@ -156,8 +156,8 @@ local function theme(args)
     newconfig['CSS_NAME'] = name
     -- write result in config file
     local result = rope()
-    for param, value in ipairs(newconfig) do
-      result:push(param .. ' = ' .. value)
+    for param, value in pairs(newconfig) do
+      result:push(param .. ' = ' .. value .. '\n')
     end
     local out = assert(io.open(configfile, 'wb'))
     local content = result:flatten()
