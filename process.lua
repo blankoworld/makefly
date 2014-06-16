@@ -1102,8 +1102,10 @@ for tag, posts in pairs(tags) do
 end
 -- delete posts that appear on homepage
 local index_nb = 0
-while index_nb < max_post do
-  os.remove(tmppath .. '/' .. 'index.' .. index_nb .. '.tmp')
+while index_nb <= max_post do
+  local displayednumber = index_nb + 1
+  local indexpath = tmppath .. '/' .. 'index.' .. displayednumber .. '.tmp'
+  os.remove(indexpath)
   index_nb = index_nb + 1
 end
 
