@@ -85,7 +85,9 @@ local function clean(args)
 end
 
 local function compile(args)
-  dofile('process.lua')
+  local markdown = require 'markdown'
+  local blog = require 'lib/blog'
+  -- TODO: TO BE CONTINUED
 end
 
 local function publish(args)
