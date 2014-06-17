@@ -159,7 +159,7 @@ local function backup(args)
   for idx, dir in ipairs(to_save) do
     command = command .. ' ' .. dir
   end
-  command = command .. string.format(_('| %s > %s'), config.compression_command, filepath)
+  command = command .. string.format('| %s > %s', config.compression_command, filepath)
   local ret = os.execute(command)
   if ret and ret == 0 then
     print(string.format(_('[%s] Backup: Files successfully saved in %s: makefly.rc, %s, %s, %s, %s and %s'), display_success, config.backupdir, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))

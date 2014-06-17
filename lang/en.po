@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the makefly package.
 # Olivier DOSSMANN <olivier+makefly@dossmann.net>, 2013.
 #
-#, 
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.2.1-lua\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-24 12:52+0200\n"
+"POT-Creation-Date: 2014-06-17 12:52+0200\n"
 "PO-Revision-Date: 2013-07-31 14:00+0200\n"
 "Last-Translator: Olivier DOSSMANN <olivier+makefly@dossmann.net>\n"
 "Language-Team: None\n"
@@ -17,181 +16,392 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/utils.lua:122
+#: lib/utils.lua:106
 #, python-format
-msgid "-- [%s] New folder: %s"
+msgid "[%s] %s file not found!"
 msgstr ""
 
-#: lib/utils.lua:141
+#: lib/utils.lua:150
+#, python-format
+msgid "[%s] New folder: %s"
+msgstr ""
+
+#: lib/utils.lua:166
+#, python-format
+msgid "[%s] Not a directory: %s"
+msgstr ""
+
+#: lib/utils.lua:187
 #, python-format
 msgid "-- [%s] Unknown read mode while reading this path: %s."
 msgstr ""
 
-#: lib/utils.lua:240
+#: lib/utils.lua:287
 #, python-format
 msgid "-- [%s] %s not found in copy method!"
 msgstr ""
 
-#: lib/utils.lua:361
+#: lib/utils.lua:318
+#, python-format
+msgid "-- [%s] %s not found (in remove process)!"
+msgstr ""
+
+#: lib/utils.lua:470
 msgid ", "
 msgstr ""
 
-#: process.lua:127
+#: process.lua:127 makefly:44
 msgid "  INFO   "
 msgstr ""
 
-#: process.lua:128
+#: process.lua:128 makefly:45
 msgid " SUCCESS "
 msgstr ""
 
-#: process.lua:129
+#: process.lua:129 makefly:46
 msgid " ENABLE  "
 msgstr ""
 
-#: process.lua:130
+#: process.lua:130 makefly:47
 msgid " DISABLE "
 msgstr ""
 
-#: process.lua:131
+#: process.lua:131 makefly:48
 msgid " WARNING "
 msgstr ""
 
-#: process.lua:132
+#: process.lua:132 makefly:49
 msgid "  ERROR  "
 msgstr ""
 
-#: process.lua:266
+#: process.lua:306
 #, python-format
 msgid "-- [%s] New post: %s"
 msgstr ""
 
-#: process.lua:495 process.lua:540
+#: process.lua:529 process.lua:592
 #, python-format
 msgid "-- [%s] Post list %s/%s: BUILT."
 msgstr ""
 
-#: process.lua:555
+#: process.lua:609
 #, python-format
 msgid "-- [%s] RSS feed: BUILT."
 msgstr ""
 
-#: process.lua:557
+#: process.lua:611
 #, python-format
 msgid "-- [%s] Post list: BUILT."
 msgstr ""
 
-#: process.lua:591
+#: process.lua:645
 #, python-format
 msgid "-- [%s] New tag: %s"
 msgstr ""
 
-#: process.lua:625
+#: process.lua:681
 #, python-format
 msgid "-- [%s] Tag list: BUILT."
 msgstr ""
 
-#: process.lua:651
+#: process.lua:707
 #, python-format
 msgid "-- [%s] Homepage: BUILT."
 msgstr ""
 
-#: process.lua:673
+#: process.lua:729
 #, python-format
 msgid "-- [%s] Page '%s': BUILT."
 msgstr ""
 
-#: process.lua:689
+#: process.lua:745
 #, python-format
 msgid "-- [%s] Check mandatories information"
 msgstr ""
 
-#: process.lua:693
+#: process.lua:749
 #, python-format
 msgid "-- [%s] Missing information in %s file: %s"
 msgstr ""
 
-#: process.lua:726
+#: process.lua:783
 #, python-format
 msgid "-- [%s] Theme: %s"
 msgstr ""
 
-#: process.lua:730
+#: process.lua:787
 #, python-format
 msgid "-- [%s] Given theme (%s) seems to not exist."
 msgstr ""
 
-#: process.lua:736
+#: process.lua:793
 #, python-format
 msgid ""
 "-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."
 msgstr ""
 
-#: process.lua:744
+#: process.lua:801
 #, python-format
 msgid "-- [%s] No '%s' translation. Use default one: %s."
 msgstr ""
 
-#: process.lua:783
+#: process.lua:840
 #, python-format
 msgid "-- [%s] Wrong flavor: %s"
 msgstr ""
 
-#: process.lua:785
+#: process.lua:842
 #, python-format
 msgid "-- [%s] Specific flavor: %s"
 msgstr ""
 
-#: process.lua:850
+#: process.lua:907
 #, python-format
 msgid "-- [%s] About's page available"
 msgstr ""
 
-#: process.lua:854
+#: process.lua:911
 #, python-format
 msgid "-- [%s] About's page not found"
 msgstr ""
 
-#: process.lua:859 process.lua:891
+#: process.lua:916 process.lua:948
 #, python-format
 msgid "-- [%s] ELI badge"
 msgstr ""
 
-#: process.lua:897 process.lua:901
+#: process.lua:954 process.lua:958
 #, python-format
 msgid "-- [%s] Sidebar"
 msgstr ""
 
-#: process.lua:906 process.lua:909
+#: process.lua:963 process.lua:966
 #, python-format
 msgid "-- [%s] Search bar"
 msgstr ""
 
-#: process.lua:915 process.lua:935
+#: process.lua:972 process.lua:992
 #, python-format
 msgid "-- [%s] Comment system"
 msgstr ""
 
-#: process.lua:950 process.lua:954
+#: process.lua:1007 process.lua:1011
 #, python-format
 msgid "-- [%s] %s"
 msgstr ""
 
-#: process.lua:980
+#: process.lua:1037
 #, python-format
 msgid "-- [%s] Folder content copied: %s"
 msgstr ""
 
-#: process.lua:994
+#: process.lua:1051
 #, python-format
 msgid "-- [%s] Missing information in '%s' post: %s"
 msgstr ""
 
-#: process.lua:1002
+#: process.lua:1061
 #, python-format
 msgid "-- [%s] No DB file(s) found!"
 msgstr ""
 
-#: process.lua:1015
+#: process.lua:1074
 #, python-format
 msgid "-- [%s] No static page(s) found."
+msgstr ""
+
+#: makefly:61
+#, python-format
+msgid ""
+"[%s] You cannot choose an extension (%s) similar to template's one (%s)."
+msgstr ""
+
+#: makefly:68 makefly:74
+#, python-format
+msgid "[%s] Removed: %s directory"
+msgstr ""
+
+#: makefly:70 makefly:76
+#, python-format
+msgid "[%s] Missing: %s directory"
+msgstr ""
+
+#: makefly:84
+#, python-format
+msgid "[%s] Removed: %s/*%s files"
+msgstr ""
+
+#: makefly:99
+#, python-format
+msgid "[%s] Publication failed!"
+msgstr ""
+
+#: makefly:101
+#, python-format
+msgid "[%s] Publish: %s content with %s"
+msgstr ""
+
+#: makefly:122
+#, python-format
+msgid "[%s] New post failed!"
+msgstr ""
+
+#: makefly:124
+#, python-format
+msgid "[%s] New post added successfully."
+msgstr ""
+
+#: makefly:138
+msgid "List of available commands: "
+msgstr ""
+
+#: makefly:165
+#, python-format
+msgid ""
+"[%s] Backup: Files successfully saved in %s: makefly.rc, %s, %s, %s, %s and "
+"%s"
+msgstr ""
+
+#: makefly:167
+#, python-format
+msgid "[%s] Backup failed!"
+msgstr ""
+
+#: makefly:177
+#, python-format
+msgid "[%s] No INSTALLDIR found. Please add INSTALLDIR= in your makefly.rc"
+msgstr ""
+
+#: makefly:181
+#, python-format
+msgid "[%s] %s directory not found!"
+msgstr ""
+
+#: makefly:184
+#, python-format
+msgid ""
+"This will delete %s content and copy all files from %s into this directory. "
+"Are you sure [y/n]?"
+msgstr ""
+
+#: makefly:191
+#, python-format
+msgid "[%s] Installation: achieved."
+msgstr ""
+
+#: makefly:193
+#, python-format
+msgid "[%s] Installation failed!"
+msgstr ""
+
+#: makefly:199
+#, python-format
+msgid "[%s] Migration: missing URL parameter."
+msgstr ""
+
+#: makefly:208
+#, python-format
+msgid "[%s] Migration failed!"
+msgstr ""
+
+#: makefly:210
+#, python-format
+msgid "[%s] Migration achieved."
+msgstr ""
+
+#: makefly:216
+#, python-format
+msgid "[%s] Give a name."
+msgstr ""
+
+#: makefly:223
+#, python-format
+msgid "[%s] Theme already exists: %s"
+msgstr ""
+
+#: makefly:244
+#, python-format
+msgid "[%s] Missing 'base' directory"
+msgstr ""
+
+#: makefly:246
+#, python-format
+msgid "[%s] Created: New theme %s is available in '%s' directory."
+msgstr ""
+
+#: makefly:250
+#, python-format
+msgid "Makefly %s using %s"
+msgstr ""
+
+#: makefly:257
+#, python-format
+msgid "Version %s"
+msgstr ""
+
+#: makefly:275
+#, python-format
+msgid "[%s] Built: documentation files."
+msgstr ""
+
+#: makefly:296
+msgid "clean up result directory"
+msgstr ""
+
+#: makefly:300
+msgid "list all available commands"
+msgstr ""
+
+#: makefly:304
+msgid "publish your weblog using tools/publish.sh script"
+msgstr ""
+
+#: makefly:308
+msgid "same as clean + compile commands"
+msgstr ""
+
+#: makefly:312
+msgid "create a new post"
+msgstr ""
+
+#: makefly:316
+msgid "same as 'list'"
+msgstr ""
+
+#: makefly:320
+msgid "same as 'add'"
+msgstr ""
+
+#: makefly:324
+msgid "make a backup from your current makefly directory"
+msgstr ""
+
+#: makefly:328
+msgid ""
+"install 'pub' directory into INSTALLDIR directory (set in makefly.rc file)"
+msgstr ""
+
+#: makefly:332
+msgid "will update all DB files with given [url]"
+msgstr ""
+
+#: makefly:336
+msgid "will copy 'base' theme to the new one given with [name]"
+msgstr ""
+
+#: makefly:340
+msgid "give current program version"
+msgstr ""
+
+#: makefly:344
+msgid "generate the documentation in 'doc' directory"
+msgstr ""
+
+#: makefly:348
+msgid "generate the weblog"
+msgstr ""
+
+#: makefly:366
+#, python-format
+msgid "'%s' option not found!"
 msgstr ""
