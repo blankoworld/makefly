@@ -85,7 +85,7 @@ local function clean(args)
 end
 
 local function compile(args)
-  print('compiling')
+  dofile('process.lua')
 end
 
 local function publish(args)

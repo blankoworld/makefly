@@ -31,12 +31,12 @@ It gives these functionnalities:
 
 In some short steps, here is how to install the last version (current development):
 
-    sudo apt-get install pmake lua5.1 lua-filesystem lua-markdown
+    sudo apt-get install lua5.1 lua-filesystem lua-markdown
     curl https://github.com/blankoworld/makefly/archive/master.zip
     unzip master.zip
     cd makefly-master
     cp makefly.rc.example makefly.rc
-    pmake clean && pmake
+    ./makefly clean && ./makefly compile
 
 You should have an action list done on your computer. And result is available in **pub directory**.
 
@@ -48,14 +48,13 @@ If you achieve the **Briefly** step, go to **Use it!** section.
 
 Some programs on which makefly depends: 
 
-  * pmake or bmake
   * lua 5.1 and earlier
   * lua-filesystem
   * lua-markdown
 
 So use your distribution package manager to install them. For an example on Debian and derivated, it would be:
 
-    apt-get install pmake lua5.1 lua-filesystem lua-markdown
+    apt-get install lua5.1 lua-filesystem lua-markdown
 
 For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
 
@@ -104,10 +103,10 @@ For more information please read **The makefly.rc configuration file** section.
 
 Some useful commands:
 
-  * **pmake**: Produce the blog. Available in the **pub** directory
-  * **pmake help**: Display available commands
-  * **pmake add**: Create a post and add its main metadata
-  * **pmake clean**: Trash the entire final directory content and empty the Makefly's *cache*.
+  * **./makefly compilte**: Produce the blog. Available in the **pub** directory
+  * **./makefly help**: Display available commands
+  * **./makefly add**: Create a post and add its main metadata
+  * **./makefly clean**: Trash the entire final directory content and empty the Makefly's *cache*.
 
 ## Create content
 
@@ -115,13 +114,13 @@ Some useful commands:
 
 Use this command:
 
-    pmake add
+    ./makefly add
 
 and answer to all given questions. It will generate some files needed by Makefly.
 
 Note that Makefly use the [markdown format](http://daringfireball.net/projects/markdown/ "Learn more about Markdown format") for its posts.
 
-**Don't forget to edit the file that the 'pmake add' command return.**
+**Don't forget to edit the file that the './makefly add' command return.**
 
 ### Static files
 
@@ -140,11 +139,9 @@ This one is named **special** because it can contain some file you have to creat
 
 After having created *makefly.rc* (from makefly.rc.example) and having created some posts, just do this:
 
-    pmake
+    ./makefly compile
 
 It will generate a Makefly weblog to the **pub** directory (default directory).
-
-Note: *pmake* is for Debian like distribution. For other distributions, I suggest you to use **bmake**.
 
 # Publish result to the web
 
@@ -154,7 +151,7 @@ The result is compatible with all HTML servers. In fact you could probably use r
 
 If you launch Makefly on you own server or probably on provider ' server, you should be capable to use **install** script automation. Just launch it as:
 
-    pmake install
+    ./makefly install
 
 ...and it will copy all files to **~/public\_html** directory.
 
@@ -164,7 +161,7 @@ If you launch Makefly on you own server or probably on provider ' server, you sh
 
     INSTALLDIR=${HOME}/public_html
 
-Then relaunch `pmake install` to recompile the weblog.
+Then relaunch `./makefly refresh && ./makefly install` to recompile and reinstall the weblog.
 
 ## To a remote computer: *publish* command
 
@@ -183,7 +180,7 @@ Note that **PUBLISH\_DESTINATION** looks like:
 
 Once having complete this variable in **makefly.rc** file, just launch:
 
-    pmake publish
+    ./makefly publish
 
 For developers: You can also edit **tools/publish.sh** file and change script content to you own code.
 
@@ -191,7 +188,7 @@ For developers: You can also edit **tools/publish.sh** file and change script co
 
 To make easier the theme creation you can use this command:
 
-    pmake theme name="myTheme"
+    ./makefly theme myTheme
 
 where **myTheme** is to replace by your own theme name.
 
@@ -205,7 +202,7 @@ A simple way to translate Makefly to your language is to copy the **lang/transla
 
 Perhaps would you backup some important files in Makefly? It's possible via **backup command**. Just launch it like this:
 
-    pmake backup
+    ./makefly backup
 
 Requirements:
 
@@ -243,9 +240,7 @@ Sources are available:
 
 This file is the documentation. You can [read it on github](https://github.com/blankoworld/makefly "Read documentation on Github") or simply generate an HTML file with this command:
 
-    pmake doc
-
-Note: pmake command is for Debian like. For other distribution, use **bmake** instead of pmake.
+    ./makefly doc
 
 # Tips
 
@@ -259,7 +254,7 @@ For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 13625694
 
 Just use the 'content' variable at the beginning of the command:
 
-    content="my little content" pmake add
+    content="my little content" ./makefly add
 
 This will add "my little content" into your new post.
 
@@ -269,7 +264,7 @@ When you migrate from **old.domain.tld** to **new.domain.tld**, comments will no
 
 To avoid this problem, just use **migratefrom command** as:
 
-    domain="http://old.domain.tld" pmake migratefrom
+    ./makefly migratefrom http://old.domain.tld
 
 This will update all your old posts with the old comments' identifier (your old domain) and comments will afressh appear.
 
@@ -314,7 +309,7 @@ Here is some options you can change:
   * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on IDENTICA. By default "user".
   * ELI\_MAX (optional): Permit to choose how many statuses to display. On identica, this couldn't bypass the default 20 items. Default value: 5.
   * ELI\_API (optional) : Access to your StatusNet API system.
-  * INSTALLDIR : Permit to choose a target directory when using **install.sh** script (Read more in *Publish result to the web* chapter)
+  * INSTALLDIR : Permit to choose a target directory when using **./makefly install** command (Read more in *Publish result to the web* chapter)
   * COMPRESS_TOOL (optional) : Shell tool used for backup compression via *backup* command (Cf. *Backup* section). Example : **gzip**.
   * COMPRESS_EXT (optional) : Backup file extension. Warning: do not forget the point char. Example: **.gz**.
   * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
