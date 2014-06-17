@@ -3,9 +3,6 @@ TODO:
 
 Refactoring:
 
-- Create a number OR pagination object in which there is all numbers for pagination.
-- In this number/pagination object, add incPage, incTotal, incCurrent to increment numbers
-- In this number/pagination object, see if "decrementation" is needed
 - Think about a method to launch process.lua via just some commands as "makefly = Makefly(); makefly:compile()" or similar
 - Make ALL function LOCAL !!! Example: local function something()
 
@@ -31,6 +28,8 @@ Tests:
 - test: pmake version
 - Do some tests with image comparison of all themes
 - test that an error is returned if TMPL_EXT = PAGE_EXT
+- test that there is no problem with "pièce à jouets" as post title
+- test multi page for post list (next, previous, last, first, etc.)
 
 Templates:
 N/A
