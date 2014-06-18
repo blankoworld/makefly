@@ -9,7 +9,7 @@ local blog = { }
 -- @param double_replacement if set to true, then do replacement twice. First on file, then on result.
 -- @return a string that contains process result
 -------------------------------------------------------------------------------
-local function blog.stuffTemplate(filepath, content, variable, option, double_replacement)
+function blog.stuffTemplate(filepath, content, variable, option, double_replacement)
   -- default initialization
   local double = nil
   local result = ''
@@ -47,22 +47,22 @@ end
 -- @param config post configuration (table)
 -- @return A keywords rope()
 -------------------------------------------------------------------------------
-local function blog.getKeywords(config)
+function blog.getKeywords(postconfig)
   local result = rope()
-  if config['KEYWORDS'] ~= nil then
-    result:push (config['KEYWORDS'])
+  if postconfig['KEYWORDS'] ~= nil then
+    result:push (postconfig['KEYWORDS'])
   end
-  if config['TAGS'] then
+  if postconfig['TAGS'] then
     if result:flatten() ~= '' then
       result:push(',')
     end
-    result:push(config['TAGS'])
+    result:push(postconfig['TAGS'])
   end
-  if makeflyrc['BLOG_KEYWORDS'] then
+  if config.BLOG_KEYWORDS then
     if result:flatten() ~= '' then
       result:push(',')
     end
-    result:push (makeflyrc['BLOG_KEYWORDS'])
+    result:push (config.BLOG_KEYWORDS)
   end
   return result
 end
@@ -74,7 +74,7 @@ end
 -- @param title Post title
 -- @return Substitutions table with JSKOMMENT_CONTENT if needed
 -------------------------------------------------------------------------------
-local function blog.commentSubstitutions(sub, config, title)
+function blog.commentSubstitutions(sub, config, title)
   if template_comment then
     local jskomment_prefix = config['JSKOMMENT_PREFIX'] and config['JSKOMMENT_PREFIX'] ~= '' and config['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
     local jskomment_id = jskomment_prefix .. '/' .. title
@@ -92,7 +92,7 @@ end
 -- @param remember If true, set tag name into all tags list.
 -- @return metadata (completed or not regarding taglist content)
 -------------------------------------------------------------------------------
-local function blog.parseTags(taglist, metadata, title, template, remember)
+function blog.parseTags(taglist, metadata, title, template, remember)
   if taglist then
     local post_tags = {}
     for i, tag in pairs(taglist:split(',')) do
@@ -125,14 +125,14 @@ end
 -- @param data.template_tag_file file to use as template for tag in a post page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-local function blog.createPost(file, config, data)
+function blog.createPost(file, config, data)
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
   if today > tonumber(timestamp) then
     local template = utils.readFile(data.template_file, 'r')
     local out = assert(io.open(postpath .. "/" .. utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension, 'wb'))
     local post = rope()
-    local content = utils.readFile(srcpath .. "/" .. title .. source_extension, 'r')
+    local content = utils.readFile(srcpath .. "/" .. title .. config.SRC_EXT, 'r')
     local markdown_content = markdown(content)
     -- concatenate all final post subelements
     post:push (header)
@@ -178,7 +178,7 @@ end
 -- @return a string if some tags
 -- @return an empty string if no tags
 -------------------------------------------------------------------------------
-local function blog.createTagLinks(post_tags, file)
+function blog.createTagLinks(post_tags, file)
   -- prepare some values
   local result = ''
   -- get single tag element template
@@ -205,7 +205,7 @@ end
 -- @param page_number Number of current page in the code (start at 0)
 -- @return Nothing (process method)
 -------------------------------------------------------------------------------
-local function blog.closeIndex(file, result, title, body_class, pagin, page_number)
+function blog.closeIndex(file, result, title, body_class, pagin, page_number)
   result:push (footer)
   -- do substitutions on page
   local page_sub_first = index_name .. resultextension
@@ -238,7 +238,7 @@ end
 -- @param data.num Real displayed number for index page
 -- @return data.num, the number of new real displayed index number
 -------------------------------------------------------------------------------
-local function blog.createPostForHomepage(file, title, config, content, sub, post_template, data)
+function blog.createPostForHomepage(file, title, config, content, sub, post_template, data)
   local final_content = utils.readFile(file, 'r')
   if data.index_nb >= data.min and data.index_nb <= data.max then
     if max_post_lines then
@@ -284,7 +284,7 @@ end
 -- @param data.num Number (in the code) of the post
 -- @return data.num which is the number of the RSS
 -------------------------------------------------------------------------------
-local function blog.createPostForRSS(content, config, title, template, data)
+function blog.createPostForRSS(content, config, title, template, data)
   if data.index_nb >= data.min and data.index_nb <= data.max then
     -- create temporary file for RSS
     if data.increment then
@@ -323,7 +323,7 @@ end
 -- @return number.page_number after its modifications
 -- @return pagin after its modifications
 -------------------------------------------------------------------------------
-local function blog.postsIndexing(posts, indexfile, result, pagin, number, template, post_list_title)
+function blog.postsIndexing(posts, indexfile, result, pagin, number, template, post_list_title)
   -- prepare some variables
   local index_nb = 0 -- number of post in all posts
   local increment = true
@@ -372,7 +372,7 @@ local function blog.postsIndexing(posts, indexfile, result, pagin, number, templ
       -- push result into index
       result:push(post_element_content)
       -- read post real content
-      local postfile = srcpath .. '/' .. title .. source_extension
+      local postfile = srcpath .. '/' .. title .. config.SRC_EXT
       local content = utils.readFile(postfile, 'r')
       -- process post to be displayed on HOMEPAGE
       home_index = blog.createPostForHomepage(postfile, title, v['conf'], content, post_substitutions, template.article, { min = home_min, max = home_max, num = home_index, index_nb = index_nb, increment = increment })
@@ -414,7 +414,7 @@ end
 -- @param template.article_index_file path to the template to use for each post that appears on index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-local function blog.createPostIndex(posts, template)
+function blog.createPostIndex(posts, template)
   -- check directory
   utils.checkDirectory(postpath)
   -- prepare some values
@@ -481,7 +481,7 @@ end
 -- @param title title of page (using a replacement)
 -- @param posts list of posts that are linked to this tag
 -------------------------------------------------------------------------------
-local function blog.createTag(filename, title, posts)
+function blog.createTag(filename, title, posts)
   local page = rope()
   page:push(header)
   -- insert content (all posts linked to this tag)
@@ -497,8 +497,8 @@ local function blog.createTag(filename, title, posts)
   -- keywords
   local keywords = rope()
   keywords:push (title)
-  if makeflyrc['BLOG_KEYWORDS'] then
-    keywords:push (',' .. makeflyrc['BLOG_KEYWORDS'])
+  if config.BLOG_KEYWORDS then
+    keywords:push (',' .. config.BLOG_KEYWORDS)
   end
   -- do substitutions on page
   local substitutions = utils.getSubstitutions(replacements, {TITLE=title, KEYWORDS=keywords:flatten()})
@@ -516,7 +516,7 @@ end
 -- @param data.template_element_filename path to the template to use for each tag on tag index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-local function blog.createTagIndex(index_filename, data)
+function blog.createTagIndex(index_filename, data)
   local index = rope()
   index:push(header)
   -- check tagpath directory
@@ -551,7 +551,7 @@ end
 -- @param title title of the page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-local function blog.createHomepage(file, title)
+function blog.createHomepage(file, title)
   local index = rope()
   local index_file = io.open(file, 'wb')
   index:push(header)
@@ -575,7 +575,7 @@ end
 -- Create single static page named PAGE
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-local function blog.createPage(origin, destination, title)
+function blog.createPage(origin, destination, title)
   local page = rope()
   local page_file = io.open(destination, 'wb')
   page:push(header)
