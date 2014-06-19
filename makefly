@@ -46,7 +46,6 @@ local utils = require 'lib.utils'
 require 'lib.rope'
 
 --[[ VARIABLES ]]--
-VERSION = '0.4-trunk'
 local configfile = os.getenv('CONFIG') or currentpath .. '/config'
 -- default display values
 display_info =    _('  INFO   ')
@@ -65,23 +64,21 @@ end
 
 local function clean(args)
   -- checks
-  if config.template_extension == config.PAGE_EXT then
-    error(string.format(_('[%s] You cannot choose an extension (%s) similar to template\'s one (%s).'), display_error, config.PAGE_EXT, config.template_extension))
+  if config.TMPL_EXT == config.PAGE_EXT then
+    error(string.format(_('[%s] You cannot choose an extension (%s) similar to template\'s one (%s).'), display_error, config.PAGE_EXT, config.TMPL_EXT))
   end
   -- cleaning
-  local pubpath = currentpath .. '/' .. config.destdir
-  local tmppath = currentpath .. '/' .. config.tmpdir
-  if lfs.attributes(pubpath) ~= nil then
-    utils.rm(pubpath)
-    print(string.format(_('[%s] Removed: %s directory'), display_info, pubpath))
+  if lfs.attributes(config.publicpath) ~= nil then
+    utils.rm(config.publicpath)
+    print(string.format(_('[%s] Removed: %s directory'), display_info, config.publicpath))
   else
-    print(string.format(_('[%s] Missing: %s directory'), display_warning, pubpath))
+    print(string.format(_('[%s] Missing: %s directory'), display_warning, config.publicpath))
   end
-  if lfs.attributes(tmppath) ~= nil then
-    utils.rm(tmppath)
-    print(string.format(_('[%s] Removed: %s directory'), display_info, tmppath))
+  if lfs.attributes(config.tmppath) ~= nil then
+    utils.rm(config.tmppath)
+    print(string.format(_('[%s] Removed: %s directory'), display_info, config.tmppath))
   else
-    print(string.format(_('[%s] Missing: %s directory'), display_warning, tmppath))
+    print(string.format(_('[%s] Missing: %s directory'), display_warning, config.tmppath))
   end
   local docpath = currentpath .. '/' .. config.docdir
   local docextension = string.gsub(config.PAGE_EXT, '\.(.*)', '%1')
@@ -113,8 +110,8 @@ end
 local function add(args)
   local script = currentpath .. '/' .. config.toolsdir .. '/create_post.sh'
   local substitutions = {
-    DBDIR = currentpath .. '/' .. config.dbdir,
-    SRCDIR = currentpath .. '/' .. config.srcdir,
+    DBDIR = config.dbpath,
+    SRCDIR = config.srcpath,
   }
   local user_choice = config.AUTO_EDIT
   local option = '-q'
@@ -251,14 +248,14 @@ local function theme(args)
 end
 
 local function version(args)
-  print(string.format(_('Makefly %s using %s'), VERSION, _VERSION))
+  print(string.format(_('Makefly %s using %s'), config.VERSION, _VERSION))
 end
 
 local function doc(args)
   local directory = currentpath .. '/' .. config.docdir
   local header = utils.readFile(directory .. '/header.tmpl', 'r')
   local footer = utils.readFile(directory .. '/footer.tmpl', 'r')
-  local version = string.format(_('Version %s'), VERSION)
+  local version = string.format(_('Version %s'), config.VERSION)
   local tocreate = utils.listing(directory, 'md')
   local markdown = require 'markdown'
   for _, path in pairs(tocreate) do
@@ -301,96 +298,123 @@ local function checkConfigVariables(configtable, mandatories)
   end
 end
 
+local function setDefaultVariables(configtable)
+  configtable.VERSION = configtable.VERSION or _('unknown')
+  configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
+  configtable.indexfile = configtable.index .. configtable.PAGE_EXT
+  -- main directories
+  configtable.dbpath = currentpath .. '/' .. configtable.dbdir
+  configtable.srcpath = currentpath .. '/' .. configtable.srcdir
+  configtable.publicpath = currentpath .. '/' .. configtable.destdir
+  configtable.templatepath = currentpath .. '/' .. configtable.tmpldir
+  configtable.specialpath = currentpath .. '/' .. configtable.specialdir
+  configtable.themepath = currentpath .. '/' .. configtable.THEME 
+  configtable.tmppath = currentpath .. '/' .. configtable.tmpdir
+  configtable.postpath = configtable.publicpath .. '/' .. configtable.POSTDIR_NAME
+  configtable.tagpath = configtable.publicpath .. '/' .. configtable.TAGDIR_NAME
+  -- files
+  configtable.about_filepath = configtable.specialpath .. '/' .. configtable.ABOUT_FILENAME .. configtable.SRC_EXT
+  -- theme filenames
+  configtable.page_header_name = 'header' .. configtable.TMPL_EXT
+  configtable.page_footer_name = 'footer' .. configtable.TMPL_EXT
+  configtable.page_posts_name = 'post.index' .. configtable.TMPL_EXT
+  configtable.page_article_name = 'article' .. configtable.TMPL_EXT
+  configtable.page_homepage_article_name = 'article.index' .. configtable.TMPL_EXT
+  configtable.page_post_element_name = 'element' .. configtable.TMPL_EXT
+  configtable.page_tag_element_name = 'tagelement' .. configtable.TMPL_EXT
+  configtable.page_tag_link_name = 'taglink' .. configtable.TMPL_EXT
+  configtable.page_tag_index_name = 'tags' .. configtable.TMPL_EXT
+  configtable.page_sidebar_name = 'sidebar' .. configtable.TMPL_EXT
+  configtable.page_searchbar_name = 'menu.search_bar' .. configtable.TMPL_EXT
+  configtable.page_about_name = 'menu.about' .. configtable.TMPL_EXT
+  configtable.page_read_more_name = 'read_more_link' .. configtable.TMPL_EXT
+  configtable.page_pagination_name = 'pagination' .. configtable.TMPL_EXT
+  configtable.page_jskomment = configtable.templatepath .. '/' .. 'jskomment.article' .. configtable.TMPL_EXT
+  configtable.page_jskomment_declaration = configtable.templatepath .. '/' .. 'jskomment_declaration' .. configtable.TMPL_EXT
+  configtable.page_jskomment_css_declaration = configtable.templatepath .. '/' .. 'jskomment_css_declaration' .. configtable.TMPL_EXT
+  configtable.page_jskomment_script = configtable.templatepath .. '/' .. configtable.jskomment_jsfilename
+  configtable.page_jskomment_css_name = 'jskomment.css'
+  configtable.page_rss_header = configtable.templatepath .. '/' .. 'feed.header.rss'
+  configtable.page_rss_element = configtable.templatepath .. '/' .. 'feed.element.rss'
+  configtable.page_rss_footer = configtable.templatepath .. '/' .. 'feed.footer.rss'
+  configtable.page_eli_content = configtable.templatepath .. '/' .. 'eli_content' .. configtable.TMPL_EXT
+  configtable.page_eli_css = configtable.templatepath .. '/' .. 'eli.css'
+  configtable.page_eli_declaration = configtable.templatepath .. '/' .. 'eli_declaration' .. configtable.TMPL_EXT
+  configtable.page_eli_css_declaration = configtable.templatepath .. '/' .. 'eli_css_declaration' .. configtable.TMPL_EXT
+  configtable.page_eli_script = configtable.templatepath .. '/' .. 'eli.js'
+  -- change number values
+  configtable.MAX_POST = tonumber(configtable.MAX_POST) -- should not be nil
+  configtable.MAX_POST_LINES = configtable.MAX_POST_LINES and tonumber(configtable.MAX_POST_LINES) or nil
+  configtable.MAX_RSS = tonumber(configtable.MAX_RSS) -- should not be nil
+  -- check user sort choice
+  if configtable.SORT ~= nil and configtable.SORT ~= '' then
+    for id_nb, sort_value in pairs({'ASC', 'asc', 'desc', 'DESC'}) do
+      if sort_value == configtable.SORT then
+        configtable.SORT = string.lower(configtable.SORT)
+      end
+    end
+  end
+  -- return result
+  return configtable
+end
+
 local function compile(args)
   -- needed libraries
   local markdown = require 'markdown'
   local blog = require 'lib/blog'
-  -- configuration variables
-  local publicpath = currentpath .. '/' .. config.pubdir
-  local templatepath = currentpath .. '/' .. config.tmpldir
-  local specialpath = currentpath .. '/' .. config.specialdir
-  -- create thread table
-  threads = { }
 
-  -- Get makefly's configuration
-  local language = config.BLOG_LANG or language_default
+  -- variables preparation
   -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
+  local threads = { }
+  replacements = { } -- substitution table
+  local today = os.time() -- today's timestamp
+  tags = { }
 
-  -- Set variables regarding user configuration
-  -- TODO: delete useless params
-  -- index_name => config.index
-  -- makeflyrc => config.configurationfile
-  -- index_filename => config.indexfile
-  -- resultextension => config.PAGE_EXT
-  -- extension_default => config.PAGE_EXT
-  config.index = utils.keepUnreservedCharsAndDeleteDuplicate(config.INDEX_FILENAME)
-  local theme = config.THEME or theme_default
-  local themepath = templatepath .. '/' .. theme
-  local postdir_name = config.POSTDIR_NAME or postdir_name_default
-  local tagdir_name = config.TAGDIR_NAME or tagdir_name_default
-  local bodyclass = config.BODY_CLASS or bodyclass_default
-  local postpath = publicpath .. '/' .. postdir_name
-  local tagpath = publicpath .. '/' .. tagdir_name
-  config.indexfile = config.index .. config.PAGE_EXT
-  local date_format = config.DATE_FORMAT or date_format_default
-  local short_date_format = config.SHORT_DATE_FORMAT or short_date_format_default
-  local max_post = config.MAX_POST and tonumber(config.MAX_POST) or max_post_default
-  local max_post_lines = config.MAX_POST_LINES and tonumber(config.MAX_POST_LINES) or max_post_lines_default
-  local max_rss = config.MAX_RSS and tonumber(config.MAX_RSS) or max_rss_default
-  local max_page = config.MAX_PAGE and tonumber(config.MAX_PAGE or max_page_default)
+
   local jskomment_max = config.JSKOMMENT_MAX and tonumber(config.JSKOMMENT_MAX) or jskomment_max_default
   local jskomment_url = config.JSKOMMENT_URL or jskomment_url_default
-  -- Check if an order have been set for sorting posts
-  local user_sort_choice = sort_default
-  if config.SORT ~= nil and config.SORT ~= '' then
-    for id_nb, sort_value in pairs({'ASC', 'asc', 'desc', 'DESC'}) do
-      if sort_value == config.SORT then
-        user_sort_choice = string.lower(config.SORT)
-      end
-    end
-  end
   -- Display which theme the user have choosed
-  print (string.format(_("-- [%s] Theme: %s"), display_info, theme))
+  print (string.format(_("-- [%s] Theme: %s"), display_info, config.THEME))
 
   -- Check that given them exists
-  if lfs.attributes(themepath) == nil then
-    print(string.format(_("-- [%s] Given theme (%s) seems to not exist."), display_error, theme))
+  if lfs.attributes(config.themepath) == nil then
+    print(string.format(_("-- [%s] Given theme (%s) seems to not exist."), display_error, config.THEME))
     os.exit(1)
   end
 
   -- Check that user choice doesn't conflict with default templates extension
-  if config.PAGE_EXT == template_extension_default then
-    print(string.format(_("-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."), display_error, PAGE_EXT, template_extension_default))
+  if config.PAGE_EXT == config.TMPL_EXT then
+    print(string.format(_("-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."), display_error, config.PAGE_EXT, config.TMPL_EXT))
     os.exit(1)
   end
 
   -- Get language configuration
-  local languagefile = langpath .. '/translate.' .. language
+  local language = string.sub(config.BLOG_LANG, 0, 2)
+  local languagefile = config.langpath .. '/translate.' .. language
   if lfs.attributes(languagefile) == nil then
-    languagefile = langpath .. '/translate.' .. language_default
+    languagefile = config.langpath .. '/translate.' .. language_default
     print(string.format(_("-- [%s] No '%s' translation. Use default one: %s."), display_warning, language, language_default))
   end
   local languagerc = utils.getConfig(languagefile)
 
   -- Check if needed directories exists. Otherwise create them
-  local tmppath = currentpath .. '/' .. config.tmpdir
-  for k,v in pairs({tmppath, publicpath, postpath, tagpath}) do
+  for k,v in pairs({config.tmppath, config.publicpath, config.postpath, config.tagpath}) do
     utils.checkDirectory(v)
   end
 
   -- Create path for template's files
-  local page_header = themepath .. '/' .. page_header_name
-  local page_footer = themepath .. '/' .. page_footer_name
-  local page_article_single = themepath .. '/' .. page_article_name
-  local page_post_element = themepath .. '/' .. page_post_element_name
-  local page_tag_element = themepath .. '/' .. page_tag_element_name
-  local page_tag_link = themepath .. '/' .. page_tag_link_name
-  local page_sidebar = themepath .. '/' .. page_sidebar_name
-  local page_searchbar = themepath .. '/' .. page_searchbar_name
-  local page_article_index = themepath .. '/' .. page_homepage_article_name
+  local page_header = config.themepath .. '/' .. page_header_name
+  local page_footer = config.themepath .. '/' .. page_footer_name
+  local page_article_single = config.themepath .. '/' .. page_article_name
+  local page_post_element = config.themepath .. '/' .. page_post_element_name
+  local page_tag_element = config.themepath .. '/' .. page_tag_element_name
+  local page_tag_link = config.themepath .. '/' .. page_tag_link_name
+  local page_sidebar = config.themepath .. '/' .. page_sidebar_name
+  local page_searchbar = config.themepath .. '/' .. page_searchbar_name
+  local page_article_index = config.themepath .. '/' .. page_homepage_article_name
 
   -- Read template configuration file
-  local themerc = utils.getConfig(themepath .. '/' .. config.themercfile)
+  local themerc = utils.getConfig(config.themepath .. '/' .. config.themercfile)
 
   -- Some values that comes from template configuration file
   local jskomment_captcha_theme = config.JSKOMMENT_CAPTCHA_THEME or themerc['JSKOMMENT_CAPTCHA_THEME'] or jskomment_captcha_theme_default
@@ -400,11 +424,11 @@ local function compile(args)
   footer = utils.readFile(page_footer, 'r')
 
   -- Create CSS files
-  css_file = themepath .. '/style/' .. themerc['CSS_FILE']
+  css_file = config.themepath .. '/style/' .. themerc['CSS_FILE']
   local css_color_file_name = themerc['CSS_COLOR_FILE']
   if config.FLAVOR and config.FLAVOR ~= '' then
-    local css_color_file_test = 'color_' .. theme .. '_' .. config.FLAVOR .. '.css'
-    local css_color_file_attr = lfs.attributes(themepath .. '/style/' .. css_color_file_test)
+    local css_color_file_test = 'color_' .. config.THEME .. '_' .. config.FLAVOR .. '.css'
+    local css_color_file_attr = lfs.attributes(config.themepath .. '/style/' .. css_color_file_test)
     if css_color_file_attr and css_color_file_attr.mode == 'file' then
       css_color_file_name = css_color_file_test
     else
@@ -412,19 +436,19 @@ local function compile(args)
     end
     print (string.format(_("-- [%s] Specific flavor: %s"), display_info, config.FLAVOR))
   end
-  css_color_file = themepath .. '/style/' .. css_color_file_name
+  css_color_file = config.themepath .. '/style/' .. css_color_file_name
   if themerc['JSKOMMENT_CSS'] then
-    jskomment_css_file = themepath .. '/' .. themerc['JSKOMMENT_CSS']
+    jskomment_css_file = config.themepath .. '/' .. themerc['JSKOMMENT_CSS']
     jskomment_css_filename = themerc['JSKOMMENT_CSS']
   else
-    jskomment_css_file = templatepath .. '/' .. page_jskomment_css_name
+    jskomment_css_file = config.templatepath .. '/' .. page_jskomment_css_name
     jskomment_css_filename = page_jskomment_css_name
   end
-  table.insert(threads, coroutine.create(function () utils.copyFile(css_file, publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = blog_url }) end))
-  table.insert(threads, coroutine.create(function () utils.copyFile(css_color_file, publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
+  table.insert(threads, coroutine.create(function () utils.copyFile(css_file, config.publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = config.BLOG_URL }) end))
+  table.insert(threads, coroutine.create(function () utils.copyFile(css_color_file, config.publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
   -- Copy static theme directory
-  theme_static_directory = themepath .. '/static'
-  table.insert(threads, coroutine.create(function () utils.copy(theme_static_directory, publicpath, { BLOG_URL = blog_url }) end))
+  theme_static_directory = config.themepath .. '/static'
+  table.insert(threads, coroutine.create(function () utils.copy(theme_static_directory, config.publicpath, { BLOG_URL = config.BLOG_URL }) end))
 
   -- Add result to replacements table (to substitute ${VARIABLES} in files)
   replacements = {
@@ -432,7 +456,7 @@ local function compile(args)
     BLOG_TITLE = config.BLOG_TITLE,
     BLOG_DESCRIPTION = config.BLOG_DESCRIPTION,
     BLOG_SHORT_DESC = config.BLOG_SHORT_DESC,
-    BLOG_URL = blog_url,
+    BLOG_URL = config.BLOG_URL,
     BLOG_AUTHOR = config.BLOG_AUTHOR or '',
     BLOG_COPYRIGHT = config.BLOG_COPYRIGHT or '&copy; ' .. os.date('%Y', today),
     KEYWORDS = config.BLOG_KEYWORDS or '',
@@ -458,9 +482,9 @@ local function compile(args)
     CSS_FILE = themerc['CSS_FILE'],
     CSS_COLOR_FILE = themerc['CSS_COLOR_FILE'],
     JSKOMMENT_CSS = themerc['JSKOMMENT_CSS'],
-    TAGDIR_NAME = tagdir_name,
-    POSTDIR_NAME = postdir_name,
-    BODY_CLASS = bodyclass,
+    TAGDIR_NAME = config.TAGDIR_NAME,
+    POSTDIR_NAME = config.POSTDIR_NAME,
+    BODY_CLASS = config.BODY_CLASS,
     POSTDIR_INDEX = index_filename,
     TAGDIR_INDEX = index_filename, -- FIXME: delete these two var to add a new one: INDEX_FILENAME which is better for indexes.
   }
@@ -471,13 +495,11 @@ local function compile(args)
   end
 
   -- Check about's page presence
-  about_filename = config.ABOUT_FILENAME or about_default
-  about_file_path = specialpath .. '/' .. about_filename .. config.SRC_EXT
-  about_file = utils.readFile(about_file_path, 'r')
+  about_file = utils.readFile(config.about_filepath, 'r')
   if about_file ~= '' then
     print (string.format(_("-- [%s] About's page available"), display_enable))
-    replacements['ABOUT_INDEX'] = about_filename .. config.PAGE_EXT
-    replacements['ABOUT_LINK'] = blog.stuffTemplate(themepath .. '/' .. page_about_name, '', '', '', false)
+    replacements['ABOUT_INDEX'] = config.ABOUT_FILENAME .. config.PAGE_EXT
+    replacements['ABOUT_LINK'] = blog.stuffTemplate(config.themepath .. '/' .. page_about_name, '', '', '', false)
   else
     print (string.format(_("-- [%s] About's page not found"), display_disable))
   end
@@ -489,18 +511,18 @@ local function compile(args)
     eli_max = config.ELI_MAX and tonumber(config.ELI_MAX) or eli_max_default
     eli_type = config.ELI_TYPE or eli_type_default
     -- copy ELI css file
-    table.insert(threads, coroutine.create(function () utils.copyFile(page_eli_css, publicpath .. '/' .. eli_css_name) end))
+    table.insert(threads, coroutine.create(function () utils.copyFile(page_eli_css, config.publicpath .. '/' .. eli_css_name) end))
     replacements['ELI_CSS'] = eli_css_name
     -- copy ELI script to public directory
     local template_eli_script = utils.readFile(page_eli_script, 'r')
-    local eli_script = assert(io.open(publicpath .. '/' .. eli_js_filename, 'wb'))
+    local eli_script = assert(io.open(config.publicpath .. '/' .. eli_js_filename, 'wb'))
     eli_script_substitutions = utils.getSubstitutions(replacements, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=config.ELI_API,ELI_USER=config.ELI_USER})
     local eli_script_replace = utils.replace(template_eli_script, eli_script_substitutions)
     eli_script:write(eli_script_replace)
     assert(eli_script:close())
     -- ELI script declaration in all pages
     local template_eli_declaration = utils.readFile(page_eli_declaration, 'r')
-    replacements['ELI_SCRIPT'] = utils.replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL=blog_url})
+    replacements['ELI_SCRIPT'] = utils.replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL = config.BLOG_URL})
     -- ELI CSS declaration in all pages
     local template_eli_css_declaration = utils.readFile(page_eli_css_declaration, 'r')
     replacements['ELI_CSS_DECLARATION'] = utils.replace(template_eli_css_declaration, replacements)
@@ -520,10 +542,10 @@ local function compile(args)
   end
 
   -- Sidebar (display that's active/inactive)
-  local sidebar_filename = (config.SIDEBAR_FILENAME or sidebar_default) .. config.SRC_EXT
+  local sidebar_filename = config.SIDEBAR_FILENAME .. config.SRC_EXT
   if (config.SIDEBAR and config.SIDEBAR == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
     print (string.format(_("-- [%s] Sidebar"), display_enable))
-    local sidebar_content = utils.readFile(specialpath .. '/' .. sidebar_filename, 'r')
+    local sidebar_content = utils.readFile(config.specialpath .. '/' .. sidebar_filename, 'r')
     replacements['SIDEBAR'] = blog.stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
   else
     print (string.format(_("-- [%s] Sidebar"), display_disable))
@@ -542,18 +564,18 @@ local function compile(args)
   if config.JSKOMMENT and config.JSKOMMENT == '1' then
     print (string.format(_("-- [%s] Comment system"), display_enable))
     -- copy jskomment css file
-    table.insert(threads, coroutine.create(function () utils.copyFile(jskomment_css_file, publicpath .. '/' .. jskomment_css_filename) end))
+    table.insert(threads, coroutine.create(function () utils.copyFile(jskomment_css_file, config.publicpath .. '/' .. jskomment_css_filename) end))
     replacements['JSKOMMENT_CSS'] = jskomment_css_filename
     -- copy jskomment javascript
     local template_jskomment_script = utils.readFile(page_jskomment_script, 'r')
-    local jskomment_script = assert(io.open(publicpath .. '/' .. config.jskomment_jsfilename, 'wb'))
+    local jskomment_script = assert(io.open(config.publicpath .. '/' .. config.jskomment_jsfilename, 'wb'))
     local jskomment_script_substitutions = utils.getSubstitutions(replacements, {JSKOMMENT_URL=jskomment_url,JSKOMMENT_MAX=jskomment_max,JSKOMMENT_CAPTCHA_THEME=jskomment_captcha_theme})
     local jskomment_script_content = utils.replace(template_jskomment_script, jskomment_script_substitutions)
     jskomment_script:write(jskomment_script_content)
     assert(jskomment_script:close())
     -- jskomment javascript declaration in all pages
     local template_jskomment_declaration = utils.readFile(page_jskomment_declaration, 'r')
-    replacements['JSKOMMENT_SCRIPT'] = utils.replace(template_jskomment_declaration, {jskom_name=config.jskomment_jsfilename, BLOG_URL=blog_url})
+    replacements['JSKOMMENT_SCRIPT'] = utils.replace(template_jskomment_declaration, {jskom_name=config.jskomment_jsfilename, BLOG_URL = config.BLOG_URL})
     -- jskomment css declaration in all pages
     local template_jskomment_css_declaration = utils.readFile(page_jskomment_css_declaration, 'r')
     replacements['JSKOMMENT_CSS_DECLARATION'] = utils.replace(template_jskomment_css_declaration, replacements)
@@ -573,7 +595,7 @@ local function compile(args)
   -- browse them
   for i, j in pairs(special_files) do
     -- read special file if exists
-    local special_file_path = specialpath .. '/' .. j
+    local special_file_path = config.specialpath .. '/' .. j
     local special_file = utils.readFile(special_file_path, 'r')
     if special_file and special_file ~= '' then
       print (string.format(_("-- [%s] %s"), display_enable, i))
@@ -598,14 +620,14 @@ local function compile(args)
     about_substitutions = utils.getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE'], BODY_CLASS='about'})
     about_content = utils.replace(about:flatten(), about_substitutions)
     -- write changes
-    about_file_result = assert(io.open(publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(config.ABOUT_FILENAME or about_default) .. config.PAGE_EXT, 'wb'))
+    about_file_result = assert(io.open(config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(config.ABOUT_FILENAME) .. config.PAGE_EXT, 'wb'))
     about_file_result:write(about_content)
     about_file_result:close()
   end
 
   -- Copy static directory content to public path
   local staticpath = currentpath .. '/' .. staticdir
-  utils.copy(staticpath, publicpath, { BLOG_URL = blog_url })
+  utils.copy(staticpath, config.publicpath, { BLOG_URL = config.BLOG_URL })
   print (string.format(_("-- [%s] Folder content copied: %s"), display_success, staticpath))
 
   -- Browse DB files
@@ -639,7 +661,7 @@ local function compile(args)
   if pages_result then
     for k,v in pairs(pages_result) do
       local pagetitle = string.match(v, ".+/(.+)%.md")
-      local pagefile = publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. config.PAGE_EXT
+      local pagefile = config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. config.PAGE_EXT
       local co = coroutine.create(function () blog.createPage(v, pagefile, pagetitle) end)
       table.insert(threads, co)
     end
@@ -652,7 +674,7 @@ local function compile(args)
 
   -- Create post's index
   blog.createPostIndex(post_files, {
-    index_file = themepath .. '/' .. page_posts_name,
+    index_file = config.themepath .. '/' .. page_posts_name,
     element_file = page_post_element,
     taglink_file = page_tag_link,
     article_index_file = page_article_index
@@ -661,24 +683,24 @@ local function compile(args)
   -- Create tag's files: index and each tag's page
   -- {template_index_filename, template_element_filename})
   blog.createTagIndex(index_filename, {
-    template_index_filename = themepath .. '/' .. page_tag_index_name,
+    template_index_filename = config.themepath .. '/' .. page_tag_index_name,
     template_element_filename = page_tag_element
   })
 
   -- Create index
-  blog.createHomepage(publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
+  blog.createHomepage(config.publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
 
   -- Delete temporary files
   for tag, posts in pairs(tags) do
     for i, post in pairs(posts) do
-      os.remove(tmppath .. '/' .. post)
+      os.remove(config.tmppath .. '/' .. post)
     end
   end
   -- delete posts that appear on homepage
   local index_nb = 0
-  while index_nb <= max_post do
+  while index_nb <= config.MAX_POST do
     local displayednumber = index_nb + 1
-    local indexpath = tmppath .. '/' .. 'index.' .. displayednumber .. '.tmp'
+    local indexpath = config.tmppath .. '/' .. 'index.' .. displayednumber .. '.tmp'
     os.remove(indexpath)
     index_nb = index_nb + 1
   end
@@ -753,6 +775,12 @@ config = utils.mergeConfig(config_default, config_user)
 -- check mandatories variables
 local config_mandatory_vars = { 'BLOG_TITLE', 'BLOG_DESCRIPTION', 'BLOG_URL' }
 checkConfigVariables(config, config_mandatory_vars)
+
+-- variable initialization
+config = setDefaultVariables(config)
+
+-- set local for blog result
+os.setlocale(config.BLOG_LANG)
 
 -- check command
 local args = {...}

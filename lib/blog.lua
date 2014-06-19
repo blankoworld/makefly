@@ -130,9 +130,9 @@ function blog.createPost(file, config, data)
   -- only create post if date is older than today
   if today > tonumber(timestamp) then
     local template = utils.readFile(data.template_file, 'r')
-    local out = assert(io.open(postpath .. "/" .. utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension, 'wb'))
+    local out = assert(io.open(config.postpath .. "/" .. utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension, 'wb'))
     local post = rope()
-    local content = utils.readFile(srcpath .. "/" .. title .. config.SRC_EXT, 'r')
+    local content = utils.readFile(config.srcpath .. "/" .. title .. config.SRC_EXT, 'r')
     local markdown_content = markdown(content)
     -- concatenate all final post subelements
     post:push (header)
@@ -147,8 +147,8 @@ function blog.createPost(file, config, data)
       ARTICLE_CLASS_TYPE = config['TYPE'] or '',
       CONTENT = markdown_content,
       POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
-      DATE = os.date(date_format, timestamp) or '',
-      DATETIME = os.date(datetime_format_default, timestamp) or '',
+      DATE = os.date(config.DATE_FORMAT, timestamp) or '',
+      DATETIME = os.date(config.datetime_format, timestamp) or '',
       POST_AUTHOR = config['AUTHOR'],
       POST_ESCAPED_TITLE = title,
       KEYWORDS = keywords:flatten(),
@@ -241,11 +241,11 @@ end
 function blog.createPostForHomepage(file, title, config, content, sub, post_template, data)
   local final_content = utils.readFile(file, 'r')
   if data.index_nb >= data.min and data.index_nb <= data.max then
-    if max_post_lines then
+    if config.MAX_POST_LINES then
       local n = 0
       for i in content:gmatch("\n") do n=n+1 end
-      final_content = utils.headFile(file, max_post_lines)
-      if max_post_lines < n then
+      final_content = utils.headFile(file, config.MAX_POST_LINES)
+      if config.MAX_POST_LINES < n then
         local page_read_more = utils.readFile(themepath .. '/' .. page_read_more_name, 'r')
         final_content = final_content .. page_read_more
       end
@@ -263,7 +263,7 @@ function blog.createPostForHomepage(file, title, config, content, sub, post_temp
     else
       data.num = data.num - 1
     end
-    local homepage_file = io.open(tmppath .. '/index.' .. data.num .. '.tmp', 'wb')
+    local homepage_file = io.open(config.tmppath .. '/index.' .. data.num .. '.tmp', 'wb')
     assert(homepage_file:write(content4index))
     -- close first_posts file
     assert(homepage_file:close())
@@ -292,12 +292,12 @@ function blog.createPostForRSS(content, config, title, template, data)
     else
       data.num = data.num - 1
     end
-    local rss_file = io.open(tmppath .. '/rss.' .. data.num .. '.tmp', 'wb')
-    local rss_post_html_link = blog_url .. '/' .. postdir_name .. '/' .. title .. resultextension
+    local rss_file = io.open(config.tmppath .. '/' .. 'rss.' .. data.num .. '.tmp', 'wb')
+    local rss_post_html_link = config.BLOG_URL .. '/' .. config.POSTDIR_NAME .. '/' .. title .. resultextension
     -- Change temporarly locale
     assert(os.setlocale('C'))
     local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
-    assert(os.setlocale(lang))
+    assert(os.setlocale(config.BLOG_LANG))
     local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=config['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
     assert(rss_file:write(rss_post))
     -- close first_posts file
@@ -328,19 +328,19 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
   local index_nb = 0 -- number of post in all posts
   local increment = true
   local home_min = 0 -- minimal index_nb in all posts to appear on homepage
-  local home_max = home_min + max_post + 1 -- max index_nb in all posts to appear on homepage
+  local home_max = home_min + config.MAX_POST + 1 -- max index_nb in all posts to appear on homepage
   local home_index = 0 -- index process for posts that will appear on homepage
   local rss_min = 0
-  local rss_max = rss_min + max_rss + 1
+  local rss_max = rss_min + config.MAX_RSS + 1
   local rss_index_nb = 0
-  if user_sort_choice == 'asc' then
+  if config.SORT == 'asc' then
     increment = false
-    home_min = number.post_nb - max_post - 1
+    home_min = number.post_nb - config.MAX_POST - 1
     home_max = number.post_nb + 1
-    home_index = max_post + 1
-    rss_min = number.post_nb - max_rss - 1
+    home_index = config.MAX_POST + 1
+    rss_min = number.post_nb - config.MAX_RSS - 1
     rss_max = number.post_nb + 1
-    rss_index_nb = max_post + 1
+    rss_index_nb = config.MAX_POST + 1
   end
   local post_element = utils.readFile(template.element, 'r')
   local rss_element = utils.readFile(page_rss_element, 'r')
@@ -355,9 +355,9 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
         POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
         POST_AUTHOR = v['conf']['AUTHOR'],
         POST_DESCRIPTION = v['conf']['DESCRIPTION'] or '',
-        SHORT_DATE = os.date(short_date_format, timestamp) or '',
-        DATE = os.date(date_format, timestamp) or '',
-        DATETIME = os.date(datetime_format_default, timestamp) or '',
+        SHORT_DATE = os.date(config.SHORT_DATE_FORMAT, timestamp) or '',
+        DATE = os.date(config.DATE_FORMAT, timestamp) or '',
+        DATETIME = os.date(config.datetime_format, timestamp) or '',
       }
       -- registering tags
       local post_conf_tags = v['conf']['TAGS'] or nil
@@ -366,13 +366,13 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
       local post_substitutions = utils.getSubstitutions(v, metadata)
       -- remember this post's element for each tag page
       local post_element_content = utils.replace(post_element, post_substitutions)
-      local remember_file = assert(io.open(tmppath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(title), 'wb'))
+      local remember_file = assert(io.open(config.tmppath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(title), 'wb'))
       assert(remember_file:write(post_element_content))
       assert(remember_file:close())
       -- push result into index
       result:push(post_element_content)
       -- read post real content
-      local postfile = srcpath .. '/' .. title .. config.SRC_EXT
+      local postfile = config.srcpath .. '/' .. title .. config.SRC_EXT
       local content = utils.readFile(postfile, 'r')
       -- process post to be displayed on HOMEPAGE
       home_index = blog.createPostForHomepage(postfile, title, v['conf'], content, post_substitutions, template.article, { min = home_min, max = home_max, num = home_index, index_nb = index_nb, increment = increment })
@@ -394,7 +394,7 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
         -- increment page number
         number.page_number = number.page_number + 1
         -- CREATE NEW INDEX
-        indexfile = io.open(postpath .. '/' .. index_name .. number.page_number .. resultextension, 'wb')
+        indexfile = io.open(config.postpath .. '/' .. index_name .. number.page_number .. resultextension, 'wb')
         result = rope()
         result:push (header)
         -- Add title of the post list on the result
@@ -416,10 +416,10 @@ end
 -------------------------------------------------------------------------------
 function blog.createPostIndex(posts, template)
   -- check directory
-  utils.checkDirectory(postpath)
+  utils.checkDirectory(config.postpath)
   -- prepare some values
-  local indexfile = io.open(postpath .. '/' .. index_name .. resultextension, 'wb')
-  local rssfile = io.open(publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(rss_name_default) .. rss_extension_default, 'wb')
+  local indexfile = io.open(config.postpath .. '/' .. index_name .. resultextension, 'wb')
+  local rssfile = io.open(config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(config.RSS_NAME) .. config.rss_extension, 'wb')
   local rss_header = utils.readFile(page_rss_header, 'r')
   local rss_footer = utils.readFile(page_rss_footer, 'r')
   -- create a rope to merge all text
@@ -432,10 +432,10 @@ function blog.createPostIndex(posts, template)
   index:push (post_list_title)
   local template_article_index = utils.readFile(template.article_index_file, 'r')
   -- sort posts in a given order
-  table.sort(posts, function(a, b) return utils.compare_post(a,b, user_sort_choice) end)
+  table.sort(posts, function(a, b) return utils.compare_post(a,b, config.SORT) end)
   -- prepare some values
   local pagination = require "pagination"
-  local pagin = pagination.new(#posts, max_page)
+  local pagin = pagination.new(#posts, config.MAX_PAGE)
   local post_nb = #posts
   local page_number = 0
   local page_post_nb = 1
@@ -458,8 +458,8 @@ function blog.createPostIndex(posts, template)
   end
   -- rss process
   local index_rss_nb = 1
-  while index_rss_nb <= max_rss do
-    local rsspath = tmppath .. '/' .. 'rss.' .. index_rss_nb .. '.tmp'
+  while index_rss_nb <= config.MAX_RSS do
+    local rsspath = config.tmppath .. '/' .. 'rss.' .. index_rss_nb .. '.tmp'
     local rss_content = utils.readFile(rsspath, 'r')
     rss:push (rss_content)
     index_rss_nb = index_rss_nb + 1
@@ -487,7 +487,7 @@ function blog.createTag(filename, title, posts)
   -- insert content (all posts linked to this tag)
   for k, post in pairs(posts) do
     local content = ''
-    content = utils.readFile(tmppath .. '/' .. post, 'r')
+    content = utils.readFile(config.tmppath .. '/' .. post, 'r')
     if content then
       page:push(content)
     end
@@ -520,8 +520,8 @@ function blog.createTagIndex(index_filename, data)
   local index = rope()
   index:push(header)
   -- check tagpath directory
-  utils.checkDirectory(tagpath)
-  local index_file = assert(io.open(tagpath .. '/' .. index_filename, 'wb'))
+  utils.checkDirectory(config.tagpath)
+  local index_file = assert(io.open(config.tagpath .. '/' .. index_filename, 'wb'))
   -- read general tag index template file
   local template_index = utils.readFile(data.template_index_filename, 'r')
   -- read tage element template file
@@ -531,7 +531,7 @@ function blog.createTagIndex(index_filename, data)
   for tag, posts in utils.pairsByKeys(tags) do
     local tag_page = string.gsub(tag, '%s', '_') .. resultextension
     taglist_content = taglist_content .. utils.replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
-    blog.createTag(tagpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts)
+    blog.createTag(config.tagpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts)
   end
   index:push(utils.replace(template_index, {TAGLIST_CONTENT=taglist_content}))
   index:push(footer)
@@ -557,8 +557,8 @@ function blog.createHomepage(file, title)
   index:push(header)
   -- push content from all temporary files
   local index_nb = 1
-  while index_nb <= max_post do
-    local content = utils.readFile(tmppath .. '/' .. 'index.' .. index_nb .. '.tmp', 'r')
+  while index_nb <= config.MAX_POST do
+    local content = utils.readFile(config.tmppath .. '/' .. 'index.' .. index_nb .. '.tmp', 'r')
     index:push(content)
     index_nb = index_nb + 1
   end
