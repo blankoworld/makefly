@@ -9,6 +9,7 @@ tmpdir = tmp
 docdir = doc
 staticdir = static
 specialdir = special
+pagedir = pages
 backupdir = mbackup
 toolsdir = tools
 TMPL_EXT = .tmpl

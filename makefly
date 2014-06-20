@@ -104,11 +104,6 @@ local function publish(args)
   print(string.format(_('[%s] Publish: %s content with %s'), display_success, config.destdir, script))
 end
 
-local function refresh(args)
-  clean()
-  compile()
-end
-
 local function add(args)
   local script = currentpath .. '/' .. config.toolsdir .. '/create_post.sh'
   local substitutions = {
@@ -681,6 +676,11 @@ local function compile(args)
     os.remove(indexpath)
     index_nb = index_nb + 1
   end
+end
+
+local function refresh(args)
+  clean()
+  compile()
 end
 
 -- Create commands
