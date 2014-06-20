@@ -483,6 +483,35 @@ local function processAbout(about_file, languagerc, header, footer)
   end
 end
 
+local function processPosts(threads, header, footer, page_tag_link)
+  local post_files = { }
+  local mandatories_post_vars = { 'TITLE', 'TAGS', 'AUTHOR' }
+  local page_article_single = config.themepath .. '/' .. config.page_article_name
+  local dbresult = utils.listing (currentpath .. '/' .. config.dbdir, "mk")
+  if dbresult then
+    for k,v in pairs(dbresult) do
+      -- parse DB files to get metadata and posts'title
+      local postConf = utils.getConfig(v)
+      -- Check some variables presence
+      local missing_post_info = utils.processMissingInfo(postConf, mandatories_post_vars)
+      -- Check that all is OK, otherwise display an error message and quit the program
+      local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
+      if missing_post_info ~= '' then
+        print(string.format(_("[%s] Missing information in '%s' post: %s"), display_error, postTitle, missing_post_info))
+        os.exit(1)
+      end
+      if today > tonumber(timestamp) then
+        table.insert(post_files, {file=v, conf=postConf})
+        local co = coroutine.create(function () blog.createPost(v, postConf, header, footer, { template_file = page_article_single, template_tag_file = page_tag_link }) end)
+        table.insert(threads, co)
+      end
+    end
+  else
+    print (string.format(_("[%s] No DB file(s) found!"), display_warning))
+  end
+  return threads, post_files
+end
+
 local function processStaticDir()
   utils.copy(config.staticpath, config.publicpath, { BLOG_URL = config.BLOG_URL })
   print (string.format(_("[%s] Folder content copied: %s"), display_success, config.staticpath))
@@ -599,33 +628,9 @@ local function compile(args)
   processAbout(about_file, languagerc, header, footer)
   -- Copy static directory content to public path
   processStaticDir()
-
   -- Browse DB files
-  local post_files = {}
-  local mandatories_post_vars = { 'TITLE', 'TAGS', 'AUTHOR' }
-  local page_article_single = config.themepath .. '/' .. config.page_article_name
-  dbresult = utils.listing (currentpath .. '/' .. config.dbdir, "mk")
-  if dbresult then
-    for k,v in pairs(dbresult) do
-      -- parse DB files to get metadata and posts'title
-      local postConf = utils.getConfig(v)
-      -- Check some variables presence
-      local missing_post_info = utils.processMissingInfo(postConf, mandatories_post_vars)
-      -- Check that all is OK, otherwise display an error message and quit the program
-      local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
-      if missing_post_info ~= '' then
-        print(string.format(_("[%s] Missing information in '%s' post: %s"), display_error, postTitle, missing_post_info))
-        os.exit(1)
-      end
-      if today > tonumber(timestamp) then
-        table.insert(post_files, {file=v, conf=postConf})
-        local co = coroutine.create(function () blog.createPost(v, postConf, header, footer, { template_file = page_article_single, template_tag_file = page_tag_link }) end)
-        table.insert(threads, co)
-      end
-    end
-  else
-    print (string.format(_("[%s] No DB file(s) found!"), display_warning))
-  end
+  local post_files = { }
+  threads, post_files = processPosts(threads, header, footer, page_tag_link)
 
   -- Add static pages to the dispatcher
   local pages_result = utils.listing(config.pagepath, 'md')
