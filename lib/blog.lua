@@ -210,10 +210,10 @@ end
 function blog.closeIndex(file, result, title, body_class, pagin, page_number)
   result:push (footer)
   -- do substitutions on page
-  local page_sub_first = config.index_name .. config.PAGE_EXT
-  local page_sub_last = config.index_name .. (pagin.total - 1) .. config.PAGE_EXT
-  local page_sub_previous = config.index_name .. pagin:previous_page(page_number) .. config.PAGE_EXT
-  local page_sub_next = config.index_name .. pagin:next_page(page_number) .. config.PAGE_EXT
+  local page_sub_first = config.indexfile
+  local page_sub_last = config.INDEX_FILENAME .. (pagin.total - 1) .. config.PAGE_EXT
+  local page_sub_previous = config.INDEX_FILENAME .. pagin:previous_page(page_number) .. config.PAGE_EXT
+  local page_sub_next = config.INDEX_FILENAME .. pagin:next_page(page_number) .. config.PAGE_EXT
   local index_sub_table = {
     TITLE=title,
     BODY_CLASS=body_class,
@@ -248,7 +248,7 @@ function blog.createPostForHomepage(file, title, cfg, content, sub, post_templat
       for i in content:gmatch("\n") do n=n+1 end
       final_content = utils.headFile(file, config.MAX_POST_LINES)
       if config.MAX_POST_LINES < n then
-        local page_read_more = utils.readFile(themepath .. '/' .. page_read_more_name, 'r')
+        local page_read_more = utils.readFile(config.themepath .. '/' .. config.page_read_more_name, 'r')
         final_content = final_content .. page_read_more
       end
     end
@@ -299,7 +299,7 @@ function blog.createPostForRSS(content, cfg, title, template, data)
     -- Change temporarly locale
     assert(os.setlocale('C'))
     local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
-    assert(os.setlocale(config.BLOG_LANG))
+    assert(os.setlocale(oslanguage or en_US.utf-8))
     local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=cfg['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
     assert(rss_file:write(rss_post))
     -- close first_posts file
@@ -396,7 +396,7 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
         -- increment page number
         number.page_number = number.page_number + 1
         -- CREATE NEW INDEX
-        indexfile = io.open(config.postpath .. '/' .. config.index_name .. number.page_number .. config.PAGE_EXT, 'wb')
+        indexfile = io.open(config.postpath .. '/' .. config.INDEX_FILENAME .. number.page_number .. config.PAGE_EXT, 'wb')
         result = rope()
         result:push (header)
         -- Add title of the post list on the result
@@ -420,7 +420,7 @@ function blog.createPostIndex(posts, template)
   -- check directory
   utils.checkDirectory(config.postpath)
   -- prepare some values
-  local indexfile = io.open(config.postpath .. '/' .. config.INDEX_FILENAME .. config.PAGE_EXT, 'wb')
+  local indexfile = io.open(config.postpath .. '/' .. config.indexfile, 'wb')
   local rssfile = io.open(config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(config.RSS_NAME) .. config.rss_extension, 'wb')
   local rss_header = utils.readFile(config.page_rss_header, 'r')
   local rss_footer = utils.readFile(config.page_rss_footer, 'r')
@@ -523,7 +523,7 @@ function blog.createTagIndex(index_filename, data)
   index:push(header)
   -- check tagpath directory
   utils.checkDirectory(config.tagpath)
-  local index_file = assert(io.open(config.tagpath .. '/' .. index_filename, 'wb'))
+  local index_file = assert(io.open(config.tagpath .. '/' .. config.indexfile, 'wb'))
   -- read general tag index template file
   local template_index = utils.readFile(data.template_index_filename, 'r')
   -- read tage element template file

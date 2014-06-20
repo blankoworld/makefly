@@ -656,12 +656,12 @@ local function compile(args)
   -- Create tag's files: index and each tag's page
   local page_tag_element = config.themepath .. '/' .. config.page_tag_element_name
   blog.createTagIndex(index_filename, {
-    template_index_filename = config.themepath .. '/' .. page_tag_index_name,
+    template_index_filename = config.themepath .. '/' .. config.page_tag_index_name,
     template_element_filename = page_tag_element
   })
 
   -- Create index
-  blog.createHomepage(config.publicpath .. '/' .. index_filename, languagerc['HOME_TITLE'])
+  blog.createHomepage(config.publicpath .. '/' .. config.indexfile, languagerc['HOME_TITLE'])
 
   -- Delete temporary files
   for tag, posts in pairs(tags) do
