@@ -97,6 +97,33 @@ function utils.getConfig(file)
 end
 
 -------------------------------------------------------------------------------
+-- Check that configuration exists. If yes, load it.
+-- @param file Path of file to check and load
+-- @return Table that contains the filepath content
+-------------------------------------------------------------------------------
+function utils.checkConfig(filepath)
+  if lfs.attributes(filepath) == nil then
+    print(string.format(_('[%s] %s file not found!'), display_error, filepath))
+    os.exit(1)
+  end
+  return utils.getConfig(filepath)
+end
+
+-------------------------------------------------------------------------------
+-- Merge the 2 tables
+-- @param conf1 The first configuration table
+-- @param conf2 The second configuration table
+-- @return Table that contains the merge of 2 configuration files
+-------------------------------------------------------------------------------
+function utils.mergeConfig(conf1, conf2)
+  res = conf1
+  for k, v in pairs(conf2) do
+    conf1[k] = v
+  end
+  return conf1
+end
+
+-------------------------------------------------------------------------------
 -- Get '@string' and replace all '${KEY}' by its value given in '@table'
 -- @param string the string in which you will replace some elements
 -- @param table a table composed of KEY/VALUE where KEY is the ${KEY} to replace and VALUE its replacement
@@ -120,8 +147,26 @@ function utils.checkDirectory(path)
   if lfs.attributes(path) == nil then
     assert(lfs.mkdir(path))
     -- Display created directory
-    print (string.format(_("-- [%s] New folder: %s"), display_success, path))
+    print (string.format(_("[%s] New folder: %s"), display_success, path))
   end
+end
+
+-------------------------------------------------------------------------------
+-- Check if directory exists. If yes, return true. If not a dir, raise an error
+-- @param checkingdir the absolute/relative path in which we do the check
+-- @usage dir_exists('/home/olivier/probably_directory', 'some_directory_name')
+-- @return true if checkingdir exists. Otherwise false.
+-------------------------------------------------------------------------------
+function utils.dir_exists(checkingdir)
+  local result = false
+  local attrs = lfs.attributes(checkingdir)
+  if attrs ~= nil and attrs.mode == 'directory' then
+    result = true
+  elseif attrs ~= nil and attrs.mode ~= 'directory' then
+    print(string.format(_('[%s] Not a directory: %s'), display_error, checkingdir))
+    os.exit(1)
+  end
+  return result
 end
 
 -------------------------------------------------------------------------------
@@ -139,7 +184,7 @@ function utils.readFile(path, mode)
     local mode = 'r'
   end
   if mode ~= 'r' and mode ~= 'rb' then
-    print(string.format(_("-- [%s] Unknown read mode while reading this path: %s."), display_error, path))
+    print(string.format(_("[%s] Unknown read mode while reading this path: %s."), display_error, path))
     os.exit(1)
   end
   local attr = lfs.attributes(path)
@@ -239,8 +284,40 @@ function utils.copy(origin, destination, sreplace)
   elseif attr and attr.mode == 'file' then
     utils.copyFile(origin, destination, sreplace)
   else
-    print (string.format(_("-- [%s] %s not found in copy method!"), display_error, origin))
+    print (string.format(_("[%s] %s not found in copy method!"), display_error, origin))
     os.exit(1)
+  end
+end
+
+-------------------------------------------------------------------------------
+-- Remove recursively a given directory
+-- @param origin Original path to delete recursively
+-- @return Nothing (process method)
+-------------------------------------------------------------------------------
+function utils.rm(origin)
+  local attr = lfs.attributes(origin)
+  if origin ~= '.' and origin ~= '..' then
+    if attr and attr.mode == 'directory' then
+      -- browse origin directory
+      for element in lfs.dir(origin) do
+        if element ~= '.' and element ~= '..' then
+          local path = origin .. '/' .. element
+          -- launch copy directory if element is a directory, otherwise copy file
+          if lfs.attributes(path) and lfs.attributes(path).mode == 'directory' then
+            utils.rm(path)
+          else
+            os.remove(path)
+          end
+        end
+      end
+      lfs.rmdir(origin)
+    -- if origin is a file, just launch copyFile function
+    elseif attr and attr.mode == 'file' then
+      os.remove(origin)
+    else
+      print (string.format(_("[%s] %s not found (in remove process)!"), display_error, origin))
+      os.exit(1)
+    end
   end
 end
 
@@ -264,11 +341,41 @@ function utils.getSubstitutions(replaces, local_replaces)
 end
 
 -------------------------------------------------------------------------------
+-- Copy 'path' script into 'tmpdir' directory by changing some variables
+-- @param path the path of script to launch
+-- @param tmpdir the directory in which copy temporarly the script
+-- @param sub a table that contains some variable to change in the given script
+-- @param opts options to add when you launch the command
+-- @return command return
+-------------------------------------------------------------------------------
+function utils.launch_script(path, tmpdir, sub, opts)
+  -- copy script into temporary directory
+  local content = utils.readFile(path, 'r')
+  local replaced_content = utils.replace(content, sub)
+  utils.checkDirectory(tmpdir)
+  local basename = string.gsub(path, "(.*/)(.*)", "%2")
+  local scriptfilepath = tmpdir .. '/' .. basename
+  local scriptfile = assert(io.open(scriptfilepath, 'wb'))
+  scriptfile:write(replaced_content)
+  assert(scriptfile:close())
+  -- load script
+  local command = 'chmod +x ' .. scriptfilepath .. ' && ' .. scriptfilepath
+  if opts == nil then
+    opts = ''
+  end
+  local ret = os.execute(command .. ' ' .. opts)
+  -- delete script
+  os.remove(scriptfilepath)
+  -- return result
+  return ret
+end
+
+-------------------------------------------------------------------------------
 -- Launch threads from 'threads' table
 -- @use dispatcher()
 -- @return Nothing
 -------------------------------------------------------------------------------
-function utils.dispatcher ()
+function utils.dispatcher (threads)
   while true do
     local n = #threads
     if n == 0 then break end   -- no more threads to run
