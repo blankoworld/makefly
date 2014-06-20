@@ -394,6 +394,18 @@ local function processELI(threads, languagerc)
   return threads
 end
 
+local function processSidebar(themerc)
+  local page_sidebar = config.themepath .. '/' .. config.page_sidebar_name
+  local sidebar_filename = config.SIDEBAR_FILENAME .. config.SRC_EXT
+  if (config.SIDEBAR and config.SIDEBAR == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
+    print (string.format(_("[%s] Sidebar"), display_enable))
+    local sidebar_content = utils.readFile(config.specialpath .. '/' .. sidebar_filename, 'r')
+    replacements['SIDEBAR'] = blog.stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
+  else
+    print (string.format(_("[%s] Sidebar"), display_disable))
+  end
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -496,16 +508,8 @@ local function compile(args)
   -- ELI badge
   threads = processELI(threads, languagerc)
 
-  -- Sidebar (display that's active/inactive)
-  local page_sidebar = config.themepath .. '/' .. config.page_sidebar_name
-  local sidebar_filename = config.SIDEBAR_FILENAME .. config.SRC_EXT
-  if (config.SIDEBAR and config.SIDEBAR == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
-    print (string.format(_("[%s] Sidebar"), display_enable))
-    local sidebar_content = utils.readFile(config.specialpath .. '/' .. sidebar_filename, 'r')
-    replacements['SIDEBAR'] = blog.stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
-  else
-    print (string.format(_("[%s] Sidebar"), display_disable))
-  end
+  -- Sidebar
+  processSidebar(themerc)
 
   -- Search bar
   local page_searchbar = config.themepath .. '/' .. config.page_searchbar_name
