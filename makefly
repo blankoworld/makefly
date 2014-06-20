@@ -483,6 +483,11 @@ local function processAbout(about_file, languagerc, header, footer)
   end
 end
 
+local function processStaticDir()
+  utils.copy(config.staticpath, config.publicpath, { BLOG_URL = config.BLOG_URL })
+  print (string.format(_("[%s] Folder content copied: %s"), display_success, config.staticpath))
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -592,10 +597,8 @@ local function compile(args)
   processSpecialFiles()
   -- Create about's page if exists
   processAbout(about_file, languagerc, header, footer)
-
   -- Copy static directory content to public path
-  utils.copy(config.staticpath, config.publicpath, { BLOG_URL = config.BLOG_URL })
-  print (string.format(_("[%s] Folder content copied: %s"), display_success, config.staticpath))
+  processStaticDir()
 
   -- Browse DB files
   local post_files = {}
