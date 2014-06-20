@@ -89,9 +89,8 @@ local function add(args)
     DBDIR = config.dbpath,
     SRCDIR = config.srcpath,
   }
-  local user_choice = config.AUTO_EDIT
   local option = '-q'
-  if user_choice and user_choice == 1 then
+  if config.AUTO_EDIT and config.AUTO_EDIT == '1' then
     option = ''
   end
   local ret = utils.launch_script(script, config.tmpdir, substitutions, option)
