@@ -4,30 +4,8 @@
 
 TODO:
 
-  * Change process.lua to be into a lib named "blog" (for an example)
-  * Export default variables from process.lua into a specific file. Example:
-
-    config = {
-      ext = .html
-      index_name = index
-    }
-
-    Then:
-
-    config = require 'config'
-    print(config.ext)
-
   * QUIET mode
-  * Display help in few languages
-
-In main program:
-
-  * Import gettext
-  * Include default configuration variables
-  * Check that makefly.rc configuration file exists. If not raise an error.
-  * Read makefly.rc configuration file (with a ConfigParser that include it in a metatable)
-  * Read args to see which one is asked
-  * Launch the specific method regarding args
+  * Translate strings
 
 ]]--
 
