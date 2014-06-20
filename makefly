@@ -532,6 +532,23 @@ local function processPages(threads, header, footer)
   return threads
 end
 
+local function removeTemporary()
+  -- Delete temporary files
+  for tag, posts in pairs(tags) do
+    for i, post in pairs(posts) do
+      os.remove(config.tmppath .. '/' .. post)
+    end
+  end
+  -- delete posts that appear on homepage
+  local index_nb = 0
+  while index_nb <= config.MAX_POST do
+    local displayednumber = index_nb + 1
+    local indexpath = config.tmppath .. '/' .. 'index.' .. displayednumber .. '.tmp'
+    os.remove(indexpath)
+    index_nb = index_nb + 1
+  end
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -672,20 +689,8 @@ local function compile(args)
   -- Create index
   blog.createHomepage(config.publicpath .. '/' .. config.indexfile, languagerc['HOME_TITLE'], header, footer)
 
-  -- Delete temporary files
-  for tag, posts in pairs(tags) do
-    for i, post in pairs(posts) do
-      os.remove(config.tmppath .. '/' .. post)
-    end
-  end
-  -- delete posts that appear on homepage
-  local index_nb = 0
-  while index_nb <= config.MAX_POST do
-    local displayednumber = index_nb + 1
-    local indexpath = config.tmppath .. '/' .. 'index.' .. displayednumber .. '.tmp'
-    os.remove(indexpath)
-    index_nb = index_nb + 1
-  end
+  -- remove temporary files
+  --removeTemporary()
 end
 
 local function refresh(args)
