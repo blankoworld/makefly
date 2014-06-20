@@ -517,6 +517,21 @@ local function processStaticDir()
   print (string.format(_("[%s] Folder content copied: %s"), display_success, config.staticpath))
 end
 
+local function processPages(threads, header, footer)
+  local pages_result = utils.listing(config.pagepath, 'md')
+  if pages_result then
+    for k,v in pairs(pages_result) do
+      local pagetitle = string.match(v, ".+/(.+)%.md")
+      local pagefile = config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. config.PAGE_EXT
+      local co = coroutine.create(function () blog.createPage(v, pagefile, pagetitle, header, footer) end)
+      table.insert(threads, co)
+    end
+  else
+    print (string.format(_("[%s] No static page(s) found."), display_info))
+  end
+  return threads
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -631,19 +646,8 @@ local function compile(args)
   -- Browse DB files
   local post_files = { }
   threads, post_files = processPosts(threads, header, footer, page_tag_link)
-
   -- Add static pages to the dispatcher
-  local pages_result = utils.listing(config.pagepath, 'md')
-  if pages_result then
-    for k,v in pairs(pages_result) do
-      local pagetitle = string.match(v, ".+/(.+)%.md")
-      local pagefile = config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. config.PAGE_EXT
-      local co = coroutine.create(function () blog.createPage(v, pagefile, pagetitle, header, footer) end)
-      table.insert(threads, co)
-    end
-  else
-    print (string.format(_("[%s] No static page(s) found."), display_info))
-  end
+  threads = processPages(threads, header, footer)
 
   -- launch dispatcher to create each post and more (copy needed directories/files, etc.)
   utils.dispatcher(threads)
