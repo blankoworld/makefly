@@ -358,6 +358,42 @@ local function initializeReplacements(themerc, languagerc, about_file)
   end
 end
 
+local function processELI(threads, languagerc)
+  if config.ELI_USER and config.ELI_API then
+    print (string.format(_("-- [%s] ELI badge"), display_enable))
+    -- copy ELI css file
+    table.insert(threads, coroutine.create(function () utils.copyFile(config.page_eli_css, config.publicpath .. '/' .. config.eli_cssname) end))
+    replacements['ELI_CSS'] = config.eli_cssname
+    -- copy ELI script to public directory
+    local template_eli_script = utils.readFile(config.page_eli_script, 'r')
+    local eli_script = assert(io.open(config.publicpath .. '/' .. config.eli_jsfilename, 'wb'))
+    local eli_script_substitutions = utils.getSubstitutions(replacements, { ELI_MAX = config.ELI_MAX, ELI_TYPE = config.ELI_TYPE, ELI_API = config.ELI_API, ELI_USER = config.ELI_USER })
+    local eli_script_replace = utils.replace(template_eli_script, eli_script_substitutions)
+    eli_script:write(eli_script_replace)
+    assert(eli_script:close())
+    -- ELI script declaration in all pages
+    local template_eli_declaration = utils.readFile(config.page_eli_declaration, 'r')
+    replacements['ELI_SCRIPT'] = utils.replace(template_eli_declaration, { eli_name = config.eli_jsfilename, BLOG_URL = config.BLOG_URL })
+    -- ELI CSS declaration in all pages
+    local template_eli_css_declaration = utils.readFile(config.page_eli_css_declaration, 'r')
+    replacements['ELI_CSS_DECLARATION'] = utils.replace(template_eli_css_declaration, replacements)
+    -- FIXME: get ELI status (with lua socket or anything else)
+  --  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmpfile}'
+  --  local eli_cmd = utils.replace(eli_cmd, { ELI_MAX = config.ELI_MAX, ELI_TYPE = config.ELI_TYPE, ELI_API = config.ELI_API, ELI_USER = config.ELI_USER, eli_tmpfile = config.eli_tmpfile })
+  --  local status_return = assert(os.execute(eli_cmd))
+  --  if status_return == 0 then
+  --    local eli_status = utils.readFile(config.eli_tmpfile, 'r')
+  --    replacements['ELI_STATUS'] = eli_status
+  --  end
+    replacements['ELI_STATUS'] = languagerc['ELI_DEFAULT_STATUS'] or ''
+    -- read ELI content to add it in all pages
+    replacements['ELI_CONTENT'] = blog.stuffTemplate(config.page_eli_content, '', '')
+  else
+    print (string.format(_("-- [%s] ELI badge"), display_disable))
+  end
+  return threads
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -458,38 +494,7 @@ local function compile(args)
   initializeReplacements(themerc, languagerc, about_file)
 
   -- ELI badge
-  if config.ELI_USER and config.ELI_API then
-    print (string.format(_("-- [%s] ELI badge"), display_enable))
-    -- copy ELI css file
-    table.insert(threads, coroutine.create(function () utils.copyFile(config.page_eli_css, config.publicpath .. '/' .. config.eli_cssname) end))
-    replacements['ELI_CSS'] = config.eli_cssname
-    -- copy ELI script to public directory
-    local template_eli_script = utils.readFile(config.page_eli_script, 'r')
-    local eli_script = assert(io.open(config.publicpath .. '/' .. config.eli_jsfilename, 'wb'))
-    eli_script_substitutions = utils.getSubstitutions(replacements, { ELI_MAX = config.ELI_MAX, ELI_TYPE = config.ELI_TYPE, ELI_API = config.ELI_API, ELI_USER = config.ELI_USER })
-    local eli_script_replace = utils.replace(template_eli_script, eli_script_substitutions)
-    eli_script:write(eli_script_replace)
-    assert(eli_script:close())
-    -- ELI script declaration in all pages
-    local template_eli_declaration = utils.readFile(config.page_eli_declaration, 'r')
-    replacements['ELI_SCRIPT'] = utils.replace(template_eli_declaration, { eli_name = config.eli_jsfilename, BLOG_URL = config.BLOG_URL })
-    -- ELI CSS declaration in all pages
-    local template_eli_css_declaration = utils.readFile(config.page_eli_css_declaration, 'r')
-    replacements['ELI_CSS_DECLARATION'] = utils.replace(template_eli_css_declaration, replacements)
-    -- FIXME: get ELI status (with lua socket or anything else)
-  --  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmpfile}'
-  --  eli_cmd = utils.replace(eli_cmd, { ELI_MAX = config.ELI_MAX, ELI_TYPE = config.ELI_TYPE, ELI_API = config.ELI_API, ELI_USER = config.ELI_USER, eli_tmpfile = config.eli_tmpfile })
-  --  status_return = assert(os.execute(eli_cmd))
-  --  if status_return == 0 then
-  --    local eli_status = utils.readFile(config.eli_tmpfile, 'r')
-  --    replacements['ELI_STATUS'] = eli_status
-  --  end
-    replacements['ELI_STATUS'] = languagerc['ELI_DEFAULT_STATUS'] or ''
-    -- read ELI content to add it in all pages
-    replacements['ELI_CONTENT'] = blog.stuffTemplate(config.page_eli_content, '', '')
-  else
-    print (string.format(_("-- [%s] ELI badge"), display_disable))
-  end
+  threads = processELI(threads, languagerc)
 
   -- Sidebar (display that's active/inactive)
   local page_sidebar = config.themepath .. '/' .. config.page_sidebar_name
