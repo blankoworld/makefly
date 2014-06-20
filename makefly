@@ -24,6 +24,7 @@ package.path = package.path .. ";./lib/?.lua"
 require 'lib.init'
 local utils = require 'lib.utils'
 require 'lib.rope'
+local blog = require 'lib.blog'
 
 --[[ VARIABLES ]]--
 local configfile = os.getenv('CONFIG') or currentpath .. '/config'
@@ -302,6 +303,61 @@ local function cssProcess(themerc, threads)
   return threads, jskomment_css_file, jskomment_css_filename
 end
 
+local function initializeReplacements(themerc, languagerc, about_file)
+  -- Add result to replacements table (to substitute ${VARIABLES} in files)
+  replacements = {
+    VERSION = config.VERSION,
+    BLOG_TITLE = config.BLOG_TITLE,
+    BLOG_DESCRIPTION = config.BLOG_DESCRIPTION,
+    BLOG_SHORT_DESC = config.BLOG_SHORT_DESC,
+    BLOG_URL = config.BLOG_URL,
+    BLOG_AUTHOR = config.BLOG_AUTHOR or '',
+    BLOG_COPYRIGHT = config.BLOG_COPYRIGHT or '&copy; ' .. os.date('%Y', today),
+    KEYWORDS = config.BLOG_KEYWORDS or '',
+    LANG = config.BLOG_LANG,
+    BLOG_CHARSET = config.BLOG_CHARSET,
+    RSS_FEED_NAME = config.RSS_FEED_NAME,
+    SIDEBAR = '',
+    ARTICLE_CLASS_TYPE = 'normal',
+    SEARCHBAR = '',
+    JSKOMMENT_SCRIPT = '',
+    JSKOMMENT_CSS_DECLARATION = '',
+    JSKOMMENT_CONTENT = '',
+    ELI_SCRIPT = '',
+    ELI_CONTENT = '',
+    ELI_CSS = '',
+    ELI_CSS_DECLARATION = '',
+    ELI_STATUS = '',
+    INTRO_CONTENT = '',
+    FOOTER_CONTENT = '',
+    ABOUT_LINK = '',
+    ABOUT_FILENAME = '',
+    CSS_NAME = themerc['CSS_NAME'],
+    CSS_FILE = themerc['CSS_FILE'],
+    CSS_COLOR_FILE = themerc['CSS_COLOR_FILE'],
+    JSKOMMENT_CSS = themerc['JSKOMMENT_CSS'],
+    TAGDIR_NAME = config.TAGDIR_NAME,
+    POSTDIR_NAME = config.POSTDIR_NAME,
+    BODY_CLASS = config.BODY_CLASS,
+    POSTDIR_INDEX = config.indexfile,
+    TAGDIR_INDEX = config.indexfile, -- TODO: delete these two var to add a new one: INDEX_FILENAME which is better for indexes.
+  }
+
+  -- Add language translation to replacements table
+  for k, v in pairs(languagerc) do
+    replacements[k] = v
+  end
+
+  -- Check about's page presence
+  if about_file ~= '' then
+    print (string.format(_("-- [%s] About's page available"), display_enable))
+    replacements['ABOUT_INDEX'] = config.ABOUT_FILENAME .. config.PAGE_EXT
+    replacements['ABOUT_LINK'] = blog.stuffTemplate(config.themepath .. '/' .. config.page_about_name, '', '', '', false)
+  else
+    print (string.format(_("-- [%s] About's page not found"), display_disable))
+  end
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -372,7 +428,6 @@ end
 local function compile(args)
   -- needed libraries
   local markdown = require 'markdown'
-  local blog = require 'lib.blog'
 
   -- variables preparation
   -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
@@ -381,81 +436,26 @@ local function compile(args)
   today = os.time() -- today's timestamp
   local threads = { }
   local page_tag_link = config.themepath .. '/' .. config.page_tag_link_name
-
+  local header = utils.readFile(config.themepath .. '/' .. config.page_header_name, 'r')
+  local footer = utils.readFile(config.themepath .. '/' .. config.page_footer_name, 'r')
+  local about_file = utils.readFile(config.about_filepath, 'r')
   -- check theme configuration
   blog.checkTheme(config)
-
   -- get language config
   local languagerc = blog.getLanguageConfig(config, langpath, utils)
+  -- Read template configuration file
+  local themerc = utils.getConfig(config.themepath .. '/' .. config.themercfile)
 
   -- Check if needed directories exists. Otherwise create them
   for k,v in pairs({config.tmppath, config.publicpath, config.postpath, config.tagpath}) do
     utils.checkDirectory(v)
   end
 
-  -- Read template configuration file
-  local themerc = utils.getConfig(config.themepath .. '/' .. config.themercfile)
-
-  -- prepare header/footer
-  local header = utils.readFile(config.themepath .. '/' .. config.page_header_name, 'r')
-  local footer = utils.readFile(config.themepath .. '/' .. config.page_footer_name, 'r')
-
   -- CSS process
   threads, jskomment_css_file, jskomment_css_filename = cssProcess(themerc, threads)
 
-  -- Add result to replacements table (to substitute ${VARIABLES} in files)
-  replacements = {
-    VERSION = config.VERSION,
-    BLOG_TITLE = config.BLOG_TITLE,
-    BLOG_DESCRIPTION = config.BLOG_DESCRIPTION,
-    BLOG_SHORT_DESC = config.BLOG_SHORT_DESC,
-    BLOG_URL = config.BLOG_URL,
-    BLOG_AUTHOR = config.BLOG_AUTHOR or '',
-    BLOG_COPYRIGHT = config.BLOG_COPYRIGHT or '&copy; ' .. os.date('%Y', today),
-    KEYWORDS = config.BLOG_KEYWORDS or '',
-    LANG = config.BLOG_LANG,
-    BLOG_CHARSET = config.BLOG_CHARSET,
-    RSS_FEED_NAME = config.RSS_FEED_NAME,
-    SIDEBAR = '',
-    ARTICLE_CLASS_TYPE = 'normal',
-    SEARCHBAR = '',
-    JSKOMMENT_SCRIPT = '',
-    JSKOMMENT_CSS_DECLARATION = '',
-    JSKOMMENT_CONTENT = '',
-    ELI_SCRIPT = '',
-    ELI_CONTENT = '',
-    ELI_CSS = '',
-    ELI_CSS_DECLARATION = '',
-    ELI_STATUS = '',
-    INTRO_CONTENT = '',
-    FOOTER_CONTENT = '',
-    ABOUT_LINK = '',
-    ABOUT_FILENAME = '',
-    CSS_NAME = themerc['CSS_NAME'],
-    CSS_FILE = themerc['CSS_FILE'],
-    CSS_COLOR_FILE = themerc['CSS_COLOR_FILE'],
-    JSKOMMENT_CSS = themerc['JSKOMMENT_CSS'],
-    TAGDIR_NAME = config.TAGDIR_NAME,
-    POSTDIR_NAME = config.POSTDIR_NAME,
-    BODY_CLASS = config.BODY_CLASS,
-    POSTDIR_INDEX = config.indexfile,
-    TAGDIR_INDEX = config.indexfile, -- FIXME: delete these two var to add a new one: INDEX_FILENAME which is better for indexes.
-  }
-
-  -- Add language translation to replacements table
-  for k, v in pairs(languagerc) do 
-    replacements[k] = v
-  end
-
-  -- Check about's page presence
-  about_file = utils.readFile(config.about_filepath, 'r')
-  if about_file ~= '' then
-    print (string.format(_("-- [%s] About's page available"), display_enable))
-    replacements['ABOUT_INDEX'] = config.ABOUT_FILENAME .. config.PAGE_EXT
-    replacements['ABOUT_LINK'] = blog.stuffTemplate(config.themepath .. '/' .. config.page_about_name, '', '', '', false)
-  else
-    print (string.format(_("-- [%s] About's page not found"), display_disable))
-  end
+  -- replacements is a substitution table that permit to change ${VAR_NAME} to a given name
+  initializeReplacements(themerc, languagerc, about_file)
 
   -- ELI badge
   if config.ELI_USER and config.ELI_API then
