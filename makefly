@@ -447,7 +447,7 @@ local function compile(args)
   if about_file ~= '' then
     print (string.format(_("-- [%s] About's page available"), display_enable))
     replacements['ABOUT_INDEX'] = config.ABOUT_FILENAME .. config.PAGE_EXT
-    replacements['ABOUT_LINK'] = blog.stuffTemplate(config.themepath .. '/' .. config.ABOUT_FILENAME, '', '', '', false)
+    replacements['ABOUT_LINK'] = blog.stuffTemplate(config.themepath .. '/' .. config.page_about_name, '', '', '', false)
   else
     print (string.format(_("-- [%s] About's page not found"), display_disable))
   end
