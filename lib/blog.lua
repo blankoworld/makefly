@@ -127,7 +127,7 @@ end
 -- @param data.template_tag_file file to use as template for tag in a post page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function blog.createPost(file, cfg, data)
+function blog.createPost(file, cfg, header, footer, data)
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
   if today > tonumber(timestamp) then
@@ -207,7 +207,7 @@ end
 -- @param page_number Number of current page in the code (start at 0)
 -- @return Nothing (process method)
 -------------------------------------------------------------------------------
-function blog.closeIndex(file, result, title, body_class, pagin, page_number)
+function blog.closeIndex(file, result, title, body_class, pagin, page_number, footer)
   result:push (footer)
   -- do substitutions on page
   local page_sub_first = config.indexfile
@@ -325,7 +325,7 @@ end
 -- @return number.page_number after its modifications
 -- @return pagin after its modifications
 -------------------------------------------------------------------------------
-function blog.postsIndexing(posts, indexfile, result, pagin, number, template, post_list_title)
+function blog.postsIndexing(posts, indexfile, result, pagin, number, template, post_list_title, header, footer)
   -- prepare some variables
   local index_nb = 0 -- number of post in all posts
   local increment = true
@@ -389,7 +389,7 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
         -- Add pagination template
         result:push (template.pagination)
         -- CLOSE CURRENT INDEX
-        blog.closeIndex(indexfile, result, replacements['POST_LIST_TITLE'], 'posts', pagin, number.page_number)
+        blog.closeIndex(indexfile, result, replacements['POST_LIST_TITLE'], 'posts', pagin, number.page_number, footer)
         indexfile = nil
         result = nil
         print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, number.page_number + 1, pagin.total))
@@ -416,7 +416,7 @@ end
 -- @param template.article_index_file path to the template to use for each post that appears on index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function blog.createPostIndex(posts, template)
+function blog.createPostIndex(posts, header, footer, template)
   -- check directory
   utils.checkDirectory(config.postpath)
   -- prepare some values
@@ -444,7 +444,7 @@ function blog.createPostIndex(posts, template)
   -- Some common pagination numbers/files
   local page_pagination = utils.readFile(config.themepath .. '/' .. config.page_pagination_name, 'r')
   -- process posts
-  indexfile, index, page_post_nb, page_number, pagin = blog.postsIndexing(posts, indexfile, index, pagin, { post_nb = page_post_nb, page_number = page_number }, { article = template_article_index, element = template.element_file, tag = template.taglink_file, pagination = page_pagination }, post_list_title)
+  indexfile, index, page_post_nb, page_number, pagin = blog.postsIndexing(posts, indexfile, index, pagin, { post_nb = page_post_nb, page_number = page_number }, { article = template_article_index, element = template.element_file, tag = template.taglink_file, pagination = page_pagination }, post_list_title, header, footer)
   -- If last post, finish index writing (to close file)
   if page_post_nb >= post_nb or (pagin.max and page_post_nb <= pagin.max) then
     -- Prepare page substitution elements
@@ -453,7 +453,7 @@ function blog.createPostIndex(posts, template)
       index:push (page_pagination)
     end
     -- CLOSE FINAL INDEX
-    blog.closeIndex(indexfile, index, replacements['POST_LIST_TITLE'], 'posts', pagin, page_number)
+    blog.closeIndex(indexfile, index, replacements['POST_LIST_TITLE'], 'posts', pagin, page_number, footer)
     if pagin.max and pagin.max > 0 and pagin.total > 1 then
       print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_number + 1, pagin.total))
     end
@@ -483,7 +483,7 @@ end
 -- @param title title of page (using a replacement)
 -- @param posts list of posts that are linked to this tag
 -------------------------------------------------------------------------------
-function blog.createTag(filename, title, posts)
+function blog.createTag(filename, title, posts, header, footer)
   local page = rope()
   page:push(header)
   -- insert content (all posts linked to this tag)
@@ -518,7 +518,7 @@ end
 -- @param data.template_element_filename path to the template to use for each tag on tag index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function blog.createTagIndex(index_filename, data)
+function blog.createTagIndex(index_filename, header, footer, data)
   local index = rope()
   index:push(header)
   -- check tagpath directory
@@ -533,7 +533,7 @@ function blog.createTagIndex(index_filename, data)
   for tag, posts in utils.pairsByKeys(tags) do
     local tag_page = string.gsub(tag, '%s', '_') .. config.PAGE_EXT
     taglist_content = taglist_content .. utils.replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
-    blog.createTag(config.tagpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts)
+    blog.createTag(config.tagpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts, header, footer)
   end
   index:push(utils.replace(template_index, {TAGLIST_CONTENT=taglist_content}))
   index:push(footer)
@@ -553,7 +553,7 @@ end
 -- @param title title of the page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function blog.createHomepage(file, title)
+function blog.createHomepage(file, title, header, footer)
   local index = rope()
   local index_file = io.open(file, 'wb')
   index:push(header)
@@ -577,7 +577,7 @@ end
 -- Create single static page named PAGE
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function blog.createPage(origin, destination, title)
+function blog.createPage(origin, destination, title, header, footer)
   local page = rope()
   local page_file = io.open(destination, 'wb')
   page:push(header)

@@ -619,7 +619,7 @@ local function compile(args)
       end
       if today > tonumber(timestamp) then
         table.insert(post_files, {file=v, conf=postConf})
-        local co = coroutine.create(function () blog.createPost(v, postConf, { template_file = page_article_single, template_tag_file = page_tag_link }) end)
+        local co = coroutine.create(function () blog.createPost(v, postConf, header, footer, { template_file = page_article_single, template_tag_file = page_tag_link }) end)
         table.insert(threads, co)
       end
     end
@@ -633,7 +633,7 @@ local function compile(args)
     for k,v in pairs(pages_result) do
       local pagetitle = string.match(v, ".+/(.+)%.md")
       local pagefile = config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. config.PAGE_EXT
-      local co = coroutine.create(function () blog.createPage(v, pagefile, pagetitle) end)
+      local co = coroutine.create(function () blog.createPage(v, pagefile, pagetitle, header, footer) end)
       table.insert(threads, co)
     end
   else
@@ -646,7 +646,7 @@ local function compile(args)
   -- Create post's index
   local page_post_element = config.themepath .. '/' .. config.page_post_element_name
   local page_article_index = config.themepath .. '/' .. config.page_homepage_article_name
-  blog.createPostIndex(post_files, {
+  blog.createPostIndex(post_files, header, footer, {
     index_file = config.themepath .. '/' .. config.page_posts_name,
     element_file = page_post_element,
     taglink_file = page_tag_link,
@@ -655,13 +655,13 @@ local function compile(args)
 
   -- Create tag's files: index and each tag's page
   local page_tag_element = config.themepath .. '/' .. config.page_tag_element_name
-  blog.createTagIndex(index_filename, {
+  blog.createTagIndex(index_filename, header, footer, {
     template_index_filename = config.themepath .. '/' .. config.page_tag_index_name,
     template_element_filename = page_tag_element
   })
 
   -- Create index
-  blog.createHomepage(config.publicpath .. '/' .. config.indexfile, languagerc['HOME_TITLE'])
+  blog.createHomepage(config.publicpath .. '/' .. config.indexfile, languagerc['HOME_TITLE'], header, footer)
 
   -- Delete temporary files
   for tag, posts in pairs(tags) do
