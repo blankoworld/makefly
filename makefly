@@ -406,6 +406,16 @@ local function processSidebar(themerc)
   end
 end
 
+local function processSearchbar()
+  local page_searchbar = config.themepath .. '/' .. config.page_searchbar_name
+  if config.SEARCH_BAR and config.SEARCH_BAR == '1' then
+    print (string.format(_("[%s] Search bar"), display_enable))
+    replacements['SEARCHBAR'] = blog.stuffTemplate(page_searchbar)
+  else
+    print (string.format(_("[%s] Search bar"), display_disable))
+  end
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -501,24 +511,14 @@ local function compile(args)
 
   -- CSS process
   threads, jskomment_css_file, jskomment_css_filename = cssProcess(themerc, threads)
-
   -- replacements is a substitution table that permit to change ${VAR_NAME} to a given name
   initializeReplacements(themerc, languagerc, about_file)
-
   -- ELI badge
   threads = processELI(threads, languagerc)
-
   -- Sidebar
   processSidebar(themerc)
-
   -- Search bar
-  local page_searchbar = config.themepath .. '/' .. config.page_searchbar_name
-  if config.SEARCH_BAR and config.SEARCH_BAR == '1' then
-    print (string.format(_("[%s] Search bar"), display_enable))
-    replacements['SEARCHBAR'] = blog.stuffTemplate(page_searchbar)
-  else
-    print (string.format(_("[%s] Search bar"), display_disable))
-  end
+  processSearchbar()
 
   -- JSKOMMENT system
   -- FIXME: Delete "link" tag in header file for JSKOMMENT css file (it's useless)
