@@ -314,6 +314,8 @@ local function setDefaultVariables(configtable)
   configtable.tagpath = configtable.publicpath .. '/' .. configtable.TAGDIR_NAME
   -- files
   configtable.about_filepath = configtable.specialpath .. '/' .. configtable.ABOUT_FILENAME .. configtable.SRC_EXT
+  configtable.eli_cssname = 'eli.css'
+  configtable.eli_tmpfile = configtable.tmppath .. '/' .. 'content.eli'
   -- theme filenames
   configtable.page_header_name = 'header' .. configtable.TMPL_EXT
   configtable.page_footer_name = 'footer' .. configtable.TMPL_EXT
@@ -346,6 +348,8 @@ local function setDefaultVariables(configtable)
   configtable.MAX_POST = tonumber(configtable.MAX_POST) -- should not be nil
   configtable.MAX_POST_LINES = configtable.MAX_POST_LINES and tonumber(configtable.MAX_POST_LINES) or nil
   configtable.MAX_RSS = tonumber(configtable.MAX_RSS) -- should not be nil
+  configtable.JSKOMMENT_MAX = tonumber(configtable.JSKOMMENT_MAX)
+  configtable.ELI_MAX = tonumber(configtable.ELI_MAX)
   -- check user sort choice
   if configtable.SORT ~= nil and configtable.SORT ~= '' then
     for id_nb, sort_value in pairs({'ASC', 'asc', 'desc', 'DESC'}) do
@@ -370,9 +374,6 @@ local function compile(args)
   local today = os.time() -- today's timestamp
   tags = { }
 
-
-  local jskomment_max = config.JSKOMMENT_MAX and tonumber(config.JSKOMMENT_MAX) or jskomment_max_default
-  local jskomment_url = config.JSKOMMENT_URL or jskomment_url_default
   -- Display which theme the user have choosed
   print (string.format(_("-- [%s] Theme: %s"), display_info, config.THEME))
 
@@ -415,9 +416,6 @@ local function compile(args)
 
   -- Read template configuration file
   local themerc = utils.getConfig(config.themepath .. '/' .. config.themercfile)
-
-  -- Some values that comes from template configuration file
-  local jskomment_captcha_theme = config.JSKOMMENT_CAPTCHA_THEME or themerc['JSKOMMENT_CAPTCHA_THEME'] or jskomment_captcha_theme_default
 
   -- Read template's mandatory files
   header = utils.readFile(page_header, 'r')
@@ -507,31 +505,28 @@ local function compile(args)
   -- ELI badge
   if config.ELI_USER and config.ELI_API then
     print (string.format(_("-- [%s] ELI badge"), display_enable))
-    -- Set default ELI mandatory variables
-    eli_max = config.ELI_MAX and tonumber(config.ELI_MAX) or eli_max_default
-    eli_type = config.ELI_TYPE or eli_type_default
     -- copy ELI css file
-    table.insert(threads, coroutine.create(function () utils.copyFile(page_eli_css, config.publicpath .. '/' .. eli_css_name) end))
-    replacements['ELI_CSS'] = eli_css_name
+    table.insert(threads, coroutine.create(function () utils.copyFile(page_eli_css, config.publicpath .. '/' .. config.eli_cssname) end))
+    replacements['ELI_CSS'] = config.eli_cssname
     -- copy ELI script to public directory
     local template_eli_script = utils.readFile(page_eli_script, 'r')
-    local eli_script = assert(io.open(config.publicpath .. '/' .. eli_js_filename, 'wb'))
-    eli_script_substitutions = utils.getSubstitutions(replacements, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=config.ELI_API,ELI_USER=config.ELI_USER})
+    local eli_script = assert(io.open(config.publicpath .. '/' .. config.eli_jsfilename, 'wb'))
+    eli_script_substitutions = utils.getSubstitutions(replacements, { ELI_MAX = config.ELI_MAX, ELI_TYPE = config.ELI_TYPE, ELI_API = config.ELI_API, ELI_USER = config.ELI_USER })
     local eli_script_replace = utils.replace(template_eli_script, eli_script_substitutions)
     eli_script:write(eli_script_replace)
     assert(eli_script:close())
     -- ELI script declaration in all pages
     local template_eli_declaration = utils.readFile(page_eli_declaration, 'r')
-    replacements['ELI_SCRIPT'] = utils.replace(template_eli_declaration, {eli_name=eli_js_filename, BLOG_URL = config.BLOG_URL})
+    replacements['ELI_SCRIPT'] = utils.replace(template_eli_declaration, { eli_name = config.eli_jsfilename, BLOG_URL = config.BLOG_URL })
     -- ELI CSS declaration in all pages
     local template_eli_css_declaration = utils.readFile(page_eli_css_declaration, 'r')
     replacements['ELI_CSS_DECLARATION'] = utils.replace(template_eli_css_declaration, replacements)
     -- FIXME: get ELI status (with lua socket or anything else)
-  --  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmp_file}'
-  --  eli_cmd = utils.replace(eli_cmd, {ELI_MAX=eli_max,ELI_TYPE=eli_type,ELI_API=config.ELI_API,ELI_USER=config.ELI_USER, eli_tmp_file=eli_tmp_file})
+  --  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmpfile}'
+  --  eli_cmd = utils.replace(eli_cmd, { ELI_MAX = config.ELI_MAX, ELI_TYPE = config.ELI_TYPE, ELI_API = config.ELI_API, ELI_USER = config.ELI_USER, eli_tmpfile = config.eli_tmpfile })
   --  status_return = assert(os.execute(eli_cmd))
   --  if status_return == 0 then
-  --    local eli_status = utils.readFile(eli_tmp_file, 'r')
+  --    local eli_status = utils.readFile(config.eli_tmpfile, 'r')
   --    replacements['ELI_STATUS'] = eli_status
   --  end
     replacements['ELI_STATUS'] = languagerc['ELI_DEFAULT_STATUS'] or ''
@@ -563,13 +558,15 @@ local function compile(args)
   -- FIXME: Delete "link" tag in header file for JSKOMMENT css file (it's useless)
   if config.JSKOMMENT and config.JSKOMMENT == '1' then
     print (string.format(_("-- [%s] Comment system"), display_enable))
+    -- Some values that comes from template configuration file
+    local jskomment_captcha_theme = config.JSKOMMENT_CAPTCHA_THEME or themerc['JSKOMMENT_CAPTCHA_THEME'] or config.jskomment_theme
     -- copy jskomment css file
     table.insert(threads, coroutine.create(function () utils.copyFile(jskomment_css_file, config.publicpath .. '/' .. jskomment_css_filename) end))
     replacements['JSKOMMENT_CSS'] = jskomment_css_filename
     -- copy jskomment javascript
     local template_jskomment_script = utils.readFile(page_jskomment_script, 'r')
     local jskomment_script = assert(io.open(config.publicpath .. '/' .. config.jskomment_jsfilename, 'wb'))
-    local jskomment_script_substitutions = utils.getSubstitutions(replacements, {JSKOMMENT_URL=jskomment_url,JSKOMMENT_MAX=jskomment_max,JSKOMMENT_CAPTCHA_THEME=jskomment_captcha_theme})
+    local jskomment_script_substitutions = utils.getSubstitutions(replacements, { JSKOMMENT_URL = config.JSKOMMENT_URL, JSKOMMENT_MAX = config.JSKOMMENT_MAX, JSKOMMENT_CAPTCHA_THEME = jskomment_captcha_theme})
     local jskomment_script_content = utils.replace(template_jskomment_script, jskomment_script_substitutions)
     jskomment_script:write(jskomment_script_content)
     assert(jskomment_script:close())

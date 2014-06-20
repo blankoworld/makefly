@@ -24,12 +24,4 @@
 -------------------------------------------------------------------------------
 
 --[[ Variables ]]--
-local jskomment_max_default = 3 -- number of comments displayed by default for each post
-local jskomment_url_default = 'http://jskomment.appspot.com' -- default URL of JSKOMMENT comment system
-local jskomment_captcha_theme_default = 'white'
-local eli_css_name = 'eli.css'
-local eli_js_filename = 'eli.js'
-local eli_max_default = 5
-local eli_type_default = 'user'
-local eli_tmp_file = tmppath .. '/' .. 'content.eli'
 -- vim:expandtab:smartindent:tabstop=2:softtabstop=2:shiftwidth=2:
