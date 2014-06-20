@@ -5,7 +5,6 @@
 TODO:
 
   * QUIET mode
-  * Translate strings
 
 ]]--
 
@@ -690,7 +689,7 @@ local function compile(args)
   blog.createHomepage(config.publicpath .. '/' .. config.indexfile, languagerc['HOME_TITLE'], header, footer)
 
   -- remove temporary files
-  --removeTemporary()
+  removeTemporary()
 end
 
 local function refresh(args)
