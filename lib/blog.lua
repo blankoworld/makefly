@@ -593,4 +593,32 @@ function blog.createPage(origin, destination, title)
   print (string.format(_("-- [%s] Page '%s': BUILT."), display_success, title))
 end
 
+function blog.checkTheme(cfg)
+  -- Display which theme the user have choosed
+  print (string.format(_("-- [%s] Theme: %s"), display_info, cfg.THEME))
+
+  -- Check that given them exists
+  if lfs.attributes(config.themepath) == nil then
+    print(string.format(_("-- [%s] Given theme (%s) seems to not exist."), display_error, cfg.THEME))
+    os.exit(1)
+  end
+
+  -- Check that user choice doesn't conflict with default templates extension
+  if cfg.PAGE_EXT == cfg.TMPL_EXT then
+    print(string.format(_("-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."), display_error, cfg.PAGE_EXT, cfg.TMPL_EXT))
+    os.exit(1)
+  end
+end
+
+function blog.getLanguageConfig(cfg, path, utils)
+  -- Get language configuration
+  local language = string.sub(cfg.BLOG_LANG, 0, 2)
+  local languagefile = path .. '/translate.' .. language
+  if lfs.attributes(languagefile) == nil then
+    languagefile = path .. '/translate.' .. language_default
+    print(string.format(_("-- [%s] No '%s' translation. Use default one: %s."), display_warning, language, language_default))
+  end
+  return utils.getConfig(languagefile)
+end
+
 return blog
