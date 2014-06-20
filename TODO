@@ -1,25 +1,31 @@
 TODO:
 -----
 
+Refactoring:
+
+- Check new CONFIG file to see which new VARS are available and make a documentation for them!
+
 Version 0.3.1:
-- add documentation for static pages directory
+- add documentation for static pages directory (in PAGES directory)
 - replace space (and other special chars) by '_' for pages (static pages) name. Use filename as HTML page's title, but replace space for HTML file. Example: "Another essay.md" should give "Another essay" as title but "another_essay.html" as filename.
 - add 2 pages "about.md" for each language and adapt the prepare-new-version to use the right one into the final archive
 - add same thing for a static pages in pages directory with a "article_test.md" to show how it works. In the content explain to the user that it could edit this pages and add new ones but that it have to create link to this page… It's a trick, not a functionnality to be often use!
 
 Version 0.4:
-- replace [p|b] make by a lua script for launching some commands
+Nothing
 
 Tests:
-- test: pmake backup
-- test: pmake list
-- test: pmake help
-- test: pmake clean
-- test: pmake install
-- test: pmake theme
-- test: pmake version
+- test: backup
+- test: list
+- test: help
+- test: clean
+- test: install
+- test: theme
+- test: version
 - Do some tests with image comparison of all themes
 - test that an error is returned if TMPL_EXT = PAGE_EXT
+- test that there is no problem with "pièce à jouets" as post title
+- test multi page for post list (next, previous, last, first, etc.)
 
 Templates:
 N/A
@@ -189,3 +195,4 @@ DONE:
 - Add HTML keywords/meta on main page regarding posts
 - Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
 - Create translation for displayed info message when compiling Makefly
+- replace [p|b] make by a lua script for launching some commands
