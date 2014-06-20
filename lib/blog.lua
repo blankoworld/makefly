@@ -77,7 +77,8 @@ end
 -- @return Substitutions table with JSKOMMENT_CONTENT if needed
 -------------------------------------------------------------------------------
 function blog.commentSubstitutions(sub, cfg, title)
-  if template_comment then
+  local template_comment = utils.readFile(config.page_jskomment, 'r')
+  if config.JSKOMMENT and config.JSKOMMENT == '1' then
     local jskomment_prefix = cfg['JSKOMMENT_PREFIX'] and cfg['JSKOMMENT_PREFIX'] ~= '' and cfg['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
     local jskomment_id = jskomment_prefix .. '/' .. title
     local jskomment_content = utils.replace(template_comment, {JSKOMMENT_ID=jskomment_id})

@@ -416,6 +416,33 @@ local function processSearchbar()
   end
 end
 
+local function processJskomment(threads, themerc, jskomment_css_file, jskomment_css_filename)
+  if config.JSKOMMENT and config.JSKOMMENT == '1' then
+    print (string.format(_("[%s] Comment system"), display_enable))
+    -- Some values that comes from template configuration file
+    local jskomment_captcha_theme = config.JSKOMMENT_CAPTCHA_THEME or themerc['JSKOMMENT_CAPTCHA_THEME'] or config.jskomment_theme
+    -- copy jskomment css file
+    table.insert(threads, coroutine.create(function () utils.copyFile(jskomment_css_file, config.publicpath .. '/' .. jskomment_css_filename) end))
+    replacements['JSKOMMENT_CSS'] = jskomment_css_filename
+    -- copy jskomment javascript
+    local template_jskomment_script = utils.readFile(config.page_jskomment_script, 'r')
+    local jskomment_script = assert(io.open(config.publicpath .. '/' .. config.jskomment_jsfilename, 'wb'))
+    local jskomment_script_substitutions = utils.getSubstitutions(replacements, { JSKOMMENT_URL = config.JSKOMMENT_URL, JSKOMMENT_MAX = config.JSKOMMENT_MAX, JSKOMMENT_CAPTCHA_THEME = jskomment_captcha_theme})
+    local jskomment_script_content = utils.replace(template_jskomment_script, jskomment_script_substitutions)
+    jskomment_script:write(jskomment_script_content)
+    assert(jskomment_script:close())
+    -- jskomment javascript declaration in all pages
+    local template_jskomment_declaration = utils.readFile(config.page_jskomment_declaration, 'r')
+    replacements['JSKOMMENT_SCRIPT'] = utils.replace(template_jskomment_declaration, {jskom_name=config.jskomment_jsfilename, BLOG_URL = config.BLOG_URL})
+    -- jskomment css declaration in all pages
+    local template_jskomment_css_declaration = utils.readFile(config.page_jskomment_css_declaration, 'r')
+    replacements['JSKOMMENT_CSS_DECLARATION'] = utils.replace(template_jskomment_css_declaration, replacements)
+  else
+    print (string.format(_("[%s] Comment system"), display_disable))
+  end
+  return threads
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -519,35 +546,8 @@ local function compile(args)
   processSidebar(themerc)
   -- Search bar
   processSearchbar()
-
   -- JSKOMMENT system
-  -- FIXME: Delete "link" tag in header file for JSKOMMENT css file (it's useless)
-  if config.JSKOMMENT and config.JSKOMMENT == '1' then
-    print (string.format(_("[%s] Comment system"), display_enable))
-    -- Some values that comes from template configuration file
-    local jskomment_captcha_theme = config.JSKOMMENT_CAPTCHA_THEME or themerc['JSKOMMENT_CAPTCHA_THEME'] or config.jskomment_theme
-    -- copy jskomment css file
-    table.insert(threads, coroutine.create(function () utils.copyFile(jskomment_css_file, config.publicpath .. '/' .. jskomment_css_filename) end))
-    replacements['JSKOMMENT_CSS'] = jskomment_css_filename
-    -- copy jskomment javascript
-    local template_jskomment_script = utils.readFile(page_jskomment_script, 'r')
-    local jskomment_script = assert(io.open(config.publicpath .. '/' .. config.jskomment_jsfilename, 'wb'))
-    local jskomment_script_substitutions = utils.getSubstitutions(replacements, { JSKOMMENT_URL = config.JSKOMMENT_URL, JSKOMMENT_MAX = config.JSKOMMENT_MAX, JSKOMMENT_CAPTCHA_THEME = jskomment_captcha_theme})
-    local jskomment_script_content = utils.replace(template_jskomment_script, jskomment_script_substitutions)
-    jskomment_script:write(jskomment_script_content)
-    assert(jskomment_script:close())
-    -- jskomment javascript declaration in all pages
-    local template_jskomment_declaration = utils.readFile(page_jskomment_declaration, 'r')
-    replacements['JSKOMMENT_SCRIPT'] = utils.replace(template_jskomment_declaration, {jskom_name=config.jskomment_jsfilename, BLOG_URL = config.BLOG_URL})
-    -- jskomment css declaration in all pages
-    local template_jskomment_css_declaration = utils.readFile(page_jskomment_css_declaration, 'r')
-    replacements['JSKOMMENT_CSS_DECLARATION'] = utils.replace(template_jskomment_css_declaration, replacements)
-    -- read different templates for next processes
-    -- TODO: give this template_comment to blog.commentSubstitutions()
-    template_comment = utils.readFile(page_jskomment, 'r')
-  else
-    print (string.format(_("[%s] Comment system"), display_disable))
-  end
+  threads = processJskomment(threads, themerc, jskomment_css_file, jskomment_css_filename)
 
   -- Introduction / footer file
   -- prepare a list of special files
