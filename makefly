@@ -455,8 +455,8 @@ local function compile(args)
     TAGDIR_NAME = config.TAGDIR_NAME,
     POSTDIR_NAME = config.POSTDIR_NAME,
     BODY_CLASS = config.BODY_CLASS,
-    POSTDIR_INDEX = index_filename,
-    TAGDIR_INDEX = index_filename, -- FIXME: delete these two var to add a new one: INDEX_FILENAME which is better for indexes.
+    POSTDIR_INDEX = config.indexfile,
+    TAGDIR_INDEX = config.indexfile, -- FIXME: delete these two var to add a new one: INDEX_FILENAME which is better for indexes.
   }
 
   -- Add language translation to replacements table
@@ -655,7 +655,7 @@ local function compile(args)
 
   -- Create tag's files: index and each tag's page
   local page_tag_element = config.themepath .. '/' .. config.page_tag_element_name
-  blog.createTagIndex(index_filename, header, footer, {
+  blog.createTagIndex(config.tagpath .. '/' .. config.indexfile, header, footer, {
     template_index_filename = config.themepath .. '/' .. config.page_tag_index_name,
     template_element_filename = page_tag_element
   })

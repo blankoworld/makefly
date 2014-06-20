@@ -518,12 +518,12 @@ end
 -- @param data.template_element_filename path to the template to use for each tag on tag index's page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function blog.createTagIndex(index_filename, header, footer, data)
+function blog.createTagIndex(path, header, footer, data)
   local index = rope()
   index:push(header)
   -- check tagpath directory
   utils.checkDirectory(config.tagpath)
-  local index_file = assert(io.open(config.tagpath .. '/' .. config.indexfile, 'wb'))
+  local index_file = assert(io.open(path, 'wb'))
   -- read general tag index template file
   local template_index = utils.readFile(data.template_index_filename, 'r')
   -- read tage element template file
