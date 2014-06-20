@@ -443,6 +443,27 @@ local function processJskomment(threads, themerc, jskomment_css_file, jskomment_
   return threads
 end
 
+function processSpecialFiles()
+  -- prepare a list of special files
+  local special_files = {
+    INTRO = config.introduction_filename .. config.SRC_EXT,
+    FOOTER = config.footer_filename .. config.SRC_EXT,
+  }
+  -- browse them
+  for i, j in pairs(special_files) do
+    -- read special file if exists
+    local special_file_path = config.specialpath .. '/' .. j
+    local special_file = utils.readFile(special_file_path, 'r')
+    if special_file and special_file ~= '' then
+      print (string.format(_("[%s] %s"), display_enable, i))
+      local special_file_final_content = utils.replace(markdown(special_file), replacements)
+      replacements[i .. '_CONTENT'] = special_file_final_content
+    else
+      print (string.format(_("[%s] %s"), display_disable, i))
+    end
+  end
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -548,26 +569,8 @@ local function compile(args)
   processSearchbar()
   -- JSKOMMENT system
   threads = processJskomment(threads, themerc, jskomment_css_file, jskomment_css_filename)
-
   -- Introduction / footer file
-  -- prepare a list of special files
-  special_files = {
-    INTRO = config.introduction_filename .. config.SRC_EXT,
-    FOOTER = config.footer_filename .. config.SRC_EXT,
-  }
-  -- browse them
-  for i, j in pairs(special_files) do
-    -- read special file if exists
-    local special_file_path = config.specialpath .. '/' .. j
-    local special_file = utils.readFile(special_file_path, 'r')
-    if special_file and special_file ~= '' then
-      print (string.format(_("[%s] %s"), display_enable, i))
-      local special_file_final_content = utils.replace(markdown(special_file), replacements)
-      replacements[i .. '_CONTENT'] = special_file_final_content
-    else
-      print (string.format(_("[%s] %s"), display_disable, i))
-    end
-  end
+  processSpecialFiles()
 
   -- Create about's page if exists
   if about_file then
