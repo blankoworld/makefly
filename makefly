@@ -347,6 +347,7 @@ local function setDefaultVariables(configtable)
   configtable.MAX_POST = tonumber(configtable.MAX_POST) -- should not be nil
   configtable.MAX_POST_LINES = configtable.MAX_POST_LINES and tonumber(configtable.MAX_POST_LINES) or nil
   configtable.MAX_RSS = tonumber(configtable.MAX_RSS) -- should not be nil
+  configtable.MAX_PAGE = tonumber(configtable.MAX_PAGE)
   configtable.JSKOMMENT_MAX = tonumber(configtable.JSKOMMENT_MAX)
   configtable.ELI_MAX = tonumber(configtable.ELI_MAX)
   -- check user sort choice
@@ -370,8 +371,8 @@ local function compile(args)
   -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
   tags = { }
   replacements = { } -- substitution table
+  today = os.time() -- today's timestamp
   local threads = { }
-  local today = os.time() -- today's timestamp
   local page_tag_link = config.themepath .. '/' .. config.page_tag_link_name
 
   -- check theme configuration
@@ -640,13 +641,13 @@ local function compile(args)
   end
 
   -- launch dispatcher to create each post and more (copy needed directories/files, etc.)
-  utils.dispatcher()
+  utils.dispatcher(threads)
 
   -- Create post's index
   local page_post_element = config.themepath .. '/' .. config.page_post_element_name
   local page_article_index = config.themepath .. '/' .. config.page_homepage_article_name
   blog.createPostIndex(post_files, {
-    index_file = config.themepath .. '/' .. page_posts_name,
+    index_file = config.themepath .. '/' .. config.page_posts_name,
     element_file = page_post_element,
     taglink_file = page_tag_link,
     article_index_file = page_article_index

@@ -76,9 +76,9 @@ end
 -- @param title Post title
 -- @return Substitutions table with JSKOMMENT_CONTENT if needed
 -------------------------------------------------------------------------------
-function blog.commentSubstitutions(sub, config, title)
+function blog.commentSubstitutions(sub, cfg, title)
   if template_comment then
-    local jskomment_prefix = config['JSKOMMENT_PREFIX'] and config['JSKOMMENT_PREFIX'] ~= '' and config['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
+    local jskomment_prefix = cfg['JSKOMMENT_PREFIX'] and cfg['JSKOMMENT_PREFIX'] ~= '' and cfg['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
     local jskomment_id = jskomment_prefix .. '/' .. title
     local jskomment_content = utils.replace(template_comment, {JSKOMMENT_ID=jskomment_id})
     sub['JSKOMMENT_CONTENT'] = jskomment_content
@@ -127,12 +127,12 @@ end
 -- @param data.template_tag_file file to use as template for tag in a post page
 -- @return Nothing (process function)
 -------------------------------------------------------------------------------
-function blog.createPost(file, config, data)
+function blog.createPost(file, cfg, data)
   local timestamp, title = string.match(file, "(%d+),(.+)%.mk")
   -- only create post if date is older than today
   if today > tonumber(timestamp) then
     local template = utils.readFile(data.template_file, 'r')
-    local out = assert(io.open(config.postpath .. "/" .. utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension, 'wb'))
+    local out = assert(io.open(config.postpath .. "/" .. utils.keepUnreservedCharsAndDeleteDuplicate(title) .. config.PAGE_EXT, 'wb'))
     local post = rope()
     local content = utils.readFile(config.srcpath .. "/" .. title .. config.SRC_EXT, 'r')
     local markdown_content = markdown(content)
@@ -141,26 +141,26 @@ function blog.createPost(file, config, data)
     post:push (template)
     post:push (footer)
     -- keywords
-    local keywords = blog.getKeywords(config)
+    local keywords = blog.getKeywords(cfg)
     -- local replacements
     local post_replacements = {
-      TITLE = config['TITLE'],
-      POST_TITLE = config['TITLE'],
-      ARTICLE_CLASS_TYPE = config['TYPE'] or '',
+      TITLE = cfg['TITLE'],
+      POST_TITLE = cfg['TITLE'],
+      ARTICLE_CLASS_TYPE = cfg['TYPE'] or '',
       CONTENT = markdown_content,
-      POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
+      POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. config.PAGE_EXT,
       DATE = os.date(config.DATE_FORMAT, timestamp) or '',
       DATETIME = os.date(config.datetime_format, timestamp) or '',
-      POST_AUTHOR = config['AUTHOR'],
+      POST_AUTHOR = cfg['AUTHOR'],
       POST_ESCAPED_TITLE = title,
       KEYWORDS = keywords:flatten(),
     }
     -- process tags
-    post_replacements = blog.parseTags(config['TAGS'], post_replacements, title, data.template_tag_file, nil)
+    post_replacements = blog.parseTags(cfg['TAGS'], post_replacements, title, data.template_tag_file, nil)
     -- create substitutions list
     local substitutions = utils.getSubstitutions(replacements, post_replacements)
     -- add comment block if comment system is activated
-    substitutions = blog.commentSubstitutions(substitutions, config, title)
+    substitutions = blog.commentSubstitutions(substitutions, cfg, title)
     -- ${VARIABLES} substitution on markdown content
     local flatten_final_content = post:flatten()
     local final_content = utils.replace(flatten_final_content, substitutions)
@@ -169,7 +169,7 @@ function blog.createPost(file, config, data)
     out:write(final_content)
     assert(out:close())
     -- Print post title
-    print (string.format(_("-- [%s] New post: %s"), display_success, config['TITLE']))
+    print (string.format(_("-- [%s] New post: %s"), display_success, cfg['TITLE']))
   end
 end
 
@@ -191,7 +191,7 @@ function blog.createTagLinks(post_tags, file)
     if k > 1 then
       result = result .. ', '
     end
-    local tag_page = string.gsub(v, '%s', '_') .. resultextension
+    local tag_page = string.gsub(v, '%s', '_') .. config.PAGE_EXT
     result = result .. utils.replace(template, {TAG_PAGE=tag_page, TAG_NAME=v})
   end
   return result
@@ -210,10 +210,10 @@ end
 function blog.closeIndex(file, result, title, body_class, pagin, page_number)
   result:push (footer)
   -- do substitutions on page
-  local page_sub_first = index_name .. resultextension
-  local page_sub_last = index_name .. (pagin.total - 1) .. resultextension
-  local page_sub_previous = index_name .. pagin:previous_page(page_number) .. resultextension
-  local page_sub_next = index_name .. pagin:next_page(page_number) .. resultextension
+  local page_sub_first = config.index_name .. config.PAGE_EXT
+  local page_sub_last = config.index_name .. (pagin.total - 1) .. config.PAGE_EXT
+  local page_sub_previous = config.index_name .. pagin:previous_page(page_number) .. config.PAGE_EXT
+  local page_sub_next = config.index_name .. pagin:next_page(page_number) .. config.PAGE_EXT
   local index_sub_table = {
     TITLE=title,
     BODY_CLASS=body_class,
@@ -240,7 +240,7 @@ end
 -- @param data.num Real displayed number for index page
 -- @return data.num, the number of new real displayed index number
 -------------------------------------------------------------------------------
-function blog.createPostForHomepage(file, title, config, content, sub, post_template, data)
+function blog.createPostForHomepage(file, title, cfg, content, sub, post_template, data)
   local final_content = utils.readFile(file, 'r')
   if data.index_nb >= data.min and data.index_nb <= data.max then
     if config.MAX_POST_LINES then
@@ -254,10 +254,10 @@ function blog.createPostForHomepage(file, title, config, content, sub, post_temp
     end
     local post_content = utils.replace(post_template, {CONTENT=markdown(final_content)})
     -- complete missing info
-    sub['ARTICLE_CLASS_TYPE'] = config['TYPE'] or ''
+    sub['ARTICLE_CLASS_TYPE'] = cfg['TYPE'] or ''
     sub['POST_ESCAPED_TITLE'] = title
     -- add comment block if comment system is activated
-    sub = blog.commentSubstitutions(sub, config, title)
+    sub = blog.commentSubstitutions(sub, cfg, title)
     local content4index = utils.replace(post_content, sub)
     -- create temporary file for Homepage
     if data.increment then
@@ -286,7 +286,7 @@ end
 -- @param data.num Number (in the code) of the post
 -- @return data.num which is the number of the RSS
 -------------------------------------------------------------------------------
-function blog.createPostForRSS(content, config, title, template, data)
+function blog.createPostForRSS(content, cfg, title, template, data)
   if data.index_nb >= data.min and data.index_nb <= data.max then
     -- create temporary file for RSS
     if data.increment then
@@ -295,12 +295,12 @@ function blog.createPostForRSS(content, config, title, template, data)
       data.num = data.num - 1
     end
     local rss_file = io.open(config.tmppath .. '/' .. 'rss.' .. data.num .. '.tmp', 'wb')
-    local rss_post_html_link = config.BLOG_URL .. '/' .. config.POSTDIR_NAME .. '/' .. title .. resultextension
+    local rss_post_html_link = config.BLOG_URL .. '/' .. config.POSTDIR_NAME .. '/' .. title .. config.PAGE_EXT
     -- Change temporarly locale
     assert(os.setlocale('C'))
     local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
     assert(os.setlocale(config.BLOG_LANG))
-    local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=config['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
+    local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=cfg['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
     assert(rss_file:write(rss_post))
     -- close first_posts file
     assert(rss_file:close())
@@ -345,7 +345,7 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
     rss_index_nb = config.MAX_POST + 1
   end
   local post_element = utils.readFile(template.element, 'r')
-  local rss_element = utils.readFile(page_rss_element, 'r')
+  local rss_element = utils.readFile(config.page_rss_element, 'r')
   for k, v in pairs(posts) do
     -- get post's title
     local timestamp, title = string.match(v['file'], "(%d+),(.+)%.mk")
@@ -354,7 +354,7 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
       -- local substitutions
       local metadata = {
         POST_TITLE = v['conf']['TITLE'],
-        POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. resultextension,
+        POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. config.PAGE_EXT,
         POST_AUTHOR = v['conf']['AUTHOR'],
         POST_DESCRIPTION = v['conf']['DESCRIPTION'] or '',
         SHORT_DATE = os.date(config.SHORT_DATE_FORMAT, timestamp) or '',
@@ -396,7 +396,7 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
         -- increment page number
         number.page_number = number.page_number + 1
         -- CREATE NEW INDEX
-        indexfile = io.open(config.postpath .. '/' .. index_name .. number.page_number .. resultextension, 'wb')
+        indexfile = io.open(config.postpath .. '/' .. config.index_name .. number.page_number .. config.PAGE_EXT, 'wb')
         result = rope()
         result:push (header)
         -- Add title of the post list on the result
@@ -420,10 +420,10 @@ function blog.createPostIndex(posts, template)
   -- check directory
   utils.checkDirectory(config.postpath)
   -- prepare some values
-  local indexfile = io.open(config.postpath .. '/' .. index_name .. resultextension, 'wb')
+  local indexfile = io.open(config.postpath .. '/' .. config.INDEX_FILENAME .. config.PAGE_EXT, 'wb')
   local rssfile = io.open(config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(config.RSS_NAME) .. config.rss_extension, 'wb')
-  local rss_header = utils.readFile(page_rss_header, 'r')
-  local rss_footer = utils.readFile(page_rss_footer, 'r')
+  local rss_header = utils.readFile(config.page_rss_header, 'r')
+  local rss_footer = utils.readFile(config.page_rss_footer, 'r')
   -- create a rope to merge all text
   local index = rope()
   local rss = rope()
@@ -442,7 +442,7 @@ function blog.createPostIndex(posts, template)
   local page_number = 0
   local page_post_nb = 1
   -- Some common pagination numbers/files
-  local page_pagination = utils.readFile(themepath .. '/' .. page_pagination_name, 'r')
+  local page_pagination = utils.readFile(config.themepath .. '/' .. config.page_pagination_name, 'r')
   -- process posts
   indexfile, index, page_post_nb, page_number, pagin = blog.postsIndexing(posts, indexfile, index, pagin, { post_nb = page_post_nb, page_number = page_number }, { article = template_article_index, element = template.element_file, tag = template.taglink_file, pagination = page_pagination }, post_list_title)
   -- If last post, finish index writing (to close file)
@@ -531,7 +531,7 @@ function blog.createTagIndex(index_filename, data)
   -- browse all tags
   local taglist_content = ''
   for tag, posts in utils.pairsByKeys(tags) do
-    local tag_page = string.gsub(tag, '%s', '_') .. resultextension
+    local tag_page = string.gsub(tag, '%s', '_') .. config.PAGE_EXT
     taglist_content = taglist_content .. utils.replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
     blog.createTag(config.tagpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts)
   end

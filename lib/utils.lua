@@ -375,7 +375,7 @@ end
 -- @use dispatcher()
 -- @return Nothing
 -------------------------------------------------------------------------------
-function utils.dispatcher ()
+function utils.dispatcher (threads)
   while true do
     local n = #threads
     if n == 0 then break end   -- no more threads to run
