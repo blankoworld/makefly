@@ -369,10 +369,11 @@ local function compile(args)
 
   -- variables preparation
   -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
-  local threads = { }
-  replacements = { } -- substitution table
-  local today = os.time() -- today's timestamp
   tags = { }
+  replacements = { } -- substitution table
+  local threads = { }
+  local today = os.time() -- today's timestamp
+  local page_tag_link = config.themepath .. '/' .. config.page_tag_link_name
 
   -- check theme configuration
   blog.checkTheme(config)
@@ -385,23 +386,12 @@ local function compile(args)
     utils.checkDirectory(v)
   end
 
-  -- Create path for template's files
-  local page_header = config.themepath .. '/' .. page_header_name
-  local page_footer = config.themepath .. '/' .. page_footer_name
-  local page_article_single = config.themepath .. '/' .. page_article_name
-  local page_post_element = config.themepath .. '/' .. page_post_element_name
-  local page_tag_element = config.themepath .. '/' .. page_tag_element_name
-  local page_tag_link = config.themepath .. '/' .. page_tag_link_name
-  local page_sidebar = config.themepath .. '/' .. page_sidebar_name
-  local page_searchbar = config.themepath .. '/' .. page_searchbar_name
-  local page_article_index = config.themepath .. '/' .. page_homepage_article_name
-
   -- Read template configuration file
   local themerc = utils.getConfig(config.themepath .. '/' .. config.themercfile)
 
   -- Read template's mandatory files
-  header = utils.readFile(page_header, 'r')
-  footer = utils.readFile(page_footer, 'r')
+  local header = utils.readFile(config.themepath .. '/' .. config.page_header_name, 'r')
+  local footer = utils.readFile(config.themepath .. '/' .. config.page_footer_name, 'r')
 
   -- Create CSS files
   css_file = config.themepath .. '/style/' .. themerc['CSS_FILE']
@@ -479,7 +469,7 @@ local function compile(args)
   if about_file ~= '' then
     print (string.format(_("-- [%s] About's page available"), display_enable))
     replacements['ABOUT_INDEX'] = config.ABOUT_FILENAME .. config.PAGE_EXT
-    replacements['ABOUT_LINK'] = blog.stuffTemplate(config.themepath .. '/' .. page_about_name, '', '', '', false)
+    replacements['ABOUT_LINK'] = blog.stuffTemplate(config.themepath .. '/' .. config.ABOUT_FILENAME, '', '', '', false)
   else
     print (string.format(_("-- [%s] About's page not found"), display_disable))
   end
@@ -519,6 +509,7 @@ local function compile(args)
   end
 
   -- Sidebar (display that's active/inactive)
+  local page_sidebar = config.themepath .. '/' .. config.page_sidebar_name
   local sidebar_filename = config.SIDEBAR_FILENAME .. config.SRC_EXT
   if (config.SIDEBAR and config.SIDEBAR == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
     print (string.format(_("-- [%s] Sidebar"), display_enable))
@@ -529,6 +520,7 @@ local function compile(args)
   end
 
   -- Search bar
+  local page_searchbar = config.themepath .. '/' .. config.page_searchbar_name
   if config.SEARCH_BAR and config.SEARCH_BAR == '1' then
     print (string.format(_("-- [%s] Search bar"), display_enable))
     replacements['SEARCHBAR'] = blog.stuffTemplate(page_searchbar)
@@ -612,6 +604,7 @@ local function compile(args)
   -- Browse DB files
   local post_files = {}
   local mandatories_post_vars = { 'TITLE', 'TAGS', 'AUTHOR' }
+  local page_article_single = config.themepath .. '/' .. config.page_article_name
   dbresult = utils.listing (currentpath .. '/' .. config.dbdir, "mk")
   if dbresult then
     for k,v in pairs(dbresult) do
@@ -627,7 +620,7 @@ local function compile(args)
       end
       if today > tonumber(timestamp) then
         table.insert(post_files, {file=v, conf=postConf})
-        local co = coroutine.create(function () blog.createPost(v, postConf, {template_file=page_article_single, template_tag_file=page_tag_link}) end)
+        local co = coroutine.create(function () blog.createPost(v, postConf, { template_file = page_article_single, template_tag_file = page_tag_link }) end)
         table.insert(threads, co)
       end
     end
@@ -652,6 +645,8 @@ local function compile(args)
   utils.dispatcher()
 
   -- Create post's index
+  local page_post_element = config.themepath .. '/' .. config.page_post_element_name
+  local page_article_index = config.themepath .. '/' .. config.page_homepage_article_name
   blog.createPostIndex(post_files, {
     index_file = config.themepath .. '/' .. page_posts_name,
     element_file = page_post_element,
@@ -660,7 +655,7 @@ local function compile(args)
   })
 
   -- Create tag's files: index and each tag's page
-  -- {template_index_filename, template_element_filename})
+  local page_tag_element = config.themepath .. '/' .. config.page_tag_element_name
   blog.createTagIndex(index_filename, {
     template_index_filename = config.themepath .. '/' .. page_tag_index_name,
     template_element_filename = page_tag_element
