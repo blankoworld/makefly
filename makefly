@@ -463,6 +463,26 @@ function processSpecialFiles()
   end
 end
 
+local function processAbout(about_file, languagerc, header, footer)
+  if about_file then
+    -- create content
+    local about_markdown = markdown(about_file)
+    local about_replaced = utils.replace(about_markdown, replacements)
+    -- construct about's page
+    local about = rope()
+    about:push(header)
+    about:push(about_replaced)
+    about:push(footer)
+    -- do replacements
+    local about_substitutions = utils.getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE'], BODY_CLASS='about'})
+    local about_content = utils.replace(about:flatten(), about_substitutions)
+    -- write changes
+    local about_file_result = assert(io.open(config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(config.ABOUT_FILENAME) .. config.PAGE_EXT, 'wb'))
+    about_file_result:write(about_content)
+    about_file_result:close()
+  end
+end
+
 local function setDefaultVariables(configtable)
   configtable.VERSION = configtable.VERSION or _('unknown')
   configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
@@ -570,25 +590,8 @@ local function compile(args)
   threads = processJskomment(threads, themerc, jskomment_css_file, jskomment_css_filename)
   -- Introduction / footer file
   processSpecialFiles()
-
   -- Create about's page if exists
-  if about_file then
-    -- create content
-    about_markdown = markdown(about_file)
-    about_replaced = utils.replace(about_markdown, replacements)
-    -- construct about's page
-    about = rope()
-    about:push(header)
-    about:push(about_replaced)
-    about:push(footer)
-    -- do replacements
-    about_substitutions = utils.getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE'], BODY_CLASS='about'})
-    about_content = utils.replace(about:flatten(), about_substitutions)
-    -- write changes
-    about_file_result = assert(io.open(config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(config.ABOUT_FILENAME) .. config.PAGE_EXT, 'wb'))
-    about_file_result:write(about_content)
-    about_file_result:close()
-  end
+  processAbout(about_file, languagerc, header, footer)
 
   -- Copy static directory content to public path
   utils.copy(config.staticpath, config.publicpath, { BLOG_URL = config.BLOG_URL })
