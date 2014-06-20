@@ -308,7 +308,7 @@ local function setDefaultVariables(configtable)
   configtable.publicpath = currentpath .. '/' .. configtable.destdir
   configtable.templatepath = currentpath .. '/' .. configtable.tmpldir
   configtable.specialpath = currentpath .. '/' .. configtable.specialdir
-  configtable.themepath = currentpath .. '/' .. configtable.THEME 
+  configtable.themepath = configtable.tmpldir .. '/' .. configtable.THEME 
   configtable.tmppath = currentpath .. '/' .. configtable.tmpdir
   configtable.postpath = configtable.publicpath .. '/' .. configtable.POSTDIR_NAME
   configtable.tagpath = configtable.publicpath .. '/' .. configtable.TAGDIR_NAME
