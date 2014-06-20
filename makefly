@@ -424,7 +424,7 @@ local function compile(args)
 
   -- Add result to replacements table (to substitute ${VARIABLES} in files)
   replacements = {
-    VERSION = version,
+    VERSION = config.VERSION,
     BLOG_TITLE = config.BLOG_TITLE,
     BLOG_DESCRIPTION = config.BLOG_DESCRIPTION,
     BLOG_SHORT_DESC = config.BLOG_SHORT_DESC,
