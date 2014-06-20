@@ -1,5 +1,7 @@
 local blog = { }
 
+local utils = require 'utils'
+
 -------------------------------------------------------------------------------
 -- Read '@filepath' and do substitutions using 'replacements' global table.
 -- @param filepath absolute/relative path to the file to read (will use 'r' mode)
@@ -610,7 +612,7 @@ function blog.checkTheme(cfg)
   end
 end
 
-function blog.getLanguageConfig(cfg, path, utils)
+function blog.getLanguageConfig(cfg, path)
   -- Get language configuration
   local language = string.sub(cfg.BLOG_LANG, 0, 2)
   local languagefile = path .. '/translate.' .. language

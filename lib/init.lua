@@ -6,7 +6,7 @@
 -------------------------------------------------------------------------------
 
 local lfs = require 'lfs'
-local gettext = require 'lib.gettext'
+local gettext = require 'gettext'
 
 --- Minimum requirement to have translation
 currentpath = os.getenv('CURDIR') or '.'

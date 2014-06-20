@@ -41,6 +41,8 @@ luarocks install markdown
 
 ]]--
 
+package.path = package.path .. ";./lib/?.lua"
+
 require 'lib.init'
 local utils = require 'lib.utils'
 require 'lib.rope'
