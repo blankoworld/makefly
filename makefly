@@ -314,6 +314,8 @@ local function setDefaultVariables(configtable)
   configtable.tmppath = currentpath .. '/' .. configtable.tmpdir
   configtable.postpath = configtable.publicpath .. '/' .. configtable.POSTDIR_NAME
   configtable.tagpath = configtable.publicpath .. '/' .. configtable.TAGDIR_NAME
+  configtable.staticpath = currentpath .. '/' .. configtable.staticdir
+  configtable.pagepath = currentpath .. '/' .. configtable.pagedir
   -- files
   configtable.about_filepath = configtable.specialpath .. '/' .. configtable.ABOUT_FILENAME .. configtable.SRC_EXT
   configtable.eli_cssname = 'eli.css'
@@ -599,9 +601,8 @@ local function compile(args)
   end
 
   -- Copy static directory content to public path
-  local staticpath = currentpath .. '/' .. staticdir
-  utils.copy(staticpath, config.publicpath, { BLOG_URL = config.BLOG_URL })
-  print (string.format(_("-- [%s] Folder content copied: %s"), display_success, staticpath))
+  utils.copy(config.staticpath, config.publicpath, { BLOG_URL = config.BLOG_URL })
+  print (string.format(_("-- [%s] Folder content copied: %s"), display_success, config.staticpath))
 
   -- Browse DB files
   local post_files = {}
@@ -631,7 +632,7 @@ local function compile(args)
   end
 
   -- Add static pages to the dispatcher
-  local pages_result = utils.listing(currentpath .. '/' .. pagedir, 'md')
+  local pages_result = utils.listing(config.pagepath, 'md')
   if pages_result then
     for k,v in pairs(pages_result) do
       local pagetitle = string.match(v, ".+/(.+)%.md")
