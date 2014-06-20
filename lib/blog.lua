@@ -169,7 +169,7 @@ function blog.createPost(file, cfg, header, footer, data)
     out:write(final_content)
     assert(out:close())
     -- Print post title
-    print (string.format(_("-- [%s] New post: %s"), display_success, cfg['TITLE']))
+    print (string.format(_("[%s] New post: %s"), display_success, cfg['TITLE']))
   end
 end
 
@@ -392,7 +392,7 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
         blog.closeIndex(indexfile, result, replacements['POST_LIST_TITLE'], 'posts', pagin, number.page_number, footer)
         indexfile = nil
         result = nil
-        print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, number.page_number + 1, pagin.total))
+        print (string.format(_('[%s] Post list %s/%s: BUILT.'), display_success, number.page_number + 1, pagin.total))
         -- increment page number
         number.page_number = number.page_number + 1
         -- CREATE NEW INDEX
@@ -455,7 +455,7 @@ function blog.createPostIndex(posts, header, footer, template)
     -- CLOSE FINAL INDEX
     blog.closeIndex(indexfile, index, replacements['POST_LIST_TITLE'], 'posts', pagin, page_number, footer)
     if pagin.max and pagin.max > 0 and pagin.total > 1 then
-      print (string.format(_('-- [%s] Post list %s/%s: BUILT.'), display_success, page_number + 1, pagin.total))
+      print (string.format(_('[%s] Post list %s/%s: BUILT.'), display_success, page_number + 1, pagin.total))
     end
   end
   -- rss process
@@ -472,9 +472,9 @@ function blog.createPostIndex(posts, header, footer, template)
   rssfile:write(rss_replace)
   rssfile:close()
   -- Display that RSS file was created
-  print (string.format(_("-- [%s] RSS feed: BUILT."), display_success))
+  print (string.format(_("[%s] RSS feed: BUILT."), display_success))
   -- Display that post index was created
-  print (string.format(_('-- [%s] Post list: BUILT.'), display_success))
+  print (string.format(_('[%s] Post list: BUILT.'), display_success))
 end
 
 -------------------------------------------------------------------------------
@@ -508,7 +508,7 @@ function blog.createTag(filename, title, posts, header, footer)
   page_file:write(final_content)
   page_file:close()
   -- Print tag title
-  print (string.format(_("-- [%s] New tag: %s"), display_success, title))
+  print (string.format(_("[%s] New tag: %s"), display_success, title))
 end
 
 -------------------------------------------------------------------------------
@@ -544,7 +544,7 @@ function blog.createTagIndex(path, header, footer, data)
   -- Close post's index
   assert(index_file:close())
   -- Display that tag index was created
-  print (string.format(_("-- [%s] Tag list: BUILT."), display_success))
+  print (string.format(_("[%s] Tag list: BUILT."), display_success))
 end
 
 -------------------------------------------------------------------------------
@@ -570,7 +570,7 @@ function blog.createHomepage(file, title, header, footer)
   index_file:write(final_content)
   assert(index_file:close())
   -- Display that homepage was created
-  print (string.format(_("-- [%s] Homepage: BUILT."), display_success))
+  print (string.format(_("[%s] Homepage: BUILT."), display_success))
 end
 
 -------------------------------------------------------------------------------
@@ -592,22 +592,22 @@ function blog.createPage(origin, destination, title, header, footer)
   page_file:write(final_content)
   assert(page_file:close())
   -- Display that this page have been created
-  print (string.format(_("-- [%s] Page '%s': BUILT."), display_success, title))
+  print (string.format(_("[%s] Page '%s': BUILT."), display_success, title))
 end
 
 function blog.checkTheme(cfg)
   -- Display which theme the user have choosed
-  print (string.format(_("-- [%s] Theme: %s"), display_info, cfg.THEME))
+  print (string.format(_("[%s] Theme: %s"), display_info, cfg.THEME))
 
   -- Check that given them exists
   if lfs.attributes(config.themepath) == nil then
-    print(string.format(_("-- [%s] Given theme (%s) seems to not exist."), display_error, cfg.THEME))
+    print(string.format(_("[%s] Given theme (%s) seems to not exist."), display_error, cfg.THEME))
     os.exit(1)
   end
 
   -- Check that user choice doesn't conflict with default templates extension
   if cfg.PAGE_EXT == cfg.TMPL_EXT then
-    print(string.format(_("-- [%s] You cannot choose an extension (%s) similar to template's one (%s)."), display_error, cfg.PAGE_EXT, cfg.TMPL_EXT))
+    print(string.format(_("[%s] You cannot choose an extension (%s) similar to template's one (%s)."), display_error, cfg.PAGE_EXT, cfg.TMPL_EXT))
     os.exit(1)
   end
 end
@@ -618,7 +618,7 @@ function blog.getLanguageConfig(cfg, path)
   local languagefile = path .. '/translate.' .. language
   if lfs.attributes(languagefile) == nil then
     languagefile = path .. '/translate.' .. language_default
-    print(string.format(_("-- [%s] No '%s' translation. Use default one: %s."), display_warning, language, language_default))
+    print(string.format(_("[%s] No '%s' translation. Use default one: %s."), display_warning, language, language_default))
   end
   return utils.getConfig(languagefile)
 end

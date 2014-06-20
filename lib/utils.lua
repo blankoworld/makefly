@@ -184,7 +184,7 @@ function utils.readFile(path, mode)
     local mode = 'r'
   end
   if mode ~= 'r' and mode ~= 'rb' then
-    print(string.format(_("-- [%s] Unknown read mode while reading this path: %s."), display_error, path))
+    print(string.format(_("[%s] Unknown read mode while reading this path: %s."), display_error, path))
     os.exit(1)
   end
   local attr = lfs.attributes(path)
@@ -284,7 +284,7 @@ function utils.copy(origin, destination, sreplace)
   elseif attr and attr.mode == 'file' then
     utils.copyFile(origin, destination, sreplace)
   else
-    print (string.format(_("-- [%s] %s not found in copy method!"), display_error, origin))
+    print (string.format(_("[%s] %s not found in copy method!"), display_error, origin))
     os.exit(1)
   end
 end
@@ -315,7 +315,7 @@ function utils.rm(origin)
     elseif attr and attr.mode == 'file' then
       os.remove(origin)
     else
-      print (string.format(_("-- [%s] %s not found (in remove process)!"), display_error, origin))
+      print (string.format(_("[%s] %s not found (in remove process)!"), display_error, origin))
       os.exit(1)
     end
   end

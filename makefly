@@ -269,7 +269,7 @@ local function checkConfigVariables(configtable, mandatories)
   local missing = utils.processMissingInfo(configtable, mandatories)
   -- Check that all is OK, otherwise display an error message and quit the program
   if missing ~= '' then
-    print(string.format(_("-- [%s] Missing information in %s file: %s"), display_error, config.configurationfile, missing))
+    print(string.format(_("[%s] Missing information in %s file: %s"), display_error, config.configurationfile, missing))
     os.exit(1)
   end
 end
@@ -284,9 +284,9 @@ local function cssProcess(themerc, threads)
     if css_color_file_attr and css_color_file_attr.mode == 'file' then
       css_color_file_name = css_color_file_test
     else
-      print (string.format(_("-- [%s] Wrong flavor: %s"), display_warning, config.FLAVOR))
+      print (string.format(_("[%s] Wrong flavor: %s"), display_warning, config.FLAVOR))
     end
-    print (string.format(_("-- [%s] Specific flavor: %s"), display_info, config.FLAVOR))
+    print (string.format(_("[%s] Specific flavor: %s"), display_info, config.FLAVOR))
   end
   local css_color_file = config.themepath .. '/style/' .. css_color_file_name
   local jskomment_css_file = config.templatepath .. '/' .. config.page_jskomment_css_name
@@ -350,17 +350,17 @@ local function initializeReplacements(themerc, languagerc, about_file)
 
   -- Check about's page presence
   if about_file ~= '' then
-    print (string.format(_("-- [%s] About's page available"), display_enable))
+    print (string.format(_("[%s] About's page available"), display_enable))
     replacements['ABOUT_INDEX'] = config.ABOUT_FILENAME .. config.PAGE_EXT
     replacements['ABOUT_LINK'] = blog.stuffTemplate(config.themepath .. '/' .. config.page_about_name, '', '', '', false)
   else
-    print (string.format(_("-- [%s] About's page not found"), display_disable))
+    print (string.format(_("[%s] About's page not found"), display_disable))
   end
 end
 
 local function processELI(threads, languagerc)
   if config.ELI_USER and config.ELI_API then
-    print (string.format(_("-- [%s] ELI badge"), display_enable))
+    print (string.format(_("[%s] ELI badge"), display_enable))
     -- copy ELI css file
     table.insert(threads, coroutine.create(function () utils.copyFile(config.page_eli_css, config.publicpath .. '/' .. config.eli_cssname) end))
     replacements['ELI_CSS'] = config.eli_cssname
@@ -389,7 +389,7 @@ local function processELI(threads, languagerc)
     -- read ELI content to add it in all pages
     replacements['ELI_CONTENT'] = blog.stuffTemplate(config.page_eli_content, '', '')
   else
-    print (string.format(_("-- [%s] ELI badge"), display_disable))
+    print (string.format(_("[%s] ELI badge"), display_disable))
   end
   return threads
 end
@@ -500,26 +500,26 @@ local function compile(args)
   local page_sidebar = config.themepath .. '/' .. config.page_sidebar_name
   local sidebar_filename = config.SIDEBAR_FILENAME .. config.SRC_EXT
   if (config.SIDEBAR and config.SIDEBAR == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
-    print (string.format(_("-- [%s] Sidebar"), display_enable))
+    print (string.format(_("[%s] Sidebar"), display_enable))
     local sidebar_content = utils.readFile(config.specialpath .. '/' .. sidebar_filename, 'r')
     replacements['SIDEBAR'] = blog.stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
   else
-    print (string.format(_("-- [%s] Sidebar"), display_disable))
+    print (string.format(_("[%s] Sidebar"), display_disable))
   end
 
   -- Search bar
   local page_searchbar = config.themepath .. '/' .. config.page_searchbar_name
   if config.SEARCH_BAR and config.SEARCH_BAR == '1' then
-    print (string.format(_("-- [%s] Search bar"), display_enable))
+    print (string.format(_("[%s] Search bar"), display_enable))
     replacements['SEARCHBAR'] = blog.stuffTemplate(page_searchbar)
   else
-    print (string.format(_("-- [%s] Search bar"), display_disable))
+    print (string.format(_("[%s] Search bar"), display_disable))
   end
 
   -- JSKOMMENT system
   -- FIXME: Delete "link" tag in header file for JSKOMMENT css file (it's useless)
   if config.JSKOMMENT and config.JSKOMMENT == '1' then
-    print (string.format(_("-- [%s] Comment system"), display_enable))
+    print (string.format(_("[%s] Comment system"), display_enable))
     -- Some values that comes from template configuration file
     local jskomment_captcha_theme = config.JSKOMMENT_CAPTCHA_THEME or themerc['JSKOMMENT_CAPTCHA_THEME'] or config.jskomment_theme
     -- copy jskomment css file
@@ -542,7 +542,7 @@ local function compile(args)
     -- TODO: give this template_comment to blog.commentSubstitutions()
     template_comment = utils.readFile(page_jskomment, 'r')
   else
-    print (string.format(_("-- [%s] Comment system"), display_disable))
+    print (string.format(_("[%s] Comment system"), display_disable))
   end
 
   -- Introduction / footer file
@@ -557,11 +557,11 @@ local function compile(args)
     local special_file_path = config.specialpath .. '/' .. j
     local special_file = utils.readFile(special_file_path, 'r')
     if special_file and special_file ~= '' then
-      print (string.format(_("-- [%s] %s"), display_enable, i))
+      print (string.format(_("[%s] %s"), display_enable, i))
       local special_file_final_content = utils.replace(markdown(special_file), replacements)
       replacements[i .. '_CONTENT'] = special_file_final_content
     else
-      print (string.format(_("-- [%s] %s"), display_disable, i))
+      print (string.format(_("[%s] %s"), display_disable, i))
     end
   end
 
@@ -586,7 +586,7 @@ local function compile(args)
 
   -- Copy static directory content to public path
   utils.copy(config.staticpath, config.publicpath, { BLOG_URL = config.BLOG_URL })
-  print (string.format(_("-- [%s] Folder content copied: %s"), display_success, config.staticpath))
+  print (string.format(_("[%s] Folder content copied: %s"), display_success, config.staticpath))
 
   -- Browse DB files
   local post_files = {}
@@ -602,7 +602,7 @@ local function compile(args)
       -- Check that all is OK, otherwise display an error message and quit the program
       local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
       if missing_post_info ~= '' then
-        print(string.format(_("-- [%s] Missing information in '%s' post: %s"), display_error, postTitle, missing_post_info))
+        print(string.format(_("[%s] Missing information in '%s' post: %s"), display_error, postTitle, missing_post_info))
         os.exit(1)
       end
       if today > tonumber(timestamp) then
@@ -612,7 +612,7 @@ local function compile(args)
       end
     end
   else
-    print (string.format(_("-- [%s] No DB file(s) found!"), display_warning))
+    print (string.format(_("[%s] No DB file(s) found!"), display_warning))
   end
 
   -- Add static pages to the dispatcher
@@ -625,7 +625,7 @@ local function compile(args)
       table.insert(threads, co)
     end
   else
-    print (string.format(_("-- [%s] No static page(s) found."), display_info))
+    print (string.format(_("[%s] No static page(s) found."), display_info))
   end
 
   -- launch dispatcher to create each post and more (copy needed directories/files, etc.)
