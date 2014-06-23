@@ -331,7 +331,7 @@ Makefly est un sous-projet de [BlogBox](http://blogbox.depotoi.re/ "En savoir pl
 
 ## Développement
 
-Makefly est développ&eacute; en Lua, CSS, HTML et utilise un BSD Makefile pour se lancer.
+Makefly est développ&eacute; en Lua, CSS et HTML.
 
 Le code du logiciel se trouve sur les d&eacute;p&ocirc;ts suivants : 
 

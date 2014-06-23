@@ -329,7 +329,7 @@ Makefly is a subproject of [BlogBox](http://blogbox.depotoi.re/ "Read more about
 
 ## Development
 
-Makefly is developed in Lua, CSS, HTML and use BSD Makefile to be launched.
+Makefly is developed in Lua, CSS and HTML.
 
 The code of the software is available in the given repositories:
 
