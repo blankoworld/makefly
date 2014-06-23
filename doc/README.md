@@ -1,161 +1,126 @@
 # Makefly
 
-[Version originale de la documentation](http://makefly.depotoi.re/documentation.html.fr) (French original version)
+[Version française](http://makefly.depotoi.re/documentation.html.fr) (French original version)
 
-[Go to the website](http://makefly.depotoi.re/)
-
-## About
-
-Makefly is a static weblog engine that used a BSD Makefile to work.
-
-### Website
-
-Stay tuned to [Makefly weblog](http://makefly.depotoi.re/blog/ "Visit Makefly official website").
-
-### Contact
-
-You can contact me [to this address](mailto:olivier+makefly@dossmann.net "Contact me").
-
-### License
-
-This software is published under GNU Affero General Public License 3.0.
-
-### Stats
-
-Some stats about project could be found [on Ohloh.net](http://www.ohloh.net/p/makefly "See ohloh's analysis for Makefly project").
+[Official website](http://makefly.depotoi.re/ "Go to the website")
 
 ## Description
 
-Makefly is a subproject of [BlogBox](http://blogbox.depotoi.re/ "Read more about BlogBox project") that aims to give user a better way to host a blog at home.
+Makefly is a fast and lightweight command line static weblog engine which uses the [Markdown format](http://daringfireball.net/projects/markdown/syntax "Discover the Markdown format") for post writting and rendering.
 
-## Dependencies
+It consists in a homepage, a post list, a tag list and an about's page.
+
+It gives these functionnalities:
+
+  * themes
+  * RSS feed
+  * keywords on each page (for web ranking)
+  * tags
+  * static webpages
+  * predate posts
+  * translations
+  * comment system
+  * backup
+  * publishing scripts to remote servers
+  * quick theme creation
+  * Nanoblogger posts migration (Cf. **Migrate from Nanoblogger** section)
+
+# Installation
+
+## Briefly
+
+In some short steps, here is how to install the last version (current development):
+
+    sudo apt-get install lua5.1 lua-filesystem lua-markdown
+    curl https://github.com/blankoworld/makefly/archive/master.zip
+    unzip master.zip
+    cd makefly-master
+    cp makefly.rc.example makefly.rc
+    ./makefly clean && ./makefly compile
+
+You should have an action list done on your computer. And result is available in **pub directory**.
+
+## Detailed
+
+If you achieve the **Briefly** step, go to **Use it!** section.
+
+### Dependencies
 
 Some programs on which makefly depends: 
 
-  * pmake or bmake
   * lua 5.1 and earlier
-
-So use your distribution package manager to install them. For an example on Debian and derivated, it would be:
-
-    apt-get install pmake lua5.1
-
-For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
-
-### Librairies
-
-Some librairies are needed in order Lua scripts to work:
-
   * lua-filesystem
   * lua-markdown
 
-To install them you have 2 choices:
+So use your distribution package manager to install them. For an example on Debian and derivated, it would be:
 
-  * either you install **luarocks**
-  * or **your distribution's packages**
+    apt-get install lua5.1 lua-filesystem lua-markdown
 
-#### Luarocks
+For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
 
-You just have to install *luarocks* and launch some commands:
+### Others methods to install dependancies
 
-    apt-get install luarocks
+If your distribution doesn't have *lua-filesystem* and/or *lua-markdown*, you can attempt to install **luarocks** then install dependancies as:
+
+    sudo apt-get install luarocks
     luarocks install lua-filesystem lua-markdown
 
 That's all!
 
-#### Your distribution's packages
-
-Use this method only if you didn't use previous *luarocks* one.
-
-Under GNU/Linux Debian for an example install given packages:
-
-  * liblua5.1-filesystem0
-  * liblua5.1-markdown0
-
-with this command:
-
-    apt-get install liblua5.1-filesystem0 liblua5.1-markdown0
-
-That's all!
-
-## Installation
+### Installation
 
 There is 2 ways to install Makefly on your computer:
 
-  * Using last stable version by fetching a tarball (recommanded)
-  * Using current developement version by using a repository (for advanced user only)
+  * [current development version](https://github.com/blankoworld/makefly/archive/master.zip "Download current development version")
+  * [0.3 stable version (recommanded)](http://makefly.depotoi.re/makefly_0.3.zip "Download 0.3 stable version")
 
-### Using last stable version
+So you just have to:
 
-Just download last version on official website: [http://makefly.depotoi.re/](http://makefly.depotoi.re/ "Go to official makefly website").
+  * fetch the choosen version
+  * extract the content in a directory on your computer
 
-For an example [0.3 version](http://makefly.depotoi.re/makefly_0.3.zip "Download Makefly 0.3").
+And Makefly is installed.
 
-Then extract tarball's content into a directory.
+### Configuration
 
-### Using current developement version
-
-You have to use **git** command. If you don't know what it is, have a look to [Git SCM website](http://git-scm.com/ "Learn more about Git").
-
-After git installation, go to a working directory and do this:
-
-    git clone git://gitorious.org/makefly/master.git makefly_dev
-
-This will fetch makefly repository and add files into **makefly\_dev** directory.
-
-**Note**: Using git is useful to easily update makefly. In fact:
-
-    git pull git://gitorious.org/makefly/master.git
-
-will update your makefly.
-
-**WARNING**: You have to always backup your files! This method could delete some changes you made previously.
-
-## Configuration
-
-### Stable version
+#### Stable version
 
 No special configuration required. Check that **makefly.rc** file is present. Otherwise copy **makefly.rc.example** file or rename it to **makefly.rc**.
 
-### Trunk version
+#### Trunk version
 
 The first time you use Makefly you don't have any configuration file. An example is available in *makefly.rc.example*. Copy it to **makefly.rc** to permit Makefly to work.
 
-### More info
+#### More info
 
 For more information please read **The makefly.rc configuration file** section.
 
+# Use it!
+
+**By default the content of the blog is located in the pub directory**.
+
+## In brief
+
+Some useful commands:
+
+  * **./makefly compilte**: Produce the blog. Available in the **pub** directory
+  * **./makefly help**: Display available commands
+  * **./makefly add**: Create a post and add its main metadata
+  * **./makefly clean**: Trash the entire final directory content and empty the Makefly's *cache*.
+
 ## Create content
 
-The way to create content depends on your version.
-
-To know your current version, just use this command:
-
-    pmake version
-
-If an error occured like ``pmake: don't know how to make version. Stop``, then you are under 0.2.1 version.
-
-### Version older than 0.2.1
-
-Go to **tools** directory and launch **create_post.sh** script like this: 
-
-    cd tools
-    ./create_post.sh
-
-and answer to all given questions. It will generate some files needed by Makefly.
-
-Note that Makefly use the [markdown format](http://daringfireball.net/projects/markdown/ "Learn more about Markdown format") for its posts.
-
-### Version equal or superior to 0.2.1
+### Create a new post
 
 Use this command:
 
-    pmake add
+    ./makefly add
 
 and answer to all given questions. It will generate some files needed by Makefly.
 
 Note that Makefly use the [markdown format](http://daringfireball.net/projects/markdown/ "Learn more about Markdown format") for its posts.
 
-**Don't forget to edit the file that the 'pmake add' command return.**
+**Don't forget to edit the file that the './makefly add' command return.**
 
 ### Static files
 
@@ -170,25 +135,23 @@ This one is named **special** because it can contain some file you have to creat
   * *introduction.md* : Display this file's content as an introduction on all your website's pages. This could change regarding the choosen theme.
   * *footer.md* : Display this file's content as a footer on all your website's pages. This could change regarding the choosen theme.
 
-## Use it!
+## Produce the blog
 
 After having created *makefly.rc* (from makefly.rc.example) and having created some posts, just do this:
 
-    pmake
+    ./makefly compile
 
-It will generate a Makefly weblog to the **pub** directory.
+It will generate a Makefly weblog to the **pub** directory (default directory).
 
-Note: *pmake* is for Debian like distribution. For other distributions, I suggest you to use **bmake**.
-
-## Publish result to the web
+# Publish result to the web
 
 The result is compatible with all HTML servers. In fact you could probably use result with your website provider. You just have to upload all files from **pub** directory to your provider's web directory.
 
-### From a webserver
+## From a webserver
 
 If you launch Makefly on you own server or probably on provider ' server, you should be capable to use **install** script automation. Just launch it as:
 
-    pmake install
+    ./makefly install
 
 ...and it will copy all files to **~/public\_html** directory.
 
@@ -198,9 +161,9 @@ If you launch Makefly on you own server or probably on provider ' server, you sh
 
     INSTALLDIR=${HOME}/public_html
 
-Then relaunch `pmake install` to recompile the weblog.
+Then relaunch `./makefly refresh && ./makefly install` to recompile and reinstall the weblog.
 
-### To a remote computer: *publish* command
+## To a remote computer: *publish* command
 
 To publish your blog to a remote computer you have to:
 
@@ -217,29 +180,29 @@ Note that **PUBLISH\_DESTINATION** looks like:
 
 Once having complete this variable in **makefly.rc** file, just launch:
 
-    pmake publish
+    ./makefly publish
 
 For developers: You can also edit **tools/publish.sh** file and change script content to you own code.
 
-## Create a new theme
+# Create a new theme
 
 To make easier the theme creation you can use this command:
 
-    pmake theme name="myTheme"
+    ./makefly theme myTheme
 
 where **myTheme** is to replace by your own theme name.
 
 Note: This exploit a theme called *Base* as example.
 
-## Translation
+# Translation
 
 A simple way to translate Makefly to your language is to copy the **lang/translate.en** file to another translation file. For an example, for french (with fr code), you can copy **lang/translate.en** to **lang/translate.fr** and change values. Then just change *BLOG\_LANG* option in **makefly.rc** file.
 
-## Backup
+# Backup
 
 Perhaps would you backup some important files in Makefly? It's possible via **backup command**. Just launch it like this:
 
-    pmake backup
+    ./makefly backup
 
 Requirements:
 
@@ -257,7 +220,7 @@ Files saved:
 
 Result: This will create a *tarball* named *YYYYMMDD\_makefly.tar.gz* in **mbackup** directory (for an example 20120823\_makefly.tar.gz). You can so backup your Makefly each day for an example.
 
-### Tips
+## Tip
 
 You can customize (in your **makefly.rc** file):
 
@@ -265,7 +228,7 @@ You can customize (in your **makefly.rc** file):
   * the compression tool by using **COMPRESS_TOOL** option. For an example with **gzip**.
   * the backup file extension by using **COMPRESS_EXT**. For an example with **.gz** (don't forget the point char).
 
-## Sources
+# Sources
 
 Sources are available: 
 
@@ -273,41 +236,39 @@ Sources are available:
   * [On github](https://github.com/blankoworld/makefly)
   * [On my own git repository](http://git.dossmann.net/blogbox/makefly.git/)
 
-## Documentation
+# Documentation
 
 This file is the documentation. You can [read it on github](https://github.com/blankoworld/makefly "Read documentation on Github") or simply generate an HTML file with this command:
 
-    pmake doc
+    ./makefly doc
 
-Note: pmake command is for Debian like. For other distribution, use **bmake** instead of pmake.
+# Tips
 
-## Tips
-
-### Write post ahead of current's datetime
+## Write post ahead of current's datetime
 
 In Makefly you can publish early posts. To do that metadata file should have a timestamp superior to current's one when you generate the weblog. 
 
 For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 1362569400. Your post (situated in the **db** directory) have to have a timestamp inferior to current's one (1362569400).
 
-### Write directly the post's content during its creation
+## Write directly the post's content during its creation
 
 Just use the 'content' variable at the beginning of the command:
 
-    content="my little content" pmake add
+    content="my little content" ./makefly add
 
 This will add "my little content" into your new post.
 
-### Do not lost comments when migrating from an old domain to a new one
+## Do not lost comments when migrating from an old domain to a new one
 
 When you migrate from **old.domain.tld** to **new.domain.tld**, comments will not appear.
 
 To avoid this problem, just use **migratefrom command** as:
 
-    domain="http://old.domain.tld" pmake migratefrom
+    ./makefly migratefrom http://old.domain.tld
 
 This will update all your old posts with the old comments' identifier (your old domain) and comments will afressh appear.
 
-## The makefly.rc configuration file
+# The makefly.rc configuration file
 
 Here is some options you can change:
 
@@ -348,8 +309,49 @@ Here is some options you can change:
   * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on IDENTICA. By default "user".
   * ELI\_MAX (optional): Permit to choose how many statuses to display. On identica, this couldn't bypass the default 20 items. Default value: 5.
   * ELI\_API (optional) : Access to your StatusNet API system.
-  * INSTALLDIR : Permit to choose a target directory when using **install.sh** script (Read more in *Publish result to the web* chapter)
+  * INSTALLDIR : Permit to choose a target directory when using **./makefly install** command (Read more in *Publish result to the web* chapter)
   * COMPRESS_TOOL (optional) : Shell tool used for backup compression via *backup* command (Cf. *Backup* section). Example : **gzip**.
   * COMPRESS_EXT (optional) : Backup file extension. Warning: do not forget the point char. Example: **.gz**.
   * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
+  * AUTO\_EDIT (optionnel) : Allow to edit automatically posts after their creation. Use the EDITOR variable content to know which editor to use.
 
+# Migrate from Nanoblogger
+
+A script that permits to migrate from Nanoblogger exists: [nb2makefly](http://github.com/blankoworld/nb2makefly "Discover nb2makefly").
+
+I guest you to read the [nb2makefly documentation](https://github.com/blankoworld/nb2makefly/blob/master/README.en.md "Read the nb2makefly documentation") to know more about it.
+
+# The project
+
+## Description
+
+Makefly is a subproject of [BlogBox](http://blogbox.depotoi.re/ "Read more about BlogBox project") that aims to give user a better way to host a blog at home.
+
+## Website
+
+Stay tuned to [Makefly weblog](http://makefly.depotoi.re/blog/ "Visit Makefly official website") to know more about the project.
+
+## Development
+
+Makefly is developed in Lua, CSS and HTML.
+
+The code of the software is available in the given repositories:
+
+  * [Gitorious](https://gitorious.org/makefly/ "Go to Makefly's project page on Gitorious")
+  * [Github](https://gitorious.org/makefly/ "Go to Makefly's project page on Github")
+
+## Docker file
+
+A Docker file is available to test Makefly: https://registry.hub.docker.com/u/bl4n/docker-makefly/
+
+## Contact
+
+You can contact me [to this address](mailto:olivier+makefly@dossmann.net "Contact me").
+
+## License
+
+This software is published under GNU Affero General Public License 3.0.
+
+## Stats
+
+Some stats about project could be found [on Ohloh.net](http://www.ohloh.net/p/makefly "See ohloh's analysis for Makefly project").

@@ -1,0 +1,792 @@
+#!/usr/bin/lua
+
+--[[
+
+TODO:
+
+  * QUIET mode
+
+]]--
+
+--[[ DEPENDANCIES 
+
+LuaFileSystem is required: 
+luarocks install luafilesystem
+
+Markdown is required:
+luarocks install markdown
+
+]]--
+
+package.path = package.path .. ";./lib/?.lua"
+
+require 'lib.init'
+local utils = require 'lib.utils'
+require 'lib.rope'
+local blog = require 'lib.blog'
+
+--[[ VARIABLES ]]--
+local configfile = os.getenv('CONFIG') or currentpath .. '/config'
+-- default display values
+display_info =    _('  INFO   ')
+display_success = _(' SUCCESS ')
+display_enable =  _(' ENABLE  ')
+display_disable = _(' DISABLE ')
+display_warning = _(' WARNING ')
+display_error =   _('  ERROR  ')
+
+--[[ FUNCTIONS ]]--
+
+local function error(message)
+  print(message)
+  os.exit(1)
+end
+
+local function clean(args)
+  -- checks
+  if config.TMPL_EXT == config.PAGE_EXT then
+    error(string.format(_('[%s] You cannot choose an extension (%s) similar to template\'s one (%s).'), display_error, config.PAGE_EXT, config.TMPL_EXT))
+  end
+  -- cleaning
+  if lfs.attributes(config.publicpath) ~= nil then
+    utils.rm(config.publicpath)
+    print(string.format(_('[%s] Removed: %s directory'), display_info, config.publicpath))
+  else
+    print(string.format(_('[%s] Missing: %s directory'), display_warning, config.publicpath))
+  end
+  if lfs.attributes(config.tmppath) ~= nil then
+    utils.rm(config.tmppath)
+    print(string.format(_('[%s] Removed: %s directory'), display_info, config.tmppath))
+  else
+    print(string.format(_('[%s] Missing: %s directory'), display_warning, config.tmppath))
+  end
+  local docpath = currentpath .. '/' .. config.docdir
+  local docextension = string.gsub(config.PAGE_EXT, '\.(.*)', '%1')
+  local docfiles = utils.listing(docpath, docextension)
+  for _, filepath in pairs(docfiles) do
+    os.remove(filepath)
+  end
+  print(string.format(_('[%s] Removed: %s/*%s files'), display_info, docpath, config.PAGE_EXT))
+end
+
+local function publish(args)
+  local script = currentpath .. '/' .. config.toolsdir .. '/' .. config.publish_script
+  local substitutions = {
+    DESTDIR = currentpath .. '/' .. config.destdir,
+    PUBLISH_DESTINATION = config.PUBLISH_DESTINATION
+  }
+  local ret = utils.launch_script(script, config.tmpdir, substitutions)
+  if ret and ret > 0 then
+    error(string.format(_('[%s] Publication failed!'), display_error))
+  end
+  print(string.format(_('[%s] Publish: %s content with %s'), display_success, config.destdir, script))
+end
+
+local function add(args)
+  local script = currentpath .. '/' .. config.toolsdir .. '/create_post.sh'
+  local substitutions = {
+    DBDIR = config.dbpath,
+    SRCDIR = config.srcpath,
+  }
+  local option = '-q'
+  if config.AUTO_EDIT and config.AUTO_EDIT == '1' then
+    option = ''
+  end
+  local ret = utils.launch_script(script, config.tmpdir, substitutions, option)
+  if ret and ret > 0 then
+    error(string.format(_('[%s] New post failed!'), display_error))
+  end
+  print(string.format(_('[%s] New post added successfully.'), display_success))
+end
+
+local function list(args, commands)
+  -- convert commands to sequence
+  local sorted_commands = { }
+  for index, value in pairs(commands) do
+    table.insert(sorted_commands, { index, value })
+  end
+
+  -- sort command
+  table.sort(sorted_commands, function (a, b) return a[1] < b[1] end)
+
+  -- making result
+  local res = _('List of available commands: ')
+  for _, command in pairs(sorted_commands) do
+    res = res .. string.format('\n%s\t\t%s', command[1], command[2].description)
+  end
+  -- display result on screen
+  print(res)
+end
+
+local function backup(args)
+  utils.checkDirectory(currentpath .. '/' .. config.backupdir)
+  -- create zipfile
+  local today = os.date('%Y%m%d', os.time())
+  local filepath = currentpath .. '/' .. config.backupdir .. '/' .. today .. '_makefly.tar' .. config.compression_extension
+  local to_save = {
+    config.staticdir,
+    config.dbdir,
+    config.srcdir,
+    config.specialdir,
+    config.tmpldir,
+  }
+  local command = 'tar cf - makefly.rc'
+  for idx, dir in ipairs(to_save) do
+    command = command .. ' ' .. dir
+  end
+  command = command .. string.format('| %s > %s', config.compression_command, filepath)
+  local ret = os.execute(command)
+  if ret and ret == 0 then
+    print(string.format(_('[%s] Backup: Files successfully saved in %s: makefly.rc, %s, %s, %s, %s and %s'), display_success, config.backupdir, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))
+  else
+    error(string.format(_('[%s] Backup failed!'), display_error))
+  end
+end
+
+local function install(args)
+  local origin = config.destdir
+  local destination = config.INSTALLDIR
+  -- replace only "$USER" variable in destination path
+  destination = utils.replace(destination, { USER = os.getenv('USER') })
+  if destination == nil then
+    error(string.format(_('[%s] No INSTALLDIR found. Please add INSTALLDIR= in your makefly.rc'), display_error))
+  end
+  for idx, dir in pairs({origin, destination}) do
+    if lfs.attributes(dir) == nil then
+      error(string.format(_('[%s] %s directory not found!'), display_error, dir))
+    end
+  end
+  print(string.format(_('This will delete %s content and copy all files from %s into this directory. Are you sure [y/n]?'), destination, origin))
+  local answer = io.read()
+  if answer == 'y' then
+    -- first delete destination directory. Then create it and finally copy all files from origin to destination.
+    utils.rm(destination)
+    lfs.mkdir(destination)
+    utils.copy(origin, destination)
+    print(string.format(_('[%s] Installation: achieved.'), display_info))
+  else
+    print(string.format(_('[%s] Installation failed!'), display_warning))
+  end
+end
+
+local function migratefrom(args)
+  if #args < 2 then
+    error(string.format(_('[%s] Migration: missing URL parameter.'), display_error))
+  end
+  local name = args[2]
+  local script = currentpath .. '/' .. config.toolsdir .. '/migrate_domain_from.sh'
+  local substitutions = {
+    DBDIR = currentpath .. '/' .. config.dbdir,
+  }
+  local ret = utils.launch_script(script, config.tmpdir, substitutions, name)
+  if ret and ret > 0 then
+    error(string.format(_('[%s] Migration failed!'), display_error))
+  end
+  print(string.format(_('[%s] Migration achieved.'), display_success))
+end
+
+local function theme(args)
+  -- check name
+  if #args < 2 then
+    error(string.format(_('[%s] Give a name.'), display_warning))
+  end
+  local name = args[2]
+  -- check existing themes
+  local directory = currentpath .. '/' .. config.tmpldir
+  local dir_exists = utils.dir_exists(directory .. '/' .. name)
+  if dir_exists then
+    error(string.format(_('[%s] Theme already exists: %s'), display_error, name))
+  end
+  -- copy 'base' directory to the new one
+  local basedir = directory .. '/base'
+  if lfs.attributes(basedir) and lfs.attributes(basedir).mode == 'directory' then
+    local destination = currentpath .. '/' .. config.tmpldir .. '/' .. name
+    utils.copy(basedir, destination)
+    -- read configuration file
+    local configfile = destination .. '/' .. config.themercfile
+    local newconfig = utils.getConfig(configfile)
+    newconfig['CSS_NAME'] = name
+    -- write result in config file
+    local result = rope()
+    for param, value in pairs(newconfig) do
+      result:push(param .. ' = ' .. value .. '\n')
+    end
+    local out = assert(io.open(configfile, 'wb'))
+    local content = result:flatten()
+    out:write(content)
+    assert(out:close())
+  else
+    error(string.format(_('[%s] Missing \'base\' directory'), display_error))
+  end
+  print(string.format(_('[%s] Created: New theme %s is available in \'%s\' directory.'), display_success, name, currentpath .. '/' .. config.tmpldir .. '/' .. name))
+end
+
+local function version(args)
+  print(string.format(_('Makefly %s using %s'), config.VERSION, _VERSION))
+end
+
+local function doc(args)
+  local directory = currentpath .. '/' .. config.docdir
+  local header = utils.readFile(directory .. '/header.tmpl', 'r')
+  local footer = utils.readFile(directory .. '/footer.tmpl', 'r')
+  local version = string.format(_('Version %s'), config.VERSION)
+  local tocreate = utils.listing(directory, 'md')
+  local markdown = require 'markdown'
+  for _, path in pairs(tocreate) do
+    -- create content for final content
+    local final = rope()
+    final:push(header)
+    final:push(version)
+    local content = utils.readFile(path, 'r')
+    final:push(markdown(content))
+    final:push(footer)
+    -- write result into a file
+    local name = string.gsub(path, "(.*/)(.*)(\.md)", "%2")
+    local filepath = directory .. '/' .. name .. config.PAGE_EXT
+    local file = assert(io.open(filepath, 'wb'))
+    file:write(final:flatten())
+    assert(file:close())
+  end
+  print(string.format(_('[%s] Built: documentation files.'), display_info))
+end
+
+local function allowed(commands, command)
+  res = false
+  for v,_ in pairs(commands) do
+    if v == command then
+      res = true
+      break
+    end
+  end
+  return res
+end
+
+local function checkConfigVariables(configtable, mandatories)
+  -- Check some variables presence
+  print (string.format(_("[%s] Check mandatories information"), display_info))
+  local missing = utils.processMissingInfo(configtable, mandatories)
+  -- Check that all is OK, otherwise display an error message and quit the program
+  if missing ~= '' then
+    print(string.format(_("[%s] Missing information in %s file: %s"), display_error, config.configurationfile, missing))
+    os.exit(1)
+  end
+end
+
+local function cssProcess(themerc, threads)
+  -- Create CSS files
+  local css_file = config.themepath .. '/style/' .. themerc['CSS_FILE']
+  local css_color_file_name = themerc['CSS_COLOR_FILE']
+  if config.FLAVOR and config.FLAVOR ~= '' then
+    local css_color_file_test = 'color_' .. config.THEME .. '_' .. config.FLAVOR .. '.css'
+    local css_color_file_attr = lfs.attributes(config.themepath .. '/style/' .. css_color_file_test)
+    if css_color_file_attr and css_color_file_attr.mode == 'file' then
+      css_color_file_name = css_color_file_test
+    else
+      print (string.format(_("[%s] Wrong flavor: %s"), display_warning, config.FLAVOR))
+    end
+    print (string.format(_("[%s] Specific flavor: %s"), display_info, config.FLAVOR))
+  end
+  local css_color_file = config.themepath .. '/style/' .. css_color_file_name
+  local jskomment_css_file = config.templatepath .. '/' .. config.page_jskomment_css_name
+  local jskomment_css_filename = config.page_jskomment_css_name
+  if themerc['JSKOMMENT_CSS'] then
+    jskomment_css_file = config.themepath .. '/' .. themerc['JSKOMMENT_CSS']
+    jskomment_css_filename = themerc['JSKOMMENT_CSS']
+  end
+  table.insert(threads, coroutine.create(function () utils.copyFile(css_file, config.publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = config.BLOG_URL }) end))
+  table.insert(threads, coroutine.create(function () utils.copyFile(css_color_file, config.publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
+  -- Copy static theme directory
+  theme_static_directory = config.themepath .. '/static'
+  table.insert(threads, coroutine.create(function () utils.copy(theme_static_directory, config.publicpath, { BLOG_URL = config.BLOG_URL }) end))
+  return threads, jskomment_css_file, jskomment_css_filename
+end
+
+local function initializeReplacements(themerc, languagerc, about_file)
+  -- Add result to replacements table (to substitute ${VARIABLES} in files)
+  replacements = {
+    VERSION = config.VERSION,
+    BLOG_TITLE = config.BLOG_TITLE,
+    BLOG_DESCRIPTION = config.BLOG_DESCRIPTION,
+    BLOG_SHORT_DESC = config.BLOG_SHORT_DESC,
+    BLOG_URL = config.BLOG_URL,
+    BLOG_AUTHOR = config.BLOG_AUTHOR or '',
+    BLOG_COPYRIGHT = config.BLOG_COPYRIGHT or '&copy; ' .. os.date('%Y', today),
+    KEYWORDS = config.BLOG_KEYWORDS or '',
+    LANG = config.BLOG_LANG,
+    BLOG_CHARSET = config.BLOG_CHARSET,
+    RSS_FEED_NAME = config.RSS_FEED_NAME,
+    SIDEBAR = '',
+    ARTICLE_CLASS_TYPE = 'normal',
+    SEARCHBAR = '',
+    JSKOMMENT_SCRIPT = '',
+    JSKOMMENT_CSS_DECLARATION = '',
+    JSKOMMENT_CONTENT = '',
+    ELI_SCRIPT = '',
+    ELI_CONTENT = '',
+    ELI_CSS = '',
+    ELI_CSS_DECLARATION = '',
+    ELI_STATUS = '',
+    INTRO_CONTENT = '',
+    FOOTER_CONTENT = '',
+    ABOUT_LINK = '',
+    ABOUT_FILENAME = '',
+    CSS_NAME = themerc['CSS_NAME'],
+    CSS_FILE = themerc['CSS_FILE'],
+    CSS_COLOR_FILE = themerc['CSS_COLOR_FILE'],
+    JSKOMMENT_CSS = themerc['JSKOMMENT_CSS'],
+    TAGDIR_NAME = config.TAGDIR_NAME,
+    POSTDIR_NAME = config.POSTDIR_NAME,
+    BODY_CLASS = config.BODY_CLASS,
+    POSTDIR_INDEX = config.indexfile,
+    TAGDIR_INDEX = config.indexfile, -- TODO: delete these two var to add a new one: INDEX_FILENAME which is better for indexes.
+  }
+
+  -- Add language translation to replacements table
+  for k, v in pairs(languagerc) do
+    replacements[k] = v
+  end
+
+  -- Check about's page presence
+  if about_file ~= '' then
+    print (string.format(_("[%s] About's page available"), display_enable))
+    replacements['ABOUT_INDEX'] = config.ABOUT_FILENAME .. config.PAGE_EXT
+    replacements['ABOUT_LINK'] = blog.stuffTemplate(config.themepath .. '/' .. config.page_about_name, '', '', '', false)
+  else
+    print (string.format(_("[%s] About's page not found"), display_disable))
+  end
+end
+
+local function processELI(threads, languagerc)
+  if config.ELI_USER and config.ELI_API then
+    print (string.format(_("[%s] ELI badge"), display_enable))
+    -- copy ELI css file
+    table.insert(threads, coroutine.create(function () utils.copyFile(config.page_eli_css, config.publicpath .. '/' .. config.eli_cssname) end))
+    replacements['ELI_CSS'] = config.eli_cssname
+    -- copy ELI script to public directory
+    local template_eli_script = utils.readFile(config.page_eli_script, 'r')
+    local eli_script = assert(io.open(config.publicpath .. '/' .. config.eli_jsfilename, 'wb'))
+    local eli_script_substitutions = utils.getSubstitutions(replacements, { ELI_MAX = config.ELI_MAX, ELI_TYPE = config.ELI_TYPE, ELI_API = config.ELI_API, ELI_USER = config.ELI_USER })
+    local eli_script_replace = utils.replace(template_eli_script, eli_script_substitutions)
+    eli_script:write(eli_script_replace)
+    assert(eli_script:close())
+    -- ELI script declaration in all pages
+    local template_eli_declaration = utils.readFile(config.page_eli_declaration, 'r')
+    replacements['ELI_SCRIPT'] = utils.replace(template_eli_declaration, { eli_name = config.eli_jsfilename, BLOG_URL = config.BLOG_URL })
+    -- ELI CSS declaration in all pages
+    local template_eli_css_declaration = utils.readFile(config.page_eli_css_declaration, 'r')
+    replacements['ELI_CSS_DECLARATION'] = utils.replace(template_eli_css_declaration, replacements)
+    -- FIXME: get ELI status (with lua socket or anything else)
+  --  local eli_cmd = 'curl -s ${ELI_API}users/show/${ELI_USER}.xml |grep -E "<text>(.+)</text>"|sed "s/<[/]*text>//g" > ${eli_tmpfile}'
+  --  local eli_cmd = utils.replace(eli_cmd, { ELI_MAX = config.ELI_MAX, ELI_TYPE = config.ELI_TYPE, ELI_API = config.ELI_API, ELI_USER = config.ELI_USER, eli_tmpfile = config.eli_tmpfile })
+  --  local status_return = assert(os.execute(eli_cmd))
+  --  if status_return == 0 then
+  --    local eli_status = utils.readFile(config.eli_tmpfile, 'r')
+  --    replacements['ELI_STATUS'] = eli_status
+  --  end
+    replacements['ELI_STATUS'] = languagerc['ELI_DEFAULT_STATUS'] or ''
+    -- read ELI content to add it in all pages
+    replacements['ELI_CONTENT'] = blog.stuffTemplate(config.page_eli_content, '', '')
+  else
+    print (string.format(_("[%s] ELI badge"), display_disable))
+  end
+  return threads
+end
+
+local function processSidebar(themerc)
+  local page_sidebar = config.themepath .. '/' .. config.page_sidebar_name
+  local sidebar_filename = config.SIDEBAR_FILENAME .. config.SRC_EXT
+  if (config.SIDEBAR and config.SIDEBAR == '1') or (themerc['SIDEBAR'] and themerc['SIDEBAR'] == '1') then
+    print (string.format(_("[%s] Sidebar"), display_enable))
+    local sidebar_content = utils.readFile(config.specialpath .. '/' .. sidebar_filename, 'r')
+    replacements['SIDEBAR'] = blog.stuffTemplate(page_sidebar, sidebar_content, 'SIDEBAR_CONTENT', 'markdown', true)
+  else
+    print (string.format(_("[%s] Sidebar"), display_disable))
+  end
+end
+
+local function processSearchbar()
+  local page_searchbar = config.themepath .. '/' .. config.page_searchbar_name
+  if config.SEARCH_BAR and config.SEARCH_BAR == '1' then
+    print (string.format(_("[%s] Search bar"), display_enable))
+    replacements['SEARCHBAR'] = blog.stuffTemplate(page_searchbar)
+  else
+    print (string.format(_("[%s] Search bar"), display_disable))
+  end
+end
+
+local function processJskomment(threads, themerc, jskomment_css_file, jskomment_css_filename)
+  if config.JSKOMMENT and config.JSKOMMENT == '1' then
+    print (string.format(_("[%s] Comment system"), display_enable))
+    -- Some values that comes from template configuration file
+    local jskomment_captcha_theme = config.JSKOMMENT_CAPTCHA_THEME or themerc['JSKOMMENT_CAPTCHA_THEME'] or config.jskomment_theme
+    -- copy jskomment css file
+    table.insert(threads, coroutine.create(function () utils.copyFile(jskomment_css_file, config.publicpath .. '/' .. jskomment_css_filename) end))
+    replacements['JSKOMMENT_CSS'] = jskomment_css_filename
+    -- copy jskomment javascript
+    local template_jskomment_script = utils.readFile(config.page_jskomment_script, 'r')
+    local jskomment_script = assert(io.open(config.publicpath .. '/' .. config.jskomment_jsfilename, 'wb'))
+    local jskomment_script_substitutions = utils.getSubstitutions(replacements, { JSKOMMENT_URL = config.JSKOMMENT_URL, JSKOMMENT_MAX = config.JSKOMMENT_MAX, JSKOMMENT_CAPTCHA_THEME = jskomment_captcha_theme})
+    local jskomment_script_content = utils.replace(template_jskomment_script, jskomment_script_substitutions)
+    jskomment_script:write(jskomment_script_content)
+    assert(jskomment_script:close())
+    -- jskomment javascript declaration in all pages
+    local template_jskomment_declaration = utils.readFile(config.page_jskomment_declaration, 'r')
+    replacements['JSKOMMENT_SCRIPT'] = utils.replace(template_jskomment_declaration, {jskom_name=config.jskomment_jsfilename, BLOG_URL = config.BLOG_URL})
+    -- jskomment css declaration in all pages
+    local template_jskomment_css_declaration = utils.readFile(config.page_jskomment_css_declaration, 'r')
+    replacements['JSKOMMENT_CSS_DECLARATION'] = utils.replace(template_jskomment_css_declaration, replacements)
+  else
+    print (string.format(_("[%s] Comment system"), display_disable))
+  end
+  return threads
+end
+
+function processSpecialFiles()
+  -- prepare a list of special files
+  local special_files = {
+    INTRO = config.introduction_filename .. config.SRC_EXT,
+    FOOTER = config.footer_filename .. config.SRC_EXT,
+  }
+  -- browse them
+  for i, j in pairs(special_files) do
+    -- read special file if exists
+    local special_file_path = config.specialpath .. '/' .. j
+    local special_file = utils.readFile(special_file_path, 'r')
+    if special_file and special_file ~= '' then
+      print (string.format(_("[%s] %s"), display_enable, i))
+      local special_file_final_content = utils.replace(markdown(special_file), replacements)
+      replacements[i .. '_CONTENT'] = special_file_final_content
+    else
+      print (string.format(_("[%s] %s"), display_disable, i))
+    end
+  end
+end
+
+local function processAbout(about_file, languagerc, header, footer)
+  if about_file then
+    -- create content
+    local about_markdown = markdown(about_file)
+    local about_replaced = utils.replace(about_markdown, replacements)
+    -- construct about's page
+    local about = rope()
+    about:push(header)
+    about:push(about_replaced)
+    about:push(footer)
+    -- do replacements
+    local about_substitutions = utils.getSubstitutions(replacements, {TITLE=languagerc['ABOUT_TITLE'], BODY_CLASS='about'})
+    local about_content = utils.replace(about:flatten(), about_substitutions)
+    -- write changes
+    local about_file_result = assert(io.open(config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(config.ABOUT_FILENAME) .. config.PAGE_EXT, 'wb'))
+    about_file_result:write(about_content)
+    about_file_result:close()
+  end
+end
+
+local function processPosts(threads, header, footer, page_tag_link)
+  local post_files = { }
+  local mandatories_post_vars = { 'TITLE', 'TAGS', 'AUTHOR' }
+  local page_article_single = config.themepath .. '/' .. config.page_article_name
+  local dbresult = utils.listing (currentpath .. '/' .. config.dbdir, "mk")
+  if dbresult then
+    for k,v in pairs(dbresult) do
+      -- parse DB files to get metadata and posts'title
+      local postConf = utils.getConfig(v)
+      -- Check some variables presence
+      local missing_post_info = utils.processMissingInfo(postConf, mandatories_post_vars)
+      -- Check that all is OK, otherwise display an error message and quit the program
+      local timestamp, postTitle = string.match(v, "(%d+),(.+)%.mk")
+      if missing_post_info ~= '' then
+        print(string.format(_("[%s] Missing information in '%s' post: %s"), display_error, postTitle, missing_post_info))
+        os.exit(1)
+      end
+      if today > tonumber(timestamp) then
+        table.insert(post_files, {file=v, conf=postConf})
+        local co = coroutine.create(function () blog.createPost(v, postConf, header, footer, { template_file = page_article_single, template_tag_file = page_tag_link }) end)
+        table.insert(threads, co)
+      end
+    end
+  else
+    print (string.format(_("[%s] No DB file(s) found!"), display_warning))
+  end
+  return threads, post_files
+end
+
+local function processStaticDir()
+  utils.copy(config.staticpath, config.publicpath, { BLOG_URL = config.BLOG_URL })
+  print (string.format(_("[%s] Folder content copied: %s"), display_success, config.staticpath))
+end
+
+local function processPages(threads, header, footer)
+  local pages_result = utils.listing(config.pagepath, 'md')
+  if pages_result then
+    for k,v in pairs(pages_result) do
+      local pagetitle = string.match(v, ".+/(.+)%.md")
+      local pagefile = config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. config.PAGE_EXT
+      local co = coroutine.create(function () blog.createPage(v, pagefile, pagetitle, header, footer) end)
+      table.insert(threads, co)
+    end
+  else
+    print (string.format(_("[%s] No static page(s) found."), display_info))
+  end
+  return threads
+end
+
+local function removeTemporary()
+  -- Delete temporary files
+  for tag, posts in pairs(tags) do
+    for i, post in pairs(posts) do
+      os.remove(config.tmppath .. '/' .. post)
+    end
+  end
+  -- delete posts that appear on homepage
+  local index_nb = 0
+  while index_nb <= config.MAX_POST do
+    local displayednumber = index_nb + 1
+    local indexpath = config.tmppath .. '/' .. 'index.' .. displayednumber .. '.tmp'
+    os.remove(indexpath)
+    index_nb = index_nb + 1
+  end
+end
+
+local function setDefaultVariables(configtable)
+  configtable.VERSION = configtable.VERSION or _('unknown')
+  configtable.index = utils.keepUnreservedCharsAndDeleteDuplicate(configtable.INDEX_FILENAME)
+  configtable.indexfile = configtable.index .. configtable.PAGE_EXT
+  -- main directories
+  configtable.dbpath = currentpath .. '/' .. configtable.dbdir
+  configtable.srcpath = currentpath .. '/' .. configtable.srcdir
+  configtable.publicpath = currentpath .. '/' .. configtable.destdir
+  configtable.templatepath = currentpath .. '/' .. configtable.tmpldir
+  configtable.specialpath = currentpath .. '/' .. configtable.specialdir
+  configtable.themepath = configtable.tmpldir .. '/' .. configtable.THEME 
+  configtable.tmppath = currentpath .. '/' .. configtable.tmpdir
+  configtable.postpath = configtable.publicpath .. '/' .. configtable.POSTDIR_NAME
+  configtable.tagpath = configtable.publicpath .. '/' .. configtable.TAGDIR_NAME
+  configtable.staticpath = currentpath .. '/' .. configtable.staticdir
+  configtable.pagepath = currentpath .. '/' .. configtable.pagedir
+  -- files
+  configtable.about_filepath = configtable.specialpath .. '/' .. configtable.ABOUT_FILENAME .. configtable.SRC_EXT
+  configtable.eli_cssname = 'eli.css'
+  configtable.eli_tmpfile = configtable.tmppath .. '/' .. 'content.eli'
+  -- theme filenames
+  configtable.page_header_name = 'header' .. configtable.TMPL_EXT
+  configtable.page_footer_name = 'footer' .. configtable.TMPL_EXT
+  configtable.page_posts_name = 'post.index' .. configtable.TMPL_EXT
+  configtable.page_article_name = 'article' .. configtable.TMPL_EXT
+  configtable.page_homepage_article_name = 'article.index' .. configtable.TMPL_EXT
+  configtable.page_post_element_name = 'element' .. configtable.TMPL_EXT
+  configtable.page_tag_element_name = 'tagelement' .. configtable.TMPL_EXT
+  configtable.page_tag_link_name = 'taglink' .. configtable.TMPL_EXT
+  configtable.page_tag_index_name = 'tags' .. configtable.TMPL_EXT
+  configtable.page_sidebar_name = 'sidebar' .. configtable.TMPL_EXT
+  configtable.page_searchbar_name = 'menu.search_bar' .. configtable.TMPL_EXT
+  configtable.page_about_name = 'menu.about' .. configtable.TMPL_EXT
+  configtable.page_read_more_name = 'read_more_link' .. configtable.TMPL_EXT
+  configtable.page_pagination_name = 'pagination' .. configtable.TMPL_EXT
+  configtable.page_jskomment = configtable.templatepath .. '/' .. 'jskomment.article' .. configtable.TMPL_EXT
+  configtable.page_jskomment_declaration = configtable.templatepath .. '/' .. 'jskomment_declaration' .. configtable.TMPL_EXT
+  configtable.page_jskomment_css_declaration = configtable.templatepath .. '/' .. 'jskomment_css_declaration' .. configtable.TMPL_EXT
+  configtable.page_jskomment_script = configtable.templatepath .. '/' .. configtable.jskomment_jsfilename
+  configtable.page_jskomment_css_name = 'jskomment.css'
+  configtable.page_rss_header = configtable.templatepath .. '/' .. 'feed.header.rss'
+  configtable.page_rss_element = configtable.templatepath .. '/' .. 'feed.element.rss'
+  configtable.page_rss_footer = configtable.templatepath .. '/' .. 'feed.footer.rss'
+  configtable.page_eli_content = configtable.templatepath .. '/' .. 'eli_content' .. configtable.TMPL_EXT
+  configtable.page_eli_css = configtable.templatepath .. '/' .. 'eli.css'
+  configtable.page_eli_declaration = configtable.templatepath .. '/' .. 'eli_declaration' .. configtable.TMPL_EXT
+  configtable.page_eli_css_declaration = configtable.templatepath .. '/' .. 'eli_css_declaration' .. configtable.TMPL_EXT
+  configtable.page_eli_script = configtable.templatepath .. '/' .. 'eli.js'
+  -- change number values
+  configtable.MAX_POST = tonumber(configtable.MAX_POST) -- should not be nil
+  configtable.MAX_POST_LINES = configtable.MAX_POST_LINES and tonumber(configtable.MAX_POST_LINES) or nil
+  configtable.MAX_RSS = tonumber(configtable.MAX_RSS) -- should not be nil
+  configtable.MAX_PAGE = tonumber(configtable.MAX_PAGE)
+  configtable.JSKOMMENT_MAX = tonumber(configtable.JSKOMMENT_MAX)
+  configtable.ELI_MAX = tonumber(configtable.ELI_MAX)
+  -- check user sort choice
+  if configtable.SORT ~= nil and configtable.SORT ~= '' then
+    for id_nb, sort_value in pairs({'ASC', 'asc', 'desc', 'DESC'}) do
+      if sort_value == configtable.SORT then
+        configtable.SORT = string.lower(configtable.SORT)
+      end
+    end
+  end
+  -- return result
+  return configtable
+end
+
+local function compile(args)
+  -- needed libraries
+  local markdown = require 'markdown'
+
+  -- variables preparation
+  -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
+  tags = { }
+  replacements = { } -- substitution table
+  today = os.time() -- today's timestamp
+  local threads = { }
+  local page_tag_link = config.themepath .. '/' .. config.page_tag_link_name
+  local header = utils.readFile(config.themepath .. '/' .. config.page_header_name, 'r')
+  local footer = utils.readFile(config.themepath .. '/' .. config.page_footer_name, 'r')
+  local about_file = utils.readFile(config.about_filepath, 'r')
+  -- check theme configuration
+  blog.checkTheme(config)
+  -- get language config
+  local languagerc = blog.getLanguageConfig(config, langpath, utils)
+  -- Read template configuration file
+  local themerc = utils.getConfig(config.themepath .. '/' .. config.themercfile)
+
+  -- Check if needed directories exists. Otherwise create them
+  for k,v in pairs({config.tmppath, config.publicpath, config.postpath, config.tagpath}) do
+    utils.checkDirectory(v)
+  end
+
+  -- CSS process
+  threads, jskomment_css_file, jskomment_css_filename = cssProcess(themerc, threads)
+  -- replacements is a substitution table that permit to change ${VAR_NAME} to a given name
+  initializeReplacements(themerc, languagerc, about_file)
+  -- ELI badge
+  threads = processELI(threads, languagerc)
+  -- Sidebar
+  processSidebar(themerc)
+  -- Search bar
+  processSearchbar()
+  -- JSKOMMENT system
+  threads = processJskomment(threads, themerc, jskomment_css_file, jskomment_css_filename)
+  -- Introduction / footer file
+  processSpecialFiles()
+  -- Create about's page if exists
+  processAbout(about_file, languagerc, header, footer)
+  -- Copy static directory content to public path
+  processStaticDir()
+  -- Browse DB files
+  local post_files = { }
+  threads, post_files = processPosts(threads, header, footer, page_tag_link)
+  -- Add static pages to the dispatcher
+  threads = processPages(threads, header, footer)
+
+  -- launch dispatcher to create each post and more (copy needed directories/files, etc.)
+  utils.dispatcher(threads)
+
+  -- Create post's index
+  local page_post_element = config.themepath .. '/' .. config.page_post_element_name
+  local page_article_index = config.themepath .. '/' .. config.page_homepage_article_name
+  blog.createPostIndex(post_files, header, footer, {
+    index_file = config.themepath .. '/' .. config.page_posts_name,
+    element_file = page_post_element,
+    taglink_file = page_tag_link,
+    article_index_file = page_article_index
+  })
+
+  -- Create tag's files: index and each tag's page
+  local page_tag_element = config.themepath .. '/' .. config.page_tag_element_name
+  blog.createTagIndex(config.tagpath .. '/' .. config.indexfile, header, footer, {
+    template_index_filename = config.themepath .. '/' .. config.page_tag_index_name,
+    template_element_filename = page_tag_element
+  })
+
+  -- Create index
+  blog.createHomepage(config.publicpath .. '/' .. config.indexfile, languagerc['HOME_TITLE'], header, footer)
+
+  -- remove temporary files
+  removeTemporary()
+end
+
+local function refresh(args)
+  clean()
+  compile()
+end
+
+-- Create commands
+local commands = { }
+commands['clean'] = {
+    description = _('clean up result directory'),
+    launch = function (args) clean(args) end
+  }
+commands['list'] = {
+    description = _('list all available commands'),
+    launch = function (args) list(args, commands) end
+  }
+commands['publish'] = {
+  description = _('publish your weblog using tools/publish.sh script'),
+  launch = function (args) publish(args) end
+}
+commands['refresh'] = {
+  description = _('same as clean + compile commands'),
+  launch = function (args) refresh(args) end
+}
+commands['add'] = {
+  description = _('create a new post'),
+  launch = function (args) add(args) end
+}
+commands['help'] = {
+  description = _('same as \'list\''),
+  launch = function (args) list(args, commands) end
+}
+commands['createpost'] = {
+  description = _('same as \'add\''),
+  launch = function (args) add(args) end
+}
+commands['backup'] = {
+  description = _('make a backup from your current makefly directory'),
+  launch = function (args) backup(args) end
+}
+commands['install'] = {
+  description = _('install \'pub\' directory into INSTALLDIR directory (set in makefly.rc file)'),
+  launch = function (args) install(args) end
+}
+commands['migratefrom'] = {
+  description = _('will update all DB files with given [url]'),
+  launch = function (args) migratefrom(args) end
+}
+commands['theme'] = {
+  description = _('will copy \'base\' theme to the new one given with [name]'),
+  launch = function (args) theme(args) end
+}
+commands['version'] = {
+  description = _('give current program version'),
+  launch = function (args) version(args) end
+}
+commands['doc'] = {
+  description = _('generate the documentation in \'doc\' directory'),
+  launch = function (args) doc(args) end
+}
+commands['compile'] = {
+  description = _('generate the weblog'),
+  launch = function (args) compile(args) end
+}
+
+--[[ MAIN ]]--
+
+-- check configuration files
+local config_default = utils.checkConfig(configfile)
+local config_user = utils.checkConfig(config_default.configurationfile)
+config = utils.mergeConfig(config_default, config_user)
+
+-- check mandatories variables
+local config_mandatory_vars = { 'BLOG_TITLE', 'BLOG_DESCRIPTION', 'BLOG_URL' }
+checkConfigVariables(config, config_mandatory_vars)
+
+-- variable initialization
+config = setDefaultVariables(config)
+
+-- set local for blog result
+os.setlocale(config.BLOG_LANG)
+
+-- check command
+local args = {...}
+local command = args[1]
+if command ~= nil then
+  if allowed(commands, command) == true then
+    -- launch user given command
+    commands[command].launch(args)
+  else
+    print(string.format(_("'%s' option not found!"), command))
+  end
+else
+  -- display list of commands by default
+  list(args, commands)
+end
+
+return 0
+-- vim:expandtab:smartindent:tabstop=2:softtabstop=2:shiftwidth=2:
