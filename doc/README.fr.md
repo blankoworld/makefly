@@ -329,6 +329,10 @@ Je vous invite &agrave; lire la [documentation de nb2makefly](https://github.com
 
 Makefly est un sous-projet de [BlogBox](http://blogbox.depotoi.re/ "En savoir plus sur le projet BlogBox") qui vise &agrave; fournir de meilleurs moyens pour h&eacute;berger un blog &agrave; la maison.
 
+## Site web
+
+Visitez fr&eacute;quemment le [blog de Makefly](http://makefly.depotoi.re/blog/ "Visiter le blog officiel de Makefly") (en) pour avoir des nouvelles du projet.
+
 ## Développement
 
 Makefly est développ&eacute; en Lua, CSS et HTML.
@@ -338,9 +342,9 @@ Le code du logiciel se trouve sur les d&eacute;p&ocirc;ts suivants :
   * [Gitorious](https://gitorious.org/makefly/ "Se rendre sur la page d'accueil du projet Makefly sur Gitorious")
   * [Github](https://gitorious.org/makefly/ "Se rendre sur la page d'accueil du projet Makefly sur Github")
 
-## Site web
+## Fichier Docker
 
-Visitez fr&eacute;quemment le [blog de Makefly](http://makefly.depotoi.re/blog/ "Visiter le blog officiel de Makefly") (en) pour avoir des nouvelles du projet.
+Un fichier Docker est disponible pour tester Makefly : https://registry.hub.docker.com/u/bl4n/docker-makefly/
 
 ## Contact
 

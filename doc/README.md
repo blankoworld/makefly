@@ -327,6 +327,10 @@ I guest you to read the [nb2makefly documentation](https://github.com/blankoworl
 
 Makefly is a subproject of [BlogBox](http://blogbox.depotoi.re/ "Read more about BlogBox project") that aims to give user a better way to host a blog at home.
 
+## Website
+
+Stay tuned to [Makefly weblog](http://makefly.depotoi.re/blog/ "Visit Makefly official website") to know more about the project.
+
 ## Development
 
 Makefly is developed in Lua, CSS and HTML.
@@ -336,9 +340,9 @@ The code of the software is available in the given repositories:
   * [Gitorious](https://gitorious.org/makefly/ "Go to Makefly's project page on Gitorious")
   * [Github](https://gitorious.org/makefly/ "Go to Makefly's project page on Github")
 
-## Website
+## Docker file
 
-Stay tuned to [Makefly weblog](http://makefly.depotoi.re/blog/ "Visit Makefly official website") to know more about the project.
+A Docker file is available to test Makefly: https://registry.hub.docker.com/u/bl4n/docker-makefly/
 
 ## Contact
 
