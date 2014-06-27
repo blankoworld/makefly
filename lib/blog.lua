@@ -565,6 +565,9 @@ function blog.createHomepage(file, title, header, footer)
     index:push(content)
     index_nb = index_nb + 1
   end
+  -- fetch mini-footer for homepage
+  local index_footer_file = utils.readFile(config.themepath .. '/' .. config.page_posts_footername, 'r')
+  index:push(index_footer_file)
   index:push(footer)
   local substitutions = utils.getSubstitutions(replacements, {BODY_CLASS='home', TITLE=title})
   local final_content = utils.replace(index:flatten(), substitutions)

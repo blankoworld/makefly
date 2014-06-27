@@ -572,6 +572,7 @@ local function setDefaultVariables(configtable)
   configtable.page_header_name = 'header' .. configtable.TMPL_EXT
   configtable.page_footer_name = 'footer' .. configtable.TMPL_EXT
   configtable.page_posts_name = 'post.index' .. configtable.TMPL_EXT
+  configtable.page_posts_footername = 'post.footer' .. configtable.TMPL_EXT
   configtable.page_article_name = 'article' .. configtable.TMPL_EXT
   configtable.page_homepage_article_name = 'article.index' .. configtable.TMPL_EXT
   configtable.page_post_element_name = 'element' .. configtable.TMPL_EXT

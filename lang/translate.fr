@@ -1,5 +1,6 @@
 HOME_TITLE = Accueil
 POST_LIST_TITLE = Articles
+ALL_POSTS = Tous les articles
 TAG_LIST_TITLE = Mots-clés
 TAG_TITLE = Mot(s)-clé(s)
 PERMALINK_TITLE = lien permanent

@@ -1,5 +1,6 @@
 HOME_TITLE = Home
 POST_LIST_TITLE = Posts
+ALL_POSTS = All posts
 TAG_LIST_TITLE = Tags
 TAG_TITLE = Tag(s)
 PERMALINK_TITLE = permalink
