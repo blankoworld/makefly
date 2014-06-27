@@ -331,6 +331,23 @@ Makefly is a subproject of [BlogBox](http://blogbox.depotoi.re/ "Read more about
 
 Stay tuned to [Makefly weblog](http://makefly.depotoi.re/blog/ "Visit Makefly official website") to know more about the project.
 
+## Red alert, bug detected!
+
+You find a bug? Or something goes wrong? Let's go [opening a ticket on Github](https://github.com/blankoworld/makefly/issues). It's simple:
+
+  * Go to [this link](https://github.com/blankoworld/makefly/issues)
+  * If you're not registered, use **Sign up** link. Then reclick on the previous link and continue to do steps
+  * Click on **New Issue**
+  * Give a title that could be a short description of your problem
+  * Then under title, explain in details:
+    * What you do
+    * What you have after that
+    * What you expect
+    * \[optional\] give the copy/paste of what you see on your computer or [give some screenshots](https://lut.im/)
+  * Validate by using **Submit new issue**
+
+This take few minutes and permit to improve Makefly. Thanks -in advance - a lot for your help!
+
 ## Development
 
 Makefly is developed in Lua, CSS and HTML.
