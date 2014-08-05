@@ -1,6 +1,6 @@
 ## About
 
-Makefly could be followed on [the official Makefly weblog](http://makefly.e-mergence.org/ "Visit official website").
+Makefly could be followed on [the official Makefly weblog](http://makefly.depotoi.re/ "Visit official website").
 
 But for those who prefer status.net, you could use the [makefly identica's group](http://identi.ca/group/makefly).
 

@@ -1,0 +1,405 @@
+# Translation file for Makefly.
+# Copyright (C) 2013
+# This file is distributed under the same license as the makefly package.
+# Olivier DOSSMANN <olivier+makefly@dossmann.net>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.2.1-lua\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-20 22:28+0200\n"
+"PO-Revision-Date: 2013-07-31 14:00+0200\n"
+"Last-Translator: Olivier DOSSMANN <olivier+makefly@dossmann.net>\n"
+"Language-Team: None\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lib/blog.lua:173
+#, python-format
+msgid "[%s] New post: %s"
+msgstr ""
+
+#: lib/blog.lua:396 lib/blog.lua:459
+#, python-format
+msgid "[%s] Post list %s/%s: BUILT."
+msgstr ""
+
+#: lib/blog.lua:476
+#, python-format
+msgid "[%s] RSS feed: BUILT."
+msgstr ""
+
+#: lib/blog.lua:478
+#, python-format
+msgid "[%s] Post list: BUILT."
+msgstr ""
+
+#: lib/blog.lua:512
+#, python-format
+msgid "[%s] New tag: %s"
+msgstr ""
+
+#: lib/blog.lua:548
+#, python-format
+msgid "[%s] Tag list: BUILT."
+msgstr ""
+
+#: lib/blog.lua:574
+#, python-format
+msgid "[%s] Homepage: BUILT."
+msgstr ""
+
+#: lib/blog.lua:596
+#, python-format
+msgid "[%s] Page '%s': BUILT."
+msgstr ""
+
+#: lib/blog.lua:601
+#, python-format
+msgid "[%s] Theme: %s"
+msgstr ""
+
+#: lib/blog.lua:605
+#, python-format
+msgid "[%s] Given theme (%s) seems to not exist."
+msgstr ""
+
+#: lib/blog.lua:611 makefly:48
+#, python-format
+msgid ""
+"[%s] You cannot choose an extension (%s) similar to template's one (%s)."
+msgstr ""
+
+#: lib/blog.lua:622
+#, python-format
+msgid "[%s] No '%s' translation. Use default one: %s."
+msgstr ""
+
+#: lib/utils.lua:106
+#, python-format
+msgid "[%s] %s file not found!"
+msgstr ""
+
+#: lib/utils.lua:150
+#, python-format
+msgid "[%s] New folder: %s"
+msgstr ""
+
+#: lib/utils.lua:166
+#, python-format
+msgid "[%s] Not a directory: %s"
+msgstr ""
+
+#: lib/utils.lua:187
+#, python-format
+msgid "[%s] Unknown read mode while reading this path: %s."
+msgstr ""
+
+#: lib/utils.lua:287
+#, python-format
+msgid "[%s] %s not found in copy method!"
+msgstr ""
+
+#: lib/utils.lua:318
+#, python-format
+msgid "[%s] %s not found (in remove process)!"
+msgstr ""
+
+#: lib/utils.lua:470
+msgid ", "
+msgstr ""
+
+#: makefly:31
+msgid "  INFO   "
+msgstr ""
+
+#: makefly:32
+msgid " SUCCESS "
+msgstr ""
+
+#: makefly:33
+msgid " ENABLE  "
+msgstr ""
+
+#: makefly:34
+msgid " DISABLE "
+msgstr ""
+
+#: makefly:35
+msgid " WARNING "
+msgstr ""
+
+#: makefly:36
+msgid "  ERROR  "
+msgstr ""
+
+#: makefly:53 makefly:59
+#, python-format
+msgid "[%s] Removed: %s directory"
+msgstr ""
+
+#: makefly:55 makefly:61
+#, python-format
+msgid "[%s] Missing: %s directory"
+msgstr ""
+
+#: makefly:69
+#, python-format
+msgid "[%s] Removed: %s/*%s files"
+msgstr ""
+
+#: makefly:80
+#, python-format
+msgid "[%s] Publication failed!"
+msgstr ""
+
+#: makefly:82
+#, python-format
+msgid "[%s] Publish: %s content with %s"
+msgstr ""
+
+#: makefly:97
+#, python-format
+msgid "[%s] New post failed!"
+msgstr ""
+
+#: makefly:99
+#, python-format
+msgid "[%s] New post added successfully."
+msgstr ""
+
+#: makefly:113
+msgid "List of available commands: "
+msgstr ""
+
+#: makefly:140
+#, python-format
+msgid ""
+"[%s] Backup: Files successfully saved in %s: makefly.rc, %s, %s, %s, %s and "
+"%s"
+msgstr ""
+
+#: makefly:142
+#, python-format
+msgid "[%s] Backup failed!"
+msgstr ""
+
+#: makefly:152
+#, python-format
+msgid "[%s] No INSTALLDIR found. Please add INSTALLDIR= in your makefly.rc"
+msgstr ""
+
+#: makefly:156
+#, python-format
+msgid "[%s] %s directory not found!"
+msgstr ""
+
+#: makefly:159
+#, python-format
+msgid ""
+"This will delete %s content and copy all files from %s into this directory. "
+"Are you sure [y/n]?"
+msgstr ""
+
+#: makefly:166
+#, python-format
+msgid "[%s] Installation: achieved."
+msgstr ""
+
+#: makefly:168
+#, python-format
+msgid "[%s] Installation failed!"
+msgstr ""
+
+#: makefly:174
+#, python-format
+msgid "[%s] Migration: missing URL parameter."
+msgstr ""
+
+#: makefly:183
+#, python-format
+msgid "[%s] Migration failed!"
+msgstr ""
+
+#: makefly:185
+#, python-format
+msgid "[%s] Migration achieved."
+msgstr ""
+
+#: makefly:191
+#, python-format
+msgid "[%s] Give a name."
+msgstr ""
+
+#: makefly:198
+#, python-format
+msgid "[%s] Theme already exists: %s"
+msgstr ""
+
+#: makefly:219
+#, python-format
+msgid "[%s] Missing 'base' directory"
+msgstr ""
+
+#: makefly:221
+#, python-format
+msgid "[%s] Created: New theme %s is available in '%s' directory."
+msgstr ""
+
+#: makefly:225
+#, python-format
+msgid "Makefly %s using %s"
+msgstr ""
+
+#: makefly:232
+#, python-format
+msgid "Version %s"
+msgstr ""
+
+#: makefly:250
+#, python-format
+msgid "[%s] Built: documentation files."
+msgstr ""
+
+#: makefly:266
+#, python-format
+msgid "[%s] Check mandatories information"
+msgstr ""
+
+#: makefly:270
+#, python-format
+msgid "[%s] Missing information in %s file: %s"
+msgstr ""
+
+#: makefly:285
+#, python-format
+msgid "[%s] Wrong flavor: %s"
+msgstr ""
+
+#: makefly:287
+#, python-format
+msgid "[%s] Specific flavor: %s"
+msgstr ""
+
+#: makefly:351
+#, python-format
+msgid "[%s] About's page available"
+msgstr ""
+
+#: makefly:355
+#, python-format
+msgid "[%s] About's page not found"
+msgstr ""
+
+#: makefly:361 makefly:390
+#, python-format
+msgid "[%s] ELI badge"
+msgstr ""
+
+#: makefly:399 makefly:403
+#, python-format
+msgid "[%s] Sidebar"
+msgstr ""
+
+#: makefly:410 makefly:413
+#, python-format
+msgid "[%s] Search bar"
+msgstr ""
+
+#: makefly:419 makefly:439
+#, python-format
+msgid "[%s] Comment system"
+msgstr ""
+
+#: makefly:456 makefly:460
+#, python-format
+msgid "[%s] %s"
+msgstr ""
+
+#: makefly:499
+#, python-format
+msgid "[%s] Missing information in '%s' post: %s"
+msgstr ""
+
+#: makefly:509
+#, python-format
+msgid "[%s] No DB file(s) found!"
+msgstr ""
+
+#: makefly:516
+#, python-format
+msgid "[%s] Folder content copied: %s"
+msgstr ""
+
+#: makefly:529
+#, python-format
+msgid "[%s] No static page(s) found."
+msgstr ""
+
+#: makefly:552
+msgid "unknown"
+msgstr ""
+
+#: makefly:703
+msgid "clean up result directory"
+msgstr ""
+
+#: makefly:707
+msgid "list all available commands"
+msgstr ""
+
+#: makefly:711
+msgid "publish your weblog using tools/publish.sh script"
+msgstr ""
+
+#: makefly:715
+msgid "same as clean + compile commands"
+msgstr ""
+
+#: makefly:719
+msgid "create a new post"
+msgstr ""
+
+#: makefly:723
+msgid "same as 'list'"
+msgstr ""
+
+#: makefly:727
+msgid "same as 'add'"
+msgstr ""
+
+#: makefly:731
+msgid "make a backup from your current makefly directory"
+msgstr ""
+
+#: makefly:735
+msgid ""
+"install 'pub' directory into INSTALLDIR directory (set in makefly.rc file)"
+msgstr ""
+
+#: makefly:739
+msgid "will update all DB files with given [url]"
+msgstr ""
+
+#: makefly:743
+msgid "will copy 'base' theme to the new one given with [name]"
+msgstr ""
+
+#: makefly:747
+msgid "give current program version"
+msgstr ""
+
+#: makefly:751
+msgid "generate the documentation in 'doc' directory"
+msgstr ""
+
+#: makefly:755
+msgid "generate the weblog"
+msgstr ""
+
+#: makefly:784
+#, python-format
+msgid "'%s' option not found!"
+msgstr ""

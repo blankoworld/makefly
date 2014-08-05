@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--[if IE 6]>
+<html id="ie6" xmlns="http://www.w3.org/1999/xhtml" xml:lang="${LANG}" lang="${LANG}" dir="ltr">
+<![endif]-->
+<!--[if IE 7]>
+<html id="ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="${LANG}" lang="${LANG}" dir="ltr">
+<![endif]-->
+<!--[if IE 8]>
+<html id="ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="${LANG}" lang="${LANG}" dir="ltr">
+<![endif]-->
+<!--[if !(IE 6) | !(IE 7) | !(IE 8)  ]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="${LANG}" lang="${LANG}" dir="ltr">
+<!--<![endif]-->
+
+<head>
+  <meta charset="${BLOG_CHARSET}">
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="pragma" content="no-cache" />
+  <meta name="keywords" content="${KEYWORDS}" />
+  <meta name="description" content="${BLOG_DESCRIPTION}" />
+  <meta name="author" content="${BLOG_AUTHOR}" />
+  <meta name="copyright" content="${BLOG_COPYRIGHT}" />
+  <meta name="robots" content="all" />
+  <meta name="generator" content="Makefly ${VERSION}">
+  <meta name="viewport" content="width=device-width">
+  <title>${BLOG_TITLE} - ${TITLE}</title>
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+
+  <!-- Styles -->
+${JSKOMMENT_CSS_DECLARATION}
+${ELI_CSS_DECLARATION}
+  <link rel="stylesheet" type="text/css" media="all" href="${BLOG_URL}/${CSS_FILE}">
+  <link type="text/css" rel="stylesheet" media="screen" href="${BLOG_URL}/${CSS_COLOR_FILE}" title="${CSS_NAME}" />
+
+    <style type="text/css">
+      header#joliebarre a.accueil {
+        display: block;
+      }
+    </style>
+
+    <style type="text/css">
+      body.single aside#laterale,
+      body.page aside#laterale {
+          padding-top: 26px;
+      }
+    @media screen and (min-width:850px) {
+      body.single aside#laterale,
+      body.page aside#laterale {
+          width: 21%; }
+
+      body.single section#flux,
+      body.page section#flux {
+          display: inline-block;
+          float: right;
+          width: 74%;
+          margin: 5.5px auto;
+    } }
+      body.page-template-archives-php section#flux { width: 100%; float: none; }
+    </style>
+
+    <style type="text/css">
+      li.bypostauthor > article.comment .comment-author cite:after {
+          content: "Minischauthor";
+      }
+    </style>
+
+    <link type="text/css" rel="stylesheet" media="print" href="${BLOG_URL}/print.css" />
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="${BLOG_URL}/favicon.ico">
+
+<!--[if lt IE 9]>
+<script src="html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<link rel="alternate" type="application/rss+xml" title="${RSS_FEED_NAME}" href="${BLOG_URL}/rss.xml" />
+</head>
+
+<body class="${BODY_CLASS}">
+  <header id="joliebarre">
+    <section>
+      <a class="accueil" href="${BLOG_URL}">${BLOG_TITLE}</a>
+      <div id="subtitle">${BLOG_SHORT_DESC}</div>
+      <nav>${SEARCHBAR}
+        <ul>
+          <li class="home">
+            <a class="home" href="${BLOG_URL}"><span></span></a>
+          </li>
+          <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
+          <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
+          <li>
+            <a href="${BLOG_URL}/rss.xml" class="follow rss"><span></span>RSS</a>
+          </li>
+        </ul>
+      </nav>
+    </section>
+  </header>
+
+  <div id="conteneur">
+    <div id='introduction'>
+      ${INTRO_CONTENT}
+    </div>
+${SIDEBAR}
+    <section id="flux">
+

@@ -1,23 +1,34 @@
 TODO:
 -----
 
-Next version (0.2):
-- comment system with disqus (with a param to activate/desactivate in RC file)
-- Do some LUA tests to improve file generation
+Refactoring:
+
+- Check new CONFIG file to see which new VARS are available and make a documentation for them!
+
+Version 0.3.1:
+- add documentation for static pages directory (in PAGES directory)
+- replace space (and other special chars) by '_' for pages (static pages) name. Use filename as HTML page's title, but replace space for HTML file. Example: "Another essay.md" should give "Another essay" as title but "another_essay.html" as filename.
+- add 2 pages "about.md" for each language and adapt the prepare-new-version to use the right one into the final archive
+- add same thing for a static pages in pages directory with a "article_test.md" to show how it works. In the content explain to the user that it could edit this pages and add new ones but that it have to create link to this page… It's a trick, not a functionnality to be often use!
+
+Version 0.4:
+Nothing
 
 Tests:
-- Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
-- Create some unit test on pmake doc, pmake clean, etc.
-- Create some more check with/without sidebar, with/without search bar, etc.
+- test: backup
+- test: list
+- test: help
+- test: clean
+- test: install
+- test: theme
+- test: version
+- Do some tests with image comparison of all themes
+- test that an error is returned if TMPL_EXT = PAGE_EXT
+- test that there is no problem with "pièce à jouets" as post title
+- test multi page for post list (next, previous, last, first, etc.)
 
 Templates:
-- Minisch theme update:
-  - add author (search in CSS to find it)
-  - add subtitle (BLOG_SHORT_DESC)
-- Create a command that generate a full template in order it to be customized by a user
-- Add HTML keywords/meta on each post's page?
-- Add possibility to choose which meta/keywords add to each post?
-- Add HTML keywords/meta on main page regarding posts
+N/A
 
 Meta functionnality:
 - permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
@@ -27,24 +38,16 @@ Import:
 
 Multimedia:
 - Permit user to integrate multimedia files as video, images, flash animation, etc.
-- For youtube iframe, do this:
-    iframe {
-      margin: 15px auto;
-      display: block;
-    }
 
 Other functionnalities:
 - Create a [b|p]make refreshall to clean all files, recompile them and publish blog
 - Add author URL that permit to each author to add a URL/link (this is not mandatory for posts, but could be useful for a UI
 
 Bugs:
-- Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
 - Problem with accentued chars in create_post.sh for TITLE
 
 Others:
-- Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
 - Permit user to create a cron that publish posts each day?
-- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
 - Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
 - Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
 - Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
@@ -60,11 +63,16 @@ IDEAS:
 ------
 
 - plugins
-- comments
-- rss/atom feeds
+- atom feeds
 - smileys
 - sitemap (xml/html)
 - fortunes
+
+ABANDON:
+--------
+
+- Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
+- comment system with disqus (with a param to activate/desactivate in RC file)
 - template:
   - permit template like Nanoblogger or Utterson. For an example with m4 or with this:
     eval "cat << ___EOF___
@@ -72,11 +80,6 @@ IDEAS:
     ___EOF___"
     This permit to replace some variables. It's seems to be not valid without zsh.
   - templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
-
-ABANDON:
---------
-
-- Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
 
 DONE:
 -----
@@ -170,3 +173,27 @@ DONE:
 - Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c - some_files | gzip > file.tar.gz
 - Create a nanoblogger import script to migrate from Nanoblogger to Makefly
 - Add a license to perso branch for Creative commons license
+- Minisch theme update:
+  - add author (search in CSS to find it)
+  - add subtitle (BLOG_SHORT_DESC)
+- Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
+- Create some unit test on pmake doc, pmake clean, etc.
+- Create some more check with/without sidebar, with/without search bar, etc.
+- Create a command that generate a full template in order it to be customized by a user
+- Generate a webpage containing a preview of all themes for official weblog
+- Create a template for tests
+- fix problem with my ARM computer which block on dispatcher function
+- Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
+- do translation of "print" (with function _ and xgettext/msgfmt)
+- For youtube iframe, do this:
+    iframe {
+      margin: 15px auto;
+      display: block;
+    }
+- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
+- Add HTML keywords/meta on each post's page?
+- Add possibility to choose which meta/keywords add to each post?
+- Add HTML keywords/meta on main page regarding posts
+- Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
+- Create translation for displayed info message when compiling Makefly
+- replace [p|b] make by a lua script for launching some commands

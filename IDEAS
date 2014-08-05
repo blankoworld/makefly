@@ -10,17 +10,18 @@ Here is some ideas that I have during project's development.
 ## Comment system
 
 - how could we add comments on each post? Disqus @ begining, then which system? => Lua system with a DB?
-- talkatv as comment system
 
 ## Tests results
 
-- makefly v1.1-bêta: 3H47 for processing 18251 posts
-- makefly v1.1-bêta: 2min when using clean method
-
-## Branchs
-
-- devtools: with /tools and /tests to give developers some tools to recreate posts, and some tests to see if nothing is broken. Give also DEV documentation contained in doc/DEV.README.*
-- extras: with /templates (more templates than default one) and /bin with lunamark and markdown.md
+Process time:
+- makefly v0.1.1-bêta:       18251 posts | 3H47 min
+- makefly v0.1.1-bêta:       clean posts |    2 min
+- makefly v0.2-trunk:         1000 posts |    6 min 21.71
+- makefly v0.2-luaversion:    1000 posts |    1 min 50.74
+- makefly v0.2-luaversion:   18251 posts |   42 min
+- makefly v0.2.1-luaversion:  1000 posts |    1 min 46.42
+- makefly v0.2.2-luaversion:  1000 posts |    1 min 53.44 (all functionnalities)
+- makefly v0.2.2-luaversion: 18251 posts |   46 min 55.05 (all functionnalities)
 
 ## Others
 
@@ -30,3 +31,13 @@ Here is some ideas that I have during project's development.
 - HTML verification?
 - use more LUA to parse and create public files. Use ROPE: http://lua-users.org/wiki/LuaRopes and http://www.tecgraf.puc-rio.br/~lhf/ftp/lua/5.1/lrope.tar.gz
 - generate a xml.gz for web robots
+
+## Old ones
+
+- ABANDON | talkatv as comment system
+
+### Branchs
+
+- DONE | devtools: with /tools and /tests to give developers some tools to recreate posts, and some tests to see if nothing is broken. Give also DEV documentation contained in doc/DEV.README.*
+- DONE | extras: with /templates (more templates than default one) and /bin with lunamark and markdown.md
+

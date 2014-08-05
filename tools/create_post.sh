@@ -27,9 +27,6 @@
 #####
 ## VARIABLES
 ###
-Makefile='../Makefile'
-DBDIR=`cat ${Makefile} |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
-SRCDIR=`cat ${Makefile} |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
 LIMIT='255'
 YOUR_EDITOR=`which nano`
 QUIET=0
@@ -69,20 +66,21 @@ fi
 
 # Fetch data
 while [ -z "$author" ]; do
-  read -p "Author: " author
+  read -e -p "Author: " author
 done
 while [ -z "$title" ]; do
-  read -p "Title: " title
+  read -e -p "Title: " title
 done
-read -p "Description: " desc
-read -p "Date: " date
+read -e -p "Description: " desc
 while [ -z "$tags" ]; do
-  read -p "Tags (use comma as separator): " tags
+  read -e -p "Tags (use comma as separator): " tags
 done
-read -p "Type (normal, special, news, etc.): " post_type
+read -e -p "Special post type (normal, special, news, etc.): " post_type
+read -e -p "Keywords: " keywords
 timestamp=`date +'%s'`
 
 # code retrived from Nanoblogger translit_text method with a little improvement for double "_"
+LC_ALL='C' # set local to C in order to take count the accentued chars on french environment
 nonascii="${title//[a-zA-Z0-9_-]/}" # isolate all non-printable/non-ascii characters
 new_name=$(echo "${title:0:$LIMIT}" |sed -e "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/; s/[\`\~\!\@\#\$\%\^\*\(\)\+\=\{\}\|\\\;\:\'\"\,\<\>\/\?]//g; s/ [\&] / and /g; s/^[ ]//g; s/[ ]$//g; s/[\.]/_/g; s/\[//g; s/\]//g; s/ /_/g; s/[$nonascii ]/_/g" |sed -e '/[\_\-]*$/ s///g; /[\_\-]$/ s///g' |sed -e 's/__/_/g')
 
@@ -102,10 +100,10 @@ fi
 # create db file
 echo "TITLE = ${title}" > ${dbfile}
 echo "DESCRIPTION = ${desc}" >> ${dbfile}
-echo "DATE = ${date}" >> ${dbfile}
 echo "TAGS = ${tags}" >> ${dbfile}
 echo "TYPE = ${post_type}" >> ${dbfile}
 echo "AUTHOR = ${author}" >> ${dbfile}
+echo "KEYWORDS = ${keywords}" >> ${dbfile}
 
 # create src file
 touch ${file}
@@ -113,7 +111,12 @@ echo "Type your text in markdown format here" > ${file}
 
 if test "$QUIET" -eq 0;then
   ${edit} ${file}
+elif ! [ -z "$content" ]; then
+  echo -e "$content" > ${file}
 fi
+
+# confirm file creation
+echo -e "Metafile: ${dbfile}\nPost: ${file}"
 
 #####
 ## END

@@ -1,4 +1,53 @@
-Current (0.2-dev)
+Current version (0.4-trunk)
+	- Make Makefly to be a Lua executable
+	- Add new configuration option: AUTO_EDIT
+	- Add publication date on RSS feeds
+
+Version 0.3 (released 2014-01-17)
+	- Add Makefly version in documentation
+	- Complete [p|b]make help command
+	- Adapt create post script to be more understandable by the user that use it
+	- Adapt create post script to be more understandable by the user that use it
+	- Fix problem with accentued chars at post creation
+	- Permit to split post's list into multiple ones by using MAX_PAGE var
+	- Permit to reverse list of posts with SORT parameter in configuration file
+	- Add keywords functionnality for posts
+	- Add new global variable for templates: BLOG_AUTHOR, BLOG_COPYRIGHT and
+	BLOG_KEYWORDS
+	- Permit to add new post without editing any file
+	- Improve base theme
+	- Add "top of the page" element
+	- Add "migratefrom" command to migrate jskomment from an old domain
+	- Delete useless theme to be more precise on some ones
+	- Fix a problem with date in different languages
+	- Improve iframe in posts
+	- Default theme: minisch
+	- Make Lua scripts translatables
+	- Add technical documentation in code
+	- Change template format: TMPL
+	- Update tests to be compatible with Lua version
+	- Improve display of message when compiling
+	- Improve RSS factory by only generating those that's expected
+	- Change posts generation bash script by a Lua script named process.lua
+	- Fix bug on tags that have space in their name
+	- Change BASE_URL to BLOG_URL
+
+Version 0.2.1 (released 2013-05-31)
+	- Improve Bootstrap theme with glyphicons
+	- You can choose a "FLAVOR" for your theme in order to change colors
+	- Add new commands: 'help' and 'list' that give all available commands
+	- Add new commands: 'createpost' and 'add' in order to create a new post
+	- Add new command: 'install'
+	- Clean up meta data file (delete DATE useless field)
+	- Add new command: 'theme' to create your theme
+	- Add new command: 'version' to give your current version
+	- Improve documentation
+	- Permit to use a prefix for JSKOMMENT identification. If none, use default
+	BASE_URL
+	- Fix ELI to use ELI_API choosen by the user (if given)
+	- Display new created postname for user to edit it
+
+Version 0.2 (released 2013-04-17)
 	- Add jskomment as optional comment system
 	- Permit to customize jskomment comment system content
 	- Permit to choose for each theme an optional CSS color file. This permit to
@@ -14,6 +63,17 @@ Current (0.2-dev)
 	- Permit user to choose a compression tool and a compression extension for
 	backups
 	- Also backup theme choosen by the user in the makefly.rc file
+	- Fix bug on carriage return
+	- Some minisch theme improvements
+	- Documentation appearance improvements
+	- Update translation
+	- New theme: Responsive
+	- Add "generator" meta tag to all templates
+	- New theme: Base
+	- Theme generation by using "Base" theme to generate one.
+	- Possibility to create its own theme with a command like `pmake theme
+	name='myThem'`
+	- New theme: Bootstrap
 
 Version 0.1.1 (release 2013-01-17)
 	- Permit user to choose page ' suffix

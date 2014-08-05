@@ -1,1 +1,1 @@
-${LOGO_AVAILABLE} [Logo sources](${BASE_URL}/makefly.svg)
+${LOGO_AVAILABLE} [Logo sources](${BLOG_URL}/makefly.svg)

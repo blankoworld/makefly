@@ -3,14 +3,19 @@
  * Website: http://kevinburke.bitbucket.org/markdowncss/
 **/
 
+html {
+    background: #add8e6;
+}
+
 body{
-    margin: 1em;
+    margin: 1em auto;
     font-family: Georgia, Palatino, serif;
     color: #444444;
     line-height: 1;
     max-width: 960px;
     padding: 30px;
     box-shadow: 1px 1px 12px #000;
+    background: white;
 }
 h1, h2, h3, h4 {
     color: #111111;
@@ -52,7 +57,7 @@ a:visited {
     color: purple;
 }
 ul, ol {
-    padding: 0;
+    padding: 0 0 0 25px;
     margin: 0 0 0 24;
 }
 li {

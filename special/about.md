@@ -6,4 +6,4 @@ Just edit *about.md* file to change this text.
 
 If you doesn't want any about page, just delete it.
 
-You will just have [${HOME_TITLE}](${BASE_URL}).
+You will just have [${HOME_TITLE}](${BLOG_URL}).

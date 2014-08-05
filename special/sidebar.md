@@ -1,4 +1,4 @@
 ## ${LINKS_TITLE}
 
-  * [Makefly Blog](http://makefly.e-mergence.org "The Makefly Blog!")
+  * [Makefly Blog](http://makefly.depotoi.re "The Makefly Blog!")
   * [DuckDuckGo Search Engine](http://ddg.gg "DDG Search Engine")
