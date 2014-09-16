@@ -29,11 +29,10 @@
 ###
 
 now=`date +'%s'`
-max=1000
+max=18250
 
-Makefile='../Makefile'
-DBDIR=`cat ${Makefile} |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
-SRCDIR=`cat ${Makefile} |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
+DBDIR='../db' #`cat ${Makefile} |grep "^DBDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
+SRCDIR='../src' #`cat ${Makefile} |grep "^SRCDIR[ ]*="|cut -d'=' -f2 |sed -e "s/^ //g" -e "s/^\./\.\./g"` # sed delete useless space
 #####
 # BEGIN
 ###
@@ -725,7 +724,7 @@ do
   timestamp=$(($now+$i))
   TITLE="post_${timestamp}"
   DATE=`date -d "@${timestamp}" +'%Y-%m-%d'`
-  ./create_post.sh -q < <(echo ${AUTHOR}; echo ${TITLE}; echo ${DESC}; echo ${DATE}; echo ${TAGS}; echo ${TYPE}) && echo -e ${CONTENT} > ${SRCDIR}/post_${timestamp}.md || exit 1
+  DBDIR=${DBDIR} SRCDIR=${SRCDIR} ./create_post.sh -q < <(echo ${AUTHOR}; echo ${TITLE}; echo ${DESC}; echo ${DATE}; echo ${TAGS}; echo ${TYPE}) && echo -e ${CONTENT} > ${SRCDIR}/post_${timestamp}.md || exit 1
   mv ${DBDIR}/*,post_${timestamp}.mk "${DBDIR}/${timestamp},post_${timestamp}.mk"
 done
 
