@@ -431,7 +431,7 @@ local function processJskomment(threads, themerc, jskomment_css_file, jskomment_
     assert(jskomment_script:close())
     -- jskomment javascript declaration in all pages
     local template_jskomment_declaration = utils.readFile(config.page_jskomment_declaration, 'r')
-    replacements['JSKOMMENT_SCRIPT'] = utils.replace(template_jskomment_declaration, {jskom_name=config.jskomment_jsfilename, BLOG_URL = config.BLOG_URL})
+    replacements['JSKOMMENT_SCRIPT'] = utils.replace(template_jskomment_declaration, {jskom_name = config.jskomment_jsfilename, BLOG_URL = config.BLOG_URL, JSKOMMENT_URL = config.JSKOMMENT_URL})
     -- jskomment css declaration in all pages
     local template_jskomment_css_declaration = utils.readFile(config.page_jskomment_css_declaration, 'r')
     replacements['JSKOMMENT_CSS_DECLARATION'] = utils.replace(template_jskomment_css_declaration, replacements)
