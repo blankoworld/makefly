@@ -70,19 +70,19 @@ function blog.getKeywords(postconfig)
 end
 
 -------------------------------------------------------------------------------
--- Add specific comments substitutions (JSKOMMENT_CONTENT variable)
+-- Add specific comments substitutions (ISSO_CONTENT variable)
 -- @param sub Substitutions table
 -- @param config Post configuration table
 -- @param title Post title
--- @return Substitutions table with JSKOMMENT_CONTENT if needed
+-- @return Substitutions table with ISSO_CONTENT if needed
 -------------------------------------------------------------------------------
 function blog.commentSubstitutions(sub, cfg, title)
-  local template_comment = utils.readFile(config.page_jskomment, 'r')
-  if config.JSKOMMENT and config.JSKOMMENT == '1' then
-    local jskomment_prefix = cfg['JSKOMMENT_PREFIX'] and cfg['JSKOMMENT_PREFIX'] ~= '' and cfg['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
-    local jskomment_id = jskomment_prefix .. '/' .. title
-    local jskomment_content = utils.replace(template_comment, {JSKOMMENT_ID=jskomment_id})
-    sub['JSKOMMENT_CONTENT'] = jskomment_content
+  local template_comment = utils.readFile(config.page_isso, 'r')
+  if config.ISSO and config.ISSO == '1' then
+    local isso_prefix = cfg['ISSO_PREFIX'] and cfg['ISSO_PREFIX'] ~= '' and cfg['ISSO_PREFIX'] or replacements['BLOG_URL']
+    local isso_id = isso_prefix .. '/' .. title
+    local isso_content = utils.replace(template_comment, {ISSO_ID=isso_id})
+    sub['ISSO_CONTENT'] = isso_content
   end
   return sub
 end

@@ -1,4 +1,5 @@
 Current version (0.4-trunk)
+	- Change Jskomment system to Isso one (Cf. http://posativ.org/isso/)
 	- Make Makefly to be a Lua executable
 	- Add new configuration option: AUTO_EDIT
 	- Add publication date on RSS feeds
