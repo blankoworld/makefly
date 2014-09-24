@@ -1,9 +1,19 @@
 TODO:
 -----
 
-Refactoring:
+Isso comment system:
 
-- Check new CONFIG file to see which new VARS are available and make a documentation for them!
+- delete all CAPTCHA related elements
+- delete isso.js elements from the code
+- change JSKOMMENT to ISSO one
+- make MINISCH theme to add or not COMMENT on index page and article. Same for base theme!
+- develop a code that permit to choose between ISSO OR DISQUS
+- upgrade documentation:
+  - delete links to appspot.com
+  - delete useless variables
+- make a tutorial?
+- tools/migrate_domain_from.sh should be update so that it take 2 params: "from to". From jskomment to jskomment, from jskomment to isso, from isso to isso, etc.
+- add a counter for comments on index's page: <section class="isso"><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}#isso-thread" data-isso-id="/${POSTDIR_NAME}/${POST_FILE}">${JSKOMMENT_COMMENTS}</a></section>
 
 Version 0.3.1:
 - add documentation for static pages directory (in PAGES directory)
