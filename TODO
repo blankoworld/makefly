@@ -3,8 +3,6 @@ TODO:
 
 Isso comment system:
 
-- delete all CAPTCHA related elements
-- delete isso.js elements from the code
 - change JSKOMMENT to ISSO one
 - make MINISCH theme to add or not COMMENT on index page and article. Same for base theme!
 - develop a code that permit to choose between ISSO OR DISQUS

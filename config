@@ -19,7 +19,6 @@ compression_extension = .gz
 publish_script = publish.sh
 INDEX_FILENAME = index
 themercfile = config.mk
-isso_jsfilename = isso.js
 isso_theme = white
 ISSO_MAX = 3
 ISSO_URL = http://rave.depotoi.re/

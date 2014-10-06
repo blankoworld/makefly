@@ -420,16 +420,9 @@ local function processIsso(threads, themerc, isso_css_file, isso_css_filename)
     -- copy isso css file
     table.insert(threads, coroutine.create(function () utils.copyFile(isso_css_file, config.publicpath .. '/' .. isso_css_filename) end))
     replacements['ISSO_CSS'] = isso_css_filename
-    -- copy isso javascript
-    local template_isso_script = utils.readFile(config.page_isso_script, 'r')
-    local isso_script = assert(io.open(config.publicpath .. '/' .. config.isso_jsfilename, 'wb'))
-    local isso_script_substitutions = utils.getSubstitutions(replacements, { ISSO_URL = config.ISSO_URL, ISSO_MAX = config.ISSO_MAX})
-    local isso_script_content = utils.replace(template_isso_script, isso_script_substitutions)
-    isso_script:write(isso_script_content)
-    assert(isso_script:close())
     -- isso javascript declaration in all pages
     local template_isso_declaration = utils.readFile(config.page_isso_declaration, 'r')
-    replacements['ISSO_SCRIPT'] = utils.replace(template_isso_declaration, {jskom_name = config.isso_jsfilename, BLOG_URL = config.BLOG_URL, ISSO_URL = config.ISSO_URL})
+    replacements['ISSO_SCRIPT'] = utils.replace(template_isso_declaration, {BLOG_URL = config.BLOG_URL, ISSO_URL = config.ISSO_URL})
     -- isso css declaration in all pages
     local template_isso_css_declaration = utils.readFile(config.page_isso_css_declaration, 'r')
     replacements['ISSO_CSS_DECLARATION'] = utils.replace(template_isso_css_declaration, replacements)
@@ -585,7 +578,6 @@ local function setDefaultVariables(configtable)
   configtable.page_isso = configtable.templatepath .. '/' .. 'isso.article' .. configtable.TMPL_EXT
   configtable.page_isso_declaration = configtable.templatepath .. '/' .. 'isso_declaration' .. configtable.TMPL_EXT
   configtable.page_isso_css_declaration = configtable.templatepath .. '/' .. 'isso_css_declaration' .. configtable.TMPL_EXT
-  configtable.page_isso_script = configtable.templatepath .. '/' .. configtable.isso_jsfilename
   configtable.page_isso_css_name = 'isso.css'
   configtable.page_rss_header = configtable.templatepath .. '/' .. 'feed.header.rss'
   configtable.page_rss_element = configtable.templatepath .. '/' .. 'feed.element.rss'
