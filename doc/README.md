@@ -302,7 +302,6 @@ Here is some options you can change:
   * SEARCH\_BAR: If set to 1, activate a search bar on Makefly. Note that your theme should support search bar!
   * MAX\_RSS: Max RSS posts that would be fetch from your users.
   * ISSO : If set to 1, this activate a comment system on Makefly. Note that your theme should support comment system. Warning: default server is isso.appspot.com which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://code.google.com/p/isso/wiki/Installation "Go to isso webpage for more information") (fr).
-  * ISSO\_CAPTCHA\_THEME (optional): Define a theme regarding [reCaptcha page](https://developers.google.com/recaptcha/docs/customization "More info about reCaptcha themes") for Catpcha in ISSO comment system
   * ISSO\_URL (optional): Define a ISSO server on which send comments. By default **http://posativ.org/isso/**.
   * ISSO\_MAX (optional): Define a limit for displayed comments for ISSO comment system. By default **2**.
   * ELI\_USER: If set, this activate a badge for identica. Note that your theme should support ELI widget. By default this functionality use IDENTICA's API.

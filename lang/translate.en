@@ -23,7 +23,6 @@ ISSO_POWERED = Commenting area powered by
 ISSO_SUBMIT = Submit
 ISSO_YOUR = Your comment
 ISSO_LABEL = Nickname: 
-ISSO_CAPTCHA_ERROR = error in API usage
 ELI_TITLE = Timeline
 ELI_DEFAULT_STATUS = None
 LEGEND_TITLE = Caption

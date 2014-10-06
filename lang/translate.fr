@@ -23,7 +23,6 @@ ISSO_POWERED = Système de commentaire propulsé par
 ISSO_SUBMIT = Soumettre
 ISSO_YOUR = Votre commentaire
 ISSO_LABEL = Pseudonyme : 
-ISSO_CAPTCHA_ERROR = erreur d\'utilisation de l\'API
 ELI_TITLE = Chronologie
 ELI_DEFAULT_STATUS = Aucun
 LEGEND_TITLE = Légende

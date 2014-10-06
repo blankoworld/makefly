@@ -417,15 +417,13 @@ end
 local function processIsso(threads, themerc, isso_css_file, isso_css_filename)
   if config.ISSO and config.ISSO == '1' then
     print (string.format(_("[%s] Comment system"), display_enable))
-    -- Some values that comes from template configuration file
-    local isso_captcha_theme = config.ISSO_CAPTCHA_THEME or themerc['ISSO_CAPTCHA_THEME'] or config.isso_theme
     -- copy isso css file
     table.insert(threads, coroutine.create(function () utils.copyFile(isso_css_file, config.publicpath .. '/' .. isso_css_filename) end))
     replacements['ISSO_CSS'] = isso_css_filename
     -- copy isso javascript
     local template_isso_script = utils.readFile(config.page_isso_script, 'r')
     local isso_script = assert(io.open(config.publicpath .. '/' .. config.isso_jsfilename, 'wb'))
-    local isso_script_substitutions = utils.getSubstitutions(replacements, { ISSO_URL = config.ISSO_URL, ISSO_MAX = config.ISSO_MAX, ISSO_CAPTCHA_THEME = isso_captcha_theme})
+    local isso_script_substitutions = utils.getSubstitutions(replacements, { ISSO_URL = config.ISSO_URL, ISSO_MAX = config.ISSO_MAX})
     local isso_script_content = utils.replace(template_isso_script, isso_script_substitutions)
     isso_script:write(isso_script_content)
     assert(isso_script:close())
