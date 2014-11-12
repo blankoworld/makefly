@@ -1,4 +1,4 @@
 ## ${LINKS_TITLE}
 
-  * [Makefly Blog](http://makefly.depotoi.re "The Makefly Blog!")
+  * [${PROJECTNAME} Blog](${PROJECTURL} "The ${PROJECTNAME} Blog!")
   * [DuckDuckGo Search Engine](http://ddg.gg "DDG Search Engine")

@@ -18,6 +18,11 @@ luarocks install markdown
 
 ]]--
 
+PROJECTNAME = 'Makefly'
+PROJECTURL = 'http://makefly.depotoi.re/'
+GITPROJECT = 'https://github.com/blankoworld/makefly/'
+PROJECTNAMELOWER = string.lower(PROJECTNAME)
+
 package.path = package.path .. ";./lib/?.lua"
 
 require 'lib.init'
@@ -122,7 +127,7 @@ local function backup(args)
   utils.checkDirectory(currentpath .. '/' .. config.backupdir)
   -- create zipfile
   local today = os.date('%Y%m%d', os.time())
-  local filepath = currentpath .. '/' .. config.backupdir .. '/' .. today .. '_makefly.tar' .. config.compression_extension
+  local filepath = currentpath .. '/' .. config.backupdir .. '/' .. today .. string.format('_%s.tar', PROJECTNAMELOWER) .. config.compression_extension
   local to_save = {
     config.staticdir,
     config.dbdir,
@@ -130,14 +135,14 @@ local function backup(args)
     config.specialdir,
     config.tmpldir,
   }
-  local command = 'tar cf - makefly.rc'
+  local command = string.format('tar cf - %s', config.configurationfile)
   for idx, dir in ipairs(to_save) do
     command = command .. ' ' .. dir
   end
   command = command .. string.format('| %s > %s', config.compression_command, filepath)
   local ret = os.execute(command)
   if ret and ret == 0 then
-    print(string.format(_('[%s] Backup: Files successfully saved in %s: makefly.rc, %s, %s, %s, %s and %s'), display_success, config.backupdir, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))
+    print(string.format(_('[%s] Backup: Files successfully saved in %s: %s, %s, %s, %s, %s and %s'), display_success, config.configurationfile, config.backupdir, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))
   else
     error(string.format(_('[%s] Backup failed!'), display_error))
   end
@@ -149,7 +154,7 @@ local function install(args)
   -- replace only "$USER" variable in destination path
   destination = utils.replace(destination, { USER = os.getenv('USER') })
   if destination == nil then
-    error(string.format(_('[%s] No INSTALLDIR found. Please add INSTALLDIR= in your makefly.rc'), display_error))
+    error(string.format(_('[%s] No INSTALLDIR found. Please add INSTALLDIR= in your %s'), display_error, config.configurationfile))
   end
   for idx, dir in pairs({origin, destination}) do
     if lfs.attributes(dir) == nil then
@@ -222,7 +227,7 @@ local function theme(args)
 end
 
 local function version(args)
-  print(string.format(_('Makefly %s using %s'), config.VERSION, _VERSION))
+  print(string.format(_('%s %s using %s'), PROJECTNAME, config.VERSION, _VERSION))
 end
 
 local function doc(args)
@@ -232,6 +237,13 @@ local function doc(args)
   local version = string.format(_('Version %s'), config.VERSION)
   local tocreate = utils.listing(directory, 'md')
   local markdown = require 'markdown'
+  local substitutions = {
+    VERSION = config.VERSION,
+    PROJECTNAME = PROJECTNAME,
+    PROJECTNAMELOWER = PROJECTNAMELOWER,
+    PROJECTURL = PROJECTURL,
+    GITPROJECT = GITPROJECT,
+  }
   for _, path in pairs(tocreate) do
     -- create content for final content
     local final = rope()
@@ -240,11 +252,12 @@ local function doc(args)
     local content = utils.readFile(path, 'r')
     final:push(markdown(content))
     final:push(footer)
+    local res = utils.replace(final:flatten(), substitutions)
     -- write result into a file
     local name = string.gsub(path, "(.*/)(.*)(\.md)", "%2")
     local filepath = directory .. '/' .. name .. config.PAGE_EXT
     local file = assert(io.open(filepath, 'wb'))
-    file:write(final:flatten())
+    file:write(res)
     assert(file:close())
   end
   print(string.format(_('[%s] Built: documentation files.'), display_info))
@@ -304,6 +317,10 @@ end
 local function initializeReplacements(themerc, languagerc, about_file)
   -- Add result to replacements table (to substitute ${VARIABLES} in files)
   replacements = {
+    PROJECTNAME = PROJECTNAME,
+    PROJECTURL = PROJECTURL,
+    GITPROJECT = GITPROJECT,
+    PROJECTNAMELOWER = PROJECTNAMELOWER,
     VERSION = config.VERSION,
     BLOG_TITLE = config.BLOG_TITLE,
     BLOG_DESCRIPTION = config.BLOG_DESCRIPTION,
@@ -719,11 +736,11 @@ commands['createpost'] = {
   launch = function (args) add(args) end
 }
 commands['backup'] = {
-  description = _('make a backup from your current makefly directory'),
+  description = _('make a backup from your blog'),
   launch = function (args) backup(args) end
 }
 commands['install'] = {
-  description = _('install \'pub\' directory into INSTALLDIR directory (set in makefly.rc file)'),
+  description = _(string.format('install \'pub\' directory into INSTALLDIR directory (set in %s.rc file)', PROJECTNAMELOWER)),
   launch = function (args) install(args) end
 }
 commands['migratefrom'] = {
@@ -751,6 +768,7 @@ commands['compile'] = {
 
 -- check configuration files
 local config_default = utils.checkConfig(configfile)
+config_default.configurationfile = string.format('%s.rc', PROJECTNAMELOWER)
 local config_user = utils.checkConfig(config_default.configurationfile)
 config = utils.mergeConfig(config_default, config_user)
 

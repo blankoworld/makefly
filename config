@@ -1,5 +1,4 @@
 VERSION = 0.4-trunk
-configurationfile = makefly.rc
 tmpldir = template
 bindir = bin
 srcdir = src

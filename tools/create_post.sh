@@ -2,13 +2,13 @@
 
 # create_post.sh
 #
-# Permit to create a new post for Makefly
+# Permit to create a new post
 
 #####
 ## LICENSE
 ###
 
-# Makefly, a static weblog engine using a BSD Makefile
+# Makefly, a static weblog engine using Lua
 # Copyright (C) 2012 DOSSMANN Olivier
 # 
 # This program is free software: you can redistribute it and/or modify
