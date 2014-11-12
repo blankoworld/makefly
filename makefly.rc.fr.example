@@ -1,11 +1,11 @@
-BLOG_TITLE = Makefly
-BLOG_SHORT_DESC = Un moteur de blog statique rapide et léger
-BLOG_DESCRIPTION = Makefly est une alternative rapide et légère au moteur de blog statique Nanoblogger. Il tient sa puissance de Lua et des BSD Makefile. Il est fournit sous Licence AGPL.
+BLOG_TITLE = Roadtrip sur le web
+BLOG_SHORT_DESC = Parce que tout est une aventure
+BLOG_DESCRIPTION = Quand vous surfez sur le web, il y a des requins, des vagues et plus encore. Laissez moi vous montrer cela.
 BLOG_LANG = fr
 BLOG_CHARSET = UTF-8
 BLOG_URL = http://localhost/~${USER}
 INSTALLDIR = /home/${USER}/public_html
-RSS_FEED_NAME = Flux RSS Makefly
+RSS_FEED_NAME = Flux RSS du Roadtrip
 MAX_POST = 2
 DATE_FORMAT = %d-%m-%Y à %H:%M
 SHORT_DATE_FORMAT = %m/%Y

@@ -1,6 +1,6 @@
 ## Introduction
 
-This post is here to test future post. If this date: 2038-01-19 04:14:07 is not achieved, Makefly have a bug.
+This post is here to test future post. If this date: 2038-01-19 04:14:07 is not achieved, ${PROJECTNAME} have a bug.
 
 ## Content
 
