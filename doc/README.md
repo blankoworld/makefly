@@ -300,7 +300,7 @@ Here is some options you can change:
   * PUBLISH\_SCRIPT\_NAME: script filename used to send files from **pub** directory to a destination filled in *PUBLISH\_DESTINATION* variable.
   * SEARCH\_BAR: If set to 1, activate a search bar on ${PROJECTNAME}. Note that your theme should support search bar!
   * MAX\_RSS: Max RSS posts that would be fetch from your users.
-  * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is isso.appspot.com which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://code.google.com/p/isso/wiki/Installation "Go to isso webpage for more information") (fr).
+  * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is isso.appspot.com which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://posativ.org/isso/docs/install/ "Go to isso webpage for more information") (fr).
   * ISSO\_URL (optional): Define a ISSO server on which send comments. By default **http://posativ.org/isso/**.
   * ISSO\_MAX (optional): Define a limit for displayed comments for ISSO comment system. By default **2**.
   * ELI\_USER: If set, this activate a badge for identica. Note that your theme should support ELI widget. By default this functionality use IDENTICA's API.
