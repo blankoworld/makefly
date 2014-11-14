@@ -83,6 +83,13 @@ function blog.commentSubstitutions(sub, cfg, title)
     local isso_id = isso_prefix .. '/' .. title
     local isso_content = utils.replace(template_comment, {ISSO_ID=isso_id})
     sub['ISSO_CONTENT'] = isso_content
+    -- process short and extended isso templates. Use previous ISSO_CONTENT value.
+    local template_isso_short = utils.readFile(config.page_isso_short, 'r')
+    local template_isso_extended = utils.readFile(config.page_isso_extended, 'r')
+    local isso_short_content = utils.replace(template_isso_short, sub)
+    local isso_extended_content = utils.replace(template_isso_extended, sub)
+    sub['ISSO_SHORT'] = isso_short_content
+    sub['ISSO_EXTENDED'] = isso_extended_content
   end
   return sub
 end

@@ -338,6 +338,8 @@ local function initializeReplacements(themerc, languagerc, about_file)
     ISSO_SCRIPT = '',
     ISSO_CSS_DECLARATION = '',
     ISSO_CONTENT = '',
+    ISSO_SHORT = '',
+    ISSO_EXTENDED = '',
     ELI_SCRIPT = '',
     ELI_CONTENT = '',
     ELI_CSS = '',
@@ -509,6 +511,7 @@ local function processPosts(threads, header, footer, page_tag_link)
       end
       if today > tonumber(timestamp) then
         table.insert(post_files, {file=v, conf=postConf})
+        -- 'v' is the filename
         local co = coroutine.create(function () blog.createPost(v, postConf, header, footer, { template_file = page_article_single, template_tag_file = page_tag_link }) end)
         table.insert(threads, co)
       end
@@ -592,7 +595,9 @@ local function setDefaultVariables(configtable)
   configtable.page_about_name = 'menu.about' .. configtable.TMPL_EXT
   configtable.page_read_more_name = 'read_more_link' .. configtable.TMPL_EXT
   configtable.page_pagination_name = 'pagination' .. configtable.TMPL_EXT
-  configtable.page_isso = configtable.templatepath .. '/' .. 'isso.article' .. configtable.TMPL_EXT
+  configtable.page_isso = configtable.templatepath .. '/' .. 'isso' .. configtable.TMPL_EXT
+  configtable.page_isso_short = configtable.templatepath .. '/' .. 'isso.short' .. configtable.TMPL_EXT
+  configtable.page_isso_extended = configtable.templatepath .. '/' .. 'isso.extended' .. configtable.TMPL_EXT
   configtable.page_isso_declaration = configtable.templatepath .. '/' .. 'isso_declaration' .. configtable.TMPL_EXT
   configtable.page_isso_css_declaration = configtable.templatepath .. '/' .. 'isso_css_declaration' .. configtable.TMPL_EXT
   configtable.page_isso_css_name = 'isso.css'
@@ -660,6 +665,14 @@ local function compile(args)
   -- Search bar
   processSearchbar()
   -- ISSO system
+  if config.ISSO and config.ISSO == '1' then
+    if themerc['ISSO_SHORT'] then
+      config.page_isso_short = config.themepath .. '/' .. themerc['ISSO_SHORT']
+    end
+    if themerc['ISSO_EXTENDED'] then
+      config.page_isso_extended = config.themepath .. '/' .. themerc['ISSO_EXTENDED']
+    end
+  end
   threads = processIsso(threads, themerc, isso_css_file, isso_css_filename)
   -- Introduction / footer file
   processSpecialFiles()
