@@ -1,4 +1,5 @@
 Current version (0.4-trunk)
+	- AUTO_EDIT option by default
 	- Make Makefly to be a Lua executable
 	- Add new configuration option: AUTO_EDIT
 	- Add publication date on RSS feeds
