@@ -218,15 +218,16 @@ Files saved:
   * src directory
   * the directory that contains the choosen theme (for an example *templates/default/*)
 
-Result: This will create a *tarball* named *YYYYMMDD\_${PROJECTNAMELOWER}.tar.gz* in **mbackup** directory (for an example 20120823\_${PROJECTNAMELOWER}.tar.gz). You can so backup your ${PROJECTNAME} each day for an example.
+Result: This will create a *tarball* named *YYYYmmdd-HM\_${PROJECTNAMELOWER}.tar.gz* in **mbackup** directory (for an example 20120823-1732\_${PROJECTNAMELOWER}.tar.gz). You can so backup your ${PROJECTNAME} each day for an example.
 
 ## Tip
 
 You can customize (in your **${PROJECTNAMELOWER}.rc** file):
 
   * the backup directory by using **BACKUPDIR** option
-  * the compression tool by using **COMPRESS_TOOL** option. For an example with **gzip**.
-  * the backup file extension by using **COMPRESS_EXT**. For an example with **.gz** (don't forget the point char).
+  * the prefix of the name by using **BACKUP\_PREFIX** option
+  * the suffix of the name by using **BACKUP\_SUFFIX** option
+  * the date format using **BACKUP\_FORMAT** option
 
 # Sources
 
@@ -294,6 +295,9 @@ Here is some options you can change:
   * THEME: Name of the theme you want to be used. All themes are available in **template** directory. Each theme have its own directory. For an example, "default" theme have its **template/default** directory.
   * FLAVOR: This name will be used to select a color from your theme (if exists)
   * BACKUPDIR: Name of directory where *backup* command will save all files.
+  * BACKUP\_FORMAT: Date format that would be used for the backup file.
+  * BACKUP\_PREFIX: prefix used for the backup file between the date and the filename.
+  * BACKUP\_SUFFIX: suffix used for the backup file between the filename and the extension.
   * SIDEBAR\_FILENAME: As described, name of sidebar file that would be used to create a sidebar. If you set it to "sidebar" for an example, you have to create a "sidebar.md" file into **special** directory in order to have this sidebar. Note that your theme should support sidebars!
   * SIDEBAR: If set to 1, so activate a sidebar on ${PROJECTNAME}. Note that your theme should support sidebars!
   * PUBLISH\_DESTINATION: Full address from where to send files in order to publish them.
@@ -309,8 +313,6 @@ Here is some options you can change:
   * ELI\_MAX (optional): Permit to choose how many statuses to display. On identica, this couldn't bypass the default 20 items. Default value: 5.
   * ELI\_API (optional) : Access to your StatusNet API system.
   * INSTALLDIR : Permit to choose a target directory when using **./${PROJECTNAMELOWER} install** command (Read more in *Publish result to the web* chapter)
-  * COMPRESS_TOOL (optional) : Shell tool used for backup compression via *backup* command (Cf. *Backup* section). Example : **gzip**.
-  * COMPRESS_EXT (optional) : Backup file extension. Warning: do not forget the point char. Example: **.gz**.
   * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
   * AUTO\_EDIT (optionnel) : Allow to edit automatically posts after their creation. Use the EDITOR variable content to know which editor to use.
 

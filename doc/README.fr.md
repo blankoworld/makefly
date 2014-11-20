@@ -218,15 +218,16 @@ Fichiers sauv&eacute;s :
   * le r&eacute;pertoire src
   * le r&eacute;pertoire contenant le th&egrave;me choisi (par exemple *templates/default/*)
 
-R&eacute;sultat : Ceci cr&eacute;era une *archive* nomm&eacute;e *YYYYMMDD\_${PROJECTNAMELOWER}.tar.gz* (20120823\_${PROJECTNAMELOWER}.tar.gz par exemple) dans le dossier **mbackup**. Vous pouvez ainsi sauvegarder votre ${PROJECTNAME} chaque jour.
+R&eacute;sultat : Ceci cr&eacute;era une *archive* nomm&eacute;e *YYYYmmdd-HM\_${PROJECTNAMELOWER}.tar.gz* (20120823-1735\_${PROJECTNAMELOWER}.tar.gz par exemple) dans le dossier **mbackup**. Vous pouvez ainsi sauvegarder votre ${PROJECTNAME} chaque jour.
 
 ## Astuce
 
 Vous pouvez personnaliser (dans votre fichier **${PROJECTNAMELOWER}**) :
 
   * le dossier de sauvegarde en utilisant l'option **BACKUPDIR**
-  * l'outil de compression en utilisant l'option **COMPRESS_TOOL**, par exemple avec **gzip**
-  * l'extension du fichier de sauvegarde en utilisant l'option **COMPRESS_EXT**, par exemple avec **.gz** (ne pas oublier le point)
+  * le pr&eacute;fixe du fichier de sauvegarde en utilisant l'option **BACKUP\_PREFIX**
+  * le suffixe du fichier de sauvegarde en utilisant l'option **BACKUP\_SUFFIX**
+  * le format de date en utilisant l'option **BACKUP\_FORMAT**
 
 # Sources
 
@@ -296,6 +297,9 @@ Voici quelques options que vous pouvez changer :
   * THEME : Nom du th&egrave;me choisi. Les th&egrave;mes sont disponibles dans le dossier nomm&eacute; **template**. Chaque th&egrave;me poss&egrave;de son propre r&eacute;pertoire. Par exemple, le th&egrave;me *default* poss&egrave;de son propre r&eacute;pertoire **template/default**.
   * FLAVOR: Ce nom sera utilis&eacute; pour choisir la couleur de votre th&egrave;me (si elle existe)
   * BACKUPDIR : Nom du dossier o&ugrave; seront sauv&eacute;s les fichiers r&eacute;sultant de la commande *backup*.
+  * BACKUP\_FORMAT : Format de date utilis&eacute; pour le fichier de sauvegarde.
+  * BACKUP\_PREFIX : pr&eacute;fixe utilis&eacute; pour le fichier de sauvegarde (entre la date et le nom de fichier).
+  * BACKUP\_SUFFIX : suffixe utilis&eacute; pour le fichier de sauvegarde (entre le nom de fichier et l'extension).
   * SIDEBAR\_FILENAME : Comme d&eacute;crit, nom du fichier utilis&eacute; pour la barre lat&eacute;rale. Elle contient des liens et tout un tas d'autres choses. Si vous la param&eacute;trez &agrave; "sidebar.md", par exemple, vous devez cr&eacute;er le fichier dans le r&eacute;pertoire **special** pour obtenir cette barre. &Agrave; noter que votre th&egrave;me doit inclure les barres lat&eacute;rales !
   * SIDEBAR : Mis &agrave; 1 permet d'activer la barre lat&eacute;rale sur ${PROJECTNAME}. &Agrave; noter que votre th&egrave;me doit inclure les barres lat&eacute;rales !
   * PUBLISH\_DESTINATION : Adresse compl&egrave;te du lieu o&ugrave; envoyer les fichiers afin de les publier.
