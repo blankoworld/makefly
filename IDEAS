@@ -22,6 +22,8 @@ Process time:
 - makefly v0.2.1-luaversion:  1000 posts |    1 min 46.42
 - makefly v0.2.2-luaversion:  1000 posts |    1 min 53.44 (all functionnalities)
 - makefly v0.2.2-luaversion: 18251 posts |   46 min 55.05 (all functionnalities)
+- makefly v0.4-trunk:         1000 posts |    0 min 14.208
+- makefly v0.4-trunk:        18251 posts |    5 min 47.91
 
 ## Others
 

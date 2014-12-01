@@ -907,6 +907,10 @@ blockquote {
     border-left: 4px solid rgba(0, 0, 0, 0.1);
 }
 
+div#postsfooter {
+  text-align: center;
+}
+
 /* =Images
 -------------------------------------------------------------- */
 
@@ -1100,7 +1104,7 @@ footer#lamochebarre section ul li {
 	display: inline;
 }
 
-footer#lamochebarre section span.credits {
+footer#lamochebarre section div.credits {
     font-size: 13px;
     font-variant: small-caps;
     display: block;

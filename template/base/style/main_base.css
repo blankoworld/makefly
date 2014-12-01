@@ -286,6 +286,10 @@ body.posts #content, body.tags #content, body.about #content, body.page #content
   border-radius: 7px;
 }
 
+div#postsfooter {
+  text-align: center;
+}
+
 aside#navigation {
   float: right;
   width: 28.7%;

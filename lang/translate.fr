@@ -1,13 +1,14 @@
 HOME_TITLE = Accueil
 POST_LIST_TITLE = Articles
+ALL_POSTS = Tous les articles
 TAG_LIST_TITLE = Mots-clés
 TAG_TITLE = Mot(s)-clé(s)
 PERMALINK_TITLE = lien permanent
 POWERED_BY = Propulsé par
 POSTED = Publié
 ABOUT_TITLE = À propos
-SOURCE_LINK_NAME = Sources disponibles sur
-SOURCE_LINK_TITLE = Le projet Makefly sur Gitorious
+SOURCE_LINK_NAME = Code source
+SOURCE_LINK_TITLE = Voir le code source
 THEME_IS = Le thème est : 
 LINKS_TITLE = Liens
 READ_MORE = Lire la suite

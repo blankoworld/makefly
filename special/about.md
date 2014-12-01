@@ -14,7 +14,7 @@ Tout petit déjà j'avais un sens particulier de l'observation et de la curiosit
 
 > L'informatique !
 
-Mais l'informatique n'est pas la seule passion que j'ai eu, au fil du temps j'ai pratiqué plusieurs sports, eu pour occupation l'aéromodélisme (avion miniatures téléguidés), l'astronomie, etc.
+Mais l'informatique n'est pas la seule passion que j'ai eu, j'ai pratiqué plusieurs sports, eu pour occupation l'aéromodélisme (avion miniatures téléguidés), l'astronomie, etc.
 
 Désormais je pratique le patin à glace, et je continue sans relâche la passion informatique, devenue plus un train de vie qu'une passion. J'en ai d'ailleurs fait un métier.
 
