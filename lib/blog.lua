@@ -147,8 +147,8 @@ function blog.createPost(file, cfg, header, footer, data)
     local post_replacements = {
       TITLE = cfg['TITLE'],
       POST_TITLE = cfg['TITLE'],
-      ARTICLE_CLASS_TYPE = cfg['TYPE'] or '',
-      CONTENT = markdown_content,
+      POST_TYPE = cfg['TYPE'] or '',
+      POST_CONTENT = markdown_content,
       POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. config.PAGE_EXT,
       DATE = os.date(config.DATE_FORMAT, timestamp) or '',
       DATETIME = os.date(config.datetime_format, timestamp) or '',
@@ -165,7 +165,7 @@ function blog.createPost(file, cfg, header, footer, data)
     -- ${VARIABLES} substitution on markdown content
     local flatten_final_content = post:flatten()
     local final_content = utils.replace(flatten_final_content, substitutions)
-    -- First time we replace element, CONTENT will get markdown_content. But markdown_content was not replaced itself with replacements elements. The next line is here to do that
+    -- First time we replace element, POST_CONTENT will get markdown_content. But markdown_content was not replaced itself with replacements elements. The next line is here to do that
     final_content = utils.replace(final_content, substitutions)
     out:write(final_content)
     assert(out:close())
@@ -253,9 +253,9 @@ function blog.createPostForHomepage(file, title, cfg, content, sub, post_templat
         final_content = final_content .. page_read_more
       end
     end
-    local post_content = utils.replace(post_template, {CONTENT=markdown(final_content)})
+    local post_content = utils.replace(post_template, {POST_CONTENT=markdown(final_content)})
     -- complete missing info
-    sub['ARTICLE_CLASS_TYPE'] = cfg['TYPE'] or ''
+    sub['POST_TYPE'] = cfg['TYPE'] or ''
     sub['POST_ESCAPED_TITLE'] = title
     -- add comment block if comment system is activated
     sub = blog.commentSubstitutions(sub, cfg, title)

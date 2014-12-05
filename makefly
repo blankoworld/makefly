@@ -336,7 +336,7 @@ local function initializeReplacements(themerc, languagerc, about_file)
     BLOG_CHARSET = config.BLOG_CHARSET,
     RSS_FEED_NAME = config.RSS_FEED_NAME,
     SIDEBAR = '',
-    ARTICLE_CLASS_TYPE = 'normal',
+    POST_TYPE = 'normal',
     SEARCHBAR = '',
     JSKOMMENT_SCRIPT = '',
     JSKOMMENT_CSS_DECLARATION = '',
