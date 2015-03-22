@@ -33,3 +33,29 @@ blockquote {
   list-style-type: disc;
   margin-left: 25px;
 }
+
+article.box a.image img {
+  position: absolute;
+}
+
+article.box header {
+  position: relative;
+  margin-bottom: 100px;
+}
+
+article.box header h2.title {
+  color: #ffffff;
+}
+
+article.box header span.byline {
+  color: #ffffff;
+  text-align: right;
+}
+
+article.box header span.byline strong {
+  color: #ffffff;
+}
+
+article.box header hr {
+  display: none;
+}
