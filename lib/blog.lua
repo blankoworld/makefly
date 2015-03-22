@@ -279,6 +279,7 @@ end
 -- @param content Content of the post to add in the RSS (if can be included)
 -- @param config Metadata from the post
 -- @param title Title of the post to be saved into temporary directory
+-- @param tmstmp Timestamp of the initial file so that you have the real displayed date
 -- @param template Template of RSS element
 -- @param data.min Number minimum that the post number should have to be on RSS page
 -- @param data.max Number maximum that the post number should have to be on RSS page
@@ -287,7 +288,7 @@ end
 -- @param data.num Number (in the code) of the post
 -- @return data.num which is the number of the RSS
 -------------------------------------------------------------------------------
-function blog.createPostForRSS(content, cfg, title, template, data)
+function blog.createPostForRSS(content, cfg, title, tmstmp, template, data)
   if data.index_nb >= data.min and data.index_nb <= data.max then
     -- create temporary file for RSS
     if data.increment then
@@ -299,7 +300,7 @@ function blog.createPostForRSS(content, cfg, title, template, data)
     local rss_post_html_link = config.BLOG_URL .. '/' .. config.POSTDIR_NAME .. '/' .. title .. config.PAGE_EXT
     -- Change temporarly locale
     assert(os.setlocale('C'))
-    local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
+    local rss_date = os.date('!%a, %d %b %Y %T GMT', tmstmp) or ''
     assert(os.setlocale(oslanguage or en_US.utf-8))
     local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=cfg['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
     assert(rss_file:write(rss_post))
@@ -380,7 +381,7 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
       -- process post to be displayed on HOMEPAGE
       home_index = blog.createPostForHomepage(postfile, title, v['conf'], content, post_substitutions, template.article, { min = home_min, max = home_max, num = home_index, index_nb = index_nb, increment = increment })
       -- process post to be used in RSS file
-      rss_index_nb = blog.createPostForRSS(content, v['conf'], title, rss_element, { min = rss_min, max = rss_max, num = rss_index_nb, index_nb = index_nb, increment = increment })
+      rss_index_nb = blog.createPostForRSS(content, v['conf'], title, timestamp, rss_element, { min = rss_min, max = rss_max, num = rss_index_nb, index_nb = index_nb, increment = increment })
       -- incrementation
       index_nb = index_nb + 1
       -- Page process
