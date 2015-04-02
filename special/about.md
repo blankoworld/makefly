@@ -1,6 +1,6 @@
 ## About
 
-This about page is included into *static* directory.
+This about page is included into *special* directory.
 
 Just edit *about.md* file to change this text.
 
