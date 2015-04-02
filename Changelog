@@ -1,5 +1,9 @@
 Current version (0.4-trunk)
 	- Change Jskomment system to Isso one (Cf. http://posativ.org/isso/)
+	- Add some option on backup tool: prefix, suffix and date format. Delete
+	other one like: compress tool and extension
+	- Fix a problem with titles. Now we can display japanese titles
+	- AUTO_EDIT option by default
 	- Make Makefly to be a Lua executable
 	- Add new configuration option: AUTO_EDIT
 	- Add publication date on RSS feeds

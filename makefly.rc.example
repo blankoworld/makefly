@@ -7,6 +7,7 @@ BLOG_URL = http://localhost/~${USER}
 INSTALLDIR = /home/${USER}/public_html
 RSS_FEED_NAME = Roadtrip RSS feed
 MAX_POST = 2
+AUTO_EDIT = 1
 DATE_FORMAT = %Y-%m-%d at %H:%M
 SHORT_DATE_FORMAT = %Y/%m
 SIDEBAR = 0

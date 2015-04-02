@@ -124,10 +124,13 @@ local function list(args, commands)
 end
 
 local function backup(args)
-  utils.checkDirectory(currentpath .. '/' .. config.backupdir)
+  utils.checkDirectory(currentpath .. '/' .. config.BACKUPDIR)
   -- create zipfile
-  local today = os.date('%Y%m%d', os.time())
-  local filepath = currentpath .. '/' .. config.backupdir .. '/' .. today .. string.format('_%s.tar', PROJECTNAMELOWER) .. config.compression_extension
+  local today = os.date(config.BACKUP_FORMAT, os.time())
+  local prefix = (config.BACKUP_PREFIX and config.BACKUP_PREFIX .. '_') or ''
+  local suffix = (config.BACKUP_SUFFIX and '_' .. config.BACKUP_SUFFIX) or ''
+  local basename = string.format('_%s%s%s.tar', prefix, PROJECTNAMELOWER, suffix)
+  local filepath = currentpath .. '/' .. config.BACKUPDIR .. '/' .. today .. basename .. config.compression_extension
   local to_save = {
     config.staticdir,
     config.dbdir,
@@ -142,7 +145,7 @@ local function backup(args)
   command = command .. string.format('| %s > %s', config.compression_command, filepath)
   local ret = os.execute(command)
   if ret and ret == 0 then
-    print(string.format(_('[%s] Backup: Files successfully saved in %s: %s, %s, %s, %s, %s and %s'), display_success, config.configurationfile, config.backupdir, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))
+    print(string.format(_('[%s] Backup: Files successfully saved in %s: %s, %s, %s, %s, %s and %s'), display_success, config.BACKUPDIR, config.configurationfile, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))
   else
     error(string.format(_('[%s] Backup failed!'), display_error))
   end
@@ -333,7 +336,7 @@ local function initializeReplacements(themerc, languagerc, about_file)
     BLOG_CHARSET = config.BLOG_CHARSET,
     RSS_FEED_NAME = config.RSS_FEED_NAME,
     SIDEBAR = '',
-    ARTICLE_CLASS_TYPE = 'normal',
+    POST_TYPE = 'normal',
     SEARCHBAR = '',
     ISSO_SCRIPT = '',
     ISSO_CSS_DECLARATION = '',

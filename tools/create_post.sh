@@ -81,8 +81,7 @@ timestamp=`date +'%s'`
 
 # code retrived from Nanoblogger translit_text method with a little improvement for double "_"
 LC_ALL='C' # set local to C in order to take count the accentued chars on french environment
-nonascii="${title//[a-zA-Z0-9_-]/}" # isolate all non-printable/non-ascii characters
-new_name=$(echo "${title:0:$LIMIT}" |sed -e "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/; s/[\`\~\!\@\#\$\%\^\*\(\)\+\=\{\}\|\\\;\:\'\"\,\<\>\/\?]//g; s/ [\&] / and /g; s/^[ ]//g; s/[ ]$//g; s/[\.]/_/g; s/\[//g; s/\]//g; s/ /_/g; s/[$nonascii ]/_/g" |sed -e '/[\_\-]*$/ s///g; /[\_\-]$/ s///g' |sed -e 's/__/_/g')
+new_name=$(echo "${title:0:$LIMIT}" |sed -e "s/[\`\~\!\@\#\$\%\^\*\(\)\+\=\{\}\|\\\;\:\'\"\,\<\>\/\?]//g; s/ [\&] / and /g; s/^[ ]//g; s/[ ]$//g; s/[\.]/_/g; s/\[//g; s/\]//g; s/ /_/g" |sed -e '/[\_\-]*$/ s///g; /[\_\-]$/ s///g' |sed -e 's/_\+/_/g'| tr [:upper:] [:lower:])
 
 # db filename
 dbfile="${DBDIR}/${timestamp},${new_name}.mk"
