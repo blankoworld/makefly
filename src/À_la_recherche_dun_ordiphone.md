@@ -2,7 +2,7 @@
 
 Quel ordiphone (téléphone mobile) utilisez-vous ? Pour quelle raison l'avez-vous choisi ? Êtes-vous sûrs que **vous** l'avez choisi ? N'est-ce pas les autres qui ont très fortement suggéré le choix de celui que vous détenez ? Ne serait-ce que par le soi-disant prix intéressant, le fait qu'on vous fait une offre - LOL - sur un abonnement, etc. ?
 
-De mon côté, j'ai - évidemment - choisi un mobile proposant un système d'exploitation GNU/Linux Debian pour son ouverture et le fait de pouvoir développer des applications librement. J'ai nommé : [mon Nokia N900](https://olivier.dossmann.net/wiki/materiel/nokia_n900 "En savoir plus sur les raisons qui me font apprécier le N900").
+De mon côté, j'ai - évidemment - choisi un mobile proposant un système d'exploitation GNU/Linux pour son ouverture et le fait de pouvoir développer des applications librement. J'ai nommé : [mon Nokia N900](https://olivier.dossmann.net/wiki/materiel/nokia_n900 "En savoir plus sur les raisons qui me font apprécier le N900").
 
 C'est un véritable bijou de 600 euros (il y a 6 ans et demi).
 
@@ -24,7 +24,7 @@ L'[Open C de chez ZTE](http://www.ztefrance.com/smartphones/open-c/ "Découvrir 
 
 Plusieurs choses m'ennuient dans ce téléphone : 
 
-  * Comme c'est Firefox OS, cela demande un peu d'avoir le Web fréquemment. Ce qui, avec les téléphones actuels n'est pas si choquant
+  * Comme c'est Firefox OS, cela demande un peu d'avoir le Web fréquemment. Ce qui, avec les téléphones actuels n'est pas si choquant. Edit: On me dit que ce n'est pas pire qu'un N900, donc cela s'équivaut
   * L'appareil photo ne fait que 2 millions de pixels. J'aimerais plus car je prévois de l'utiliser très fortement les prochains temps.
   * Des bruits de couloir expliquent qu'un nouveau modèle de chez ZTE va sortir, plus performant. Ce qui explique que certains revendeurs vous *jettent* le téléphone à 50 euros environ. Vraiment pas cher !
   * Pas de clavier comme le N900
