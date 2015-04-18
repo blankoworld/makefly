@@ -36,20 +36,34 @@ So you just have to customize the theme. Pay attention to values that are replac
 
 ## Adapt an existing template (Example)
 
+For lazy people, you can choose a template on the Web and adapt it to ${PROJECTNAME} so that it makes less work to create a new template.
+
+I suggest you either to see a video showing how to adapt Monochromed template to ${PROJECTNAME} or to read explanation about it.
+
+### Learn with a video
+
+As a video is more verbose than a lot of explanation I make [a video that show you how to search/download/adapt an existing template to ${PROJECTNAME}](${PROJECTURL}monochromed.mkv "How to adapt a template to ${PROJECTNAME}") (30 MB and 30 minutes approximatively).
+
+### Learn with explanations (you can compare with the video)
+
 Sometimes, you're a lazy person. And I too. So you prefer taking other people's templates! I so use [a website template](http://templated.co/ "Choose a template on templated.co website").
 
 Let's have a look to this template : [http://templated.co/monochromed](http://templated.co/monochromed "Discover the template called 'monochromed'"). We will use it for our tutorial.
 
 I download the template, extract it in **template/monochromed** (in ${PROJECTNAMELOWER} directory).
 
-Then we have 2 tasks:
+Then we have 2 tasks so that the template works on ${PROJECTNAME}:
 
-  * Insert some specific word that would be replaced by our blog content
-  * Make the structure of a template
+  1. Insert some keys (specific words) that insert our blog content into
+  2. Create the template's structure
 
-The first task is explained in **Replacement values** section of the current document.
+A list of keys is available in **Replacement values** section of the current document. This is for the **first task**.
 
-The second one is explained in **Template ' structure** section.
+The **second one** is explained in **Template ' structure** section.
+
+But have a look to the following steps to understand a template migration procedure.
+
+First we TODO TODO TODO
 
 Then I suggest you to read the following example to understand how to proceed.
 
