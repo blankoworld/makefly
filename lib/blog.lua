@@ -147,6 +147,7 @@ function blog.createPost(file, cfg, header, footer, data)
     local post_replacements = {
       TITLE = cfg['TITLE'],
       POST_TITLE = cfg['TITLE'],
+      POST_DESCRIPTION = cfg['DESCRIPTION'],
       POST_TYPE = cfg['TYPE'] or '',
       POST_CONTENT = markdown_content,
       POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. config.PAGE_EXT,
