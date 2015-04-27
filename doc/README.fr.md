@@ -31,7 +31,7 @@ Il propose les fonctionnalités suivantes :
 
 En quelques &eacute;tapes voici comment installer la derni&egrave;re version (en d&eacute;veloppement) : 
 
-    sudo apt-get install lua5.1 lua-filesystem lua-markdown
+    sudo apt-get install lua5.1 lua-filesystem
     curl ${GITPROJECT}archive/master.zip
     unzip master.zip
     cd makefly-master
@@ -50,20 +50,19 @@ ${PROJECTNAME} d&eacute;pend des &eacute;l&eacute;ment suivants :
 
   * lua 5.1 ou plus r&eacute;cent
   * lua-filesystem
-  * lua-markdown
 
 Ainsi utilisez le gestionnaire de paquet de votre distribution pour les installer. Par exemple sur Debian et d&eacute;riv&eacute;es, ce serait : 
 
-    apt-get install lua5.1 lua-filesystem lua-markdown
+    apt-get install lua5.1 lua-filesystem
 
 Pour d'autres distributions, regardez du c&ocirc;t&eacute; des forums, d'IRC et/ou de la communaut&eacute; de votre distribution. Ils seront heureux de vous aider.
 
 ### Autre m&eacute;thode pour les dépendances
 
-Si votre distribution ne propose pas les paquets *lua-filesystem* et/ou *lua-markdown*, vous pouvez tenter d'installer **luarocks** puis installer les d&eacute;pendances de la mani&egrave;re suivante : 
+Si votre distribution ne propose pas le paquet *lua-filesystem*, vous pouvez tenter d'installer **luarocks** puis installer les d&eacute;pendances de la mani&egrave;re suivante : 
 
     sudo apt-get install luarocks
-    luarocks install lua-filesystem lua-markdown
+    luarocks install lua-filesystem
 
 Et le tour est jou&eacute; !
 
