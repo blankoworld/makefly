@@ -4,6 +4,22 @@
 
 Je suis Olivier DOSSMANN. Pour plus d'informations à mon sujet, je vous invite à lire [ma page personnelle](https://olivier.dossmann.net/ "Se rendre sur la page d'accueil d'Olivier DOSSMANN").
 
+### Blog amis
+
+  * [IRPDEV](http://blog.irpdev.fr/ "Le blog d'IRPDEV")
+  * [Lukc](http://lukc.upyum.com/ "Page de Lukc")
+  * [Deber](http://oceamer.com/~interlude/ "Journal du projet de Deber")
+  * [mart-e](http://mart-e.be/ "about life, linux and everything")
+  * [Vinilox](http://vinilox.eu/ "Le blog de Vinilox")
+  * [Postblue](http://postblue.info/ "Le blog de Postblue")
+  * [BlogiGor](https://id-libre.org/ "blogiGor|traces éphémères")
+  * [Halpanet](http://www.halpanet.org/ "Découvrir la liberté informatique avec Halpanet")
+  * [fabienwang](http://fabienwang.eliteheberg.fr/ "Adepte et développeur de logiciels Libres")
+  * [Schoewilliam](http://schoewilliam.fr/ "Carnet web d'un habitant de la banquise GNU/Linuxienne.")
+  * [L'appel du Gnou](http://blog.wolf.am/ "Le blog d'un vadrouilleur libre, explorateur de gnu/linux et d'autres horizons")
+  * [Porneia delights](http://porneia.free.fr/pub/ "I used to be schizophrenic but now we are going much better. We are the Porneia delights. We are persistent and reluctant. We also do not really come from outer space.")
+
+
 ### Me contacter
 
 Écrivez moi à : olivier+contact [CHEZ] dossmann [POINT] net
