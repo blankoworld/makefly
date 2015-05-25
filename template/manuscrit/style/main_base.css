@@ -91,9 +91,9 @@ html {
 
 #content {
   width: 100%;
-  margin: 15px 0 0 0;
+  margin: 15px 0 35px 0;
   background-color: transparent;
-  font-size: 20pt;
+  font-size: 16pt;
 }
 
 #content article {
@@ -101,7 +101,6 @@ html {
   margin-bottom: 15px;
   padding: -1px;
   border-radius: 7px;
-  font-size: 20pt;
 }
 
 #content hr {
@@ -175,7 +174,6 @@ form#search input#validate_button {
 
 footer p#top {
   text-align: center;
-  font-family: Georgia, sans-serif;
 }
 
 /* ==========================================================================
@@ -198,18 +196,16 @@ body {
   padding: 1em;
   color: #112233;
   background-color: #ffffff;
-  font-family: Georgia, sans-serif;
   border: 1px solid #eee;
   border-right: 3px solid #707070;
   border-bottom: 3px solid #707070;
-  font-family: 'manuscrit';
+  font-family: Georgia, sans-serif;
 }
 
 nav#main {
   height: auto;
   width: 100%;
   padding: 0;
-  font-family: Georgia, sans-serif;
   font-size: x-small;
   f\ont-size: small;
 }
@@ -246,12 +242,22 @@ header h1 {
   margin: 0;
   padding: 0;
   font-size: 6em;
+  font-family: 'manuscrit';
 }
 
 article time {
   display: block;
   text-align: right;
   font-size: 12pt;
+}
+
+article header {
+  font-family: 'manuscrit';
+}
+
+article > h1, h2, h3, h4, h5, h6 {
+  font-family: 'manuscrit';
+  text-decoration: underline;
 }
 
 article header h1 {
@@ -290,22 +296,24 @@ article.post h3 {
 }
 
 article.post h4 {
-  color: lightgreen;
+  color: green;
+}
+
+article.post h5 {
+  color: blue;
+}
+
+article.post h6 {
+  color: lightpink;
 }
 
 article div.read_more {
-  font-family: Georgia, sans-serif;
-  font-size: 18pt;
+  font-size: 16pt;
   text-align: right;
 }
 
 article div.read_more a:after {
   content: '> ',
-}
-
-#content {
-  margin-bottom: 35px;
-  float: left;
 }
 
 #content > * {
@@ -318,12 +326,22 @@ article div.read_more a:after {
 
 #content h2 {
   font-size: 24pt;
-  text-decoration: underline;
 }
 
 #content h3 {
   font-size: 22pt;
-  text-decoration: underline;
+}
+
+#content h4 {
+  font-size: 20pt;
+}
+
+#content h5 {
+  font-size: 18pt;
+}
+
+#content h6 {
+  font-size: 16pt;
 }
 
 #content p {
@@ -347,7 +365,6 @@ body.posts #content, body.tags #content, body.about #content, body.page #content
 
 div#postsfooter {
   text-align: center;
-  font-family: Georgia, sans-serif;
   font-size: 16pt;
 }
 
@@ -358,7 +375,6 @@ footer {
   bottom: 0;
   padding: 0;
   text-align: center;
-  font-family: Georgia, sans-serif;
   clear: both;
 }
 
@@ -387,7 +403,6 @@ section.permalink {
 
 section.comment {
   display: none;
-  font-family: Georgia, sans-serif;
   font-size: 12pt;
 }
 
