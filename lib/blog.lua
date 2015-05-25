@@ -144,6 +144,7 @@ function blog.createPost(file, cfg, header, footer, data)
     -- keywords
     local keywords = blog.getKeywords(cfg)
     -- local replacements
+    assert(os.setlocale(oslanguage or en_US.utf-8))
     local post_replacements = {
       TITLE = cfg['TITLE'],
       POST_TITLE = cfg['TITLE'],
