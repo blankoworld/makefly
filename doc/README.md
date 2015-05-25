@@ -121,9 +121,29 @@ Note that ${PROJECTNAME} use the [markdown format](http://daringfireball.net/pro
 
 **Don't forget to edit the file that the './${PROJECTNAMELOWER} add' command return.**
 
-### Static files
+### Static content (pictures, videos, PDF files, etc.)
 
-If you want to add some static files, just add them to the *static* directory. They will be copied in destination directory.
+Sometimes you want to share some files as photos, demonstration, shows, etc. *static* directory exists for this kind of use. Each file that is in this directory will be copied in the result directory.
+
+Example:
+
+  * We created *static/makefly.svg* file
+  * After blog's compilation: *pub/makefly.svg* file exists
+
+It works for each kind of file in this *static* directory.
+
+### Static pages
+
+Sometimes you'd prefer to add **static** pages,  for an example legal notices.
+
+For this, create **pages** directory in the ${PROJECTNAME}'s root. Then add some files that contains Markdown content with **.md** file extension.
+
+Example:
+
+  * We created *pages/notices.md* file
+  * After blog's compilation: *pub/mentions.html* file exists
+
+This allow you to create a full website only with static pages.
 
 ### The 'special' directory
 

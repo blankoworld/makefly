@@ -24,7 +24,6 @@ First you need to install dependancies. Search these elements on your system:
 
   * lua 5.1
   * lua filesystem
-  * lua markdown
 
 Then you need to **copy** default configuration (*makefly.rc.example*) to the **makefly.rc** file. For an example:
 
@@ -46,7 +45,6 @@ Il faut avant tout installer les dépendances du projet. Cherchez les éléments
 
   * lua 5.1
   * lua filesystem
-  * lua markdown
 
 Puis vous devez **copier** la configuration par défaut (*makefly.rc.example*) vers le fichier **makefly.rc**. Par exemple : 
 

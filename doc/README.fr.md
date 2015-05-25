@@ -121,9 +121,29 @@ Il est &agrave; noter que ${PROJECTNAME} utilise [le format markdown](http://dar
 
 **N'oubliez pas d'&eacute;diter le fichier renseign&eacute; par la commande './${PROJECTNAMELOWER} add'.**
 
-### Fichiers statiques
+### Contenu statique (photos, vidéos, fichiers PDF, etc.)
 
-Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans le dossier *static*. Ils seront copiés dans le dossier de destination.
+Parfois on souhaite partager des fichiers tels quels, que ce soit des images, des démonstrations, des présentations, etc. Il existe pour cela le dossier *static*. Tout fichier déposé dans ce dossier sera copié dans le dossier de destination.
+
+Exemple : 
+
+  * Nous possédons le fichier *static/makefly.svg*
+  * Après compilation du blog, nous avons un fichier *pub/makefly.svg*
+
+Cela fonctionne donc pour tout type de fichier contenu dans ce dossier.
+
+### Pages statiques
+
+Parfois on aimerait ajouter à son blog quelques pages dites **statiques**. Par exemple les mentions légales.
+
+Pour cela, créez le dossier *pages* à la racine de votre projet ${PROJECTNAME}. Puis ajoutez des fichiers contenant du texte au format Markdown dont l'extension est **.md**.
+
+Exemple : 
+
+  * Nous créeons le fichier *pages/mentions.md*
+  * Après compilation du blog, nous avons un fichier *pub/mentions.html*
+
+Ceci vous permet de créer un site web complet avec que des pages statiques.
 
 ### Le dossier 'special'
 

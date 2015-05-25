@@ -121,6 +121,12 @@ article h1 {
   text-align: left;
 }
 
+article p.description {
+  text-align: center;
+  font-size: 80%;
+  margin: 0;
+}
+
 .pagination {
 }
 
