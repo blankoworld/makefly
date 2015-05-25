@@ -1,0 +1,21 @@
+    <article class="post ${POST_TYPE}" id="post-${POST_ESCAPED_TITLE}">
+      <header>
+        <p><time class="entry-date" datetime="${DATETIME}">${DATE}</time></p>
+        <h1 class='title'><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${POST_TITLE}</a></h1>
+	      <p class='description'>${POST_DESCRIPTION}</p>
+      </header>
+      ${POST_CONTENT}
+      <footer>
+        <section class="tags">
+          <p>${TAG_TITLE}&#8239;: ${TAG_LINKS_LIST}</p>
+        </section>
+        <section class="permalink">
+          <p><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${PERMALINK_TITLE}</a></p>
+        </section>
+      </footer>
+      <section class="comment" id="comment-${POST_ESCAPED_TITLE}">
+        <a href="" id="comment-${POST_ESCAPED_TITLE}"></a>
+        ${JSKOMMENT_CONTENT}
+      </section>
+      <hr />
+    </article>
