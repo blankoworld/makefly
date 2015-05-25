@@ -2,51 +2,21 @@
   <header class="major"><h2>À propos</h2></header>
   <section class="box">
 
-Que serait un site personnel sans présentation de soi et une ribambelle de phrases commençant par "moi je personnellement moi même estime que je crois que je ...". Bref vous avez compris que mon esprit est aussi tordu que l'introduction de cette page.
-
-**NB** : Si vous cherchez des **mentions légales**, c'est en bas de cette page que vous les trouverez !
-
-### Présentation
-
-Je me présente, Olivier DOSSMANN, auteur de ce joueb / blog. Mais ça vous l'avez déjà deviné !
-
-Tout petit déjà j'avais un sens particulier de l'observation et de la curiosité pour ces êtres que nous voyons souvent au quotidien : les humains / hommes. Au fil du temps j'ai pu aiguiser cette curiosité à travers divers loisirs et passions, pour finalement m'accrocher énormémemnt à une seule ... 
-
-> L'informatique !
-
-Mais l'informatique n'est pas la seule passion que j'ai eu, j'ai pratiqué plusieurs sports, eu pour occupation l'aéromodélisme (avion miniatures téléguidés), l'astronomie, etc.
-
-Désormais je pratique le patin à glace, et je continue sans relâche la passion informatique, devenue plus un train de vie qu'une passion. J'en ai d'ailleurs fait un métier.
-
-Vous pouvez visualiser quelques vidéos de ma façon particulière de patiner sur [Dépotoire](http://f.depotoi.re/videos/olivier/patinoire/ "Visualiser des vidéos de patinage d'Olivier").
-
-### Métier
-
-Oh bien sûr je suis encore très jeune, donc je ne pourrais pas utiliser le mot "informaticien de carrière". Mais voici quelques entreprises où je suis allé : 
-
-  * **PowerLinux.fr** où j'étais développeur d'applications de novembre 2007 à mars 2009. Je m'occupais surtout de tout ce qui est documentation, organisation, sites webs, mais aussi un projet de gestion de parc d'appareils médicaux. C'était un travail parfois bien compliqué du fait des dates d'échéance de rendu de projet, mais il y avait une ambiance qui me plaîsait et j'apprenais énormément de choses, je ne remercierais jamais assez PowerLinux.fr pour cela.
-  * **Wensson** où j'étais opérateur informatique d'août 2009 à mars 2010. Je m'occupais de l'ensemble du pôle informatique de l'entreprise, des câbles aux postes informatiques en passant par les logiciels et diverses applications créées en fonction du besoin.
-  * [TeMPO Consulting](http://tempo-consulting.fr "Visiter la page d'accueil du site TeMPO Consulting") où je suis actuellement chargé de faire du développement logiciel sur OpenERP, un progiciel de gestion informatisé. OpenERP est sous licence libre, est disponible gratuitement sur Internet et génère un écosystème particulier pour les entreprises utilisant des outils libres. Je vous incite vivement à rejoindre le [site officiel d'OpenERP](http://openerp.com/ "Se rendre sur la page d'accueil d'OpenERP") pour en savoir plus à ce sujet.
-
-### CV
-
-Peut être penserais je un jour à vous confier mon CV, j'avoue ne jamais avoir pensé à en créer un sur le net. Quand on a déjà un travail, avons nous besoin d'un CV ?
+Je suis Olivier DOSSMANN. Pour plus d'informations à mon sujet, je vous invite à lire [ma page personnelle](https://olivier.dossmann.net/ "Se rendre sur la page d'accueil d'Olivier DOSSMANN").
 
 ### Me contacter
 
-Si l'un d'entre vous voudrait me joindre malgré mes pics de folies aiguës et mon humour décallé, je vous invite à utiliser l'une des méthodes cités [sur la page prévue à cet effet pour me joindre](http://m.b4n.fr/).
+Écrivez moi à : olivier+contact [CHEZ] dossmann [POINT] net
 
-### Portedesetoiles.NET
+### Projet Stargate (série TV)
 
-Il y a de cela quelques années, ayant suivi l'épopée des plusieurs héros télévisés dans la série Stargate SG-1, je m'étais mis en tête de créer un site proposant de nombreuses informations sur Stargate SG-1. Au fur et à mesure le temps filait et je ne pouvais pas trop avancer le site.
-
-Pour l'heure il est abandonné, mais j'ai toujours espoir de trouver des personnes intéressées par la création d'une base de données et/ou site sur Stargate.
+Si vous aussi êtes passionnés par la série TV Stargate, je vous invite à me joindre au sujet d'un projet d'une plateforme permettant de receuillir des informations sur la série par le biais de requêtes (par exemple une API).
 
 ATTENTION, **le but n'est pas de remplir** la base de données, **mais de la créer**. En somme je cherche déjà à pouvoir choisir une structure correcte.
 
-Il faut savoir que je possède une bonne quantité de données au travers divers magazines, et que j'ai déjà procédé à diverses choses pour l'organisation du site internet. Simplement le temps me manque.
+Il faut savoir que je possède une bonne quantité de données au travers divers magazines, et que j'ai déjà procédé à diverses choses pour l'organisation du site internet. Simplement il me manque une personne au minimum pour mener à bien le projet.
 
-J'invite tout ceux qui seraient intéressés de me joindre via l'adresse courriel citée plus haut, mais également à visionner l'ancien site : [Portedesetoiles.NET, ancienne mouture](http://sitealpha.portedesetoiles.net/ "Visiter l'ancien site Portedesetoiles.NET").
+J'invite tout ceux qui seraient intéressés de me joindre via l'adresse courriel citée plus haut.
 
 ### Mentions légales
 
