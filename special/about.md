@@ -8,7 +8,8 @@ Je suis Olivier DOSSMANN. Pour plus d'informations à mon sujet, je vous invite 
 
   * [IRPDEV](http://blog.irpdev.fr/ "Le blog d'IRPDEV")
   * [Lukc](http://lukc.upyum.com/ "Page de Lukc")
-  * [Deber](http://oceamer.com/~interlude/ "Journal du projet de Deber")
+  * [Deber](http://oceamer.com/ "Page personnelle de Denis BERNARD")
+  * [Chris](http://chris.autre.net/ "Blog de Chris")
   * [mart-e](http://mart-e.be/ "about life, linux and everything")
   * [Vinilox](http://vinilox.eu/ "Le blog de Vinilox")
   * [Postblue](http://postblue.info/ "Le blog de Postblue")
