@@ -22,7 +22,7 @@ Et finalement j'ai remis les clés publiques sur le serveur en copiant les id_rs
 
 ### Et les clés à Blanko dans tout ça ?
 
-Il pense qu'il serait intéressant de vous donner ses clés publiques, à tout hasard, voici un lieu où vous pourrez en disposer sans commune mesure : [Portedesetoiles, l'espace de stockage de Blanko](http://vampiris.me/fichiers/cles/blanko/ "Découvrir les clés publiques de Blanko").
+Il pense qu'il serait intéressant de vous donner ses clés publiques, à tout hasard, voici un lieu où vous pourrez en disposer sans commune mesure : [Portedesetoiles, l'espace de stockage de Blanko](https://olivier.dossmann.net/fichiers/cles/olivier/ "Découvrir les clés publiques de Blanko").
 
 Prenez en soin, et ne faites pas de bêtises !
 
