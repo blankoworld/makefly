@@ -99,7 +99,6 @@ html {
 #content article {
   border: 1px solid transparent;
   margin-bottom: 15px;
-  padding: -1px;
   border-radius: 7px;
 }
 
@@ -359,7 +358,6 @@ article div.read_more a:after {
 body.posts #content, body.tags #content, body.about #content, body.page #content {
   border: 1px solid transparent;
   margin-bottom: 15px;
-  padding: -1px;
   border-radius: 7px;
 }
 
