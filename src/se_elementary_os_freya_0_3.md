@@ -4,7 +4,7 @@
 
 **Version** : 64 bits
 
-**Site web** : [http://elementary.io](Elementary OS "Se rendre sur le site officiel d'Elementary OS")
+**Site web** : [Elementary](http://elementary.io "Se rendre sur le site officiel d'Elementary OS")
 
 **Méthode d'installation testée** : Clé USB Bootable - en utilisant Unetbootin et l'image officielle du CD
 

@@ -4,6 +4,7 @@ BLOG_DESCRIPTION = Blog d'Olivier : récits et nouvelles touchant de près ou de
 BLOG_LANG = fr
 BLOG_CHARSET = UTF-8
 BLOG_URL = https://olivier.dossmann.net/blog
+#BLOG_URL = file:///home/olivier/projets/makefly/pub
 BLOG_AUTHOR = Olivier DOSSMANN
 BLOG_KEYWORDS = olivier,dossmann,blog,joueb,personnel,logiciel,libre,free,software,fantasmablankoique,fantasme,web,linux,bsd,film,livre,matériel,cinéma,nouveau,nouveautés
 INSTALLDIR = ../blog
