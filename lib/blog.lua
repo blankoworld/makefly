@@ -70,6 +70,18 @@ function blog.getKeywords(postconfig)
 end
 
 -------------------------------------------------------------------------------
+-- Get the webpage name without reserved chars and with its extension
+-- @param name Initial name of the page
+-- @param extension extension you want to add to the page
+-- @return a string of your page's name and its extension
+-------------------------------------------------------------------------------
+function blog.getPageName(name, extension)
+  local page_base = utils.keepUnreservedCharsAndDeleteDuplicate(name)
+  local result = page_base .. extension
+  return result
+end
+
+-------------------------------------------------------------------------------
 -- Add specific comments substitutions (JSKOMMENT_CONTENT variable)
 -- @param sub Substitutions table
 -- @param config Post configuration table
@@ -194,7 +206,7 @@ function blog.createTagLinks(post_tags, file)
     if k > 1 then
       result = result .. ', '
     end
-    local tag_page = string.gsub(v, '%s', '_') .. config.PAGE_EXT
+    local tag_page = blog.getPageName(v, config.PAGE_EXT)
     result = result .. utils.replace(template, {TAG_PAGE=tag_page, TAG_NAME=v})
   end
   return result
@@ -535,7 +547,7 @@ function blog.createTagIndex(path, header, footer, data)
   -- browse all tags
   local taglist_content = ''
   for tag, posts in utils.pairsByKeys(tags) do
-    local tag_page = string.gsub(tag, '%s', '_') .. config.PAGE_EXT
+    local tag_page = blog.getPageName(tag, config.PAGE_EXT)
     taglist_content = taglist_content .. utils.replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
     blog.createTag(config.tagpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts, header, footer)
   end

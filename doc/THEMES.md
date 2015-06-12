@@ -44,6 +44,8 @@ I suggest you either to see a video showing how to adapt Monochromed template to
 
 As a video is more verbose than a lot of explanation I make [a video that show you how to search/download/adapt an existing template to ${PROJECTNAME}](${PROJECTURL}monochromed.mkv "How to adapt a template to ${PROJECTNAME}") (30 MB and 30 minutes approximatively).
 
+NB: This video can be seen with [VLC media player](https://www.videolan.org/vlc/ "Download VLC").
+
 ### Learn with explanations (you can compare with the video)
 
 Sometimes, you're a lazy person. And I too. So you prefer taking other people's templates! I so use [a website template](http://templated.co/ "Choose a template on templated.co website").
