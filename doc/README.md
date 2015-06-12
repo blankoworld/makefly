@@ -31,7 +31,7 @@ It gives these functionnalities:
 
 In some short steps, here is how to install the last version (current development):
 
-    sudo apt-get install lua5.1 lua-filesystem lua-markdown
+    sudo apt-get install lua5.1 lua-filesystem
     curl ${GITPROJECT}archive/master.zip
     unzip master.zip
     cd makefly-master
@@ -50,20 +50,19 @@ Some programs on which ${PROJECTNAME} depends:
 
   * lua 5.1 and earlier
   * lua-filesystem
-  * lua-markdown
 
 So use your distribution package manager to install them. For an example on Debian and derivated, it would be:
 
-    apt-get install lua5.1 lua-filesystem lua-markdown
+    apt-get install lua5.1 lua-filesystem
 
 For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
 
 ### Others methods to install dependancies
 
-If your distribution doesn't have *lua-filesystem* and/or *lua-markdown*, you can attempt to install **luarocks** then install dependancies as:
+If your distribution doesn't have *lua-filesystem*, you can attempt to install **luarocks** then install dependancies as:
 
     sudo apt-get install luarocks
-    luarocks install lua-filesystem lua-markdown
+    luarocks install lua-filesystem
 
 That's all!
 
@@ -122,9 +121,29 @@ Note that ${PROJECTNAME} use the [markdown format](http://daringfireball.net/pro
 
 **Don't forget to edit the file that the './${PROJECTNAMELOWER} add' command return.**
 
-### Static files
+### Static content (pictures, videos, PDF files, etc.)
 
-If you want to add some static files, just add them to the *static* directory. They will be copied in destination directory.
+Sometimes you want to share some files as photos, demonstration, shows, etc. *static* directory exists for this kind of use. Each file that is in this directory will be copied in the result directory.
+
+Example:
+
+  * We created *static/makefly.svg* file
+  * After blog's compilation: *pub/makefly.svg* file exists
+
+It works for each kind of file in this *static* directory.
+
+### Static pages
+
+Sometimes you'd prefer to add **static** pages,  for an example legal notices.
+
+For this, create **pages** directory in the ${PROJECTNAME}'s root. Then add some files that contains Markdown content with **.md** file extension.
+
+Example:
+
+  * We created *pages/notices.md* file
+  * After blog's compilation: *pub/mentions.html* file exists
+
+This allow you to create a full website only with static pages.
 
 ### The 'special' directory
 

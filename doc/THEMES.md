@@ -26,7 +26,7 @@ Create a new theme is easy as explained in the officiel documentation. Just do t
 
 where **myTheme** is the name of your theme.
 
-This copy the default **base** theme.
+This will copy the default **base** theme.
 
 The command show you where is the new theme. It remains commonly in the **template** directory (except if you change the template's directory location).
 
@@ -36,20 +36,36 @@ So you just have to customize the theme. Pay attention to values that are replac
 
 ## Adapt an existing template (Example)
 
-Sometimes, you're a lazy person (I too). So you prefer taking other people's templates! So you sometimes go to [a website template](http://templated.co/ "Choose a template on templated.co website").
+For lazy people, you can choose a template on the Web and adapt it to ${PROJECTNAME} so that it makes less work to create a new template.
 
-Let's have a look to this template : http://templated.co/monochromed . We will use it for our tutorial.
+I suggest you either to see a video showing how to adapt Monochromed template to ${PROJECTNAME} or to read explanation about it.
+
+### Learn with a video
+
+As a video is more verbose than a lot of explanation I make [a video that show you how to search/download/adapt an existing template to ${PROJECTNAME}](${PROJECTURL}monochromed.mkv "How to adapt a template to ${PROJECTNAME}") (30 MB and 30 minutes approximatively).
+
+NB: This video can be seen with [VLC media player](https://www.videolan.org/vlc/ "Download VLC").
+
+### Learn with explanations (you can compare with the video)
+
+Sometimes, you're a lazy person. And I too. So you prefer taking other people's templates! I so use [a website template](http://templated.co/ "Choose a template on templated.co website").
+
+Let's have a look to this template : [http://templated.co/monochromed](http://templated.co/monochromed "Discover the template called 'monochromed'"). We will use it for our tutorial.
 
 I download the template, extract it in **template/monochromed** (in ${PROJECTNAMELOWER} directory).
 
-Then we have 2 tasks:
+Then we have 2 tasks so that the template works on ${PROJECTNAME}:
 
-  * Insert some specific word that would be replaced by our blog content
-  * Make the structure of a template
+  1. Insert some keys (specific words) that insert our blog content into
+  2. Create the template's structure
 
-The first task is explained in **Replacement values** section of the current document.
+A list of keys is available in **Replacement values** section of the current document. This is for the **first task**.
 
-The second one is explained in **Template ' structure**.
+The **second one** is explained in **Template ' structure** section.
+
+But have a look to the following steps to understand a template migration procedure.
+
+First we TODO TODO TODO
 
 Then I suggest you to read the following example to understand how to proceed.
 
@@ -67,18 +83,20 @@ In ${PROJECTNAME} the structure of templates are not complex. But you need to kn
 
 ### Quick list of needed files
 
-Here is a short description of each element of the structure. Note that no header/footer is required for these templates:
+Here is a short description of each element of the structure. Note that no header/footer is required for these templates. Which means that the begining of all pages is **header.tmpl** and the end of all pages is **footer.tmpl**, except for RSS feeds that use **feed.header.rss** and **feed.footer.rss**.
+
+Elements:
 
   * **article.index.tmpl**: the template of **one** post on the homepage
   * **article.tmpl**: content of a given post from the weblog
-  * **config.mk**: contains the configuration of your template. The name, the CSS filename, the second CSS filename, if you the sidebar is mandatory, etc.
+  * **config.mk**: contains the configuration of your template. The name, the CSS filename, the second CSS filename, if the sidebar is mandatory, etc.
   * **element.tmpl**: short info about a post to be integrated in the list of posts.
   * **footer.tmpl**: footer of **all** weblog pages. Should contains the first ```<html>``` tag, the ```<head>``` and the ```<body>``` one.
   * **header.tmpl**: header of **all** weblog pages. Should contains the last ```</body>``` and ```</html>``` one.
   * **[deprecated] jskomment.css**: CSS for JSKOMMENT comment system
   * **menu.about.tmpl**: supplementary main menu link to the about's page
   * **menu.search\_bar.tmpl**: supplementary main menu link to display a search bar
-  * **pagination.tmpl**: HTML code used to make a pagination under 
+  * **pagination.tmpl**: HTML code used to make a pagination under homepage
   * **post.footer.tmpl**: last HTML code that will be displayed after the list of all posts
   * **post.index.tmpl**: first HTML code to be displayed before the list of all posts
   * **read\_more\_link.tmpl**: link "Read more" that will be displayed under each post on the homepage
@@ -147,8 +165,31 @@ TODO: make a picture to display the structure
 
 ### The config.mk file
 
-TODO: Explain this file: mandatories fields, other fields. How do we need to write this file (var = content)
+Each template delivers a **config.mk** file. This is the business card of your template.
 
+The file contains some mandatories info as:
+
+  * **CSS\_NAME**: template's name. For an example: *Minisch 2.4*
+  * **CSS\_FILE**: template's main CSS file. This should be located into '*template/yourTemplate/style/*' directory. Example: *main\_minisch.css*
+  * **CSS\_COLOR\_FILE**: template's particular colors. This means you can have more than one color for your template just by giving a lot of CSS files. All CSS files should be located into '*template/yourTemplate/style/*'. For an example: *color\_minisch\_light.css*
+
+and optional ones:
+
+  * **JSKOMMENT\_CAPTCHA\_THEME**: Theme used by reCaptcha. Could be one of:
+    * red
+    * white
+    * blackglass
+    * clean
+  * **JSKOMMENT\_CSS**: alternative CSS used for reCaptcha in JSKOMMENT system. Should be located into **template/yourTemplate* directory. Example: *myjskomment.css*
+  * **SIDEBAR**: If value is 1 then the sidebar is mandatory for your template. Which means your template have been designed to be only used with a sidebar.
+
+**NB:** These info should be placed like this:
+
+```
+VAR = value
+```
+
+You can find some example of *config.mk* file into the **template** directory. Don't hesitate to have a look into this directory. You will learn a lot!
 ----
 
 ## Replacement values

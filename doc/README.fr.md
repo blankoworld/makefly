@@ -31,7 +31,7 @@ Il propose les fonctionnalités suivantes :
 
 En quelques &eacute;tapes voici comment installer la derni&egrave;re version (en d&eacute;veloppement) : 
 
-    sudo apt-get install lua5.1 lua-filesystem lua-markdown
+    sudo apt-get install lua5.1 lua-filesystem
     curl ${GITPROJECT}archive/master.zip
     unzip master.zip
     cd makefly-master
@@ -50,20 +50,19 @@ ${PROJECTNAME} d&eacute;pend des &eacute;l&eacute;ment suivants :
 
   * lua 5.1 ou plus r&eacute;cent
   * lua-filesystem
-  * lua-markdown
 
 Ainsi utilisez le gestionnaire de paquet de votre distribution pour les installer. Par exemple sur Debian et d&eacute;riv&eacute;es, ce serait : 
 
-    apt-get install lua5.1 lua-filesystem lua-markdown
+    apt-get install lua5.1 lua-filesystem
 
 Pour d'autres distributions, regardez du c&ocirc;t&eacute; des forums, d'IRC et/ou de la communaut&eacute; de votre distribution. Ils seront heureux de vous aider.
 
 ### Autre m&eacute;thode pour les dépendances
 
-Si votre distribution ne propose pas les paquets *lua-filesystem* et/ou *lua-markdown*, vous pouvez tenter d'installer **luarocks** puis installer les d&eacute;pendances de la mani&egrave;re suivante : 
+Si votre distribution ne propose pas le paquet *lua-filesystem*, vous pouvez tenter d'installer **luarocks** puis installer les d&eacute;pendances de la mani&egrave;re suivante : 
 
     sudo apt-get install luarocks
-    luarocks install lua-filesystem lua-markdown
+    luarocks install lua-filesystem
 
 Et le tour est jou&eacute; !
 
@@ -122,9 +121,29 @@ Il est &agrave; noter que ${PROJECTNAME} utilise [le format markdown](http://dar
 
 **N'oubliez pas d'&eacute;diter le fichier renseign&eacute; par la commande './${PROJECTNAMELOWER} add'.**
 
-### Fichiers statiques
+### Contenu statique (photos, vidéos, fichiers PDF, etc.)
 
-Si vous voulez ajouter quelques fichiers statiques, rajoutez les simplement dans le dossier *static*. Ils seront copiés dans le dossier de destination.
+Parfois on souhaite partager des fichiers tels quels, que ce soit des images, des démonstrations, des présentations, etc. Il existe pour cela le dossier *static*. Tout fichier déposé dans ce dossier sera copié dans le dossier de destination.
+
+Exemple : 
+
+  * Nous possédons le fichier *static/makefly.svg*
+  * Après compilation du blog, nous avons un fichier *pub/makefly.svg*
+
+Cela fonctionne donc pour tout type de fichier contenu dans ce dossier.
+
+### Pages statiques
+
+Parfois on aimerait ajouter à son blog quelques pages dites **statiques**. Par exemple les mentions légales.
+
+Pour cela, créez le dossier *pages* à la racine de votre projet ${PROJECTNAME}. Puis ajoutez des fichiers contenant du texte au format Markdown dont l'extension est **.md**.
+
+Exemple : 
+
+  * Nous créeons le fichier *pages/mentions.md*
+  * Après compilation du blog, nous avons un fichier *pub/mentions.html*
+
+Ceci vous permet de créer un site web complet avec que des pages statiques.
 
 ### Le dossier 'special'
 

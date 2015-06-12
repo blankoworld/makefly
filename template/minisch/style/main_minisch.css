@@ -1137,8 +1137,8 @@ body.page ul.children, body.error404 ul.children {
 
 /* Expression Libre Identica */
 #eli_widget {
-width: auto;
-margin: 5px;
+  width: auto;
+  margin: 5px;
 }
 
 #introduction {
@@ -1146,5 +1146,16 @@ margin: 5px;
 }
 
 .read_more {
-text-align: right;
+  text-align: right;
+}
+
+p.entry-description {
+  text-align: center;
+  margin: 0;
+}
+
+span.entry-description {
+  display: inline-block;
+  margin: 0 0 0 10px;
+  font-size: 80%;
 }

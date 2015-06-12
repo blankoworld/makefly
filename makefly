@@ -13,9 +13,6 @@ TODO:
 LuaFileSystem is required: 
 luarocks install luafilesystem
 
-Markdown is required:
-luarocks install markdown
-
 ]]--
 
 PROJECTNAME = 'Makefly'
@@ -239,7 +236,7 @@ local function doc(args)
   local footer = utils.readFile(directory .. '/footer.tmpl', 'r')
   local version = string.format(_('Version %s'), config.VERSION)
   local tocreate = utils.listing(directory, 'md')
-  local markdown = require 'markdown'
+  local markdown = require 'bin/markdown'
   local substitutions = {
     VERSION = config.VERSION,
     PROJECTNAME = PROJECTNAME,
@@ -633,7 +630,7 @@ end
 
 local function compile(args)
   -- needed libraries
-  local markdown = require 'markdown'
+  local markdown = require 'bin/markdown'
 
   -- variables preparation
   -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
