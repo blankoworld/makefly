@@ -15,7 +15,6 @@
 ### Apparence
 
 [![Bureau Openbox sous Bento avec urxvt, tmux et elinks](${BLOG_URL}/images/distributions/20150604_bento_14.04-490.jpg)](${BLOG_URL}/images/distributions/20150604_bento_14.04.jpg "Aggrandir la photo")
-20150604_bento_14.04.jpg
 
 **Note** : test effectué sur un ordinateur portable AMD double cœur 800Mhz avec 4GB de mémoire vive.
 
