@@ -1,9 +1,14 @@
 TODO:
 -----
 
-Refactoring:
+Isso comment system:
 
-- Check new CONFIG file to see which new VARS are available and make a documentation for them!
+- develop a code that permit to choose between ISSO OR DISQUS
+- upgrade documentation:
+  - delete links to appspot.com
+  - delete useless variables
+- make a tutorial?
+- tools/migrate_domain_from.sh should be update so that it take 2 params: "from to". From jskomment to jskomment, from jskomment to isso, from isso to isso, etc.
 
 Version 0.3.1:
 - add documentation for static pages directory (in PAGES directory)
@@ -30,18 +35,11 @@ Tests:
 Templates:
 N/A
 
-Meta functionnality:
-- permit to add META data into db files in order to be added in "head" section of HTML files (for META tags)
-
 Import:
 - Other import script? From Wordpress to Makefly?
 
 Multimedia:
 - Permit user to integrate multimedia files as video, images, flash animation, etc.
-
-Other functionnalities:
-- Create a [b|p]make refreshall to clean all files, recompile them and publish blog
-- Add author URL that permit to each author to add a URL/link (this is not mandatory for posts, but could be useful for a UI
 
 Bugs:
 - Problem with accentued chars in create_post.sh for TITLE
@@ -50,7 +48,6 @@ Others:
 - Permit user to create a cron that publish posts each day?
 - Permit something like "share this article on identi.ca" (Cf. http://www.vinilox.eu/blog/2012/07/06/jappix-est-il-encore-un-projet-libre/)
 - Permit to integrate makefly blog in another website? From an example begin from an homepage then click on "blog" and have makefly weblog? => this should be done via theme/css?
-- Use double $ to give parser the content of posts, for an example ${parser} CONTENT=$$()
 - Change all s/ABCD/abcd to tr "[A-Z]" "[a-z]"
 - create a Makefile that permit user to setup and install makefly (this permit to return an error if a program is missing)
   - permit to change language regarding LOCALE (makefly.rc.example configuration)
@@ -66,133 +63,3 @@ IDEAS:
 - smileys
 - sitemap (xml/html)
 - fortunes
-
-ABANDON:
---------
-
-- Add possibility to activate or not jquery as SIDEBAR or JSKOMMENT (add param in config.mk)
-- comment system with disqus (with a param to activate/desactivate in RC file)
-- template:
-  - permit template like Nanoblogger or Utterson. For an example with m4 or with this:
-    eval "cat << ___EOF___
-    $(cat)
-    ___EOF___"
-    This permit to replace some variables. It's seems to be not valid without zsh.
-  - templating (PEG system with POSIX compatibility, like byacc [Berkeley YACC])
-
-DONE:
------
-
-- permit to sort article regarding a given timestamp (add timestamp to db/ files).
-  Example : date -d "2012-06-04 00:15:32" +'%s' to have timestamp at 2012-06-etc.
-  date +%s give current timestamp
-  File example : timestampnumber,article_title.mk
-- rss feed
-- simple templating system
-- add X articles on index page where X is in makefly.rc
-- do something not to destroy makefly.rc configuration. For an example an makefly.rc.example
-- permalink
-- some translations
-- permit user to select which format the date should have
-- change template for each post (in order to have date and permalink)
-- Add "tag(s)" before tags on posts'footer
-- categories/tags:
-  .for ARTICLE in ${ARTICLES}
-  .for TAG in ${TAGS}
-  TAG_${TAG} += ${ARTICLE}
-  .endfor
-  .endfor
-- create a documentation in markdown and add a target in Makefile to create .html doc :)
-- write a doc
-- create a script that generate some posts and delete current posts (except an example post?)
-- Add a parser_opts to parser in order to give it some VAR. Example : ${parser} ${parse_opts} and parse_opts = "VAR=content VAR2=content2"
-- Change colors from links (a better gray or another color)
-- Permit user to have images (copy all files from src, except .md files)
-- add a license (for an example BSD)
-- complete README.md
-- Permit user to choose FILE EXTENSION for all files
-- Make possibility to have a "About" page (kind of static webpage). Perhaps with a about.md?
-- Add POSTDIR_NAME and TAGDIR_NAME to documentation in order to inform user that he can change that
-- Add more installation element in documentation
-- Change "github" source link to "gitorious" source link
-- Permit to create more templates with linked CSS
-- Permit THEME_STATIC_FILES to be copied from template/theme to pub directory (from config.mk given on each template
-- Create a [b|p]make backup to save all important files in a 20120822_13H44_makefly_archive.tar.gz (for an example):
-  * makefly.rc
-  * static directory
-  * special directory
-  * db directory
-- Create a french documentation
-- Integrate another theme like minisch (from schoewilliam)?
-- Create a template for tag list with some text (in order to be more readeable in elinks)
-- Use posts'title for each individual page and homepage. For an example to have "My first post" then content of post
-- use : ftp://ftp.netbsd.org/pub/pkgsrc/pkgsrc-2012Q2/pkgsrc/Makefile to discover if/else/end in bsd makefile
-- Add sidebar.md in special directory in order to be displayed on Makefly
-- Instead of copying each file given in THEME_STATIC_FILES, just copy those given in template/theme_name/static directory
-- permit user to select how many lines should be given for each articles on index page (for an example 10 lines): to do this, do a head -n 10 on art1.md then do markdown on it
-- permit user to choose if yes or no it wants "how many lines" to be used or not in Makefly
-- Create a [b|p]make publish in order to publish blog with a specific script
-- Do a script that export to a FTP or use rsync
-- Add Search capability on home page (for an example with http://duckduckgo.com/search_box.html) | http://patdryburgh.com/blog/adding-a-custom-duckduckgo-search-bar-to-your-site/
-- Create a list of error (known issues) that you can encount and give some explanations to fix them
-- Delete var for these programs:
-  sed, cp, ls, cat, echo, head, cut, grep, tail
-- Add BLOG_CHARSET in RSS file
-- Technical documentation (english)
-- Technical documentation (french)
-- Instead of copying each file from static, just copy all static directory content (cp static/* ./pub)
-- Add in doc some explanation on how makefly work for src, db directory and linked files.
-- limit RSS posts to 5, 10, etc. (add a new VAR in makefly.rc for this)
-- Add short description behind H1 HEADER
-- Add AUTHOR in db files + adapt template + update bash script that permits to create new posts
-- Add content of post in RSS file with <![CDATA[ into description tag to be readable by TinyTiny RSS that does not display post content
-- create a POST_ESCAPED_TITLE which is the post title without any whitespace, etc. Same as POST_FILE but without ".html" string (change doc)
-- add POST_ESCAPED_TITLE in minisch theme for article id="${POST_ESCAPED_TITLE}"
-- find a logo
-- do a favicon with logo
-- print.css
-- For jskomment.css => Change url into jskomment.css to have it from Makefly.
-- Find a way to make more than 1 CSS for 1 theme and choose CSS by user without changing config.mk (or make all CSS as alternative and define one as DEFAULT)
-- Multiple CSS => so permit user to define WHICH CSS it wants for a theme.
-- Permit to choose a color for a theme
-- Add in dev doc the fact that Q= could be used to debug the Makefile (and see commands)
-- Readapt print.css to NOT have comments
-- Problem with TAG_NAME and TAGNAME. And also TAGLINK.
-- change all variable to be UNIQUE in TEMPLATES
-- Clean UP templates code! Delete useless CSS, etc.
-  - Delete useless CSS in minisch.css
-- Delete the double point from JSKOMMENT after username/pseudo (it's useless)
-- ELI on sidebar (or elsewhere) with param to activate/desactivate in RC file
-  - complete doc for user with ELI_USER/TYPE/etc.
-  - add a H2 name with "ELI" on it
-- Permit to include an introduction in the page with a variable (in special/intro.md for an example) (as sidebar)
-- Permit to include a footer in the page with a variable (in special/footer.md for an example) (as sidebar)
-- Only permit to publish current post (if post have a date in the future, so don't take it). With this:
-  for i in `ls db| cut -d ',' -f 1`; do if test "$(( 5 < `date +'%s'` ))" -eq "1"; then echo $i; fi; done
-- Permit user to choose compression tool. Use ${compression} for an example with some params. Separate archive tool from compression tool. Example: tar c - some_files | gzip > file.tar.gz
-- Create a nanoblogger import script to migrate from Nanoblogger to Makefly
-- Add a license to perso branch for Creative commons license
-- Minisch theme update:
-  - add author (search in CSS to find it)
-  - add subtitle (BLOG_SHORT_DESC)
-- Create some scripts to test Makefly (via another repository?). With what is expected and that launch "pmake".
-- Create some unit test on pmake doc, pmake clean, etc.
-- Create some more check with/without sidebar, with/without search bar, etc.
-- Create a command that generate a full template in order it to be customized by a user
-- Generate a webpage containing a preview of all themes for official weblog
-- Create a template for tests
-- fix problem with my ARM computer which block on dispatcher function
-- Remake RSS "factory" to only make MAX_RSS posts (for an example a dependancy with only the MAX_RSS posts and a file in TMP dir that have RSS contents)
-- do translation of "print" (with function _ and xgettext/msgfmt)
-- For youtube iframe, do this:
-    iframe {
-      margin: 15px auto;
-      display: block;
-    }
-- Permit to choose if we want reversed list of article or not (sort by date or DESC sort)
-- Add HTML keywords/meta on each post's page?
-- Add possibility to choose which meta/keywords add to each post?
-- Add HTML keywords/meta on main page regarding posts
-- Problem with space into TAGS. Example: you cannot create a tag named "my super tag", you have to write "my_super_tag"
-- Create translation for displayed info message when compiling Makefly
-- replace [p|b] make by a lua script for launching some commands
