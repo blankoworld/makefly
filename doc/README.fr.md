@@ -25,6 +25,8 @@ Il propose les fonctionnalités suivantes :
   * cr&eacute;ation rapide de nouveaux th&egrave;mes
   * migration depuis Nanoblogger (Cf. section **Migration depuis Nanoblogger**)
 
+**Note** : ${PROJECTNAME} n'est pas destiné à créer, éditer ou supprimer des billets, même s'il propose un script pour faire un nouveau billet, il est conseillé de se tourner vers des projets tierces tels qu'[Hymby](https://github.com/blankoworld/hymby) (en développement).
+
 # Installation
 
 ## En rapide

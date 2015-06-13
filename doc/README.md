@@ -25,6 +25,8 @@ It gives these functionnalities:
   * quick theme creation
   * Nanoblogger posts migration (Cf. **Migrate from Nanoblogger** section)
 
+**Note** : ${PROJECTNAME} was not designed to create, edit and delete posts. Even if it offers a script that make new post we suggest you to turn to other projects like [Hymby](https://github.com/blankoworld/hymby) (in development).
+
 # Installation
 
 ## Briefly
