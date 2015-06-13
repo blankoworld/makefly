@@ -279,6 +279,21 @@ Just use the 'content' variable at the beginning of the command:
 
 This will add "my little content" into your new post.
 
+## Having a comment system
+
+${PROJECTNAME} have a free beta service called [Rave Comment](http://rave.depotoi.re/) and available for users.
+
+Once registered, you will receive an URL as: **rave.depotoi.re/mypseudo**.
+
+You just have to edit ${PROJECTNAMELOWER}.rc and change these variables:
+
+    ISSO = 1
+    ISSO_URL = rave.depotoi.re/mypseudo
+
+You will so have a comment system on your website.
+
+Note: comments will not be visible on your computer. Only on remote website.
+
 ## [deprecated] Do not lost comments when migrating from an old domain to a new one
 
 **Note**: This tip is **deprecated** since 0.4 ${PROJECTNAME} version as it only works with JSKOMMENT system.
@@ -327,8 +342,8 @@ Here is some options you can change:
   * PUBLISH\_SCRIPT\_NAME: script filename used to send files from **pub** directory to a destination filled in *PUBLISH\_DESTINATION* variable.
   * SEARCH\_BAR: If set to 1, activate a search bar on ${PROJECTNAME}. Note that your theme should support search bar!
   * MAX\_RSS: Max RSS posts that would be fetch from your users.
-  * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is rave.depotoi.re which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://posativ.org/isso/docs/install/ "Go to isso webpage for more information") (fr).
-  * ISSO\_URL (optional): Define a ISSO server on which send comments. For example **rave.depotoi.re/pseudo**.
+  * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is rave.depotoi.re which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://posativ.org/isso/docs/install/ "Go to isso webpage for more information").
+  * ISSO\_URL (optional): Define a ISSO server on which send comments. For example **rave.depotoi.re/pseudo**. Warning: don't use **http://** behind the address. It permits to keep to have http or https when needed.
   * ISSO\_MAX (optional): Define a limit for displayed comments for ISSO comment system. By default **3**.
   * ELI\_USER: If set, this activate a badge for identica. Note that your theme should support ELI widget. By default this functionality use IDENTICA's API.
   * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on IDENTICA. By default "user".

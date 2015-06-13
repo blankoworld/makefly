@@ -279,6 +279,20 @@ Utilisez juste la variable 'content' au d&eacute;but de la commande :
 
 Ceci ajoutera "mon petit contenu" dans votre nouvel article.
 
+## Disposer d'un service de commentaires
+
+${PROJECTNAME} dispose d'un service gratuit en bêta test nommé [Rave Comment](http://rave.depotoi.re/) mis à disposition de ses utilisateurs.
+
+Une fois enregistré, vous recevrez une adresse URL telle que : **rave.depotoi.re/monpseudo**.
+
+Il suffit ensuite d'éditer le fichier ${PROJECTNAMELOWER}.rc et d'y modifier les variables suivantes : 
+
+    ISSO = 1
+    ISSO_URL = rave.depotoi.re/monpseudo
+
+Vous aurez ainsi un système de commentaire sur votre site.
+
+Note : les commentaires ne seront pas visibles sur votre machine. Seulement sur le site distant.
 
 ## [périmé] Ne pas perdre les commentaires quand on migre d'un vieux domaine &agrave; un nouveau
 
@@ -337,8 +351,6 @@ Voici quelques options que vous pouvez changer :
   * ELI\_MAX (optionnel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
   * ELI\_API (optionnel) : Acc&egrave;s &agrave; l'API de votre syst&egrave;me StatusNet.
   * INSTALLDIR : Permet de choisir le dossier de destination lors de l'utilisation de la commande **./${PROJECTNAMELOWER} install** (Cf. Chapitre Publier le r&eacute;sultat sur le web).
-  * COMPRESS_TOOL (optionnel) : Outil console utilis&eacute; pour la compression lors des sauvegardes via la commande *backup* (Cf. Chapitre *Sauvegardes*). Exemple : **gzip**.
-  * COMPRESS_EXT (optionnel) : Extension des fichiers de sauvegarde. Attention &agrave; ne pas oublier le caract&egrave;re point. Exemple : **.gz**.
   * SORT (optionnel) : Tri la liste des billets. Utilisez ASC pour que les billets soient triés du plus anciens au plus récent. DESC (valeur par défaut) tri les billets du plus récent au plus ancien.
   * AUTO\_EDIT (optionnel) : Permet d'&eacute;diter automatiquement les billets apr&egrave;s leur cr&eacute;ation. Utilise le contenu de la variable EDITOR pour savoir quel &eacute;diteur utiliser.
 
