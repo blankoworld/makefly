@@ -1,9 +1,0 @@
-digraph depends {
-  index [label="index.html"]
-  index       -> {"style.css"; "db/12347_post3.mk"; "src/post3.md"; "db/12346_post2.mk"; "src/post2.md"; "template/default/*"; "special/sidebar.md"}
-  "template/default/styles/*" -> "template/default/*"
-  "style.css"        -> {"template/default/styles/*"}
-  "posts/index.html" -> {"db/12345_post1.mk"; "src/post1.md"; "db/12346_post2.mk"; "src/post2.md"; "db/12347_post3.mk"; "src/post3.md"; "special/sidebar.md"}
-  "tags/index.html"  -> {"db/12345_post1.mk"; "db/12346_post2.mk"; "db/12347_post3.mk"; "special/sidebar.md"}
-  "about.html"       -> "special/about.md"
-}
