@@ -4,8 +4,6 @@ TODO:
 Isso comment system:
 
 - develop a code that permit to choose between ISSO OR DISQUS
-- upgrade documentation:
-  - delete useless variables
 - make a tutorial?
 - tools/migrate_domain_from.sh should be update so that it take 2 params: "from to". From jskomment to jskomment, from jskomment to isso, from isso to isso, etc.
 
