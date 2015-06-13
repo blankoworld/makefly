@@ -383,7 +383,7 @@ The code of the software is available in the given repositories:
 The project can be duplicated and renamed easily. For that just use the given variable in ${PROJECTNAMELOWER} file:
 
   * PROJECTNAME
-  * PROJECTNAMEURL
+  * PROJECTURL
   * GITPROJECT
 
 Then rename the ${PROJECTNAMELOWER} file to the name given in PROJECTNAME variable, in lower case.

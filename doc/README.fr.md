@@ -86,15 +86,15 @@ Et ${PROJECTNAME} est install&eacute;.
 
 #### Pour la version stable
 
-Aucune configuration particuli&egrave;re n'est requise. V&eacute;rifiez que le fichier **${PROJECTNAMELOWER}.rc** existe bien. Le cas &eacute;ch&eacute;ant copiez le fichier **${PROJECTNAMELOWER}.example** ou renommez le en **${PROJECTNAMELOWER}**.
+Aucune configuration particuli&egrave;re n'est requise. V&eacute;rifiez que le fichier **${PROJECTNAMELOWER}.rc** existe bien. Le cas &eacute;ch&eacute;ant copiez le fichier **${PROJECTNAMELOWER}.rc.fr.example** ou renommez le en **${PROJECTNAMELOWER}.rc**.
 
 #### Pour la version en cours de d&eacute;veloppement
 
-La premi&egrave;re fois que vous utilisez ${PROJECTNAME} vous n'avez aucun fichier de configuration. Un exemple de fichier de configuration est disponible dans **${PROJECTNAMELOWER}.example**. Copiez le vers **${PROJECTNAMELOWER}** pour permettre &agrave; ${PROJECTNAME} de fonctionner.
+La premi&egrave;re fois que vous utilisez ${PROJECTNAME} vous n'avez aucun fichier de configuration. Un exemple de fichier de configuration est disponible dans **${PROJECTNAMELOWER}.rc.fr.example**. Copiez le vers **${PROJECTNAMELOWER}.rc** pour permettre &agrave; ${PROJECTNAME} de fonctionner.
 
 #### Plus d'infos
 
-Pour plus d'informations, lisez la section **Le fichier de configuration ${PROJECTNAMELOWER}**.
+Pour plus d'informations, lisez la section **Le fichier de configuration ${PROJECTNAMELOWER}.rc**.
 
 # Utilisation
 
@@ -178,7 +178,7 @@ Si vous lancez ${PROJECTNAME} sur votre propre serveur ou tr&egrave;s certaineme
 
 **ATTENTION**: Cela supprimera tous les fichiers contenus dans le dossier *public\_html* !
 
-**Note**: Vous pouvez personnaliser la destination en changeant le fichier **${PROJECTNAMELOWER}** et plus particuli&egrave;rement la ligne suivante : 
+**Note**: Vous pouvez personnaliser la destination en changeant le fichier **${PROJECTNAMELOWER}.rc** et plus particuli&egrave;rement la ligne suivante : 
 
     INSTALLDIR=${HOME}/public_html
 
@@ -190,7 +190,7 @@ Pour publier votre blog vers une machine distante, vous devez :
 
   * avoir un acc&egrave;s SSH &agrave; la machine distante
   * avoir le programme rsync
-  * configurer la variable **PUBLISH\_DESTINATION** dans le fichier **${PROJECTNAMELOWER}**
+  * configurer la variable **PUBLISH\_DESTINATION** dans le fichier **${PROJECTNAMELOWER}.rc**
   * lancer la commande **publish**
 
 C'est tout!
@@ -199,7 +199,7 @@ C'est tout!
 
     monUtilisateurDistant@domaineDistant.tld:/mondossierhome/dossier_public
 
-Une fois cette variable renseign&eacute;e dans le fichier **${PROJECTNAMELOWER}**, lancez simplement : 
+Une fois cette variable renseign&eacute;e dans le fichier **${PROJECTNAMELOWER}.rc**, lancez simplement : 
 
     ./${PROJECTNAMELOWER} publish
 
@@ -217,7 +217,7 @@ Note : Ceci utilise le th&egrave;me nomm&eacute; *Base* comme exemple.
 
 # Traduction
 
-Une fa&ccedil;on simple de traduire ${PROJECTNAME} dans votre langage est de copier le fichier **lang/translate.en** dans un autre fichier. Par exemple, pour le Fran&ccedil;ais (avec le code fr), vous pouvez copier **lang/translate.en** en **lang/translate.fr** et changez les valeurs. Puis changez simplement l'option *BLOG\_LANG* dans le fichier **${PROJECTNAMELOWER}**.
+Une fa&ccedil;on simple de traduire ${PROJECTNAME} dans votre langage est de copier le fichier **lang/translate.en** dans un autre fichier. Par exemple, pour le Fran&ccedil;ais (avec le code fr), vous pouvez copier **lang/translate.en** en **lang/translate.fr** et changez les valeurs. Puis changez simplement l'option *BLOG\_LANG* dans le fichier **${PROJECTNAMELOWER}.rc**.
 
 # Sauvegardes
 
@@ -232,7 +232,7 @@ Requis :
 
 Fichiers sauv&eacute;s : 
 
-  * ${PROJECTNAMELOWER}
+  * ${PROJECTNAMELOWER}.rc
   * le r&eacute;pertoire static
   * le r&eacute;pertoire special
   * le r&eacute;pertoire db
@@ -243,7 +243,7 @@ R&eacute;sultat : Ceci cr&eacute;era une *archive* nomm&eacute;e *YYYYmmdd-HM\_$
 
 ## Astuce
 
-Vous pouvez personnaliser (dans votre fichier **${PROJECTNAMELOWER}**) :
+Vous pouvez personnaliser (dans votre fichier **${PROJECTNAMELOWER}.rc**) :
 
   * le dossier de sauvegarde en utilisant l'option **BACKUPDIR**
   * le pr&eacute;fixe du fichier de sauvegarde en utilisant l'option **BACKUP\_PREFIX**
@@ -290,7 +290,7 @@ Pour r&eacute;gler le probl&egrave;me, utilisez simplement la **commande migrate
 
 Ceci va mettre &agrave; jour tout les anciens articles avec l'identifiant des vieux commentaires (votre vieux domaine) et les commentaires r&eacute;appara&icirc;tront.
 
-# Le fichier de configuration ${PROJECTNAMELOWER}
+# Le fichier de configuration ${PROJECTNAMELOWER}.rc
 
 Voici quelques options que vous pouvez changer : 
 
@@ -306,9 +306,9 @@ Voici quelques options que vous pouvez changer :
   * BLOG\_KEYWORDS : Mots-cl&eacute;s qui doivent appara&icirc;trent pour l'ensemble des pages du blog. Permet un r&eacute;f&eacute;rencement dans les moteurs de recherche.
   * RSS\_FEED\_NAME : Titre affich&eacute; dans le flux RSS.
   * MAX\_POST : Nombre maximum d'articles qui seront affich&eacute;s sur la page d'accueil.
-  * MAX\_POST\_LINES : Nombre de lignes qui seront montr&eacute;es sur la page d'accueil. Si param&eacute;tr&eacute; &agrave; 0 ou inexistant dans le fichier *${PROJECTNAMELOWER}*, alors les articles sont enti&egrave;rement montr&eacute;s.
+  * MAX\_POST\_LINES : Nombre de lignes qui seront montr&eacute;es sur la page d'accueil. Si param&eacute;tr&eacute; &agrave; 0 ou inexistant dans le fichier *${PROJECTNAMELOWER}.rc*, alors les articles sont enti&egrave;rement montr&eacute;s.
   * DATE\_FORMAT : Format de la date affich&eacute;e pour chaque article. Lisez les pages du manuel *date* pour plus d'informations.
-  * MAX\_PAGE : Nombre maximal d'articles qui devrait s'afficher sur la liste des articles. Si param&eacute;tr&eacute; &agrave; 0 ou inexistant du fichier *${PROJECTNAMELOWER}*, alors une seule page sera faite avec tout les articles !
+  * MAX\_PAGE : Nombre maximal d'articles qui devrait s'afficher sur la liste des articles. Si param&eacute;tr&eacute; &agrave; 0 ou inexistant du fichier *${PROJECTNAMELOWER}.rc*, alors une seule page sera faite avec tout les articles !
   * SHORT\_DATE\_FORMAT : Format court de la date. Sera utilis&eacute; sur la page de la liste des articles. Pour plus d'informations, lire les pages du manuel *date*.
   * INDEX\_FILENAME : Nom donn&eacute; &agrave; toutes les pages index. Par exemple avec **INDEX\_FILENAME = mainpage**, la liste des articles se nommera *mainpage.html*.
   * PAGE\_EXT : suffixe que toutes les pages auront. **NE PAS OUBLIER D'AJOUTER UN POINT AVANT LE SUFFIXE**. Par exemple avec **PAGE\_EXT = .html**, toutes les pages seront de la forme : *index.html*.
@@ -387,7 +387,7 @@ Le code du logiciel se trouve sur les d&eacute;p&ocirc;ts suivants :
 Le projet peut se dupliquer et se renommer facilement en utilisant les variables suivantes dans le fichier ${PROJECTNAMELOWER} : 
 
   * PROJECTNAME
-  * PROJECTNAMEURL
+  * PROJECTURL
   * GITPROJECT
 
 Et en renommant le fichier ${PROJECTNAMELOWER} par le nom donné dans PROJECTNAME en minuscule.
