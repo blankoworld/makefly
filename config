@@ -17,6 +17,7 @@ PAGE_EXT = .html
 compression_command = gzip
 compression_extension = .gz
 publish_script = publish.sh
+PUBLISH_DESTINATION = ~/public_html
 INDEX_FILENAME = index
 themercfile = config.mk
 isso_theme = white
