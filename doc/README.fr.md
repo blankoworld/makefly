@@ -280,7 +280,9 @@ Utilisez juste la variable 'content' au d&eacute;but de la commande :
 Ceci ajoutera "mon petit contenu" dans votre nouvel article.
 
 
-## Ne pas perdre les commentaires quand on migre d'un vieux domaine &agrave; un nouveau
+## [périmé] Ne pas perdre les commentaires quand on migre d'un vieux domaine &agrave; un nouveau
+
+**Note** : cette astuce n'est **plus valable** pour la version 0.4 et suivante de ${PROJECTNAME}. Elle ne fonctionne que si vous utilisez JSKOMMENT.
 
 Quand vous migrez de **vieux.domaine.tld** &agrave; **nouveau.domaine.tld**, les commentaires n'appara&icirc;tront plus.
 
@@ -327,9 +329,9 @@ Voici quelques options que vous pouvez changer :
   * PUBLISH\_SCRIPT\_NAME : Nom du fichier script utilis&eacute; pour envoyer les fichiers du dossier **pub** vers une destination renseign&eacute;e dans la variable *PUBLISH\_DESTINATION*.
   * SEARCH\_BAR : Mis &agrave; 1 permet d'activer une barre de recherche sur ${PROJECTNAME}. &Agrave; noter que votre th&egrave;me doit supporter la barre de recherche.
   * MAX\_RSS : Nombre d'articles RSS maximum qui sera r&eacute;cup&eacute;r&eacute; par vos utilisateurs.
-  * ISSO : Mis &agrave; 1 permet d'activer un syst&eacute;me de commentaires pour ${PROJECTNAME}. &Agrave; noter que votre th&egrave;me doit supporter le syst&egrave;me de commentaires. Attention, par d&eacute;faut cela utilise isso.appspot.com en tant que serveur, il ne garantit pas un archivage &agrave; long terme des commentaires. Plus d'informations sont disponibles [sur la page d'installation du projet isso](http://posativ.org/isso/docs/install/ "Se rendre sur la page du projet pour en savoir plus").
-  * ISSO\_URL (optionnel) : D&eacute;finit un serveur ISSO sur lequel envoyer les commentaires. Par d&eacute;faut **http://posativ.org/isso/**.
-  * ISSO\_MAX (optionnel) : D&eacute;finit une limite de commentaires &agrave; afficher pour le syst&egrave;me de commentaire ISSO. Par d&eacute;faut **2**.
+  * ISSO : Mis &agrave; 1 permet d'activer un syst&egrave;me de commentaires pour ${PROJECTNAME}. &Agrave; noter que votre th&egrave;me doit supporter le syst&egrave;me de commentaires. Attention, par d&eacute;faut cela utilise rave.depotoi.re en tant que serveur, il ne garantit pas un archivage &agrave; long terme des commentaires. Plus d'informations sont disponibles [sur la page d'installation du projet isso](http://posativ.org/isso/docs/install/ "Se rendre sur la page du projet pour en savoir plus").
+  * ISSO\_URL (optionnel) : D&eacute;finit un serveur ISSO sur lequel envoyer les commentaires. Par exemple **rave.depotoi.re/pseudo**. Attention : n'utilisez pas de **http://** devant l'adresse. Cela permet d'avoir du http ou du https quand nécessaire.
+  * ISSO\_MAX (optionnel) : D&eacute;finit une limite de commentaires &agrave; afficher pour le syst&egrave;me de commentaire ISSO. Par d&eacute;faut **3**.
   * ELI\_USER: Si utilis&eacute;, ceci active un cadre pour identica. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utiliser l'API d'IDENTICA.
   * ELI\_TYPE (optionel) : Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur d'IDENTICA. Par d&eacute;faut "user".
   * ELI\_MAX (optionnel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
