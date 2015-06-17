@@ -50,9 +50,13 @@ NB: This video can be seen with [VLC media player](https://www.videolan.org/vlc/
 
 Sometimes, you're a lazy person. And I too. So you prefer taking other people's templates! I so use [a website template](http://templated.co/ "Choose a template on templated.co website").
 
+#### Template download
+
 Let's have a look to this template : [http://templated.co/monochromed](http://templated.co/monochromed "Discover the template called 'monochromed'"). We will use it for our tutorial.
 
 I download the template, extract it in **template/monochromed** (in ${PROJECTNAMELOWER} directory).
+
+#### To do
 
 Then we have 2 tasks so that the template works on ${PROJECTNAME}:
 
@@ -65,21 +69,90 @@ The **second one** is explained in **Template ' structure** section.
 
 But have a look to the following steps to understand a template migration procedure.
 
-First we TODO TODO TODO
+**Note:** Have a look to **template/monochromed** directory for an example of this tutoriel.
 
-Then I suggest you to read the following example to understand how to proceed.
+#### What needs each page
 
-TODO
+First open the **template/monochromed/index.html** file with your web browser. You can see the original monochromed template.
 
-TODO: explain the user how to adapt the theme so that it could be used into ${PROJECTNAME}.
+Open then the same file with your favorite editor. Mine is *vim*. But you can open the file with *gedit* or *geany* for an example. You see the file composed of:
 
-TODO
+  * doctype
+  * head content
+  * body content (homepage class)
+
+The last one (body content) have some elements:
+
+  * Header DIV
+  * Main DIV
+  * Sidebar DIV
+  * Footer DIV
+  * Copyright DIV
+
+As explained in **Template 's structure** we need to create a **header.tmpl** and a **footer.tmpl** file. They will be used in all pages in our weblog.
+
+The idea is to get the begining of the page from doctype to this:
+
+    <!-- Main -->
+      <div id="main">
+        <div class="container">
+
+and to put it into **template/monochromed/header.tmpl** file.
+
+Then get the last 2 DIV from the container DIV to the end of the file and put it into **template/monochromed/header.tmpl**.
+
+#### Static directory
+
+Each template need a static directory in which you will put some pictures/images, javascript files, etc.
+
+In our example, do this:
+
+  * create static directory in **template/monochromed/static**
+  * copy **css**, **images** and **js** directory into **static** one
+
+It's time to configure our template.
+
+#### config.mk file
+
+As explained in next chapters, **config.mk** file gives some information about your new template/theme.
+
+So create **template/monochromed/config.mk** file with this content:
+
+    CSS_NAME = Monochromed
+    CSS_FILE = main_monochromed.css
+    CSS_COLOR_FILE = color_monochromed_light.css
+
+which implies to create two files:
+
+  * template/monochromed/style/main_monochromed.css: all common CSS rules for your template/theme
+  * template/monochromed/style/color_monochromed_light.css: only recommanded for a color version of your template so that you can create multiple versions
+
+For now, just create the files. You will move all CSS rules later.
+
+#### Test the result
+
+What's about testing the result?
+
+Just modify your **makefly.rc** and add this:
+
+    THEME = monochromed
+
+Then refresh your blog:
+
+    ./makefly refresh
+
+And you will see the result.
+
+
+
+**TODO**
+
 
 ----
 
 ## Template ' structure
 
-In ${PROJECTNAME} the structure of templates are not complex. But you need to know how it works to understand the possibilities it offers.
+In ${PROJECTNAME} the structure of templates is not complex. But you need to know how it works to understand the possibilities it offers.
 
 ### Quick list of needed files
 
@@ -93,7 +166,6 @@ Elements:
   * **element.tmpl**: short info about a post to be integrated in the list of posts.
   * **footer.tmpl**: footer of **all** weblog pages. Should contains the first ```<html>``` tag, the ```<head>``` and the ```<body>``` one.
   * **header.tmpl**: header of **all** weblog pages. Should contains the last ```</body>``` and ```</html>``` one.
-  * **[deprecated] jskomment.css**: CSS for JSKOMMENT comment system
   * **menu.about.tmpl**: supplementary main menu link to the about's page
   * **menu.search\_bar.tmpl**: supplementary main menu link to display a search bar
   * **pagination.tmpl**: HTML code used to make a pagination under homepage
@@ -117,11 +189,12 @@ Pay attention that some other ones are located in the template main directory fo
   * **empty.file**: an empty file (some applications are very curious, this one don't escape to this rule)
   * **feed.footer.rss**: XML footer code for RSS feed
   * **feed.header.rss**: XML header code for RSS feed
-  * **[deprecated] jskomment.article.tmpl**: HTML code for each article for JSKOMMENT functionnality
-  * **[deprecated] jskomment.css**: CSS used for JSKOMMENT functionnality
-  * **[deprecated] jskomment\_css\_declaration.tmpl**: CSS HTML declaration used for header
-  * **[deprecated] jskomment\_declaration.tmpl**: HTML code that declares the JSKOMMENT javascript in our weblog. Commonly placed in the footer.
-  * **[deprecated] jskomment.js**: Javascript code used by JSKOMMENT functionnality
+  * **isso.tmpl**: HTML code for each article for ISSO comment functionnality. Replace ISSO\_CONTENT variable in templates.
+  * **isso.css**: CSS used for ISSO functionnality
+  * **isso\_css\_declaration.tmpl**: CSS HTML declaration used in header for ISSO comment system. Replace ISSO\_CSS\_DECLARATION variable in templates.
+  * **isso\_declaration.tmpl**: HTML code that declares the ISSO javascript in our weblog. Commonly placed in the footer. Replace ISSO\_SCRIPT variable in templates.
+  * **isso.short.tmpl**: usually used on homepage to only display number of comment using ISSO comment system. Replace ISSO\_SHORT variable in templates.
+  * **isso.extended.tmpl**: usually used on each post to display comments using ISSO comment system. Replace ISSO\_EXTENDED variable in templates.
 
 ### More explanation
 
@@ -175,13 +248,9 @@ The file contains some mandatories info as:
 
 and optional ones:
 
-  * **JSKOMMENT\_CAPTCHA\_THEME**: Theme used by reCaptcha. Could be one of:
-    * red
-    * white
-    * blackglass
-    * clean
-  * **JSKOMMENT\_CSS**: alternative CSS used for reCaptcha in JSKOMMENT system. Should be located into **template/yourTemplate* directory. Example: *myjskomment.css*
+  * **ISSO\_CSS**: additionnal CSS used for ISSO comment system. Should be located into **template/yourTemplate* directory. Example: *myissocomment.css*
   * **SIDEBAR**: If value is 1 then the sidebar is mandatory for your template. Which means your template have been designed to be only used with a sidebar.
+  * **ISSO\_SHORT**: template used for ISSO\_SHORT variable. In fact, it replaces ISSO\_SHORT variable by the content of this template.
 
 **NB:** These info should be placed like this:
 
@@ -190,6 +259,7 @@ VAR = value
 ```
 
 You can find some example of *config.mk* file into the **template** directory. Don't hesitate to have a look into this directory. You will learn a lot!
+
 ----
 
 ## Replacement values
