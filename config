@@ -20,7 +20,6 @@ publish_script = publish.sh
 PUBLISH_DESTINATION = ~/public_html
 INDEX_FILENAME = index
 themercfile = config.mk
-isso_theme = white
 ISSO_MAX = 3
 ISSO_URL = rave.depotoi.re
 introduction_filename = introduction
