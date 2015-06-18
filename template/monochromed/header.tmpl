@@ -6,22 +6,22 @@
 -->
 <html>
 	<head>
-		<title>Monochromed by TEMPLATED</title>
+		<title>${BLOG_TITLE} - ${TITLE}</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
 		<link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
 		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="js/skel.min.js"></script>
-		<script src="js/skel-panels.min.js"></script>
-		<script src="js/init.js"></script>
+		<script src="${BLOG_URL}/js/skel.min.js"></script>
+		<script src="${BLOG_URL}/js/skel-panels.min.js"></script>
+		<script src="${BLOG_URL}/js/init.js"></script>
 		<noscript>
-			<link rel="stylesheet" href="css/skel-noscript.css" />
-			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="${BLOG_URL}/css/skel-noscript.css" />
+			<link rel="stylesheet" href="${BLOG_URL}/css/style.css" />
 		</noscript>
-		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="css/ie/v9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="${BLOG_URL}/css/ie/v8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="${BLOG_URL}/css/ie/v9.css" /><![endif]-->
 	</head>
 	<body class="homepage">
 
@@ -31,18 +31,16 @@
 					
 				<!-- Logo -->
 					<div id="logo">
-						<h1><a href="#">Monochromed</a></h1>
-						<span>Design by TEMPLATED</span>
+						<h1><a href="${BLOG_URL}">${BLOG_TITLE}</a></h1>
+						<span>${BLOG_SHORT_DESC}</span>
 					</div>
 				
 				<!-- Nav -->
 					<nav id="nav">
 						<ul>
-							<li class="active"><a href="index.html">Homepage</a></li>
-							<li><a href="threecolumn.html">Two Sidebars</a></li>
-							<li><a href="twocolumn1.html">Left Sidebar</a></li>
-							<li><a href="twocolumn2.html">Right Sidebar</a></li>
-							<li><a href="onecolumn.html">No Sidebar</a></li>
+							<li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
+              <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
+							<li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
 						</ul>
 					</nav>
 

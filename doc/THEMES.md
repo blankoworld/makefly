@@ -141,11 +141,70 @@ Then refresh your blog:
 
     ./makefly refresh
 
-And you will see the result.
+And you will see the result in your web browser by opening **pub/index.html**.
 
+#### Hey, I want to display the title!
+
+Let's display our blog title.
+
+Open **template/monochromed/header.tmpl** file and replace this:
+
+    <title>Monochromed by TEMPLATED</title>
+
+by this:
+
+    <title>${BLOG_TITLE} - ${TITLE}</title>
+
+And:
+
+    <h1><a href="#">Monochromed</a></h1>
+    <span>Design by TEMPLATED</span>
+
+by:
+
+    <h1><a href="${BLOG_URL}">${BLOG_TITLE}</a></h1>
+    <span>${BLOG_SHORT_DESC}</span>
+
+In fact we just place some variables so that ${PROJECTNAME} makes replacements in all pages.
+
+As previously, test the result:
+
+    ./makefly refresh
+
+And open **pub/index.html** in your web browser.
+
+#### Where are posts?
+
+See **template/monochromed/onecolumn.html**. The template give us a row containing a "No sidebar" post that takes all the width.
+
+So place the content of **row** DIV (```<div class="row">```) and put it into **template/monochromed/article.index.tmpl** file.
+
+Then add some variables to display your posts (you can see the result in **template/monochromed/article.index.tmpl**):
+
+  * POST\_TITLE
+  * POST\_DESCRIPTION
+  * POST\_FILE
+  * POSTDIR\_NAME
+  * POST\_TYPE
+  * POST\_CONTENT
+
+This will only make posts available on homepage. To have each post create the **template/monochromed/article.tmpl**. You can copy the **template/monochromed/article.index.tmpl**. As explained in *Template ' structure* chapter, *article.index.tmpl* is used by homepage and *article.tmpl* by each single post. So just adapt them as your needs.
+
+#### Main menu
+
+What we are used to see in ${PROJECTNAME} looks like:
+
+    <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
+    <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
+    <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
+
+You can adapt **template/monochromed/header.tmpl** to integrate the menu in place of **nav** tag.
+
+Note that the ABOUT\_LINK variable needs the **template/monochromed/menu.about.tmpl** file. You can copy those from *template/base/menu.about.tmpl*.
 
 
 **TODO**
+
 
 
 ----
@@ -254,9 +313,7 @@ and optional ones:
 
 **NB:** These info should be placed like this:
 
-```
-VAR = value
-```
+    VAR = value
 
 You can find some example of *config.mk* file into the **template** directory. Don't hesitate to have a look into this directory. You will learn a lot!
 
