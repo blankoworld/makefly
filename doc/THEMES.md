@@ -202,10 +202,39 @@ You can adapt **template/monochromed/header.tmpl** to integrate the menu in plac
 
 Note that the ABOUT\_LINK variable needs the **template/monochromed/menu.about.tmpl** file. You can copy those from *template/base/menu.about.tmpl*.
 
+#### Some problems appears with the CSS
+
+Now you have a menu and use it you see that CSS is not available for all pages. This is because of the fact that all CSS and JS links are relative. They refers to *css/style.css* for an example.
+
+To avoid this kind of problem we recommand in ${PROJECTNAME} to use absolute path. But how to add our blog URL in each CSS and JS files? We use variables. That way, you can add BLOG\_URL variable in your CSS/JS files (located in **template/monochromed/static** directory) to complete all links. For an example in **template/monochromed/static/js/init.js** file replace:
+
+    prefix: 'css/style',
+
+by:
+
+    prefix: '${BLOG_URL}/css/style',
+
+Then adapt **template/monochromed/header.tmpl** to have this:
+
+      <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+      <!--[if lte IE 8]><script src="${BLOG_URL}/js/html5shiv.js"></script><![endif]-->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="${BLOG_URL}/js/skel.min.js"></script>
+      <script src="${BLOG_URL}/js/skel-panels.min.js"></script>
+      <script src="${BLOG_URL}/js/init.js"></script>
+      <noscript>
+        <link rel="stylesheet" href="${BLOG_URL}/css/skel-noscript.css" />
+        <link rel="stylesheet" href="${BLOG_URL}/css/style.css" />
+      </noscript>
+      <!--[if lte IE 8]><link rel="stylesheet" href="${BLOG_URL}/css/ie/v8.css" /><![endif]-->
+      <!--[if lte IE 9]><link rel="stylesheet" href="${BLOG_URL}/css/ie/v9.css" /><![endif]-->
+    </head>
+
+Refresh the blog and enjoy!
+
+----
 
 **TODO**
-
-
 
 ----
 
@@ -232,7 +261,7 @@ Elements:
   * **post.index.tmpl**: first HTML code to be displayed before the list of all posts
   * **read\_more\_link.tmpl**: link "Read more" that will be displayed under each post on the homepage
   * **sidebar.tmpl**: HTML code that will be used in place of ${SIDEBAR} specific word in header/footer templates. Should contains the **${SIDEBAR\_CONTENT}** specific word.
-  * **static**: directory that contains files that needs to be present in the result. For an example some pictures, javascript files, etc. But NOT CSS files.
+  * **static**: directory that contains files that needs to be present in the result. For an example some pictures, javascript files, etc. Do not place CSS files here (but not forbidden) as we have *style* directory for this. You should know that files contained in static directory will be completed during a compilation process. But this is only ready for the **BLOG\_URL** variable.
   * **style**: list of possible CSS files. As ${PROJECTNAME} is designed, you can make a stylesheet for main appearance, then add a CSS file for each version of your template. For an example a CSS that makes your template red. Another one that makes your template blue, etc.
   * **tagelement.tmpl**: a single tag element to be displayed on the tag list page
   * **taglink.tmpl**: a single tag info that would be displayed on each post
