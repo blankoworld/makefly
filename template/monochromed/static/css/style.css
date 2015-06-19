@@ -261,7 +261,7 @@
 	#header
 	{
 		position: relative;
-		background: #ddd url(../images/header.jpg) no-repeat center;
+		background: #ddd url(${BLOG_URL}/images/header.jpg) no-repeat center;
 		background-size: cover;
 	}
 
@@ -296,7 +296,7 @@
 	#main
 	{
 		position: relative;
-		background: #fff url(images/overlay.png) repeat;
+		background: #fff url(${BLOG_URL}/images/overlay.png) repeat;
 	}
 	
 	.divider
