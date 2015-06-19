@@ -1,60 +1,60 @@
-# Themes for ${PROJECTNAME}
+# Thèmes pour ${PROJECTNAME}
 
-[Version française](${PROJECTURL}themes.html.fr) (French original version)
+[English version](${PROJECTURL}themes.html.en) (version originale française)
 
-[Official website](${PROJECTURL} "Go to the website")
+[Site officiel](${PROJECTURL} "Aller sur le site web")
 
-## Requirements
+## Dépendances
 
-Making a theme is not difficult. But you need some skills as:
+Concevoir un thème n'est pas difficile. Mais cela demande quelques compétences comme : 
 
-  * making HTML
-  * making CSS
-  * [optional] making JS
+  * faire du HTML
+  * faire du CSS
+  * [optionnel] faire du JS
 
-All these skills can be learned on [openclassrooms](http://openclassrooms.com/ "Go to the official openclassrooms website").
+Toutes ces compétences peuvent être apprises sur [openclassrooms](http://openclassrooms.com/ "Aller sur le site web officiel d'openclassrooms").
 
-Remember that this is not difficult, you just need a little bit time to make it.
-
-----
-
-## Design a new theme
-
-Create a new theme is easy as explained in the officiel documentation. Just do this:
-
-    ./${PROJECTNAMELOWER} theme myTheme
-
-where **myTheme** is the name of your theme.
-
-This will copy the default **base** theme.
-
-The command show you where is the new theme. It remains commonly in the **template** directory (except if you change the template's directory location).
-
-So you just have to customize the theme. Pay attention to values that are replacement ones. You can find a non-exhaustive list in **Replacement values** section of this documentation.
+Rappelez-vous que ce n'est pas difficile, vous avez simplement besoin d'un peu de temps pour le faire.
 
 ----
 
-## Adapt an existing template (Example)
+## Concevoir un nouveau thème
 
-For lazy people, you can choose a template on the Web and adapt it to ${PROJECTNAME} so that it makes less work to create a new template.
+Créér un nouveau thème est facile, comme expliqué dans la documentation officielle. Faites simplement : 
 
-I suggest you either to see a video showing how to adapt Monochromed template to ${PROJECTNAME} or to read explanation about it.
+    ./${PROJECTNAMELOWER} theme monTheme
 
-### Learn with a video
+où **monTheme** est le nom de votre thème.
 
-As a video is more verbose than a lot of explanation I make [a video that show you how to search/download/adapt an existing template to ${PROJECTNAME}](${PROJECTURL}monochromed.mkv "How to adapt a template to ${PROJECTNAME}") (30 MB and 30 minutes approximatively).
+Ceci va copier le thème par défaut **base**.
 
-NB: This video can be seen with [VLC media player](https://www.videolan.org/vlc/ "Download VLC").
+La commande vous montre où est le nouveau thème. Cela reste généralement dans le répertoire **template** (sauf si vous changez l'emplacement du répertoire des templates).
 
-### Learn with explanations (you can compare with the video)
+Donc vous avez simplement à personnaliser le thème. Faites attention aux valeurs qui sont des valeurs de remplacement. Vous pouvez trouver une liste non-exhaustive dans la section **Valeurs de remplacement** de cette documentation.
 
-Sometimes, you're a lazy person. And I too. So you prefer taking other people's templates! I so use [a website template](http://templated.co/ "Choose a template on templated.co website").
+----
 
-#### Template download
+## Adapter un template existant (Exemple)
 
-Let's have a look to this template: [http://templated.co/monochromed](http://templated.co/monochromed "Discover the template called 'monochromed'"). We will use it for our tutorial.
+Pour les personnes fainéantes, vous pouvez choisir un template sur le Web et l'adapter à ${PROJECTNAME} afin que cela fasse moins de travail pour créer un nouveau template.
 
-Download the template, extract it in **template/monochromed** (in ${PROJECTNAMELOWER} directory).
+Je vous suggère soit de voir une vidéo montrant comment adapter le template Monochromed à ${PROJECTNAME} soit de lire les explications à ce propos.
+
+### Apprendre avec une vidéo
+
+Comme une vidéo est plus parlante qu'un ensemble d'explication, j'ai fait [une vidéo qui vous montre comment chercher/charger/adapter un template existant à ${PROJECTNAME}](${PROJECTURL}monochromed.mkv "Comment adapter un template à ${PROJECTNAME}") (30 MB et 30 minutes approximativement).
+
+NB: Cette vidéo est visionnable avec [VLC media player](https://www.videolan.org/vlc/ "Charger VLC").
+
+### Apprendre avec des explications (vous pouvez comparer avec la vidéo)
+
+Parfois, vous êtes feignants. Et moi aussi. Alors vous préférez prendre les templates des autres ! Ainsi j'utilise [un site web de templates](http://templated.co/ "Choisir un template sur le site web templated.co").
+
+#### Chargement du template
+
+Jetez un œil à ce template : [http://templated.co/monochromed](http://templated.co/monochromed "Découvrir le template nommé 'monochromed'"). Nous l'utiliserons pour notre tutoriel.
+
+Charger le template, l'extraire dans **template/monochromed** (dans le dossier ${PROJECTNAMELOWER}).
 
 #### To do
 
@@ -362,7 +362,7 @@ You can find some example of *config.mk* file into the **template** directory. D
 
 ----
 
-## Replacement values
+## Valeurs de remplacement
 
 In ${PROJECTNAME} you have some specific words in templates that are replaced by some values. For an example the word **${HOME\_TITLE}** will be displayed as **Home**. So when you see it in template, or add it in template, you know that this specific word will be replaced.
 
