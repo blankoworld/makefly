@@ -213,7 +213,9 @@ To make easier the theme creation you can use this command:
 
 where **myTheme** is to replace by your own theme name.
 
-Note: This exploit a theme called *Base* as example.
+Note: This exploits a theme called *Base* as example.
+
+For template designer have a look here: [Themes documentation](${PROJECTURL}/themes.html "Read more about making template for ${PROJECTNAME}").
 
 # Translation
 

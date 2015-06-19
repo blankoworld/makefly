@@ -215,6 +215,8 @@ o&ugrave; **myTheme** est &agrave; remplacer par le nom de votre th&egrave;me.
 
 Note : Ceci utilise le th&egrave;me nomm&eacute; *Base* comme exemple.
 
+Pour les concepteur de thèmes jetez un œil ici: [Documentation sur les thèmes](${PROJECTURL}/themes.html.fr "En savoir plus sur la manière de faire un template pour ${PROJECTNAME}").
+
 # Traduction
 
 Une fa&ccedil;on simple de traduire ${PROJECTNAME} dans votre langage est de copier le fichier **lang/translate.en** dans un autre fichier. Par exemple, pour le Fran&ccedil;ais (avec le code fr), vous pouvez copier **lang/translate.en** en **lang/translate.fr** et changez les valeurs. Puis changez simplement l'option *BLOG\_LANG* dans le fichier **${PROJECTNAMELOWER}.rc**.
