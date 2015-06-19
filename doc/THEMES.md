@@ -232,9 +232,23 @@ Then adapt **template/monochromed/header.tmpl** to have this:
 
 Refresh the blog and enjoy!
 
-----
+#### Common files
 
-**TODO**
+As explained in *Template ' structure* chapter, there is a lot of files needed. Some needs to be adapted, and some other one can be just used as it is.
+
+So you can copy these files (from **template/base** directory) in your monochromed directory:
+
+  * element.tmpl
+  * menu.about.tmpl
+  * post.footer.tmpl
+  * post.index.tmpl
+  * tagelement.tmpl
+  * taglink.tmpl
+  * tags.tmpl
+
+After a refresh your blog will have post list and tag list available.
+
+What do you think about your blog now?
 
 ----
 
