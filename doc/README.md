@@ -27,9 +27,9 @@ It gives these functionnalities:
 
 **Note** : ${PROJECTNAME} was not designed to create, edit and delete posts. Even if it offers a script that make new post we suggest you to turn to other projects like [Hymby](https://github.com/blankoworld/hymby) (in development).
 
-# Installation
+## Installation
 
-## Briefly
+### Briefly
 
 In some short steps, here is how to install the last version (current development):
 
@@ -42,11 +42,11 @@ In some short steps, here is how to install the last version (current developmen
 
 You should have an action list done on your computer. And result is available in **pub directory**.
 
-## Detailed
+### Detailed
 
 If you achieve the **Briefly** step, go to **Use it!** section.
 
-### Dependencies
+#### Dependencies
 
 Some programs on which ${PROJECTNAME} depends: 
 
@@ -59,7 +59,7 @@ So use your distribution package manager to install them. For an example on Debi
 
 For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
 
-### Others methods to install dependancies
+#### Others methods to install dependancies
 
 If your distribution doesn't have *lua-filesystem*, you can attempt to install **luarocks** then install dependancies as:
 
@@ -68,7 +68,7 @@ If your distribution doesn't have *lua-filesystem*, you can attempt to install *
 
 That's all!
 
-### Installation
+#### Installation
 
 There is 2 ways to install ${PROJECTNAME} on your computer:
 
@@ -82,25 +82,25 @@ So you just have to:
 
 And ${PROJECTNAME} is installed.
 
-### Configuration
+#### Configuration
 
-#### Stable version
+##### Stable version
 
 No special configuration required. Check that **${PROJECTNAMELOWER}.rc** file is present. Otherwise copy **${PROJECTNAMELOWER}.rc.example** file or rename it to **${PROJECTNAMELOWER}.rc**.
 
-#### Trunk version
+##### Trunk version
 
 The first time you use ${PROJECTNAME} you don't have any configuration file. An example is available in *${PROJECTNAMELOWER}.rc.example*. Copy it to **${PROJECTNAMELOWER}.rc** to permit ${PROJECTNAME} to work.
 
-#### More info
+##### More info
 
 For more information please read **The ${PROJECTNAMELOWER}.rc configuration file** section.
 
-# Use it!
+## Use it!
 
 **By default the content of the blog is located in the pub directory**.
 
-## In brief
+### In brief
 
 Some useful commands:
 
@@ -109,9 +109,9 @@ Some useful commands:
   * **./${PROJECTNAMELOWER} add**: Create a post and add its main metadata
   * **./${PROJECTNAMELOWER} clean**: Trash the entire final directory content and empty the ${PROJECTNAME}'s *cache*.
 
-## Create content
+### Create content
 
-### Create a new post
+#### Create a new post
 
 Use this command:
 
@@ -123,7 +123,7 @@ Note that ${PROJECTNAME} use the [markdown format](http://daringfireball.net/pro
 
 **Don't forget to edit the file that the './${PROJECTNAMELOWER} add' command return.**
 
-### Static content (pictures, videos, PDF files, etc.)
+#### Static content (pictures, videos, PDF files, etc.)
 
 Sometimes you want to share some files as photos, demonstration, shows, etc. *static* directory exists for this kind of use. Each file that is in this directory will be copied in the result directory.
 
@@ -134,7 +134,7 @@ Example:
 
 It works for each kind of file in this *static* directory.
 
-### Static pages
+#### Static pages
 
 Sometimes you'd prefer to add **static** pages,  for an example legal notices.
 
@@ -147,7 +147,7 @@ Example:
 
 This allow you to create a full website only with static pages.
 
-### The 'special' directory
+#### The 'special' directory
 
 This one is named **special** because it can contain some file you have to create in order to activate a functionality:
 
@@ -156,7 +156,7 @@ This one is named **special** because it can contain some file you have to creat
   * *introduction.md* : Display this file's content as an introduction on all your website's pages. This could change regarding the choosen theme.
   * *footer.md* : Display this file's content as a footer on all your website's pages. This could change regarding the choosen theme.
 
-## Produce the blog
+### Produce the blog
 
 After having created *${PROJECTNAMELOWER}.rc* (from ${PROJECTNAMELOWER}.rc.example) and having created some posts, just do this:
 
@@ -164,11 +164,11 @@ After having created *${PROJECTNAMELOWER}.rc* (from ${PROJECTNAMELOWER}.rc.examp
 
 It will generate a ${PROJECTNAME} weblog to the **pub** directory (default directory).
 
-# Publish result to the web
+## Publish result to the web
 
 The result is compatible with all HTML servers. In fact you could probably use result with your website provider. You just have to upload all files from **pub** directory to your provider's web directory.
 
-## From a webserver
+### From a webserver
 
 If you launch ${PROJECTNAME} on you own server or probably on provider ' server, you should be capable to use **install** script automation. Just launch it as:
 
@@ -184,7 +184,7 @@ If you launch ${PROJECTNAME} on you own server or probably on provider ' server,
 
 Then relaunch `./${PROJECTNAMELOWER} refresh && ./${PROJECTNAMELOWER} install` to recompile and reinstall the weblog.
 
-## To a remote computer: *publish* command
+### To a remote computer: *publish* command
 
 To publish your blog to a remote computer you have to:
 
@@ -205,7 +205,7 @@ Once having complete this variable in **${PROJECTNAMELOWER}.rc** file, just laun
 
 For developers: You can also edit **tools/publish.sh** file and change script content to you own code.
 
-# Create a new theme
+## Create a new theme
 
 To make easier the theme creation you can use this command:
 
@@ -217,11 +217,11 @@ Note: This exploits a theme called *Base* as example.
 
 For template designer have a look here: [Themes documentation](${PROJECTURL}/themes.html.en "Read more about making template for ${PROJECTNAME}").
 
-# Translation
+## Translation
 
 A simple way to translate ${PROJECTNAME} to your language is to copy the **lang/translate.en** file to another translation file. For an example, for french (with fr code), you can copy **lang/translate.en** to **lang/translate.fr** and change values. Then just change *BLOG\_LANG* option in **${PROJECTNAMELOWER}.rc** file.
 
-# Backup
+## Backup
 
 Perhaps would you backup some important files in ${PROJECTNAME}? It's possible via **backup command**. Just launch it like this:
 
@@ -243,7 +243,7 @@ Files saved:
 
 Result: This will create a *tarball* named *YYYYmmdd-HM\_${PROJECTNAMELOWER}.tar.gz* in **mbackup** directory (for an example 20120823-1732\_${PROJECTNAMELOWER}.tar.gz). You can so backup your ${PROJECTNAME} each day for an example.
 
-## Tip
+### Tip
 
 You can customize (in your **${PROJECTNAMELOWER}.rc** file):
 
@@ -252,28 +252,28 @@ You can customize (in your **${PROJECTNAMELOWER}.rc** file):
   * the suffix of the name by using **BACKUP\_SUFFIX** option
   * the date format using **BACKUP\_FORMAT** option
 
-# Sources
+## Sources
 
 Sources are available: 
 
   * [On gitorious](http://gitorious.org/makefly/master.git/)
   * [On github](${GITPROJECT})
 
-# Documentation
+## Documentation
 
 This file is the documentation. You can [read it on github](${GITPROJECT} "Read documentation on Github") or simply generate an HTML file with this command:
 
     ./${PROJECTNAMELOWER} doc
 
-# Tips
+## Tips
 
-## Write post ahead of current's datetime
+### Write post ahead of current's datetime
 
 In ${PROJECTNAME} you can publish early posts. To do that metadata file should have a timestamp superior to current's one when you generate the weblog. 
 
 For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 1362569400. Your post (situated in the **db** directory) have to have a timestamp inferior to current's one (1362569400).
 
-## Write directly the post's content during its creation
+### Write directly the post's content during its creation
 
 Just use the 'content' variable at the beginning of the command:
 
@@ -281,7 +281,7 @@ Just use the 'content' variable at the beginning of the command:
 
 This will add "my little content" into your new post.
 
-## Having a comment system
+### Having a comment system
 
 ${PROJECTNAME} have a free beta service called [Rave Comment](http://rave.depotoi.re/) and available for users.
 
@@ -296,7 +296,7 @@ You will so have a comment system on your website.
 
 Note: comments will not be visible on your computer. Only on remote website.
 
-## [deprecated] Do not lost comments when migrating from an old domain to a new one
+### [deprecated] Do not lost comments when migrating from an old domain to a new one
 
 **Note**: This tip is **deprecated** since 0.4 ${PROJECTNAME} version as it only works with JSKOMMENT system.
 
@@ -308,7 +308,7 @@ To avoid this problem, just use **migratefrom command** as:
 
 This will update all your old posts with the old comments' identifier (your old domain) and comments will afressh appear.
 
-# The ${PROJECTNAMELOWER}.rc configuration file
+## The ${PROJECTNAMELOWER}.rc configuration file
 
 Here is some options you can change:
 
@@ -355,23 +355,23 @@ Here is some options you can change:
   * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
   * AUTO\_EDIT (optionnel) : Allow to edit automatically posts after their creation. Use the EDITOR variable content to know which editor to use.
 
-# Migrate from Nanoblogger
+## Migrate from Nanoblogger
 
 A script that permits to migrate from Nanoblogger exists: [nb2makefly](http://github.com/blankoworld/nb2makefly "Discover nb2makefly").
 
 I guest you to read the [nb2makefly documentation](https://github.com/blankoworld/nb2makefly/blob/master/README.en.md "Read the nb2makefly documentation") to know more about it.
 
-# The project
+## The project
 
-## Description
+### Description
 
 ${PROJECTNAME} is a subproject of [BlogBox](http://blogbox.depotoi.re/ "Read more about BlogBox project") that aims to give user a better way to host a blog at home.
 
-## Website
+### Website
 
 Stay tuned to [${PROJECTNAME} weblog](${PROJECTURL}blog/ "Visit ${PROJECTNAME} official website") to know more about the project.
 
-## Red alert, bug detected!
+### Red alert, bug detected!
 
 You find a bug? Or something goes wrong? Let's go [opening a ticket on Github](${GITPROJECT}issues). It's simple:
 
@@ -388,7 +388,7 @@ You find a bug? Or something goes wrong? Let's go [opening a ticket on Github]($
 
 This take few minutes and permit to improve ${PROJECTNAME}. Thanks -in advance - a lot for your help!
 
-## Development
+### Development
 
 ${PROJECTNAME} is developed in Lua, CSS and HTML.
 
@@ -397,7 +397,7 @@ The code of the software is available in the given repositories:
   * [Gitorious](https://gitorious.org/makefly/ "Go to ${PROJECTNAME}'s project page on Gitorious")
   * [Github](${GITPROJECT} "Go to ${PROJECTNAME}'s project page on Github")
 
-### Tip to fork the project
+#### Tip to fork the project
 
 The project can be duplicated and renamed easily. For that just use the given variable in ${PROJECTNAMELOWER} file:
 
@@ -411,18 +411,18 @@ I suggest you to rename the ${PROJECTNAMELOWER}.svg file to those given in PROJE
 
 Good fork and good luck!
 
-## Docker file
+### Docker file
 
 A Docker file is available to test ${PROJECTNAME}: https://registry.hub.docker.com/u/bl4n/docker-makefly/
 
-## Contact
+### Contact
 
 You can contact me [to this address](mailto:olivier+makefly@dossmann.net "Contact me").
 
-## License
+### License
 
 This software is published under GNU Affero General Public License 3.0.
 
-## Stats
+### Stats
 
 Some stats about project could be found [on Ohloh.net](http://www.ohloh.net/p/makefly "See ohloh's analysis for ${PROJECTNAME} project").

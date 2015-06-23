@@ -27,9 +27,9 @@ Il propose les fonctionnalités suivantes :
 
 **Note** : ${PROJECTNAME} n'est pas destiné à créer, éditer ou supprimer des billets, même s'il propose un script pour faire un nouveau billet, il est conseillé de se tourner vers des projets tierces tels qu'[Hymby](https://github.com/blankoworld/hymby) (en développement).
 
-# Installation
+## Installation
 
-## En rapide
+### En rapide
 
 En quelques &eacute;tapes voici comment installer la derni&egrave;re version (en d&eacute;veloppement) : 
 
@@ -42,11 +42,11 @@ En quelques &eacute;tapes voici comment installer la derni&egrave;re version (en
 
 Vous devriez avoir une liste d'actions effectu&eacute;es sur votre machine. Et le r&eacute;sultat se trouve dans le dossier **pub**.
 
-## En d&eacute;taill&eacute;
+### En d&eacute;taill&eacute;
 
 Si vous avez r&eacute;ussi l'&eacute;tape **En rapide** avec succ&egrave;s, passez directement &agrave; la section **Utilisation**.
 
-### D&eacute;pendences
+#### D&eacute;pendences
 
 ${PROJECTNAME} d&eacute;pend des &eacute;l&eacute;ment suivants : 
 
@@ -59,7 +59,7 @@ Ainsi utilisez le gestionnaire de paquet de votre distribution pour les installe
 
 Pour d'autres distributions, regardez du c&ocirc;t&eacute; des forums, d'IRC et/ou de la communaut&eacute; de votre distribution. Ils seront heureux de vous aider.
 
-### Autre m&eacute;thode pour les dépendances
+#### Autre m&eacute;thode pour les dépendances
 
 Si votre distribution ne propose pas le paquet *lua-filesystem*, vous pouvez tenter d'installer **luarocks** puis installer les d&eacute;pendances de la mani&egrave;re suivante : 
 
@@ -68,7 +68,7 @@ Si votre distribution ne propose pas le paquet *lua-filesystem*, vous pouvez ten
 
 Et le tour est jou&eacute; !
 
-### Installation
+#### Installation
 
 Vous avez le choix entre : 
 
@@ -82,25 +82,25 @@ Il suffit donc de :
 
 Et ${PROJECTNAME} est install&eacute;.
 
-### Configuration
+#### Configuration
 
-#### Pour la version stable
+##### Pour la version stable
 
 Aucune configuration particuli&egrave;re n'est requise. V&eacute;rifiez que le fichier **${PROJECTNAMELOWER}.rc** existe bien. Le cas &eacute;ch&eacute;ant copiez le fichier **${PROJECTNAMELOWER}.rc.fr.example** ou renommez le en **${PROJECTNAMELOWER}.rc**.
 
-#### Pour la version en cours de d&eacute;veloppement
+##### Pour la version en cours de d&eacute;veloppement
 
 La premi&egrave;re fois que vous utilisez ${PROJECTNAME} vous n'avez aucun fichier de configuration. Un exemple de fichier de configuration est disponible dans **${PROJECTNAMELOWER}.rc.fr.example**. Copiez le vers **${PROJECTNAMELOWER}.rc** pour permettre &agrave; ${PROJECTNAME} de fonctionner.
 
-#### Plus d'infos
+##### Plus d'infos
 
 Pour plus d'informations, lisez la section **Le fichier de configuration ${PROJECTNAMELOWER}.rc**.
 
-# Utilisation
+## Utilisation
 
 **Par défaut le contenu du blog se trouve dans le r&eacute;pertoire pub**.
 
-## En rapide
+### En rapide
 
 Quelques commandes utiles :
 
@@ -109,9 +109,9 @@ Quelques commandes utiles :
   * **./${PROJECTNAMELOWER} add** : Créer un article et compl&eacute;ter ses infos principales
   * **./${PROJECTNAMELOWER} clean** : Vide compl&egrave;tement le contenu du r&eacute;pertoire final et vide le *cache* de ${PROJECTNAME}
 
-## Cr&eacute;er du contenu
+### Cr&eacute;er du contenu
 
-### Cr&eacute;er un nouvel article
+#### Cr&eacute;er un nouvel article
 
 Utilisez la commande suivante :
 
@@ -123,7 +123,7 @@ Il est &agrave; noter que ${PROJECTNAME} utilise [le format markdown](http://dar
 
 **N'oubliez pas d'&eacute;diter le fichier renseign&eacute; par la commande './${PROJECTNAMELOWER} add'.**
 
-### Contenu statique (photos, vidéos, fichiers PDF, etc.)
+#### Contenu statique (photos, vidéos, fichiers PDF, etc.)
 
 Parfois on souhaite partager des fichiers tels quels, que ce soit des images, des démonstrations, des présentations, etc. Il existe pour cela le dossier *static*. Tout fichier déposé dans ce dossier sera copié dans le dossier de destination.
 
@@ -134,7 +134,7 @@ Exemple :
 
 Cela fonctionne donc pour tout type de fichier contenu dans ce dossier.
 
-### Pages statiques
+#### Pages statiques
 
 Parfois on aimerait ajouter à son blog quelques pages dites **statiques**. Par exemple les mentions légales.
 
@@ -147,7 +147,7 @@ Exemple :
 
 Ceci vous permet de créer un site web complet avec que des pages statiques.
 
-### Le dossier 'special'
+#### Le dossier 'special'
 
 Ce dossier nomm&eacute; **special** peut contenir certains fichiers que vous devrez cr&eacute;er pour activer une fonctionnalit&eacute; : 
 
@@ -156,7 +156,7 @@ Ce dossier nomm&eacute; **special** peut contenir certains fichiers que vous dev
   * *introduction.md* : Affiche le contenu de ce fichier comme introduction sur l'ensemble de vos pages. Varie selon le th&egrave;me choisi.
   * *footer.md* : Affiche le contenu de ce fichier comme d'un pied de page sur l'ensemble de vos pages. Varie selon le th&egrave;me choisi.
 
-## G&eacute;n&eacute;rer le blog
+### G&eacute;n&eacute;rer le blog
 
 Apr&egrave;s avoir cr&eacute;e quelques articles, faites simplement : 
 
@@ -164,11 +164,11 @@ Apr&egrave;s avoir cr&eacute;e quelques articles, faites simplement :
 
 Ceci g&eacute;n&egrave;rera un blog ${PROJECTNAME} dans le dossier **pub** (r&eacute;pertoire par d&eacute;faut).
 
-# Publier le r&eacute;sultat sur le web
+## Publier le r&eacute;sultat sur le web
 
 Le r&eacute;sultat de ${PROJECTNAME} est compatible avec tous le serveurs HTML. En effet vous pouvez probablement utiliser le r&eacute;sultat sur le site web de votre h&eacute;bergeur. Il suffit d'envoyer le contenu du r&eacute;pertoire **pub** dans celui de votre h&eacute;bergeur.
 
-## Sur un serveur web
+### Sur un serveur web
 
 Si vous lancez ${PROJECTNAME} sur votre propre serveur ou tr&egrave;s certainement sur le serveur de votre h&eacute;bergeur, vous pourrez utiliser l'installation automatis&eacute;e. Lancez simplement la commande suivante : 
 
@@ -184,7 +184,7 @@ Si vous lancez ${PROJECTNAME} sur votre propre serveur ou tr&egrave;s certaineme
 
 Relancez ensuite la commande `./${PROJECTNAMELOWER} refresh && ./${PROJECTNAMELOWER} install` pour recompiler le blog.
 
-## Vers un ordinateur distant : la commande *publish*
+### Vers un ordinateur distant : la commande *publish*
 
 Pour publier votre blog vers une machine distante, vous devez : 
 
@@ -205,7 +205,7 @@ Une fois cette variable renseign&eacute;e dans le fichier **${PROJECTNAMELOWER}.
 
 Pour les d&eacute;velopeurs : Vous pouvez aussi modifier le fichier **tools/publish.sh** et changer le contenu du script par votre propre code.
 
-# Cr&eacute;er un nouveau th&egrave;me
+## Cr&eacute;er un nouveau th&egrave;me
 
 Afin de vous faciliter la tâche de cr&eacute;ation d'un nouveau th&egrave;me, vous pouvez utiliser la commande suivante :
 
@@ -217,11 +217,11 @@ Note : Ceci utilise le th&egrave;me nomm&eacute; *Base* comme exemple.
 
 Pour les concepteur de thèmes jetez un œil ici: [Documentation sur les thèmes](${PROJECTURL}/themes.html.fr "En savoir plus sur la manière de faire un template pour ${PROJECTNAME}").
 
-# Traduction
+## Traduction
 
 Une fa&ccedil;on simple de traduire ${PROJECTNAME} dans votre langage est de copier le fichier **lang/translate.en** dans un autre fichier. Par exemple, pour le Fran&ccedil;ais (avec le code fr), vous pouvez copier **lang/translate.en** en **lang/translate.fr** et changez les valeurs. Puis changez simplement l'option *BLOG\_LANG* dans le fichier **${PROJECTNAMELOWER}.rc**.
 
-# Sauvegardes
+## Sauvegardes
 
 Peut-&ecirc;tre voudriez-vous sauvegarder les fichiers importants de ${PROJECTNAME} ? C'est possible via la **commande backup**. Lancez la simplement de cette mani&egrave;re : 
 
@@ -243,7 +243,7 @@ Fichiers sauv&eacute;s :
 
 R&eacute;sultat : Ceci cr&eacute;era une *archive* nomm&eacute;e *YYYYmmdd-HM\_${PROJECTNAMELOWER}.tar.gz* (20120823-1735\_${PROJECTNAMELOWER}.tar.gz par exemple) dans le dossier **mbackup**. Vous pouvez ainsi sauvegarder votre ${PROJECTNAME} chaque jour.
 
-## Astuce
+### Astuce
 
 Vous pouvez personnaliser (dans votre fichier **${PROJECTNAMELOWER}.rc**) :
 
@@ -252,28 +252,28 @@ Vous pouvez personnaliser (dans votre fichier **${PROJECTNAMELOWER}.rc**) :
   * le suffixe du fichier de sauvegarde en utilisant l'option **BACKUP\_SUFFIX**
   * le format de date en utilisant l'option **BACKUP\_FORMAT**
 
-# Sources
+## Sources
 
 Les sources sont disponibles :  
 
   * [Sur gitorious](http://gitorious.org/makefly/master.git/)
   * [Sur github](${GITPROJECT})
 
-# Documentation
+## Documentation
 
 Ce fichier est la documentation. Vous pouvez [le lire sur github](${GITPROJECT} "Lire la documentation sur Github") ou simplement g&eacute;n&eacute;rer un fichier HTML &agrave; l'aide de cette commande : 
 
     ./${PROJECTNAMELOWER} doc
 
-# Astuces
+## Astuces
 
-## &Eacute;crire des billets en avance
+### &Eacute;crire des billets en avance
 
 Dans ${PROJECTNAME} vous pouvez &eacute;crire des billets en avance. Il suffit pour cela que le fichier de m&eacute;ta-donn&eacute;es de votre billet poss&egrave;de un timestamp sup&eacute;rieur &agrave; celui du moment o&ugrave; est g&eacute;n&eacute;r&eacute; le blog.
 
 Par exemple nous sommes le 6 mars 2013, &agrave; 12:30, le timestamp est : 1362569400. Il faut que dans le dossier **db**, votre article ait un timestamp inf&eacute;rieur &agrave; celui d'aujourd'hui.
 
-## &Eacute;crire directement le contenu de l'article &agrave; sa cr&eacute;ation
+### &Eacute;crire directement le contenu de l'article &agrave; sa cr&eacute;ation
 
 Utilisez juste la variable 'content' au d&eacute;but de la commande : 
 
@@ -281,7 +281,7 @@ Utilisez juste la variable 'content' au d&eacute;but de la commande :
 
 Ceci ajoutera "mon petit contenu" dans votre nouvel article.
 
-## Disposer d'un service de commentaires
+### Disposer d'un service de commentaires
 
 ${PROJECTNAME} dispose d'un service gratuit en bêta test nommé [Rave Comment](http://rave.depotoi.re/) mis à disposition de ses utilisateurs.
 
@@ -296,7 +296,7 @@ Vous aurez ainsi un système de commentaire sur votre site.
 
 Note : les commentaires ne seront pas visibles sur votre machine. Seulement sur le site distant.
 
-## [périmé] Ne pas perdre les commentaires quand on migre d'un vieux domaine &agrave; un nouveau
+### [périmé] Ne pas perdre les commentaires quand on migre d'un vieux domaine &agrave; un nouveau
 
 **Note** : cette astuce n'est **plus valable** pour la version 0.4 et suivante de ${PROJECTNAME}. Elle ne fonctionne que si vous utilisez JSKOMMENT.
 
@@ -308,7 +308,7 @@ Pour r&eacute;gler le probl&egrave;me, utilisez simplement la **commande migrate
 
 Ceci va mettre &agrave; jour tout les anciens articles avec l'identifiant des vieux commentaires (votre vieux domaine) et les commentaires r&eacute;appara&icirc;tront.
 
-# Le fichier de configuration ${PROJECTNAMELOWER}.rc
+## Le fichier de configuration ${PROJECTNAMELOWER}.rc
 
 Voici quelques options que vous pouvez changer : 
 
@@ -356,23 +356,23 @@ Voici quelques options que vous pouvez changer :
   * SORT (optionnel) : Tri la liste des billets. Utilisez ASC pour que les billets soient triés du plus anciens au plus récent. DESC (valeur par défaut) tri les billets du plus récent au plus ancien.
   * AUTO\_EDIT (optionnel) : Permet d'&eacute;diter automatiquement les billets apr&egrave;s leur cr&eacute;ation. Utilise le contenu de la variable EDITOR pour savoir quel &eacute;diteur utiliser.
 
-# Migration depuis Nanoblogger
+## Migration depuis Nanoblogger
 
 Un script de migration depuis Nanoblogger existe: [nb2makefly](http://github.com/blankoworld/nb2makefly "D&eacute;couvrir nb2makefly").
 
 Je vous invite &agrave; lire la [documentation de nb2makefly](https://github.com/blankoworld/nb2makefly/blob/master/README.md "Lire la documentation de nb2makefly") pour cela.
 
-# Le projet
+## Le projet
 
-## Description
+### Description
 
 ${PROJECTNAME} est un sous-projet de [BlogBox](http://blogbox.depotoi.re/ "En savoir plus sur le projet BlogBox") qui vise &agrave; fournir de meilleurs moyens pour h&eacute;berger un blog &agrave; la maison.
 
-## Site web
+### Site web
 
 Visitez fr&eacute;quemment le [blog de ${PROJECTNAME}](${PROJECTURL}blog/ "Visiter le blog officiel de ${PROJECTNAME}") (en) pour avoir des nouvelles du projet.
 
-## Alerte rouge, bug détecté !
+### Alerte rouge, bug détecté !
 
 Vous avez trouvé un bug ? Ou quelque chose ne va pas (hormis vos problèmes de couple) ? C'est parti pour [ouvrir un rapport de bug sur Github](${GITPROJECT}issues). C'est simple : 
 
@@ -389,7 +389,7 @@ Vous avez trouvé un bug ? Ou quelque chose ne va pas (hormis vos problèmes de 
 
 This take few minutes and permit to improve ${PROJECTNAME}. Thanks -in advance - a lot for your help!
 
-## Développement
+### Développement
 
 ${PROJECTNAME} est développ&eacute; en Lua, CSS et HTML.
 
@@ -398,7 +398,7 @@ Le code du logiciel se trouve sur les d&eacute;p&ocirc;ts suivants :
   * [Gitorious](https://gitorious.org/makefly/ "Se rendre sur la page d'accueil du projet ${PROJECTNAME} sur Gitorious")
   * [Github](${GITPROJECT} "Se rendre sur la page d'accueil du projet ${PROJECTNAME} sur Github")
 
-### Astuce pour forker/bifurquer le projet
+#### Astuce pour forker/bifurquer le projet
 
 Le projet peut se dupliquer et se renommer facilement en utilisant les variables suivantes dans le fichier ${PROJECTNAMELOWER} : 
 
@@ -412,18 +412,18 @@ Pensez également à renommer le fichier ${PROJECTNAMELOWER}.svg en celui du nom
 
 Bon fork, et bonne chance !
 
-## Fichier Docker
+### Fichier Docker
 
 Un fichier Docker est disponible pour tester ${PROJECTNAME} : https://registry.hub.docker.com/u/bl4n/docker-makefly/
 
-## Contact
+### Contact
 
 Vous pouvez me contacter [&agrave; cette adresse](mailto:olivier+makefly@dossmann.net "Me contacter").
 
-## Licence
+### Licence
 
 Ce logiciel est publi&eacute; sous la licence suivante : GNU Affero General Public License 3.0.
 
-## Stats
+### Stats
 
 Quelques stats du projet se trouvent [sur Ohloh.net](http://www.ohloh.net/p/makefly "Voir les analyses d'ohloh &agrave; propos du projet ${PROJECTNAME}").
