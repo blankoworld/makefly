@@ -70,19 +70,38 @@ function blog.getKeywords(postconfig)
 end
 
 -------------------------------------------------------------------------------
--- Add specific comments substitutions (JSKOMMENT_CONTENT variable)
+-- Get the webpage name without reserved chars and with its extension
+-- @param name Initial name of the page
+-- @param extension extension you want to add to the page
+-- @return a string of your page's name and its extension
+-------------------------------------------------------------------------------
+function blog.getPageName(name, extension)
+  local page_base = utils.keepUnreservedCharsAndDeleteDuplicate(name)
+  local result = page_base .. extension
+  return result
+end
+
+-------------------------------------------------------------------------------
+-- Add specific comments substitutions (ISSO_CONTENT variable)
 -- @param sub Substitutions table
 -- @param config Post configuration table
 -- @param title Post title
--- @return Substitutions table with JSKOMMENT_CONTENT if needed
+-- @return Substitutions table with ISSO_CONTENT if needed
 -------------------------------------------------------------------------------
 function blog.commentSubstitutions(sub, cfg, title)
-  local template_comment = utils.readFile(config.page_jskomment, 'r')
-  if config.JSKOMMENT and config.JSKOMMENT == '1' then
-    local jskomment_prefix = cfg['JSKOMMENT_PREFIX'] and cfg['JSKOMMENT_PREFIX'] ~= '' and cfg['JSKOMMENT_PREFIX'] or replacements['BLOG_URL']
-    local jskomment_id = jskomment_prefix .. '/' .. title
-    local jskomment_content = utils.replace(template_comment, {JSKOMMENT_ID=jskomment_id})
-    sub['JSKOMMENT_CONTENT'] = jskomment_content
+  local template_comment = utils.readFile(config.page_isso, 'r')
+  if config.ISSO and config.ISSO == '1' then
+    local isso_prefix = cfg['ISSO_PREFIX'] and cfg['ISSO_PREFIX'] ~= '' and cfg['ISSO_PREFIX'] or replacements['BLOG_URL']
+    local isso_id = isso_prefix .. '/' .. title
+    local isso_content = utils.replace(template_comment, {ISSO_ID=isso_id})
+    sub['ISSO_CONTENT'] = isso_content
+    -- process short and extended isso templates. Use previous ISSO_CONTENT value.
+    local template_isso_short = utils.readFile(config.page_isso_short, 'r')
+    local template_isso_extended = utils.readFile(config.page_isso_extended, 'r')
+    local isso_short_content = utils.replace(template_isso_short, sub)
+    local isso_extended_content = utils.replace(template_isso_extended, sub)
+    sub['ISSO_SHORT'] = isso_short_content
+    sub['ISSO_EXTENDED'] = isso_extended_content
   end
   return sub
 end
@@ -144,11 +163,13 @@ function blog.createPost(file, cfg, header, footer, data)
     -- keywords
     local keywords = blog.getKeywords(cfg)
     -- local replacements
+    assert(os.setlocale(oslanguage or en_US.utf-8))
     local post_replacements = {
       TITLE = cfg['TITLE'],
       POST_TITLE = cfg['TITLE'],
-      ARTICLE_CLASS_TYPE = cfg['TYPE'] or '',
-      CONTENT = markdown_content,
+      POST_DESCRIPTION = cfg['DESCRIPTION'],
+      POST_TYPE = cfg['TYPE'] or '',
+      POST_CONTENT = markdown_content,
       POST_FILE = utils.keepUnreservedCharsAndDeleteDuplicate(title) .. config.PAGE_EXT,
       DATE = os.date(config.DATE_FORMAT, timestamp) or '',
       DATETIME = os.date(config.datetime_format, timestamp) or '',
@@ -165,7 +186,7 @@ function blog.createPost(file, cfg, header, footer, data)
     -- ${VARIABLES} substitution on markdown content
     local flatten_final_content = post:flatten()
     local final_content = utils.replace(flatten_final_content, substitutions)
-    -- First time we replace element, CONTENT will get markdown_content. But markdown_content was not replaced itself with replacements elements. The next line is here to do that
+    -- First time we replace element, POST_CONTENT will get markdown_content. But markdown_content was not replaced itself with replacements elements. The next line is here to do that
     final_content = utils.replace(final_content, substitutions)
     out:write(final_content)
     assert(out:close())
@@ -192,7 +213,7 @@ function blog.createTagLinks(post_tags, file)
     if k > 1 then
       result = result .. ', '
     end
-    local tag_page = string.gsub(v, '%s', '_') .. config.PAGE_EXT
+    local tag_page = blog.getPageName(v, config.PAGE_EXT)
     result = result .. utils.replace(template, {TAG_PAGE=tag_page, TAG_NAME=v})
   end
   return result
@@ -253,9 +274,9 @@ function blog.createPostForHomepage(file, title, cfg, content, sub, post_templat
         final_content = final_content .. page_read_more
       end
     end
-    local post_content = utils.replace(post_template, {CONTENT=markdown(final_content)})
+    local post_content = utils.replace(post_template, {POST_CONTENT=markdown(final_content)})
     -- complete missing info
-    sub['ARTICLE_CLASS_TYPE'] = cfg['TYPE'] or ''
+    sub['POST_TYPE'] = cfg['TYPE'] or ''
     sub['POST_ESCAPED_TITLE'] = title
     -- add comment block if comment system is activated
     sub = blog.commentSubstitutions(sub, cfg, title)
@@ -279,6 +300,7 @@ end
 -- @param content Content of the post to add in the RSS (if can be included)
 -- @param config Metadata from the post
 -- @param title Title of the post to be saved into temporary directory
+-- @param tmstmp Timestamp of the initial file so that you have the real displayed date
 -- @param template Template of RSS element
 -- @param data.min Number minimum that the post number should have to be on RSS page
 -- @param data.max Number maximum that the post number should have to be on RSS page
@@ -287,7 +309,7 @@ end
 -- @param data.num Number (in the code) of the post
 -- @return data.num which is the number of the RSS
 -------------------------------------------------------------------------------
-function blog.createPostForRSS(content, cfg, title, template, data)
+function blog.createPostForRSS(content, cfg, title, tmstmp, template, data)
   if data.index_nb >= data.min and data.index_nb <= data.max then
     -- create temporary file for RSS
     if data.increment then
@@ -299,7 +321,7 @@ function blog.createPostForRSS(content, cfg, title, template, data)
     local rss_post_html_link = config.BLOG_URL .. '/' .. config.POSTDIR_NAME .. '/' .. title .. config.PAGE_EXT
     -- Change temporarly locale
     assert(os.setlocale('C'))
-    local rss_date = os.date('!%a, %d %b %Y %T GMT', timestamp) or ''
+    local rss_date = os.date('!%a, %d %b %Y %T GMT', tmstmp) or ''
     assert(os.setlocale(oslanguage or en_US.utf-8))
     local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=cfg['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
     assert(rss_file:write(rss_post))
@@ -380,7 +402,7 @@ function blog.postsIndexing(posts, indexfile, result, pagin, number, template, p
       -- process post to be displayed on HOMEPAGE
       home_index = blog.createPostForHomepage(postfile, title, v['conf'], content, post_substitutions, template.article, { min = home_min, max = home_max, num = home_index, index_nb = index_nb, increment = increment })
       -- process post to be used in RSS file
-      rss_index_nb = blog.createPostForRSS(content, v['conf'], title, rss_element, { min = rss_min, max = rss_max, num = rss_index_nb, index_nb = index_nb, increment = increment })
+      rss_index_nb = blog.createPostForRSS(content, v['conf'], title, timestamp, rss_element, { min = rss_min, max = rss_max, num = rss_index_nb, index_nb = index_nb, increment = increment })
       -- incrementation
       index_nb = index_nb + 1
       -- Page process
@@ -532,7 +554,7 @@ function blog.createTagIndex(path, header, footer, data)
   -- browse all tags
   local taglist_content = ''
   for tag, posts in utils.pairsByKeys(tags) do
-    local tag_page = string.gsub(tag, '%s', '_') .. config.PAGE_EXT
+    local tag_page = blog.getPageName(tag, config.PAGE_EXT)
     taglist_content = taglist_content .. utils.replace(template_element, {TAG_PAGE=tag_page, TAG_NAME=tag})
     blog.createTag(config.tagpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(tag_page), tag, posts, header, footer)
   end
@@ -565,6 +587,9 @@ function blog.createHomepage(file, title, header, footer)
     index:push(content)
     index_nb = index_nb + 1
   end
+  -- fetch mini-footer for homepage
+  local index_footer_file = utils.readFile(config.themepath .. '/' .. config.page_posts_footername, 'r')
+  index:push(index_footer_file)
   index:push(footer)
   local substitutions = utils.getSubstitutions(replacements, {BODY_CLASS='home', TITLE=title})
   local final_content = utils.replace(index:flatten(), substitutions)

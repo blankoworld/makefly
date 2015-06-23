@@ -1,12 +1,13 @@
 <h1 class="entry-title">${POST_TITLE}</h1>
+<p class="entry-description">${POST_DESCRIPTION}</p> 
 <header class="entry-meta">
   <time class="entry-date" datetime="${DATETIME}"><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${DATE}</a></time>
   <span class="tag-links">
     ${TAG_LINKS_LIST}
   </span>
 </header><!-- .entry-header -->
-<article id="post-${POST_ESCAPED_TITLE}" class="post ${ARTICLE_CLASS_TYPE}">
-  <div class="entry-content">${CONTENT}</div>
+<article id="post-${POST_ESCAPED_TITLE}" class="post ${POST_TYPE}">
+  <div class="entry-content">${POST_CONTENT}</div>
   <div id="author-info">
     <div id="author-avatar">
     </div><!-- #author-avatar -->
@@ -21,4 +22,4 @@
     </div><!-- #author-description -->
   </div><!-- #entry-author-info -->
 </article>
-${JSKOMMENT_CONTENT}
+${ISSO_CONTENT}

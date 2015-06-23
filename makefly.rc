@@ -15,7 +15,5 @@ SHORT_DATE_FORMAT = %Y/%m
 SIDEBAR = 0
 SEARCH_BAR = 1
 MAX_RSS = 8
-JSKOMMENT = 1
-JSKOMMENT_URL = http://jskomment.depotoi.re
 THEME = minisch
 AUTO_EDIT = 1

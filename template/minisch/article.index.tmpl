@@ -1,13 +1,14 @@
-      <article id="post-${POST_ESCAPED_TITLE}" class="post ${ARTICLE_CLASS_TYPE}">
+      <article id="post-${POST_ESCAPED_TITLE}" class="post ${POST_TYPE}">
         <header class="entry-header">
             <div class="entry-meta">
               <h1 class="entry-title"><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${POST_TITLE}</a></h1>
-              <span class="label ${ARTICLE_CLASS_TYPE}">${ARTICLE_CLASS_TYPE}</span> <time class="entry-date" datetime="${DATETIME}"><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${DATE}</a></time>
+	      <span class="entry-description">${POST_DESCRIPTION}</span><br />
+              <span class="label ${POST_TYPE}">${POST_TYPE}</span> <time class="entry-date" datetime="${DATETIME}"><a href="${BLOG_URL}/${POSTDIR_NAME}/${POST_FILE}">${DATE}</a></time>
               <span class="tag-links">
                 ${TAG_LINKS_LIST}
               </span>
             </div><!-- .entry-meta -->
-          <section class="extrait">${CONTENT}</section>
-          ${JSKOMMENT_CONTENT}
+          <section class="extrait">${POST_CONTENT}</section>
+          ${ISSO_SHORT}
         </header><!-- .entry-header -->
       </article>

@@ -1,4 +1,4 @@
-#!/usr/bin/lua
+#!/usr/bin/env lua
 
 --[[
 
@@ -13,10 +13,12 @@ TODO:
 LuaFileSystem is required: 
 luarocks install luafilesystem
 
-Markdown is required:
-luarocks install markdown
-
 ]]--
+
+PROJECTNAME = 'Makefly'
+PROJECTURL = 'http://makefly.depotoi.re/'
+GITPROJECT = 'https://github.com/blankoworld/makefly/'
+PROJECTNAMELOWER = string.lower(PROJECTNAME)
 
 package.path = package.path .. ";./lib/?.lua"
 
@@ -119,10 +121,13 @@ local function list(args, commands)
 end
 
 local function backup(args)
-  utils.checkDirectory(currentpath .. '/' .. config.backupdir)
+  utils.checkDirectory(currentpath .. '/' .. config.BACKUPDIR)
   -- create zipfile
-  local today = os.date('%Y%m%d', os.time())
-  local filepath = currentpath .. '/' .. config.backupdir .. '/' .. today .. '_makefly.tar' .. config.compression_extension
+  local today = os.date(config.BACKUP_FORMAT, os.time())
+  local prefix = (config.BACKUP_PREFIX and config.BACKUP_PREFIX .. '_') or ''
+  local suffix = (config.BACKUP_SUFFIX and '_' .. config.BACKUP_SUFFIX) or ''
+  local basename = string.format('_%s%s%s.tar', prefix, PROJECTNAMELOWER, suffix)
+  local filepath = currentpath .. '/' .. config.BACKUPDIR .. '/' .. today .. basename .. config.compression_extension
   local to_save = {
     config.staticdir,
     config.dbdir,
@@ -130,14 +135,14 @@ local function backup(args)
     config.specialdir,
     config.tmpldir,
   }
-  local command = 'tar cf - makefly.rc'
+  local command = string.format('tar cf - %s', config.configurationfile)
   for idx, dir in ipairs(to_save) do
     command = command .. ' ' .. dir
   end
   command = command .. string.format('| %s > %s', config.compression_command, filepath)
   local ret = os.execute(command)
   if ret and ret == 0 then
-    print(string.format(_('[%s] Backup: Files successfully saved in %s: makefly.rc, %s, %s, %s, %s and %s'), display_success, config.backupdir, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))
+    print(string.format(_('[%s] Backup: Files successfully saved in %s: %s, %s, %s, %s, %s and %s'), display_success, config.BACKUPDIR, config.configurationfile, config.staticdir, config.dbdir, config.srcdir, config.specialdir, config.tmpldir))
   else
     error(string.format(_('[%s] Backup failed!'), display_error))
   end
@@ -149,7 +154,7 @@ local function install(args)
   -- replace only "$USER" variable in destination path
   destination = utils.replace(destination, { USER = os.getenv('USER') })
   if destination == nil then
-    error(string.format(_('[%s] No INSTALLDIR found. Please add INSTALLDIR= in your makefly.rc'), display_error))
+    error(string.format(_('[%s] No INSTALLDIR found. Please add INSTALLDIR= in your %s'), display_error, config.configurationfile))
   end
   for idx, dir in pairs({origin, destination}) do
     if lfs.attributes(dir) == nil then
@@ -222,7 +227,7 @@ local function theme(args)
 end
 
 local function version(args)
-  print(string.format(_('Makefly %s using %s'), config.VERSION, _VERSION))
+  print(string.format(_('%s %s using %s'), PROJECTNAME, config.VERSION, _VERSION))
 end
 
 local function doc(args)
@@ -231,7 +236,14 @@ local function doc(args)
   local footer = utils.readFile(directory .. '/footer.tmpl', 'r')
   local version = string.format(_('Version %s'), config.VERSION)
   local tocreate = utils.listing(directory, 'md')
-  local markdown = require 'markdown'
+  local markdown = require 'bin/markdown'
+  local substitutions = {
+    VERSION = config.VERSION,
+    PROJECTNAME = PROJECTNAME,
+    PROJECTNAMELOWER = PROJECTNAMELOWER,
+    PROJECTURL = PROJECTURL,
+    GITPROJECT = GITPROJECT,
+  }
   for _, path in pairs(tocreate) do
     -- create content for final content
     local final = rope()
@@ -240,11 +252,12 @@ local function doc(args)
     local content = utils.readFile(path, 'r')
     final:push(markdown(content))
     final:push(footer)
+    local res = utils.replace(final:flatten(), substitutions)
     -- write result into a file
     local name = string.gsub(path, "(.*/)(.*)(\.md)", "%2")
     local filepath = directory .. '/' .. name .. config.PAGE_EXT
     local file = assert(io.open(filepath, 'wb'))
-    file:write(final:flatten())
+    file:write(res)
     assert(file:close())
   end
   print(string.format(_('[%s] Built: documentation files.'), display_info))
@@ -287,23 +300,27 @@ local function cssProcess(themerc, threads)
     print (string.format(_("[%s] Specific flavor: %s"), display_info, config.FLAVOR))
   end
   local css_color_file = config.themepath .. '/style/' .. css_color_file_name
-  local jskomment_css_file = config.templatepath .. '/' .. config.page_jskomment_css_name
-  local jskomment_css_filename = config.page_jskomment_css_name
-  if themerc['JSKOMMENT_CSS'] then
-    jskomment_css_file = config.themepath .. '/' .. themerc['JSKOMMENT_CSS']
-    jskomment_css_filename = themerc['JSKOMMENT_CSS']
+  local isso_css_file = config.templatepath .. '/' .. config.page_isso_css_name
+  local isso_css_filename = config.page_isso_css_name
+  if themerc['ISSO_CSS'] then
+    isso_css_file = config.themepath .. '/' .. themerc['ISSO_CSS']
+    isso_css_filename = themerc['ISSO_CSS']
   end
   table.insert(threads, coroutine.create(function () utils.copyFile(css_file, config.publicpath .. '/' .. themerc['CSS_FILE'], { BLOG_URL = config.BLOG_URL }) end))
   table.insert(threads, coroutine.create(function () utils.copyFile(css_color_file, config.publicpath .. '/' .. themerc['CSS_COLOR_FILE']) end))
   -- Copy static theme directory
   theme_static_directory = config.themepath .. '/static'
   table.insert(threads, coroutine.create(function () utils.copy(theme_static_directory, config.publicpath, { BLOG_URL = config.BLOG_URL }) end))
-  return threads, jskomment_css_file, jskomment_css_filename
+  return threads, isso_css_file, isso_css_filename
 end
 
 local function initializeReplacements(themerc, languagerc, about_file)
   -- Add result to replacements table (to substitute ${VARIABLES} in files)
   replacements = {
+    PROJECTNAME = PROJECTNAME,
+    PROJECTURL = PROJECTURL,
+    GITPROJECT = GITPROJECT,
+    PROJECTNAMELOWER = PROJECTNAMELOWER,
     VERSION = config.VERSION,
     BLOG_TITLE = config.BLOG_TITLE,
     BLOG_DESCRIPTION = config.BLOG_DESCRIPTION,
@@ -316,11 +333,13 @@ local function initializeReplacements(themerc, languagerc, about_file)
     BLOG_CHARSET = config.BLOG_CHARSET,
     RSS_FEED_NAME = config.RSS_FEED_NAME,
     SIDEBAR = '',
-    ARTICLE_CLASS_TYPE = 'normal',
+    POST_TYPE = 'normal',
     SEARCHBAR = '',
-    JSKOMMENT_SCRIPT = '',
-    JSKOMMENT_CSS_DECLARATION = '',
-    JSKOMMENT_CONTENT = '',
+    ISSO_SCRIPT = '',
+    ISSO_CSS_DECLARATION = '',
+    ISSO_CONTENT = '',
+    ISSO_SHORT = '',
+    ISSO_EXTENDED = '',
     ELI_SCRIPT = '',
     ELI_CONTENT = '',
     ELI_CSS = '',
@@ -333,7 +352,7 @@ local function initializeReplacements(themerc, languagerc, about_file)
     CSS_NAME = themerc['CSS_NAME'],
     CSS_FILE = themerc['CSS_FILE'],
     CSS_COLOR_FILE = themerc['CSS_COLOR_FILE'],
-    JSKOMMENT_CSS = themerc['JSKOMMENT_CSS'],
+    ISSO_CSS = themerc['ISSO_CSS'],
     TAGDIR_NAME = config.TAGDIR_NAME,
     POSTDIR_NAME = config.POSTDIR_NAME,
     BODY_CLASS = config.BODY_CLASS,
@@ -414,27 +433,18 @@ local function processSearchbar()
   end
 end
 
-local function processJskomment(threads, themerc, jskomment_css_file, jskomment_css_filename)
-  if config.JSKOMMENT and config.JSKOMMENT == '1' then
+local function processIsso(threads, themerc, isso_css_file, isso_css_filename)
+  if config.ISSO and config.ISSO == '1' then
     print (string.format(_("[%s] Comment system"), display_enable))
-    -- Some values that comes from template configuration file
-    local jskomment_captcha_theme = config.JSKOMMENT_CAPTCHA_THEME or themerc['JSKOMMENT_CAPTCHA_THEME'] or config.jskomment_theme
-    -- copy jskomment css file
-    table.insert(threads, coroutine.create(function () utils.copyFile(jskomment_css_file, config.publicpath .. '/' .. jskomment_css_filename) end))
-    replacements['JSKOMMENT_CSS'] = jskomment_css_filename
-    -- copy jskomment javascript
-    local template_jskomment_script = utils.readFile(config.page_jskomment_script, 'r')
-    local jskomment_script = assert(io.open(config.publicpath .. '/' .. config.jskomment_jsfilename, 'wb'))
-    local jskomment_script_substitutions = utils.getSubstitutions(replacements, { JSKOMMENT_URL = config.JSKOMMENT_URL, JSKOMMENT_MAX = config.JSKOMMENT_MAX, JSKOMMENT_CAPTCHA_THEME = jskomment_captcha_theme})
-    local jskomment_script_content = utils.replace(template_jskomment_script, jskomment_script_substitutions)
-    jskomment_script:write(jskomment_script_content)
-    assert(jskomment_script:close())
-    -- jskomment javascript declaration in all pages
-    local template_jskomment_declaration = utils.readFile(config.page_jskomment_declaration, 'r')
-    replacements['JSKOMMENT_SCRIPT'] = utils.replace(template_jskomment_declaration, {jskom_name=config.jskomment_jsfilename, BLOG_URL = config.BLOG_URL})
-    -- jskomment css declaration in all pages
-    local template_jskomment_css_declaration = utils.readFile(config.page_jskomment_css_declaration, 'r')
-    replacements['JSKOMMENT_CSS_DECLARATION'] = utils.replace(template_jskomment_css_declaration, replacements)
+    -- copy isso css file
+    table.insert(threads, coroutine.create(function () utils.copyFile(isso_css_file, config.publicpath .. '/' .. isso_css_filename) end))
+    replacements['ISSO_CSS'] = isso_css_filename
+    -- isso javascript declaration in all pages
+    local template_isso_declaration = utils.readFile(config.page_isso_declaration, 'r')
+    replacements['ISSO_SCRIPT'] = utils.replace(template_isso_declaration, {BLOG_URL = config.BLOG_URL, ISSO_URL = config.ISSO_URL})
+    -- isso css declaration in all pages
+    local template_isso_css_declaration = utils.readFile(config.page_isso_css_declaration, 'r')
+    replacements['ISSO_CSS_DECLARATION'] = utils.replace(template_isso_css_declaration, replacements)
   else
     print (string.format(_("[%s] Comment system"), display_disable))
   end
@@ -501,6 +511,7 @@ local function processPosts(threads, header, footer, page_tag_link)
       end
       if today > tonumber(timestamp) then
         table.insert(post_files, {file=v, conf=postConf})
+        -- 'v' is the filename
         local co = coroutine.create(function () blog.createPost(v, postConf, header, footer, { template_file = page_article_single, template_tag_file = page_tag_link }) end)
         table.insert(threads, co)
       end
@@ -572,6 +583,7 @@ local function setDefaultVariables(configtable)
   configtable.page_header_name = 'header' .. configtable.TMPL_EXT
   configtable.page_footer_name = 'footer' .. configtable.TMPL_EXT
   configtable.page_posts_name = 'post.index' .. configtable.TMPL_EXT
+  configtable.page_posts_footername = 'post.footer' .. configtable.TMPL_EXT
   configtable.page_article_name = 'article' .. configtable.TMPL_EXT
   configtable.page_homepage_article_name = 'article.index' .. configtable.TMPL_EXT
   configtable.page_post_element_name = 'element' .. configtable.TMPL_EXT
@@ -583,11 +595,12 @@ local function setDefaultVariables(configtable)
   configtable.page_about_name = 'menu.about' .. configtable.TMPL_EXT
   configtable.page_read_more_name = 'read_more_link' .. configtable.TMPL_EXT
   configtable.page_pagination_name = 'pagination' .. configtable.TMPL_EXT
-  configtable.page_jskomment = configtable.templatepath .. '/' .. 'jskomment.article' .. configtable.TMPL_EXT
-  configtable.page_jskomment_declaration = configtable.templatepath .. '/' .. 'jskomment_declaration' .. configtable.TMPL_EXT
-  configtable.page_jskomment_css_declaration = configtable.templatepath .. '/' .. 'jskomment_css_declaration' .. configtable.TMPL_EXT
-  configtable.page_jskomment_script = configtable.templatepath .. '/' .. configtable.jskomment_jsfilename
-  configtable.page_jskomment_css_name = 'jskomment.css'
+  configtable.page_isso = configtable.templatepath .. '/' .. 'isso' .. configtable.TMPL_EXT
+  configtable.page_isso_short = configtable.templatepath .. '/' .. 'isso.short' .. configtable.TMPL_EXT
+  configtable.page_isso_extended = configtable.templatepath .. '/' .. 'isso.extended' .. configtable.TMPL_EXT
+  configtable.page_isso_declaration = configtable.templatepath .. '/' .. 'isso_declaration' .. configtable.TMPL_EXT
+  configtable.page_isso_css_declaration = configtable.templatepath .. '/' .. 'isso_css_declaration' .. configtable.TMPL_EXT
+  configtable.page_isso_css_name = 'isso.css'
   configtable.page_rss_header = configtable.templatepath .. '/' .. 'feed.header.rss'
   configtable.page_rss_element = configtable.templatepath .. '/' .. 'feed.element.rss'
   configtable.page_rss_footer = configtable.templatepath .. '/' .. 'feed.footer.rss'
@@ -601,7 +614,7 @@ local function setDefaultVariables(configtable)
   configtable.MAX_POST_LINES = configtable.MAX_POST_LINES and tonumber(configtable.MAX_POST_LINES) or nil
   configtable.MAX_RSS = tonumber(configtable.MAX_RSS) -- should not be nil
   configtable.MAX_PAGE = tonumber(configtable.MAX_PAGE)
-  configtable.JSKOMMENT_MAX = tonumber(configtable.JSKOMMENT_MAX)
+  configtable.ISSO_MAX = tonumber(configtable.ISSO_MAX)
   configtable.ELI_MAX = tonumber(configtable.ELI_MAX)
   -- check user sort choice
   if configtable.SORT ~= nil and configtable.SORT ~= '' then
@@ -617,7 +630,7 @@ end
 
 local function compile(args)
   -- needed libraries
-  local markdown = require 'markdown'
+  local markdown = require 'bin/markdown'
 
   -- variables preparation
   -- FIXME: regarding user default extension choice do a script that will use the right parser (markdown, etc.)
@@ -642,7 +655,7 @@ local function compile(args)
   end
 
   -- CSS process
-  threads, jskomment_css_file, jskomment_css_filename = cssProcess(themerc, threads)
+  threads, isso_css_file, isso_css_filename = cssProcess(themerc, threads)
   -- replacements is a substitution table that permit to change ${VAR_NAME} to a given name
   initializeReplacements(themerc, languagerc, about_file)
   -- ELI badge
@@ -651,8 +664,16 @@ local function compile(args)
   processSidebar(themerc)
   -- Search bar
   processSearchbar()
-  -- JSKOMMENT system
-  threads = processJskomment(threads, themerc, jskomment_css_file, jskomment_css_filename)
+  -- ISSO system
+  if config.ISSO and config.ISSO == '1' then
+    if themerc['ISSO_SHORT'] then
+      config.page_isso_short = config.themepath .. '/' .. themerc['ISSO_SHORT']
+    end
+    if themerc['ISSO_EXTENDED'] then
+      config.page_isso_extended = config.themepath .. '/' .. themerc['ISSO_EXTENDED']
+    end
+  end
+  threads = processIsso(threads, themerc, isso_css_file, isso_css_filename)
   -- Introduction / footer file
   processSpecialFiles()
   -- Create about's page if exists
@@ -728,11 +749,11 @@ commands['createpost'] = {
   launch = function (args) add(args) end
 }
 commands['backup'] = {
-  description = _('make a backup from your current makefly directory'),
+  description = _('make a backup from your blog'),
   launch = function (args) backup(args) end
 }
 commands['install'] = {
-  description = _('install \'pub\' directory into INSTALLDIR directory (set in makefly.rc file)'),
+  description = _(string.format('install \'pub\' directory into INSTALLDIR directory (set in %s.rc file)', PROJECTNAMELOWER)),
   launch = function (args) install(args) end
 }
 commands['migratefrom'] = {
@@ -760,6 +781,7 @@ commands['compile'] = {
 
 -- check configuration files
 local config_default = utils.checkConfig(configfile)
+config_default.configurationfile = string.format('%s.rc', PROJECTNAMELOWER)
 local config_user = utils.checkConfig(config_default.configurationfile)
 config = utils.mergeConfig(config_default, config_user)
 

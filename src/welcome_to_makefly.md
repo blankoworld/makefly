@@ -1,12 +1,12 @@
 ### Introduction
 
-Makefly is a *static weblog engine* working thanks to a BSD **makefile** and Lua language under GNU Affero General Public License (AGPL).
+${PROJECTNAME} is a fast and lightweight static weblog engine. It's Lua powered and is provided under the GNU Affero General Public License (AGPL).
 
 Feel free to use, modify and share it!
 
 ### Main
 
-Makefly result is composed of:
+${PROJECTNAME} result is composed of:
 
   * The Homepage: main page
   * The post's list: a list view of all posts
@@ -20,6 +20,7 @@ You have a lot of possibilities like:
 
   * templates to customize your blog
   * share file to the Web using 'static' directory
+  * add keywords for each page
   * add comments to your posts
   * show your last statuses from StatusNet instance
   * sort your post by tags
@@ -36,7 +37,6 @@ You have a lot of possibilities like:
 If you know what a static weblog is, here is some details:
 
   * Lua language
-  * BSD Makefile to launch commands
   * RSS feed
   * tags
   * permalink
@@ -48,7 +48,7 @@ If you know what a static weblog is, here is some details:
   * comment system in javascript using a free and open source server
   * templates
   * statusnet badge
-  * backup your configuration file, theme, static files and some important files for your Makefile blog
+  * backup your configuration file, theme, static files and some important files from your webblog
   * command that permit to create a new theme
   * publish script
   * install script to a local directory
@@ -59,5 +59,5 @@ If you know what a static weblog is, here is some details:
 
 ### Conclusion
 
-In fact, it's a lightweight weblog engine that generate some HTML static files which is compatible with a lot of provider.
+In fact, it's a lightweight weblog engine that generate some HTML static files which is compatible with a lot of providers.
 

@@ -1,6 +1,6 @@
-TITLE = Makefly project
+TITLE = ${PROJECTNAME} project
 DESCRIPTION = How to contribute?
-TAGS = makefly, social, programmation
+TAGS = project, social, programmation
 TYPE = normal
 AUTHOR = olivier
 KEYWORDS = 

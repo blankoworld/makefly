@@ -1,14 +1,14 @@
 ## About
 
-Makefly could be followed on [the official Makefly weblog](http://makefly.depotoi.re/ "Visit official website").
+${PROJECTNAME} could be followed on [the official ${PROJECTNAME} weblog](${PROJECTURL} "Visit official website").
 
-But for those who prefer status.net, you could use the [makefly social network group](http://status.vinilox.eu/group/makefly).
+But for those who prefer GNU Social, you could use the [${PROJECTNAMELOWER} GNU Social's group](http://status.vinilox.eu/group/makefly).
 
 ## Social coding
 
 > How could we contribute?
 
-Don't forget our github repository on which Makefly could be found: [https://github.com/blankoworld/makefly](https://github.com/blankoworld/makefly).
+Don't forget our github repository on which ${PROJECTNAME} could be found: [${GITPROJECT}](${GITPROJECT}).
 
 Some others information could be seen @ohloh: [http://www.ohloh.net/p/makefly](http://www.ohloh.net/p/makefly).
 

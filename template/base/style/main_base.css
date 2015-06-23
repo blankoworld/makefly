@@ -121,6 +121,12 @@ article h1 {
   text-align: left;
 }
 
+article p.description {
+  text-align: center;
+  font-size: 80%;
+  margin: 0;
+}
+
 .pagination {
 }
 
@@ -283,6 +289,10 @@ body.posts #content, body.tags #content, body.about #content, body.page #content
   padding: -1px;
   background-color: #eee;
   border-radius: 7px;
+}
+
+div#postsfooter {
+  text-align: center;
 }
 
 aside#navigation {
