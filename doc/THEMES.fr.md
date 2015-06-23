@@ -252,186 +252,186 @@ Que pensez-vous de votre blog désormais ?
 
 ----
 
-## Template ' structure
+## Structure du template
 
-In ${PROJECTNAME} the structure of templates is not complex. But you need to know how it works to understand the possibilities it offers.
+Dans ${PROJECTNAME} la structure des templates n'est pas complexe. Mais vous devez savoir comment cela fonctionne pour comprendre les possibilités qu'elle offre.
 
-### Quick list of needed files
+### Liste rapide des fichiers nécessaires
 
-Here is a short description of each element of the structure. Note that no header/footer is required for these templates. Which means that the begining of all pages is **header.tmpl** and the end of all pages is **footer.tmpl**, except for RSS feeds that use **feed.header.rss** and **feed.footer.rss**.
+Voici une description courte de chaque élément de la structure. Notez qu'aucune entête/enqueue n'est requise pour ces templates. Ce qui veut dire que le début de chaque page est **header.tmpl** et la fin de chaque page est **footer.tmpl**, à l'exception des flux RSS qui utilisent **feed.header.rss** et **feed.footer.rss**.
 
-Elements:
+Éléments : 
 
-  * **article.index.tmpl**: the template of **one** post on the homepage
-  * **article.tmpl**: content of a given post from the weblog
-  * **config.mk**: contains the configuration of your template. The name, the CSS filename, the second CSS filename, if the sidebar is mandatory, etc.
-  * **element.tmpl**: short info about a post to be integrated in the list of posts.
-  * **footer.tmpl**: footer of **all** weblog pages. Should contains the first ```<html>``` tag, the ```<head>``` and the ```<body>``` one.
-  * **header.tmpl**: header of **all** weblog pages. Should contains the last ```</body>``` and ```</html>``` one.
-  * **menu.about.tmpl**: supplementary main menu link to the about's page
-  * **menu.search\_bar.tmpl**: supplementary main menu link to display a search bar
-  * **pagination.tmpl**: HTML code used to make a pagination under homepage
-  * **post.footer.tmpl**: last HTML code that will be displayed after the list of all posts
-  * **post.index.tmpl**: first HTML code to be displayed before the list of all posts
-  * **read\_more\_link.tmpl**: link "Read more" that will be displayed under each post on the homepage
-  * **sidebar.tmpl**: HTML code that will be used in place of ${SIDEBAR} specific word in header/footer templates. Should contains the **${SIDEBAR\_CONTENT}** specific word.
-  * **static**: directory that contains files that needs to be present in the result. For an example some pictures, javascript files, etc. Do not place CSS files here (but not forbidden) as we have *style* directory for this. You should know that files contained in static directory will be completed during a compilation process. But this is only ready for the **BLOG\_URL** variable.
-  * **style**: list of possible CSS files. As ${PROJECTNAME} is designed, you can make a stylesheet for main appearance, then add a CSS file for each version of your template. For an example a CSS that makes your template red. Another one that makes your template blue, etc.
-  * **tagelement.tmpl**: a single tag element to be displayed on the tag list page
-  * **taglink.tmpl**: a single tag info that would be displayed on each post
-  * **tags.tmpl**: the tag list page. Should content the **${TAG\_LIST\_TITLE}** specific word.
+  * **article.index.tmpl** : la structure d'**un** billet sur la page d'accueil
+  * **article.tmpl** : contenu d'un billet donné du blog
+  * **config.mk** : contient la configuration de votre template. Le nom, le nom du fichier CSS, le nom du fichier CSS secondaire, si la barre latérale est obligatoire, etc.
+  * **element.tmpl** : courtes informations à propos d'un billet qui sera intégré dans une liste de billets.
+  * **header.tmpl** : entête de **toutes** les pages du blog. Devrait contenir les premières balises ```<html>```, ```<head>``` et ```<body>```.
+  * **footer.tmpl** : enqueue de **toutes** les pages du blog. Devrait contenir les dernières balises ```</body>``` et ```</html>```.
+  * **menu.about.tmpl** : lien supplémentaire du menu principal vers la page d'à propos
+  * **menu.search\_bar.tmpl** : lien supplémentaire du menu principal pour afficher une barre de recherche
+  * **pagination.tmpl** : code HTML utilisé pour faire une pagination sous la liste des billets
+  * **post.footer.tmpl** : dernier code HTML qui sera affiché après la liste de tous les billets
+  * **post.index.tmpl** : premier code HTML à être affiché avant la liste de tous les billets
+  * **read\_more\_link.tmpl** : lien "Lire la suite" qui sera affiché sous chaque billet de la page d'accueil. Seulement disponible si MAX\_POST\_LINES est utilisé.
+  * **sidebar.tmpl** : code HTML qui sera utilisé à la place du mot spécifique ${SIDEBAR} dans les templates header/footer. Devrait contenir le mot spécifique **${SIDEBAR\_CONTENT}**.
+  * **static** [dossier] : dossier qui contient les fichiers qui doivent être présent dans le résultat. Par exemple quelques images, fichiers javascript, etc. Ne pas mettre les fichiers CSS ici (mais pas interdit de le faire) puisque nous avons un dossier *style* pour cela. Vous devez savoir que les fichiers contenus dans le dossier *static* seront complétés pendant le processus de compilation. Mais ceci n'est seulement fonctionnel que pour la variable **BLOG\_URL**.
+  * **style** [dossier] : liste des fichiers CSS possibles du template. De la manière dont ${PROJECTNAME} est conçu, vous pouvez faire une feuille de style pour l'apparence principale, puis ajouter un fichier CSS pour chaque version de votre template. Par exemple un CSS qui rend votre template rouge. Un autre qui rend le template bleu, etc. Se configure à l'aide de CSS\_COLOR\_FILE dans le fichier **config.mk**.
+  * **tagelement.tmpl** : le détail d'un mot-clé à afficher sur la liste des mots-clés
+  * **taglink.tmpl** : les informations d'un mot clé seul qui sera affiché sur chaque billet
+  * **tags.tmpl** : la page de la liste des mots-clés. Devrait contenir le mot spécifique **${TAG\_LIST\_TITLE}**.
 
-Pay attention that some other ones are located in the template main directory for specific treatments. You should not create them into your template but you need to know them:
+Faites attention car d'autres fichiers sont situés dans le répertoire principale des templates pour des traitements spécifiques. Vous ne devriez pas les créer dans votre template mais vous devez les connaître : 
 
-  * **eli\_content.tmpl**: HTML code of status timeline from ELI application.
-  * **eli.css**: CSS for ELI functionnality
-  * **eli\_css\_declaration.tmpl**: HTML code used to declare ELI CSS in our weblog
-  * **eli\_declaration.tmpl**: HTML code that declares the ELI javascript in our weblog. Commonly placed in the footer.
-  * **eli.js**: Javascript code used by ELI functionnality
-  * **empty.file**: an empty file (some applications are very curious, this one don't escape to this rule)
-  * **feed.footer.rss**: XML footer code for RSS feed
-  * **feed.header.rss**: XML header code for RSS feed
-  * **isso.tmpl**: HTML code for each article for ISSO comment functionnality. Replace ISSO\_CONTENT variable in templates.
-  * **isso.css**: CSS used for ISSO functionnality
-  * **isso\_css\_declaration.tmpl**: CSS HTML declaration used in header for ISSO comment system. Replace ISSO\_CSS\_DECLARATION variable in templates.
-  * **isso\_declaration.tmpl**: HTML code that declares the ISSO javascript in our weblog. Commonly placed in the footer. Replace ISSO\_SCRIPT variable in templates.
-  * **isso.short.tmpl**: usually used on homepage to only display number of comment using ISSO comment system. Replace ISSO\_SHORT variable in templates.
-  * **isso.extended.tmpl**: usually used on each post to display comments using ISSO comment system. Replace ISSO\_EXTENDED variable in templates.
+  * **eli\_content.tmpl** : code HTML de l'historique des statuts de l'application ELI
+  * **eli.css** : CSS pour la fonctionnalité ELI
+  * **eli\_css\_declaration.tmpl** : code HTML utilisé pour déclarer le CSS d'ELI sur votre blog
+  * **eli\_declaration.tmpl** : code HTML qui déclare le javascript d'ELI dans notre blog. Principalement localisé dans l'enqueue.
+  * **eli.js** : Code javascript utilisé par la fonctionnalité ELI
+  * **empty.file** : un fichier vide (certaines applications sont très curieuses, celle-ci n'échappe pas à la règle)
+  * **feed.footer.rss** : code XML de l'enqueue du flux RSS
+  * **feed.header.rss** : code XML de l'entête du flux RSS
+  * **isso.tmpl** : code HTML pour chaque billet pour la fonctionnalité de commentaire nommée ISSO. Remplace la variable ISSO\_CONTENT dans les templates.
+  * **isso.css** : CSS utilisé pour la fonctionnalité ISSO
+  * **isso\_css\_declaration.tmpl** : déclaration HTML du CSS utilisée dans l'entête pour le système de commentaire ISSO. Remplace la variable ISSO\_CSS\_DECLARATION dans les templates.
+  * **isso\_declaration.tmpl** : code HTML qui déclare le javascript d'ISSO dans votre blog. Principalement localisé dans le pied de page. Remplace la variable ISSO\_SCRIPT dans les templates.
+  * **isso.short.tmpl** : habituellement utilisé sur la page d'accueil pour seulement afficher le nombre de commentaire en utilisant le système de commentaire ISSO. Remplace la variable ISSO\_SHORT dans les templates.
+  * **isso.extended.tmpl** : habituellement utilisé sur chaque billet pour afficher les commentaires utilisant le système de commentaire ISSO. Remplace la variable ISSO\_EXTENDED dans les templates.
 
-### More explanation
+### Plus d'explications
 
-First, ${PROJECTNAME} delivers the blog as:
+Premièrement ${PROJECTNAME} délivre le blog de la manière suivante : 
 
-  * an homepage
-  * a list of posts
-  * a list of tags
-  * an about's page (optional)
-  * some static pages (user adds itself the static pages it wants)
-  * a page for each post
-  * a page for each tag
+  * une page d'accueil
+  * une liste de billets
+  * une liste de mots-clés
+  * une page d'à propos (optionnel)
+  * quelques pages statiques (l'utilisateur ajoute lui-même les pages statiques qu'il veut)
+  * une page pour chaque billet
+  * une page pour chaque mot-clé
 
-So a page is composed of:
+Donc une page est composée de : 
 
-  * a header (**header.tmpl** file)
-  * a content (various contents: list of posts, list of tags, a tag, a post, an homepage, an about's one, etc.)
-  * a footer (**footer.tmpl** file)
+  * une entête (fichier **header.tmpl**)
+  * un contenu (contenus variés : liste de billets, liste de mots-clés, un mot-clé, un billet, une page d'accueil, une d'à propos, etc.)
+  * une enqueue (fichier **footer.tmpl**)
 
-If you understand it well, you need so 2 files:
+Si vous le comprenez correctement, vous avez donc besoin de 2 fichiers : 
 
-  * header.tmpl (the begining of ALL pages)
-  * footer.tmpl (the end of ALL pages)
+  * header.tmpl (le début de TOUTES les pages)
+  * footer.tmpl (la fin de TOUTES les pages)
 
-Then, how works the content?
+Ainsi, comment fonctionne le contenu ?
 
-The content is so build regarding which page we want.
+Le contenu est ainsi fabriqué au regard de la page que nous voulons.
 
-So for **posts** you have **article.tmpl** that describe each single post page, but **article.index.tmpl** describe the code used for one post that is displayed on homepage.
-All posts are listed in a posts page list. The template for this list is **post.index.tmpl** (beginning) and **post.footer.tmpl** (end).
-Each post short description on this list is described in **element.tmpl**.
-If you activate the numbering of posts on this page, you will have a pagination. The template of this one is available here: **pagination.tmpl**.
+Donc pour les **billets** vous avez **article.tmpl** qui décrit chaque page simple d'un billet, mais **article.index.tmpl** décrit le code utilisé pour un billet qui sera affiché sur la page d'accueil.
+Tout les billets sont listés sur une page des billets. Le template pour cette liste est **post.index.tmpl** (début) et **post.footer.tmpl** (fin).
+Chaque courte description d'un billet de cette liste est décrit dans **element.tmpl**.
+Si vous activez la numérotation des billets sur cette page, vous aurez de la pagination. Le template pour cela est disponible ici : **pagination.tmpl**.
 
-Each post under the homepage can have a *Read More* link that is described here: **read\_more\_link.tmpl**.
+Chaque billet dans la page d'accueil peut avoir un lien *Lire la suite* qui est décrit ici : **read\_more\_link.tmpl**.
 
-For **tags** you have **taglink.tmpl** that contains each link to a tag used in a post. The tag list page is available here: **tags.tmpl**. Each tag displayed on this page is available here: **tagelement.tmpl**.
+Pour les **mots-clés** vous avez **taglink.tmpl** qui contient chaque lien vers un mot-clé utilisé par un billet. La page de la liste des mots-clés est disponible ici : **tags.tmpl**. Chaque mot-clé affiché sur cette page est disponible ici : **tagelement.tmpl**.
 
-You can create a kind of main menu displayed on all pages that is called *sidebar*. The corresponding template is: **sidebar.tmpl** and contains a specific word named **${SIDEBAR\_CONTENT}** which integrate the content of *special/sidebar.md* file.
+Vous pouvez créer une sorte de menu principal affiché sur chaque page, appelé *panneau latéral*. Le template correspondant est **sidebar.tmpl** et contient un mot spécifique nommé **${SIDEBAR\_CONTENT}** qui intègre le contenu du fichier *special/sidebar.md*.
 
-TODO: make a picture to display the structure
+À FAIRE : créer une image pour afficher la structure
 
-### The config.mk file
+### Le fichier config.mk
 
-Each template delivers a **config.mk** file. This is the business card of your template.
+Chaque template donne un fichier **config.mk**. C'est la carte de visite de votre template.
 
-The file contains some mandatories info as:
+Le fichier contient quelques informations obligatoires comme : 
 
-  * **CSS\_NAME**: template's name. For an example: *Minisch 2.4*
-  * **CSS\_FILE**: template's main CSS file. This should be located into '*template/yourTemplate/style/*' directory. Example: *main\_minisch.css*
-  * **CSS\_COLOR\_FILE**: template's particular colors. This means you can have more than one color for your template just by giving a lot of CSS files. All CSS files should be located into '*template/yourTemplate/style/*'. For an example: *color\_minisch\_light.css*
+  * **CSS\_NAME**: nom du template. Par exemple *Minisch 2.4*
+  * **CSS\_FILE**: fichier CSS principal du template. Il devrait être contenu dans le dossier '*template/votreTemplate/style/*'. Exemple : *main\_minisch.css*
+  * **CSS\_COLOR\_FILE**: Couleurs particulières du template. Ceci veut dire que vous pouvez avoir plus qu'une couleur pour votre template en donnant simplement plusieurs fichiers CSS. All les fichiers CSS doivent être placés dans le dossier '*template/votreTemplate/style/*'. Par exemple : *color\_minisch\_light.css*
 
-and optional ones:
+et quelques autres optionnelles : 
 
-  * **ISSO\_CSS**: additionnal CSS used for ISSO comment system. Should be located into **template/yourTemplate* directory. Example: *myissocomment.css*
-  * **SIDEBAR**: If value is 1 then the sidebar is mandatory for your template. Which means your template have been designed to be only used with a sidebar.
-  * **ISSO\_SHORT**: template used for ISSO\_SHORT variable. In fact, it replaces ISSO\_SHORT variable by the content of this template.
+  * **ISSO\_CSS**: CSS additionnel utilisé pour le sytème de commentaire d'ISSO. Devrait être placé dans le dossier **template/yourTemplate**. Exemple : *commentairesIsso.css*
+  * **SIDEBAR**: Si la valeur est 1 alors le panneau latéral est obligatoire pour votre template. Ce qui implique que votre template a été conçu pour être seulement utilisé avec le panneau latéral.
+  * **ISSO\_SHORT**: template utilisé pour la variable ISSO\_SHORT. En fait, cela remplace la variable ISSO\_SHORT par le contenu de ce template.
 
-**NB:** These info should be placed like this:
+**NB** : Ces informations doivent être ajoutées comme ça : 
 
-    VAR = value
+    VAR = valeur
 
-You can find some example of *config.mk* file into the **template** directory. Don't hesitate to have a look into this directory. You will learn a lot!
+Vous pouvez trouver quelques exemples de fichier *config.mk* dans le dossier **template**. N'hésitez pas à jeter un œil dans ce dossier. Vous apprendrez énormément !
 
 ----
 
 ## Valeurs de remplacement
 
-In ${PROJECTNAME} you have some specific words in templates that are replaced by some values. For an example the word **${HOME\_TITLE}** will be displayed as **Home**. So when you see it in template, or add it in template, you know that this specific word will be replaced.
+Dans ${PROJECTNAME} vous avez quelques mots spécifiques dans les templates qui sont remplacés par quelques valeurs. Par exemple le mot **${HOME\_TITLE}** sera affiché comme **Accueil**. Donc quand vous les voyez dans les templates, ou que vous les ajoutez dans les templates, vous savez que ce mot spécifique sera remplacé.
 
-Note that you can easily find these specific words in a template because the begin with "**${**" and finish by "**}**". This is the first rule.
+À noter que vous pouvez facilement trouver ces mots spécifiques dans un template car ils comment avec "**${**" et finissent avec "**}**". Ceci est la première règle.
 
-The second one is: specific words should be in UPPERCASE.
+La seconde est celle-ci : les mots spécifiques doivent être en MAJUSCULES.
 
-In this section, you will know more about these replacement values, how to find them, which one you have, etc.
+Dans cette section vous en saurez plus à propos de ces valeurs de remplacement, comment les trouver, desquelles vous disposez, etc.
 
-### Translated values
+### Valeurs de traduction
 
-Some specific word can be found here: *lang/translate.en*.
+Certains mots spécifiques peuvent se trouver ici : *lang/translate.fr*.
 
-In this file, each first word in uppercase of each line is a specific word that will be replaced in the result.
+Dans ce fichier, chaque premier mot en majuscule sur chaque ligne est un mot spécique qui sera remplacé dans le résultat final.
 
-Tip: You can add your own specific word and its value. And it will be used for templates (if you add them in templates).
+Astuce : Vous pouvez ajouter vos propres mot spécifiques et leurs valeurs. Et ils seront utilisés pour les templates (si vous les ajoutez aux templates).
 
-### Configuration values
+### Valeurs de configuration
 
-There is some specific words that comes from the configuration file (${PROJECTNAMELOWER}.rc). You can so read the official documentation, especially the ${PROJECTNAMELOWER}.rc file section to know what they are used for.
+Il y a certains mots spécifiques qui viennent du fichier de configuration (${PROJECTNAMELOWER}.rc). Vous pouvez donc lire la documentation officielle, spécifiquement la section sur le fichier ${PROJECTNAMELOWER}.rc pour savoir pour quoi ils sont utilisés.
 
   * **BLOG\_CHARSET**
   * **BLOG\_TITLE**
-  * **LANG** (comes from BLOG\_LANG in ${PROJECTNAMELOWER}.rc)
+  * **LANG** (provient de BLOG\_LANG dans le fichier ${PROJECTNAMELOWER}.rc)
   * **BLOG\_DESCRIPTION**
   * **BLOG\_SHORT\_DESCRIPTION**
-  * **BLOG\_URL** (very used all over the blog)
+  * **BLOG\_URL** (très utilisé dans tout le blog)
   * **BLOG\_AUTHOR**
   * **BLOG\_COPYRIGHT**
   * **RSS\_FEED\_NAME**
 
-Tip: Dislike the previous section about translation file, you cannot add any personal specific word in the ${PROJECTNAMELOWER}.rc file as they are used in a special way.
+Astuce : Contrairement à la section précédente à propos du fichier de traduction, vous ne pouvez pas ajouter de mot spécifique personnel dans le fichier ${PROJECTNAMELOWER}.rc puisqu'ils sont utilisés d'une manière spéciale.
 
-### Given by the ${PROJECTNAME} engine
+### Fournis par le moteur de ${PROJECTNAME}
 
-To make template you need to know and understand these specific words. They are delivered by the ${PROJECTNAME} engine and permit you to design new template for your weblog.
+Pour faire votre template vous avez besoin de savoir et comprendre certains mots spécifiques. Ils sont fournis par le moteur de ${PROJECTNAME} et permettent de concevoir de nouveaux templates pour votre blog.
 
-Here is a non-exhaustive list. If you find a new one not listed here, please contact us or create a new ticket on [our bug tracking system](${GITPROJECT}issues).
+Voici une liste non-exhaustive. Si vous en trouvez une nouvelle non listée ici, merci de nous contacter ou de créer un nouveau ticket sur [notre système de gestion de tickets](${GITPROJECT}issues).
 
-  * **ABOUT\_INDEX**: Real html name of *About*'s page. For an example: about.html. If you want a link to the about's page, you just have to make this: "*${BLOG\_URL}/${ABOUT\_INDEX}*".
-  * **ABOUT\_LINK**: Add a menu link regarding *menu.about.tmpl* template. This only works if About's page was activated by the default configuration with "*ABOUT = 1*".
-  * **BODY\_CLASS**: The engine is configured to change this value regarding the generated page. By default the value is "single" for all pages. Then you have: 
-    * single (default value)
-    * about: to say the entire page is an about's one
-    * tags: to say the entire page is the list of tags
-    * home: homepage
-    * page: you're in a static page (static page functionnality)
-  * **CONTENT**: Content of a post (when you edit posts ' templates)
-  * **CSS\_COLOR\_FILE**: CSS second filename (in template directory) used as supplementary CSS. Ofently used for CSS that gaves the color (to permit user to choose among few CSS color files). Defined in **config.mk** of your template.
-  * **CSS\_FILE**: Main CSS filename.
-  * **CSS\_NAME**: Name displayed when the user choose your template. Defined in **config.mk** of your template.
-  * **DATE**: Date using DATE\_FORMAT format. Displayed date changes regarding the post you are into.
-  * **DATETIME**: Date using ISO8601 format to be compatible with HTML5 *time* tag. Displayed datetime changes regarding the post you are into.
-  * **POST\_TYPE**: Type the user filled in when it creates the post. This permit to use it in CSS and class so that each article have another color for an example.
-  * **POSTDIR\_INDEX**: Name of postdir's index page. For an example *index.html*.
-  * **POSTDIR\_NAME**: Posts ' directory name. For an example *posts*. That permit to have a better web indexation for your language.
-  * **POST\_AUTHOR**: Author of the post
-  * **POST\_ESCAPED\_TITLE**: Title of the post without whitespaces. Commonly used for comment systems. Example of result: **my\_first\_post**.
-  * **POST\_FILE**: Post filename. Example: **my\_first\_post.html**.
-  * **POST\_TITLE**: Title of the post. For an example: **My first post**.
-  * **SEARCHBAR**: Add a search bar here regarding **menu.search_bar.tmpl** template file. Only works if searchbar is activate in configuration file.
-  * **SHORT\_DATE**: Date using short date format (SHORT\_DATE\_FORMAT in ${PROJECTNAMELOWER}.rc configuration file) for post list's page.
-  * **SIDEBAR**: Add a sidebar here regarding *sidebar.tmpl* template. Only works if sidebar is activate from the configuration file (${PROJECTNAMELOWER}.rc) or the template's configuration file (config.mk).
-  * **SIDEBAR\_CONTENT**: Add the content of **special/sidebar.md** file.
-  * **TAGDIR\_NAME**: Tags directory name. For an example *tags*. This permits a better web indexation for your language.
-  * **TAGDIR\_INDEX**: Tag index filename. Example: **index.html**.
-  * **TAGLIST\_CONTENT**: List of all tags from the blog.
-  * **TAG\_LINKS\_LIST**: List of tags from a given post.
-  * **TAG\_NAME**: Tag name. For an example **My first tag**.
-  * **TAG\_PAGE**: Tag filename. For an example: *my\_first\_tag.html*.
-  * **TITLE**: Current page title. For an example *Homepage*, *Tags List*, *My first post*, etc.
+  * **ABOUT\_INDEX**: Nom réel du fichier HTML de la page d'*À propos*. Par exemple : apropos.html. Si vous voulez un lien vers la page d'à propos, vous avez juste à faire ceci : "*${BLOG\_URL}/${ABOUT\_INDEX}*".
+  * **ABOUT\_LINK**: Ajout un lien pour un menu au regard du template *menu.about.tmpl*. Ceci fonctionne seulement si la page d'à propos a été activé par sa présence.
+  * **BODY\_CLASS**: Le moteur est configuré pour changer cette valeur au regard de la page générée. Par défaut la valeur est "single" pour toutes les pages. Puis vous avez : 
+    * single (valeur par défaut)
+    * about: pour signifier que la page entière est une page d'à propos
+    * tags: pour dire que la page entière est une liste de mots-clés
+    * home: page d'accueil
+    * page: vous êtes dans une page statique (fonctionnalité des pages statiques)
+  * **CONTENT**: Contenu d'un billet (quand vous éditez les templatees des billets)
+  * **CSS\_COLOR\_FILE**: nom du fichier CSS secondaire (dans le dossier du template) utilisé comme d'une feuille de style supplémentaire. Souvent utilisé pour un CSS qui donne des couleurs (pour permettre à l'utilisateur de choisir parmi quelques fichiers de couleurs CSS). Défini dans **config.mk** de votre template.
+  * **CSS\_FILE**: nom du fichier CSS principal.
+  * **CSS\_NAME**: Nom affiché quand l'utilisateur choisi un template. Défini dans **config.mk** de votre template.
+  * **DATE**: Date utilisant le format de DATE\_FORMAT. La date affiché change en fonction du billet dans lequel vous êtes.
+  * **DATETIME**: Date utilisant le format ISO8601 pour être compatible avec la balise *time* d'HTML5. Le datetime affiché change en fonction du billet dans lequel vous êtes.
+  * **POST\_TYPE**: Type que l'utilisateur a rempli quand il crée le billet. Ceci permet de l'utiliser dans le CSS et les class afin que chaque article ait une autre couleur par exemple.
+  * **POSTDIR\_INDEX**: Nom de la page d'index du dossier contenant les billets. Par exemple *index.html*.
+  * **POSTDIR\_NAME**: Nom du dossier des billets. Par exemple *article*. Ceci permet d'avoir un meilleur référencement web pour votre langage.
+  * **POST\_AUTHOR**: Auteur du billet
+  * **POST\_ESCAPED\_TITLE**: Titre du billet sans espaces. Principalement u tilisé pour les systèmes de commentaires. Exemple de résultat : **mon\_premier\_billet**.
+  * **POST\_FILE**: Nom du fichier du billet. Exemple : **mon\_premier\_billet.html**.
+  * **POST\_TITLE**: Titre du billet. Par exemple : **Mon premier billet**.
+  * **SEARCHBAR**: Ajoute une barre de recherche au regard du fichier de template **menu.search_bar.tmpl**. Ne fonctionne seulement si la barre de recherche est activé dans le fichier de configuration.
+  * **SHORT\_DATE**: Date utilisant le format de date court (SHORT\_DATE\_FORMAT du fichier de configuration ${PROJECTNAMELOWER}.rc) pour la page de la liste des billets.
+  * **SIDEBAR**: Ajoute un panneau latéral à cette endroit en fonction du template *sidebar.tmpl*. Ne fonctionne seulement si le panneau latéral est activé dans le fichier de configuration (${PROJECTNAMELOWER}.rc) ou dans le fichier de configuration du template (config.mk).
+  * **SIDEBAR\_CONTENT**: Ajoute le contenu du fichier **special/sidebar.md**.
+  * **TAGDIR\_NAME**: Nom du répertoire des mots-clés. Par exemple *motcle*. Ceci permet un meilleur référencement web pour votre langage.
+  * **TAGDIR\_INDEX**: Nom du fichier d'index du répertoire des mots-clés. Exemple : **index.html**.
+  * **TAGLIST\_CONTENT**: Liste de tous les mots-clés de votre blog.
+  * **TAG\_LINKS\_LIST**: Liste des mots-clés pour un billet donné.
+  * **TAG\_NAME**: Nom du mot-clé. Par exemple : **Mon premier mot-clé**.
+  * **TAG\_PAGE**: Nom du fichier du mot-clé. Par exemple : *mon\_premier\_mot\_cle.html*.
+  * **TITLE**: Titre de la page courante. Par exemple : *Accueil*, *Liste des mots-clés*, *Mon premier billet*, etc.
 

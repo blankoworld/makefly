@@ -266,17 +266,17 @@ Elements:
   * **article.tmpl**: content of a given post from the weblog
   * **config.mk**: contains the configuration of your template. The name, the CSS filename, the second CSS filename, if the sidebar is mandatory, etc.
   * **element.tmpl**: short info about a post to be integrated in the list of posts.
-  * **footer.tmpl**: footer of **all** weblog pages. Should contains the first ```<html>``` tag, the ```<head>``` and the ```<body>``` one.
-  * **header.tmpl**: header of **all** weblog pages. Should contains the last ```</body>``` and ```</html>``` one.
+  * **header.tmpl**: header of **all** weblog pages. Should contains the first ```<html>``` tag, the ```<head>``` and the ```<body>``` one.
+  * **footer.tmpl**: footer of **all** weblog pages. Should contains the last ```</body>``` and ```</html>``` one.
   * **menu.about.tmpl**: supplementary main menu link to the about's page
   * **menu.search\_bar.tmpl**: supplementary main menu link to display a search bar
-  * **pagination.tmpl**: HTML code used to make a pagination under homepage
+  * **pagination.tmpl**: HTML code used to make a pagination under posts list
   * **post.footer.tmpl**: last HTML code that will be displayed after the list of all posts
   * **post.index.tmpl**: first HTML code to be displayed before the list of all posts
-  * **read\_more\_link.tmpl**: link "Read more" that will be displayed under each post on the homepage
+  * **read\_more\_link.tmpl**: link "Read more" that will be displayed under each post on the homepage. Only available if MAX\_POST\_LINES is used.
   * **sidebar.tmpl**: HTML code that will be used in place of ${SIDEBAR} specific word in header/footer templates. Should contains the **${SIDEBAR\_CONTENT}** specific word.
-  * **static**: directory that contains files that needs to be present in the result. For an example some pictures, javascript files, etc. Do not place CSS files here (but not forbidden) as we have *style* directory for this. You should know that files contained in static directory will be completed during a compilation process. But this is only ready for the **BLOG\_URL** variable.
-  * **style**: list of possible CSS files. As ${PROJECTNAME} is designed, you can make a stylesheet for main appearance, then add a CSS file for each version of your template. For an example a CSS that makes your template red. Another one that makes your template blue, etc.
+  * **static** [directory]: directory that contains files that needs to be present in the result. For an example some pictures, javascript files, etc. Do not place CSS files here (but not forbidden) as we have *style* directory for this. You should know that files contained in static directory will be completed during a compilation process. But this is only ready for the **BLOG\_URL** variable.
+  * **style** [directory]: list of possible CSS files. As ${PROJECTNAME} is designed, you can make a stylesheet for main appearance, then add a CSS file for each version of your template. For an example a CSS that makes your template red. Another one that makes your template blue, etc. Is configurable with the help of CSS\_COLOR\_FILE in **config.mk** file.
   * **tagelement.tmpl**: a single tag element to be displayed on the tag list page
   * **taglink.tmpl**: a single tag info that would be displayed on each post
   * **tags.tmpl**: the tag list page. Should content the **${TAG\_LIST\_TITLE}** specific word.
@@ -291,7 +291,7 @@ Pay attention that some other ones are located in the template main directory fo
   * **empty.file**: an empty file (some applications are very curious, this one don't escape to this rule)
   * **feed.footer.rss**: XML footer code for RSS feed
   * **feed.header.rss**: XML header code for RSS feed
-  * **isso.tmpl**: HTML code for each article for ISSO comment functionnality. Replace ISSO\_CONTENT variable in templates.
+  * **isso.tmpl**: HTML code for each post for ISSO comment functionnality. Replace ISSO\_CONTENT variable in templates.
   * **isso.css**: CSS used for ISSO functionnality
   * **isso\_css\_declaration.tmpl**: CSS HTML declaration used in header for ISSO comment system. Replace ISSO\_CSS\_DECLARATION variable in templates.
   * **isso\_declaration.tmpl**: HTML code that declares the ISSO javascript in our weblog. Commonly placed in the footer. Replace ISSO\_SCRIPT variable in templates.
@@ -326,7 +326,7 @@ Then, how works the content?
 The content is so build regarding which page we want.
 
 So for **posts** you have **article.tmpl** that describe each single post page, but **article.index.tmpl** describe the code used for one post that is displayed on homepage.
-All posts are listed in a posts page list. The template for this list is **post.index.tmpl** (beginning) and **post.footer.tmpl** (end).
+All posts are listed in a posts page. The template for this list is **post.index.tmpl** (beginning) and **post.footer.tmpl** (end).
 Each post short description on this list is described in **element.tmpl**.
 If you activate the numbering of posts on this page, you will have a pagination. The template of this one is available here: **pagination.tmpl**.
 
@@ -350,7 +350,7 @@ The file contains some mandatories info as:
 
 and optional ones:
 
-  * **ISSO\_CSS**: additionnal CSS used for ISSO comment system. Should be located into **template/yourTemplate* directory. Example: *myissocomment.css*
+  * **ISSO\_CSS**: additionnal CSS used for ISSO comment system. Should be located into **template/yourTemplate** directory. Example: *myissocomment.css*
   * **SIDEBAR**: If value is 1 then the sidebar is mandatory for your template. Which means your template have been designed to be only used with a sidebar.
   * **ISSO\_SHORT**: template used for ISSO\_SHORT variable. In fact, it replaces ISSO\_SHORT variable by the content of this template.
 
@@ -374,7 +374,7 @@ In this section, you will know more about these replacement values, how to find 
 
 ### Translated values
 
-Some specific word can be found here: *lang/translate.en*.
+Some specific words can be found here: *lang/translate.en*.
 
 In this file, each first word in uppercase of each line is a specific word that will be replaced in the result.
 
@@ -386,7 +386,7 @@ There is some specific words that comes from the configuration file (${PROJECTNA
 
   * **BLOG\_CHARSET**
   * **BLOG\_TITLE**
-  * **LANG** (comes from BLOG\_LANG in ${PROJECTNAMELOWER}.rc)
+  * **LANG** (comes from BLOG\_LANG in ${PROJECTNAMELOWER}.rc file)
   * **BLOG\_DESCRIPTION**
   * **BLOG\_SHORT\_DESCRIPTION**
   * **BLOG\_URL** (very used all over the blog)
@@ -398,12 +398,12 @@ Tip: Dislike the previous section about translation file, you cannot add any per
 
 ### Given by the ${PROJECTNAME} engine
 
-To make template you need to know and understand these specific words. They are delivered by the ${PROJECTNAME} engine and permit you to design new template for your weblog.
+To make template you need to know and understand these specific words. They are delivered by the ${PROJECTNAME} engine and permit you to design new templates for your weblog.
 
 Here is a non-exhaustive list. If you find a new one not listed here, please contact us or create a new ticket on [our bug tracking system](${GITPROJECT}issues).
 
   * **ABOUT\_INDEX**: Real html name of *About*'s page. For an example: about.html. If you want a link to the about's page, you just have to make this: "*${BLOG\_URL}/${ABOUT\_INDEX}*".
-  * **ABOUT\_LINK**: Add a menu link regarding *menu.about.tmpl* template. This only works if About's page was activated by the default configuration with "*ABOUT = 1*".
+  * **ABOUT\_LINK**: Add a menu link regarding *menu.about.tmpl* template. This only works if About's page was activated by its presence.
   * **BODY\_CLASS**: The engine is configured to change this value regarding the generated page. By default the value is "single" for all pages. Then you have: 
     * single (default value)
     * about: to say the entire page is an about's one
@@ -418,7 +418,7 @@ Here is a non-exhaustive list. If you find a new one not listed here, please con
   * **DATETIME**: Date using ISO8601 format to be compatible with HTML5 *time* tag. Displayed datetime changes regarding the post you are into.
   * **POST\_TYPE**: Type the user filled in when it creates the post. This permit to use it in CSS and class so that each article have another color for an example.
   * **POSTDIR\_INDEX**: Name of postdir's index page. For an example *index.html*.
-  * **POSTDIR\_NAME**: Posts ' directory name. For an example *posts*. That permit to have a better web indexation for your language.
+  * **POSTDIR\_NAME**: Posts ' directory name. For an example *post*. That permit to have a better web indexation for your language.
   * **POST\_AUTHOR**: Author of the post
   * **POST\_ESCAPED\_TITLE**: Title of the post without whitespaces. Commonly used for comment systems. Example of result: **my\_first\_post**.
   * **POST\_FILE**: Post filename. Example: **my\_first\_post.html**.
@@ -427,7 +427,7 @@ Here is a non-exhaustive list. If you find a new one not listed here, please con
   * **SHORT\_DATE**: Date using short date format (SHORT\_DATE\_FORMAT in ${PROJECTNAMELOWER}.rc configuration file) for post list's page.
   * **SIDEBAR**: Add a sidebar here regarding *sidebar.tmpl* template. Only works if sidebar is activate from the configuration file (${PROJECTNAMELOWER}.rc) or the template's configuration file (config.mk).
   * **SIDEBAR\_CONTENT**: Add the content of **special/sidebar.md** file.
-  * **TAGDIR\_NAME**: Tags directory name. For an example *tags*. This permits a better web indexation for your language.
+  * **TAGDIR\_NAME**: Tags directory name. For an example *tag*. This permits a better web indexation for your language.
   * **TAGDIR\_INDEX**: Tag index filename. Example: **index.html**.
   * **TAGLIST\_CONTENT**: List of all tags from the blog.
   * **TAG\_LINKS\_LIST**: List of tags from a given post.
