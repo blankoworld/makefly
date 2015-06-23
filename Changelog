@@ -1,5 +1,6 @@
 Current version (0.4-trunk)
-  - Fix a problem on tags that have a simple quote in their name
+	- Add documentation about how to create/customize themes
+	- Fix a problem on tags that have a simple quote in their name
 	- Change Jskomment system to Isso one (Cf. http://posativ.org/isso/)
 	- Option "description" is now displayed on minisch/base themes
 	- Include markdown.lua to the project so that lua-markdown package is
