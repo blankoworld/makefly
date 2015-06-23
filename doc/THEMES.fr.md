@@ -56,130 +56,130 @@ Jetez un œil à ce template : [http://templated.co/monochromed](http://template
 
 Charger le template, l'extraire dans **template/monochromed** (dans le dossier ${PROJECTNAMELOWER}).
 
-#### To do
+#### Tâches à faire
 
-Then we have 2 tasks so that the template works on ${PROJECTNAME}:
+Donc nous avons 2 choses à faire pour que le template fonctionne sur ${PROJECTNAME} : 
 
-  1. Insert some keys (specific words) that insert our blog content into
-  2. Create the template's structure
+  1. Ajouter quelques clés (des mots spécifiques) qui vont insérer le contenu de notre blog à l'intérieur
+  2. Créer la structure du template
 
-A list of keys is available in **Replacement values** section of the current document. This is for the **first task**.
+La liste des clés est disponible dans la section **Valeurs de remplacement** du présent document. Ceci est pour la **première tâche** à faire.
 
-The **second one** is explained in **Template ' structure** section.
+**La seconde** est expliquée dans la section **Structure du template**.
 
-But have a look to the following steps to understand a template migration procedure.
+Mais jetez un œil aux étapes suivantes pour comprendre la procédure de migration d'un template.
 
-**Note:** Have a look to **template/monochromed** directory for an example of this tutoriel.
+**Note** : Regardez le dossier **template/monochromed** en exemple de ce tutoriel.
 
-#### What needs each page
+#### Ce que demande chaque page
 
-First open the **template/monochromed/index.html** file with your web browser. You can see the original monochromed template.
+Premièrement ouvrez le fichier **template/monochromed/index.html** avec votre navigateur web. Vous pouvez voir le template monochromed original.
 
-Open then the same file with your favorite editor. Mine is *vim*. But you can open the file with *gedit* or *geany* for an example. You see the file composed of:
+Ouvrez ensuite le même fichier avec votre éditeur favoris. Le mien est *vim*. Mais vous pouvez ouvrir le fichier avec *gedit* ou *geany* par exemple. Vous voyez le fichier composé de : 
 
-  * doctype
-  * head content
-  * body content (homepage class)
+  * un doctype
+  * le contenu de head
+  * le contenu de body (classe homepage)
 
-The last one (body content) have some elements:
+Le dernier (le contenu de body) a plusieurs éléments : 
 
-  * Header DIV
-  * Main DIV
-  * Sidebar DIV
-  * Footer DIV
-  * Copyright DIV
+  * un DIV header
+  * un DIV main
+  * un DIV sidebar
+  * un DIV footer
+  * un DIV copyright
 
-As explained in **Template 's structure** we need to create a **header.tmpl** and a **footer.tmpl** file. They will be used in all pages in our weblog.
+Comme expliqué dans **Structure du template** nous avons besoin de créer un fichier **header.tmpl** et **footer.tmpl**. Ils seront utilisés dans toutes les pages de notre blog.
 
-The idea is to get the begining of the page from doctype to this:
+L'idée est de prendre le début de la page depuis doctype à : 
 
     <!-- Main -->
       <div id="main">
         <div class="container">
 
-and to put it into **template/monochromed/header.tmpl** file.
+et le déposer dans le fichier **template/monochromed/header.tmpl**.
 
-Then get the last 2 DIV from the container DIV to the end of the file and put it into **template/monochromed/header.tmpl**.
+Puis nous prenons les 2 derniers DIV de celui nommé *container* à la fin du fichier et on le dépose dans **template/monochromed/footer.tmpl**.
 
-#### Static directory
+#### Dossier static
 
-Each template need a static directory in which you will put some pictures/images, javascript files, etc.
+Chaque template a besoin d'un dossier statique dans lequel vous placerez quelques images/photos, fichiers javascript, etc.
 
-In our example, do this:
+Dans notre exemple, faites ceci : 
 
-  * create static directory in **template/monochromed/static**
-  * copy **css**, **images** and **js** directory into **static** one
+  * créez un dossier *static* : **template/monochromed/static**
+  * copiez les dossiers **css**, **images** et **js** dans celui nommé **static**
 
-It's time to configure our template.
+Il est temps de configurer notre template.
 
-#### config.mk file
+#### Fichier config.mk
 
-As explained in next chapters, **config.mk** file gives some information about your new template/theme.
+Comme expliqué dans les chapitres suivants, le fichier **config.mk** donne des informations à propos de notre nouveau template/thème.
 
-So create **template/monochromed/config.mk** file with this content:
+Donc créez le fichier **template/monochromed/config.mk** avec ce contenu : 
 
     CSS_NAME = Monochromed
     CSS_FILE = main_monochromed.css
     CSS_COLOR_FILE = color_monochromed_light.css
 
-which implies to create two files:
+ce qui implique de créer deux fichiers : 
 
-  * template/monochromed/style/main_monochromed.css: all common CSS rules for your template/theme
-  * template/monochromed/style/color_monochromed_light.css: only recommanded for a color version of your template so that you can create multiple versions
+  * template/monochromed/style/main_monochromed.css : toutes les règles CSS communes pour notre template/thème
+  * template/monochromed/style/color_monochromed_light.css : seulement conseillé pour une version colorée de votre template afin que vous puissiez créer plusieurs versions
 
-For now, just create the files. You will move all CSS rules later.
+Pour l'instant créez simplement les fichiers. Vous migrerez les règles CSS plus tard.
 
-#### Test the result
+#### Tester le résultat
 
-What's about testing the result?
+Que diriez-vous de tester le résultat ?
 
-Just modify your **makefly.rc** and add this:
+Modifiez simplement votre **makefly.rc** et ajoutez ceci : 
 
     THEME = monochromed
 
-Then refresh your blog:
+Puis réactualisez votre blog : 
 
     ./makefly refresh
 
-And you will see the result in your web browser by opening **pub/index.html**.
+Et vous observerez le résultat dans votre navigateur web en ouvrant **pub/index.html**.
 
-#### Hey, I want to display the title!
+#### Hé, je voudrais afficher le titre !
 
-Let's display our blog title.
+Affichons le titre de notre blog.
 
-Open **template/monochromed/header.tmpl** file and replace this:
+Ouvrez le fichier **template/monochromed/header.tmpl** et remplacez ceci : 
 
     <title>Monochromed by TEMPLATED</title>
 
-by this:
+par ceci : 
 
     <title>${BLOG_TITLE} - ${TITLE}</title>
 
-And:
+Et : 
 
     <h1><a href="#">Monochromed</a></h1>
     <span>Design by TEMPLATED</span>
 
-by:
+par : 
 
     <h1><a href="${BLOG_URL}">${BLOG_TITLE}</a></h1>
     <span>${BLOG_SHORT_DESC}</span>
 
-In fact we just place some variables so that ${PROJECTNAME} makes replacements in all pages.
+En fait nous mettons simplement quelques variables pour que ${PROJECTNAME} fasse des remplacements dans toutes les pages.
 
-As previously, test the result:
+Comme précédemment, testez le résultat : 
 
     ./makefly refresh
 
-And open **pub/index.html** in your web browser.
+Et ouvrez **pub/index.html** dans votre navigateur web.
 
-#### Where are posts?
+#### Où sont les billets ?
 
-See **template/monochromed/onecolumn.html**. The template give us a row containing a "No sidebar" post that takes all the width.
+Regardez **template/monochromed/onecolumn.html** avec votre éditeur. Le template nous donne une ligne contenant un billet "No sidebar" qui prend toute la largeur.
 
-So place the content of **row** DIV (```<div class="row">```) and put it into **template/monochromed/article.index.tmpl** file.
+Donc prenez le contenu de la DIV **row** (```<div class="row">```) et mettez le dans le fichier **template/monochromed/article.index.tmpl**.
 
-Then add some variables to display your posts (you can see the result in **template/monochromed/article.index.tmpl**):
+Puis ajoutez quelques variables pour afficher vos billets (vous pouvez voir le résultat dans **template/monochromed/article.index.tmpl**) : 
 
   * POST\_TITLE
   * POST\_DESCRIPTION
@@ -188,33 +188,33 @@ Then add some variables to display your posts (you can see the result in **templ
   * POST\_TYPE
   * POST\_CONTENT
 
-This will only make posts available on homepage. To have each post create the **template/monochromed/article.tmpl**. You can copy the **template/monochromed/article.index.tmpl**. As explained in *Template ' structure* chapter, *article.index.tmpl* is used by homepage and *article.tmpl* by each single post. So just adapt them as your needs.
+Cela rendra seulement disponible les billets sur la page d'accueil. Pour avoir chaque billet créez le fichier **template/monochromed/article.tmpl**. Vous pouvez copier **template/monochromed/article.index.tmpl** à la place. Comme expliqué dans la section **Structure du template**, *article.index.tmpl* est utilisé par la page d'accueil et *article.tmpl* par chaque billet seul. Donc adaptez les suivant vos besoins.
 
-#### Main menu
+#### Menu principal
 
-What we are used to see in ${PROJECTNAME} looks like:
+Ce dont nous sommes habitués à voir dans ${PROJECTNAME} ressemble à : 
 
     <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
     <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
     <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
 
-You can adapt **template/monochromed/header.tmpl** to integrate the menu in place of **nav** tag.
+Vous pouvez adapter le fichier **template/monochromed/header.tmpl** pour intégrer le menu à la place de la balise **nav**.
 
-Note that the ABOUT\_LINK variable needs the **template/monochromed/menu.about.tmpl** file. You can copy those from *template/base/menu.about.tmpl*.
+Notez que la variable ABOUT\_LINK a besoin du fichier **template/monochromed/menu.about.tmpl**. Copiez celui de *template/base/menu.about.tmpl*.
 
-#### Some problems appears with the CSS
+#### Quelques problèmes apparaissent avec le CSS
 
-Now you have a menu and use it you see that CSS is not available for all pages. This is because of the fact that all CSS and JS links are relative. They refers to *css/style.css* for an example.
+Maintenant que vous avez un menu et que vous l'utiliser, vous voyez que le CSS n'est pas disponible pour toutes les pages. C'est du fait que tout les liens CSS et JS sont relatifs. Ils se réfèrent par exemple à *css/style.css*. Et chaque page n'a pas l'a même profondeur au sein l'arbre de notre blog.
 
-To avoid this kind of problem we recommand in ${PROJECTNAME} to use absolute path. But how to add our blog URL in each CSS and JS files? We use variables. That way, you can add BLOG\_URL variable in your CSS/JS files (located in **template/monochromed/static** directory) to complete all links. For an example in **template/monochromed/static/js/init.js** file replace:
+Pour éviter ce genre de problème nous recommandons dans ${PROJECTNAME} d'utiliser des liens absolus. Mais comment ajouter l'URL de notre blog dans chaque fichier CSS et JS ? Nous utilisons les variables. De cette façon vous pouvez ajouter la variable BLOG\_URL dans vos fichiers CSS/JS (situés dans le dossier **template/monochromed/static**) pour compléter tous les liens. Par exemple dans le fichier **template/monochromed/static/js/init.js** remplacez : 
 
     prefix: 'css/style',
 
-by:
+par : 
 
     prefix: '${BLOG_URL}/css/style',
 
-Then adapt **template/monochromed/header.tmpl** to have this:
+Puis adaptez **template/monochromed/header.tmpl** pour avoir ceci : 
 
       <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
       <!--[if lte IE 8]><script src="${BLOG_URL}/js/html5shiv.js"></script><![endif]-->
@@ -230,13 +230,13 @@ Then adapt **template/monochromed/header.tmpl** to have this:
       <!--[if lte IE 9]><link rel="stylesheet" href="${BLOG_URL}/css/ie/v9.css" /><![endif]-->
     </head>
 
-Refresh the blog and enjoy!
+Réactualisez le blog et profitez !
 
-#### Common files
+#### Fichiers communs
 
-As explained in *Template ' structure* chapter, there is a lot of files needed. Some needs to be adapted, and some other one can be just used as it is.
+Comme expliqué dans la section **Structure du template**, il y a beaucoup de fichiers nécessaires pour que notre template fonctionne. Certains demandent à être adaptés, d'autres peuvent être utilisés comme tels.
 
-So you can copy these files (from **template/base** directory) in your monochromed directory:
+Donc vous pouvez copiez ces fichiers (depuis le dossier **template/base**) dans votre dossier monochromed : 
 
   * element.tmpl
   * menu.about.tmpl
@@ -246,9 +246,9 @@ So you can copy these files (from **template/base** directory) in your monochrom
   * taglink.tmpl
   * tags.tmpl
 
-After a refresh your blog will have post list and tag list available.
+Après un *refresh*, votre blog aura une liste de billets et une liste de mots-clés disponible.
 
-What do you think about your blog now?
+Que pensez-vous de votre blog désormais ?
 
 ----
 

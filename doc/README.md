@@ -215,7 +215,7 @@ where **myTheme** is to replace by your own theme name.
 
 Note: This exploits a theme called *Base* as example.
 
-For template designer have a look here: [Themes documentation](${PROJECTURL}/themes.html "Read more about making template for ${PROJECTNAME}").
+For template designer have a look here: [Themes documentation](${PROJECTURL}/themes.html.en "Read more about making template for ${PROJECTNAME}").
 
 # Translation
 

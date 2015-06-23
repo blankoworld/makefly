@@ -69,7 +69,7 @@ The **second one** is explained in **Template ' structure** section.
 
 But have a look to the following steps to understand a template migration procedure.
 
-**Note:** Have a look to **template/monochromed** directory for an example of this tutoriel.
+**Note:** Have a look to **template/monochromed** directory for an example of this tutorial.
 
 #### What needs each page
 
@@ -99,7 +99,7 @@ The idea is to get the begining of the page from doctype to this:
 
 and to put it into **template/monochromed/header.tmpl** file.
 
-Then get the last 2 DIV from the container DIV to the end of the file and put it into **template/monochromed/header.tmpl**.
+Then get the last 2 DIV from the container DIV to the end of the file and put it into **template/monochromed/footer.tmpl**.
 
 #### Static directory
 
@@ -175,9 +175,9 @@ And open **pub/index.html** in your web browser.
 
 #### Where are posts?
 
-See **template/monochromed/onecolumn.html**. The template give us a row containing a "No sidebar" post that takes all the width.
+See **template/monochromed/onecolumn.html** with your editor. The template give us a row containing a "No sidebar" post that takes all the width.
 
-So place the content of **row** DIV (```<div class="row">```) and put it into **template/monochromed/article.index.tmpl** file.
+So take the content of **row** DIV (```<div class="row">```) and put it into **template/monochromed/article.index.tmpl** file.
 
 Then add some variables to display your posts (you can see the result in **template/monochromed/article.index.tmpl**):
 
@@ -188,7 +188,7 @@ Then add some variables to display your posts (you can see the result in **templ
   * POST\_TYPE
   * POST\_CONTENT
 
-This will only make posts available on homepage. To have each post create the **template/monochromed/article.tmpl**. You can copy the **template/monochromed/article.index.tmpl**. As explained in *Template ' structure* chapter, *article.index.tmpl* is used by homepage and *article.tmpl* by each single post. So just adapt them as your needs.
+This will only make posts available on homepage. To have each post create the **template/monochromed/article.tmpl**. You can copy the **template/monochromed/article.index.tmpl** file instead. As explained in **Template ' structure** section, *article.index.tmpl* is used by homepage and *article.tmpl* by each single post. So just adapt them as your needs.
 
 #### Main menu
 
@@ -198,13 +198,13 @@ What we are used to see in ${PROJECTNAME} looks like:
     <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
     <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
 
-You can adapt **template/monochromed/header.tmpl** to integrate the menu in place of **nav** tag.
+You can adapt the **template/monochromed/header.tmpl** file to integrate the menu in place of **nav** tag.
 
-Note that the ABOUT\_LINK variable needs the **template/monochromed/menu.about.tmpl** file. You can copy those from *template/base/menu.about.tmpl*.
+Note that the ABOUT\_LINK variable needs the **template/monochromed/menu.about.tmpl** file. Copy those from *template/base/menu.about.tmpl*.
 
 #### Some problems appears with the CSS
 
-Now you have a menu and use it you see that CSS is not available for all pages. This is because of the fact that all CSS and JS links are relative. They refers to *css/style.css* for an example.
+Now you have a menu and use it you see that CSS is not available for all pages. This is because of the fact that all CSS and JS links are relative. They refers to *css/style.css* for an example. And each page don't have the same depth into our blog tree.
 
 To avoid this kind of problem we recommand in ${PROJECTNAME} to use absolute path. But how to add our blog URL in each CSS and JS files? We use variables. That way, you can add BLOG\_URL variable in your CSS/JS files (located in **template/monochromed/static** directory) to complete all links. For an example in **template/monochromed/static/js/init.js** file replace:
 
@@ -234,7 +234,7 @@ Refresh the blog and enjoy!
 
 #### Common files
 
-As explained in *Template ' structure* chapter, there is a lot of files needed. Some needs to be adapted, and some other one can be just used as it is.
+As explained in **Template ' structure** section, there is a lot of files needed for our template to work. Some needs to be adapted, and some other one can be just used as it is.
 
 So you can copy these files (from **template/base** directory) in your monochromed directory:
 
@@ -246,7 +246,7 @@ So you can copy these files (from **template/base** directory) in your monochrom
   * taglink.tmpl
   * tags.tmpl
 
-After a refresh your blog will have post list and tag list available.
+After a *refresh* your blog will have posts list and tags list available.
 
 What do you think about your blog now?
 
