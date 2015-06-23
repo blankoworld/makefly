@@ -2,7 +2,7 @@
 
 ## What's Makefly ?
 
-Makefly is a fast and lightweight alternative to Nanoblogger static weblog engine. It's Lua and BSD Makefile powered and is provided under the GNU Affero General Public License (AGPL).
+Makefly is a **fast and lightweight** alternative to Nanoblogger **static** weblog engine. It's **Lua** powered and is provided under the GNU Affero General Public License (AGPL).
 
 It's composed of:
 
@@ -56,7 +56,7 @@ Have a look to [Themes list for v0.2](${BLOG_URL}/${POSTDIR_NAME}/theme_list_v0_
 
 ## No UI?
 
-Makefly aims to do a thing and do it well. It's not user-friendly so you cannot easily add posts. To do this, you need a UI (User Interface) that Makefly's project don't get. But [BlogBox project (fr)](http://blogbox.depotoi.re "Learn more on BlogBox project") wants to do this soon (approximatively 2013, March).
+Makefly aims to do a thing and do it well. It's not user-friendly so you cannot easily add posts. To do this, you need a UI (User Interface) that Makefly's project don't get. But [Hymby does](https://github.com/blankoworld/hymby/ "Learn more about Hymby project") (in development).
 
 If you are interested by an UI, perhaps would you be available for:
 
@@ -68,11 +68,7 @@ If you are interested by an UI, perhaps would you be available for:
 
 ## Makefly on the web
 
-Some repositories could be found here:
-
-  * [Gitorious](http://gitorious.org/makefly/ "Read more about Makefly on Gitorious")
-  * [Github](https://github.com/blankoworld/makefly "Read more about Makefly on Github")
-  * [Personal](http://git.dossmann.net/blogbox/makefly.git/ "My personal repository for Makefly")
+Sources are available on [Github](https://github.com/blankoworld/makefly "Read more about Makefly on Github").
 
 Some info on Makefly could be found on [status.vinilox.eu/group/makefly](http://status.vinilox.eu/group/makefly "Go to makefly's group on GNU Social").
 
@@ -82,10 +78,12 @@ For those who likes statistics, you can find [Makefly on ohloh](http://www.ohloh
 
 You can find [Makefly's documentation on github](https://github.com/blankoworld/makefly/blob/master/doc/README.md "Learn more about Makefly").
 
-For developers, it exists [a Makefly's developers documentation on github](https://github.com/blankoworld/makefly-devtools/blob/master/doc/DEV.README.md "Learn more about Makefly for developers").
+For developers, it exists [a Makefly's developers documentation on github](https://github.com/blankoworld/makefly-devtools/blob/master/doc/DEV.README.md "Learn more about Makefly for developers") (outdated but permits to understand db files and source files composition).
 
 ## Archives
 
+  * [Makefly v0.4](${BLOG_URL}/makefly_0.4.zip)
+  * [Makefly v0.4 (fr)](${BLOG_URL}/makefly_0.4_fr.zip)
   * [Makefly v0.3](${BLOG_URL}/makefly_0.3.zip)
   * [Makefly v0.3 (fr)](${BLOG_URL}/makefly_0.3_fr.zip)
   * [Makefly v0.3b2](${BLOG_URL}/makefly_0.3b2.zip)
