@@ -145,7 +145,11 @@ Exemple :
   * Nous créeons le fichier *pages/mentions.md*
   * Après compilation du blog, nous avons un fichier *pub/mentions.html*
 
-Ceci vous permet de créer un site web complet avec que des pages statiques.
+Ceci vous permet de créer un site web avec des pages statiques.
+
+Note 1 : Le nom de la page résultante sera en minuscule et remplacera les espaces par des espaces soulignés (le caractère *_*).
+
+Note 2 : Aucun lien dynamique ne sera fait vers la page statique. Vous devrez modifier vous-même le template pour ajouter un lien vers la page statique. Cf. la section *Structure du template*.
 
 #### Le dossier 'special'
 

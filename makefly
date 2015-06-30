@@ -532,7 +532,8 @@ local function processPages(threads, header, footer)
   if pages_result then
     for k,v in pairs(pages_result) do
       local pagetitle = string.match(v, ".+/(.+)%.md")
-      local pagefile = config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. config.PAGE_EXT
+      local filename = string.gsub(utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle), "%s", "_")
+      local pagefile = config.publicpath .. '/' .. string.lower(filename) .. config.PAGE_EXT
       local co = coroutine.create(function () blog.createPage(v, pagefile, pagetitle, header, footer) end)
       table.insert(threads, co)
     end

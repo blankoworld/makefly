@@ -145,7 +145,11 @@ Example:
   * We created *pages/notices.md* file
   * After blog's compilation: *pub/mentions.html* file exists
 
-This allow you to create a full website only with static pages.
+This allow you to create a website with static pages.
+
+Note 1: Page result's name will be in lower case and will replace spaces with underscore (*_* char).
+
+Note 2: No dynamic link will be make to static page. You will need to modify template yourself to include a link to the static page. Cf. *Template ' structure* section.
 
 #### The 'special' directory
 
