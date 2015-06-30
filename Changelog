@@ -1,4 +1,6 @@
-Current version (0.4-trunk)
+Current version (0.4.1-trunk)
+
+Version 0.4 (released 2015-06-23)
 	- Add documentation about how to create/customize themes
 	- Fix a problem on tags that have a simple quote in their name
 	- Change Jskomment system to Isso one (Cf. http://posativ.org/isso/)
