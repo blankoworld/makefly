@@ -44,7 +44,7 @@ Je vous suggère soit de voir une vidéo montrant comment adapter le template Mo
 
 Comme une vidéo est plus parlante qu'un ensemble d'explication, j'ai fait [une vidéo qui vous montre comment chercher/charger/adapter un template existant à ${PROJECTNAME}](${PROJECTURL}monochromed.mkv "Comment adapter un template à ${PROJECTNAME}") (30 MB et 30 minutes approximativement).
 
-NB: Cette vidéo est visionnable avec [VLC media player](https://www.videolan.org/vlc/ "Charger VLC").
+NB : Cette vidéo est visionnable avec [VLC media player](https://www.videolan.org/vlc/ "Charger VLC").
 
 ### Apprendre avec des explications (vous pouvez comparer avec la vidéo)
 
