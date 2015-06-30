@@ -27,3 +27,4 @@ AUTO_EDIT = 1
 ISSO = 1
 ISSO_URL = rave.depotoi.re/olivier
 ISSO_MAX = 3
+ABOUT_FILENAME = apropos
