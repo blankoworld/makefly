@@ -1,4 +1,22 @@
-#!/usr/bin/env lua
+#!/bin/sh
+
+_=[[
+	: ${BIN:=$(command -v lua)}
+	if [ -n "$BIN" ]; then
+		"$BIN" -e 'require"os".exit( _VERSION:find(" 5%.1") and 0 or 1)' || BIN=""
+	fi
+	: ${BIN:=$(command -v lua5.1)}
+	: ${BIN:=$(command -v lua-5.1)}
+	: ${BIN:=$(command -v luajit)}
+	exec "$BIN" "$0" "$@"
+	exit $?
+]]
+_=nil
+
+if not _VERSION:find(" 5%.1") then
+	print("Warning: the current makefly version is not compatible with Lua 5.2+")
+	require("os").exit(1)
+end
 
 --[[
 
