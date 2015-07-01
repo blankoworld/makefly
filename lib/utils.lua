@@ -4,6 +4,8 @@
 -- @copyright Olivier DOSSMANN
 -------------------------------------------------------------------------------
 
+local lfs = require "lfs"
+
 --- Split a string using '@sep' separator
 -- @param sep char to split string
 -- @usage 'a string, with some words':split(',')
