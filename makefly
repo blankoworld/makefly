@@ -63,7 +63,7 @@ local function clean(args)
     print(string.format(_('[%s] Missing: %s directory'), display_warning, config.tmppath))
   end
   local docpath = currentpath .. '/' .. config.docdir
-  local docextension = string.gsub(config.PAGE_EXT, '\.(.*)', '%1')
+  local docextension = string.gsub(config.PAGE_EXT, '%.(.*)', '%1')
   local docfiles = utils.listing(docpath, docextension)
   for _, filepath in pairs(docfiles) do
     os.remove(filepath)
@@ -254,7 +254,7 @@ local function doc(args)
     final:push(footer)
     local res = utils.replace(final:flatten(), substitutions)
     -- write result into a file
-    local name = string.gsub(path, "(.*/)(.*)(\.md)", "%2")
+    local name = string.gsub(path, "(.*/)(.*)(%.md)", "%2")
     local filepath = directory .. '/' .. name .. config.PAGE_EXT
     local file = assert(io.open(filepath, 'wb'))
     file:write(res)

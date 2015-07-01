@@ -500,7 +500,7 @@ end
 function utils.keepUnreservedChars(string)
   -- In chap 2.3 a list of reserved chars are given. We use this list
   -- and replace them by _
-  local reserved_chars = '[\:\/\?\#\@\!\$\&\'()*+,;=%]\[]'
+  local reserved_chars = "[:/%?#%]%[@!%$&'()%*%+,;=]"
   local res = string.gsub(string, reserved_chars, '_') or string
   return res
 end
