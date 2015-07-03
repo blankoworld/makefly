@@ -28,7 +28,7 @@
 ## VARIABLES
 ###
 LIMIT='255'
-YOUR_EDITOR=`which nano`
+YOUR_EDITOR="$(which editor || which nano)"
 QUIET=0
 
 #####
