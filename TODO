@@ -8,6 +8,8 @@ Isso comment system:
 - tools/migrate_domain_from.sh should be update so that it take 2 params: "from to". From jskomment to jskomment, from jskomment to isso, from isso to isso, etc.
 
 Version 0.4.1:
+- Change word "Makefly" from "./makefly" lua script at line 17 to nothing. Just explain that this program is not compatible with xxx
+- add documentation about CONFIG and RC_CONFIG variable for Makefly
 - add 2 pages "about.md" for each language and adapt the prepare-new-version to use the right one into the final archive
 
 Tests:

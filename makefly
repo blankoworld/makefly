@@ -38,7 +38,8 @@ PROJECTURL = 'http://makefly.depotoi.re/'
 GITPROJECT = 'https://github.com/blankoworld/makefly/'
 PROJECTNAMELOWER = string.lower(PROJECTNAME)
 
-package.path = package.path .. ";./lib/?.lua"
+currentpath = os.getenv('CURDIR') or '.'
+package.path = package.path .. ";" .. currentpath .. "/?.lua" .. ";./lib/?.lua"
 
 require 'lib.init'
 local utils = require 'lib.utils'
@@ -801,6 +802,10 @@ commands['compile'] = {
 -- check configuration files
 local config_default = utils.checkConfig(configfile)
 config_default.configurationfile = string.format('%s.rc', PROJECTNAMELOWER)
+local alternative_configurationfile = os.getenv('RC_CONFIG') or nil
+if alternative_configurationfile ~= nil then
+  config_default.configurationfile = alternative_configurationfile
+end
 local config_user = utils.checkConfig(config_default.configurationfile)
 config = utils.mergeConfig(config_default, config_user)
 

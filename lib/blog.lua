@@ -1,6 +1,6 @@
 local blog = { }
 
-local utils = require 'utils'
+local utils = require 'lib.utils'
 
 -------------------------------------------------------------------------------
 -- Read '@filepath' and do substitutions using 'replacements' global table.
@@ -459,7 +459,7 @@ function blog.createPostIndex(posts, header, footer, template)
   -- sort posts in a given order
   table.sort(posts, function(a, b) return utils.compare_post(a,b, config.SORT) end)
   -- prepare some values
-  local pagination = require "pagination"
+  local pagination = require "lib.pagination"
   local pagin = pagination.new(#posts, config.MAX_PAGE)
   local post_nb = #posts
   local page_number = 0
