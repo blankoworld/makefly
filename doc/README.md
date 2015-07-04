@@ -260,7 +260,6 @@ You can customize (in your **${PROJECTNAMELOWER}.rc** file):
 
 Sources are available: 
 
-  * [On gitorious](http://gitorious.org/makefly/master.git/)
   * [On github](${GITPROJECT})
 
 ## Documentation
@@ -396,9 +395,8 @@ This take few minutes and permit to improve ${PROJECTNAME}. Thanks -in advance -
 
 ${PROJECTNAME} is developed in Lua, CSS and HTML.
 
-The code of the software is available in the given repositories:
+The code of the software is available in the given repository:
 
-  * [Gitorious](https://gitorious.org/makefly/ "Go to ${PROJECTNAME}'s project page on Gitorious")
   * [Github](${GITPROJECT} "Go to ${PROJECTNAME}'s project page on Github")
 
 #### Tip to fork the project

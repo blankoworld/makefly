@@ -260,7 +260,6 @@ Vous pouvez personnaliser (dans votre fichier **${PROJECTNAMELOWER}.rc**) :
 
 Les sources sont disponibles :  
 
-  * [Sur gitorious](http://gitorious.org/makefly/master.git/)
   * [Sur github](${GITPROJECT})
 
 ## Documentation
@@ -397,9 +396,8 @@ This take few minutes and permit to improve ${PROJECTNAME}. Thanks -in advance -
 
 ${PROJECTNAME} est développ&eacute; en Lua, CSS et HTML.
 
-Le code du logiciel se trouve sur les d&eacute;p&ocirc;ts suivants : 
+Le code du logiciel se trouve sur le d&eacute;p&ocirc;t suivant : 
 
-  * [Gitorious](https://gitorious.org/makefly/ "Se rendre sur la page d'accueil du projet ${PROJECTNAME} sur Gitorious")
   * [Github](${GITPROJECT} "Se rendre sur la page d'accueil du projet ${PROJECTNAME} sur Github")
 
 #### Astuce pour forker/bifurquer le projet
