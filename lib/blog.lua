@@ -322,7 +322,7 @@ function blog.createPostForRSS(content, cfg, title, tmstmp, template, data)
     -- Change temporarly locale
     assert(os.setlocale('C'))
     local rss_date = os.date('!%a, %d %b %Y %T GMT', tmstmp) or ''
-    assert(os.setlocale(oslanguage or en_US.utf-8))
+    assert(os.setlocale(oslanguage or en_US.utf-8), string.format(_("The choosen language '%s' is not available. Choose another one. For an example 'en_US.UTF-8'."), oslanguage))
     local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=cfg['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
     assert(rss_file:write(rss_post))
     -- close first_posts file

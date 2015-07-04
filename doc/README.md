@@ -266,7 +266,7 @@ and use some configuration file as **config** and **${PROJECTNAMELOWER}**.rc, we
 
 For an example:
 
-    LANG=fr ./${PROJECTNAMELOWER} help
+    LANG=fr_FR.UTF-8 ./${PROJECTNAMELOWER} help
 
 Which permits to change the output language in French.
 
@@ -274,7 +274,7 @@ This way you have the following variables:
 
   * CURDIR : ${PROJECTNAME} directory path. Permit to launch compilation from another directory. By default the current directory.
   * LANGDIR : directory path that contains translations. By default the **lang** directory from current path.
-  * LANG : language used by the command line. For an example **en** of **fr**.
+  * LANG : language used by the command line. For an example **en_US.UTF-8** of **fr_FR.UTF-8**.
   * CONFIG : default ${PROJECTNAME} configuration file path. By default the **config** from current directory.
   * RC_CONFIG : user's configuration file path. By default the **${PROJECTNAMELOWER}**.rc from current directory.
 
