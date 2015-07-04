@@ -9,7 +9,6 @@ Isso comment system:
 
 Version 0.4.1:
 - FIX: When a post have a variable like ${PROJECTNAME} it's not displayed in output. Exemple: New post, Welcome to ${PROJECTNAME}
-- Change word "Makefly" from "./makefly" lua script at line 17 to nothing. Just explain that this program is not compatible with xxx
 - add 2 pages "about.md" for each language and adapt the prepare-new-version to use the right one into the final archive
 
 Tests:
