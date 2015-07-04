@@ -256,9 +256,33 @@ Vous pouvez personnaliser (dans votre fichier **${PROJECTNAMELOWER}.rc**) :
   * le suffixe du fichier de sauvegarde en utilisant l'option **BACKUP\_SUFFIX**
   * le format de date en utilisant l'option **BACKUP\_FORMAT**
 
+## Jouer avec la ligne de commande
+
+Sachant que ${PROJECTNAME} fonctionne de la manière suivante : 
+
+    ./${PROJECTNAMELOWER} help
+
+et utilise quelques fichiers de configuration comme **config** et **${PROJECTNAMELOWER}**.rc, on peut s'amuser avec quelques variables.
+
+Par exemple : 
+
+    LANG=en ./${PROJECTNAMELOWER} help
+
+Ceci permet de changer la langue de sortie en Anglais.
+
+Ainsi vous disposez des variables suivantes : 
+
+  * CURDIR : chemin du répertoire de ${PROJECTNAME}. Permet de lancer la compilation depuis un autre répertoire. Par défaut le répertoire courant.
+  * LANGDIR : chemin du répertoire contenant les traductions. Par défaut le dossier **lang** du répertoire courant.
+  * LANG : langue utillisée par la ligne de commande. Par exemple **en** ou **fr**.
+  * CONFIG : chemin du fichier de configuration par défaut de ${PROJECTNAME}. Par défaut le fichier **config** du répertoire courant.
+  * RC_CONFIG : chemin du fichier de configuration de l'utilisateur. Par défaut le fichier **${PROJECTNAMELOWER}**.rc du répertoire courant.
+
+L'ensemble de ces paramètres vous permettront de créer des scripts utilisant ${PROJECTNAME}.
+
 ## Sources
 
-Les sources sont disponibles :  
+Les sources sont disponibles : 
 
   * [Sur github](${GITPROJECT})
 
