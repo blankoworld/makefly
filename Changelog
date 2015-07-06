@@ -1,4 +1,8 @@
 Current version (0.4.1-trunk)
+	- Add some command line variables so that the project can be launched from 
+	another repository
+	- Add lua fallback at launch
+	- Fix lua syntax problems
 	- Static pages have lowercase without spaces filenames but normal titles
 
 Version 0.4 (released 2015-06-23)
