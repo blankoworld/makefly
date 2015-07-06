@@ -76,7 +76,7 @@ end
 -- @return a string of your page's name and its extension
 -------------------------------------------------------------------------------
 function blog.getPageName(name, extension)
-  local page_base = utils.keepUnreservedCharsAndDeleteDuplicate(name)
+  local page_base = string.gsub(utils.keepUnreservedCharsAndDeleteDuplicate(name), "%s", "_")
   local result = page_base .. extension
   return result
 end
