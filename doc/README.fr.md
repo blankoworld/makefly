@@ -151,6 +151,8 @@ Note 1 : Le nom de la page résultante sera en minuscule et remplacera les espac
 
 Note 2 : Aucun lien dynamique ne sera fait vers la page statique. Vous devrez modifier vous-même le template pour ajouter un lien vers la page statique. Cf. la section *Structure du template*.
 
+Pour en savoir plus je vous invite à [lire la documentation sur la création des pages statiques](${PROJECTURL}/static.html.fr "En lire d'avantage sur la création d'un site entièrement statique sans la fonction blog.")
+
 #### Le dossier 'special'
 
 Ce dossier nomm&eacute; **special** peut contenir certains fichiers que vous devrez cr&eacute;er pour activer une fonctionnalit&eacute; : 
