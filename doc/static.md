@@ -1,67 +1,67 @@
-# Créer un site vitrine simple avec ${PROJECTNAME}
+# Make a simple shop website with ${PROJECTNAME}
 
-[English version](${PROJECTURL}static.html.en) (version originale française)
+[Version française](${PROJECTURL}static.html.fr) (original french version)
 
-[Site officiel](${PROJECTURL} "Aller sur le site web")
+[Official website](${PROJECTURL} "Go to the official website")
 
 ## Introduction
 
-Les sites vitrines sont principalement employés pour présenter une entreprise, un projet ou une personne. À cet effet nous n'avons généralement besoin que de quelques pages : 
+Shop websites are mainly used to show your business, a project or someone. As a consequence we only need some pages:
 
-  * la page d'accueil
-  * une page d'à propos
-  * une page expliquant le projet
+  * homepage
+  * about's page
+  * a page explaining your project
 
-On peut évidemment agrémenter, mais pour l'exercice qui va suivre nous allons rester simple.
+Sure you can add some, but let keeping this tutorial as easy as possible.
 
-## En bref
+## In brief
 
-Le travail consiste à : 
+The work consist in:
 
-  * copier le thème de base
-  * créer les pages nécessaires (page expliquant le project)
-  * adapter la page d'à propos
-  * créer un nouvel article comme message d'accueil
-  * modifier le thème pour avoir les bons liens vers les autres pages
+  * duplicate default theme
+  * create needed pages (page explaining the project)
+  * adapt about's page
+  * create a new post as homepage message
+  * modify the theme so that having right links to other pages
 
-## En détail
+## In detail
 
-### Création d'un nouveau thème
+### Creating a new theme
 
-Nous allons donc créer un nouveau thème et l'utiliser afin d'obtenir le résultat attendu : 
+We will so create a new theme and use it to obtain the final result:
 
     cd makefly
-    ./makefly theme SiteVitrine
-    echo "THEME = SiteVitrine" >> makefly.rc
+    ./makefly theme ShopWebsite
+    echo "THEME = ShopWebsite" >> makefly.rc
 
-Vous avez donc un thème nommé **SiteVitrine**.
+You have so a theme named **ShopWebsite**.
 
-### Utilisation de la fonctionnalité de pages statiques et des pages spéciales
+### Using static and special pages features
 
-De là nous pouvons créer une à plusieurs pages que nous souhaitons voir apparaître : 
+From that point we can create one or more pages that we want to appear:
 
     mkdir pages
     touch pages/project.md
 
-Remplissez le fichier **pages/project.md**.
+Fill in the **pages/project.md** file.
 
-Remplissez ensuite le fichier **special/about.md** qui contient la page d'à propos, souvent utilisez comme d'un *Qui sommes nous ?*.
+Then **special/about.md** file which contains the about's page, oftenly used as "Who are we?".
 
-### La page d'accueil
+### Homepage
 
-Pour la page d'accueil nous allons utiliser un article qui fera office de texte d'accueil. Rajoutez donc un article comme ceci : 
+For homepage we will use a post that will represent the homepage. Add a new post as this:
 
     ./makefly add
 
-Renseignez les informations demandées et écrivez votre article.
+Fill in all asked data and write the post.
 
-Il ne nous reste plus qu'à modifier un peu notre thème.
+Customizing a little bit our theme remains.
 
-### Personnalisation du thème nommé SiteVitrine
+### ShopWebsite theme customization
 
-Le thème **SiteVitrine** se trouve dans le dossier **template**.
+The **ShopWebsite** theme is in **template** directory.
 
-L'idée est de modifier le menu utilisé par ${PROJECTNAME} afin d'avoir l'ensemble des pages que nous venons de rajouter. Cela se passe dans le fichier **template/SiteVitrine/footer.tmpl** qui contient le menu de navigation du site. Il suffit donc d'adapter le code suivant : 
+The idea is to modify ${PROJECTNAME} menu so that see all previously added pages. It happens into **template/ShopWebsite/footer.tmpl** file which contains the website navigation menu. You just need to adapt the following code:
 
     <aside id="navigation">
       <nav id="secondary">
@@ -77,8 +77,7 @@ L'idée est de modifier le menu utilisé par ${PROJECTNAME} afin d'avoir l'ensem
       ${SIDEBAR}
     </aside>
 
-en : 
-
+to:
 
     <aside id="navigation">
       <nav id="secondary">
@@ -93,20 +92,20 @@ en :
       ${SIDEBAR}
     </aside>
 
-Il suffit ensuite d'agrémenter le thème selon vos préférences.
+Then embellish your theme regarding your preferences.
 
-Par exemple pour n'avoir que le premier billet sur l'accueil (afin de toujours avoir le même), on va modifier les paramètres suivants de notre fichier ${PROJECTNAMELOWER}.rc : 
+For an example to have only 1 post on homepage, just change the following parameter in our ${PROJECTNAMELOWER}.rc file:
 
     MAX_POST = 1
 
-Ensuite nous enlevons le lien "Tous les articles" au bas de la page pour éviter que le visiteur aille sur une liste d'articles dont il ne saurait que faire. Pour cela éditez le fichier **template/SiteVitrine/post.footer.tmpl** et supprimez en le contenu.
+Finally we delete the "All posts" link on the bottom page to avoid visitors to go to the post list. Edit the **template/ShopWebsite/post.footer.tmpl** file and delete the content.
 
-On compile à nouveau le blog et le tour est joué ;).
+We compile again our blog. Enjoy ;).
 
-**Astuce** : Une autre astuce aurait été de supprimer l'ensemble des fichiers **.md** du dossier **src**, de faire de même avec les fichiers **.mk** dans le dossier **db** puis de modifier le fichier **template/SiteVitrine/post.footer.tmpl** pour y inclure le contenu HTML que vous désiriez pour la page d'accueil.
+**Tip**: Another tip would be to delete all **.md** files in **src** directory ;  make the same for all **.mk** files in **db** directory ; then edit **template/ShopWebsite/post.footer.tmpl** file to include some HTML want to appear on homepage.
 
 ## Conclusion
 
-Faire un site vitrine statique n'est pas compliqué quand on connaît le HTML et le CSS. Concernant ${PROJECTNAME} il suffit également d'en connaître un peu les ficelles, notamment les composantes des templates. Mais une fois ces éléments en main, il devient facile de rajouter une simple page Markdown afin de rajouter du contenu. Puis de faire un lien.
+Make a static shop website is not complex when you know what HTML and CSS is. Concerning ${PROJECTNAME} you just need to know a little bit templates and it will be OK. First the elements owned, it becomes easy to add a simple Markdown page so that you add content. Then make a link.
 
-Quoiqu'il en soit, et qu'importe l'outil, vous aurez de toute manière du temps à passer sur l'apparence et donc le HTML et le CSS.
+Anyway, skipping the tool, you will have to spend time on HTML and CSS while customizing your website appearance.
