@@ -2,7 +2,7 @@
 
 L'Arduino est une carte électronique assez connue permettant grossomodo de transformer n'importe quel objet en objet intelligent puisque vous allez pouvoir programmer ce dernier afin d'avoir des comportements spécifiques suivant les données reçues par un certain nombre de capteurs.
 
-![https://www.arduino.cc/new_home/assets/illu-arduino-UNO.png](Image d'une carte électronique Arduino)
+![Image d'une carte électronique Arduino](https://www.arduino.cc/new_home/assets/illu-arduino-UNO.png "Notre carte Arduino")
 
 Arduino permet de réunir le monde de l'informatique à celui de l'électronique et favorise le DIY (Do It Yourself = fait le toi-même).
 
