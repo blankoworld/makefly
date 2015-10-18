@@ -151,6 +151,8 @@ Note 1: Page result's name will be in lower case and will replace spaces with un
 
 Note 2: No dynamic link will be make to static page. You will need to modify template yourself to include a link to the static page. Cf. *Template ' structure* section.
 
+To learn more about static page I invite you to [read documentation about static pages creation](${PROJECTURL}/static.html.en "Read more about entirely static website without blog function.")
+
 #### The 'special' directory
 
 This one is named **special** because it can contain some file you have to create in order to activate a functionality:
