@@ -70,36 +70,37 @@ Le thème **SiteVitrine** se trouve dans le dossier **template**.
 L'idée est de modifier le menu utilisé par ${PROJECTNAME} afin d'avoir l'ensemble des pages que nous venons de rajouter. Cela se passe dans le fichier **template/SiteVitrine/footer.tmpl** qui contient le menu de navigation du site. Il suffit donc d'adapter le code suivant : 
 
 <pre name="code" class="Xml">
-    <aside id="navigation">
-      <nav id="secondary">
-        <h2 id="nav">Navigation</h2>
-        <ul>
-          <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
-          <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
-          <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
-        </ul>
-      ${SEARCHBAR}
-      </nav>
-    
-      ${SIDEBAR}
-    </aside>
+<aside id="navigation">
+  <nav id="secondary">
+    <h2 id="nav">Navigation</h2>
+    <ul>
+      <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
+      <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
+      <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
+    </ul>
+  ${SEARCHBAR}
+  </nav>
+
+  ${SIDEBAR}
+</aside>
 </pre>
 
 en : 
 
+<pre name="code" class="Xml">
+<aside id="navigation">
+  <nav id="secondary">
+    <h2 id="nav">Navigation</h2>
+    <ul>
+      <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
+      <li><a href="${BLOG_URL}/project.html">Mon projet</a></li>${ABOUT_LINK}
+    </ul>
+  ${SEARCHBAR}
+  </nav>
 
-    <aside id="navigation">
-      <nav id="secondary">
-        <h2 id="nav">Navigation</h2>
-        <ul>
-          <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
-          <li><a href="${BLOG_URL}/project.html">Mon projet</a></li>${ABOUT_LINK}
-        </ul>
-      ${SEARCHBAR}
-      </nav>
-    
-      ${SIDEBAR}
-    </aside>
+  ${SIDEBAR}
+</aside>
+</pre>
 
 Il suffit ensuite d'agrémenter le thème selon vos préférences.
 

@@ -30,9 +30,11 @@ The work consist in:
 
 We will so create a new theme and use it to obtain the final result:
 
-    cd makefly
-    ./makefly theme ShopWebsite
-    echo "THEME = ShopWebsite" >> makefly.rc
+<pre name="code" class="Bash">
+cd makefly
+./makefly theme ShopWebsite
+echo "THEME = ShopWebsite" >> makefly.rc
+</pre>
 
 You have so a theme named **ShopWebsite**.
 
@@ -40,8 +42,10 @@ You have so a theme named **ShopWebsite**.
 
 From that point we can create one or more pages that we want to appear:
 
-    mkdir pages
-    touch pages/project.md
+<pre name="code" class="Bash">
+mkdir pages
+touch pages/project.md
+</pre>
 
 Fill in the **pages/project.md** file.
 
@@ -51,7 +55,9 @@ Then **special/about.md** file which contains the about's page, oftenly used as 
 
 For homepage we will use a post that will represent the homepage. Add a new post as this:
 
-    ./makefly add
+<pre name="code" class="Bash">
+./makefly add
+</pre>
 
 Fill in all asked data and write the post.
 
@@ -63,34 +69,38 @@ The **ShopWebsite** theme is in **template** directory.
 
 The idea is to modify ${PROJECTNAME} menu so that see all previously added pages. It happens into **template/ShopWebsite/footer.tmpl** file which contains the website navigation menu. You just need to adapt the following code:
 
-    <aside id="navigation">
-      <nav id="secondary">
-        <h2 id="nav">Navigation</h2>
-        <ul>
-          <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
-          <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
-          <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
-        </ul>
-      ${SEARCHBAR}
-      </nav>
-    
-      ${SIDEBAR}
-    </aside>
+<pre name="code" class="Xml">
+<aside id="navigation">
+  <nav id="secondary">
+    <h2 id="nav">Navigation</h2>
+    <ul>
+      <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
+      <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
+      <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
+    </ul>
+  ${SEARCHBAR}
+  </nav>
+
+  ${SIDEBAR}
+</aside>
+</pre>
 
 to:
 
-    <aside id="navigation">
-      <nav id="secondary">
-        <h2 id="nav">Navigation</h2>
-        <ul>
-          <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
-          <li><a href="${BLOG_URL}/project.html">Mon projet</a></li>${ABOUT_LINK}
-        </ul>
-      ${SEARCHBAR}
-      </nav>
-    
-      ${SIDEBAR}
-    </aside>
+<pre name="code" class="Xml">
+<aside id="navigation">
+  <nav id="secondary">
+    <h2 id="nav">Navigation</h2>
+    <ul>
+      <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
+      <li><a href="${BLOG_URL}/project.html">Mon projet</a></li>${ABOUT_LINK}
+    </ul>
+  ${SEARCHBAR}
+  </nav>
+
+  ${SIDEBAR}
+</aside>
+</pre>
 
 Then embellish your theme regarding your preferences.
 
