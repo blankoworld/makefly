@@ -31,5 +31,31 @@
   <script src="${BLOG_URL}/js/main.js"></script>
 ${ISSO_SCRIPT}
 ${ELI_SCRIPT}
+
+  <script class="javascript" src="${BLOG_URL}js/shCore.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushCSharp.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushPhp.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushJScript.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushJava.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushVb.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushSql.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushXml.js"></script>
+
+  <script class="javascript" src="${BLOG_URL}js/shBrushDelphi.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushPython.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushRuby.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushCss.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushCpp.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushScala.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushGroovy.js"></script>
+  <script class="javascript" src="${BLOG_URL}js/shBrushBash.js"></script>
+  <script class="javascript">
+    if(window.isBloggerMode == true)
+      dp.SyntaxHighlighter.BloggerMode();
+
+    dp.SyntaxHighlighter.ClipboardSwf = '${BLOG_URL}js/clipboard.swf';
+    dp.SyntaxHighlighter.HighlightAll('code');
+  </script>
+
 </body>
 </html>
