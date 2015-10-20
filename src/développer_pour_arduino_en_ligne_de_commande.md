@@ -67,13 +67,11 @@ Et le tour est joué !
 
 Je pense que le point à éclaircir ici est celui du fichier **Makefile** à remplir. Rien ne vaut un bon vieil exemple de mon fichier Makefile pour le projet Blink qui fait clignoter la LED 13 de mon Arduino MEGA 2560 : 
 
-```
-BOARD_TAG = mega2560
-ARDUINO_LIBS = 
-ARDUINO_PORT = /dev/ttyACM0
+    BOARD_TAG = mega2560
+    ARDUINO_LIBS = 
+    ARDUINO_PORT = /dev/ttyACM0
 
-include /usr/share/arduino/Arduino.mk
-```
+    include /usr/share/arduino/Arduino.mk
 
 Rien de plus, rien de moins. Avec ça, un simple **make && make upload** devrait faire l'affaire :-)
 
