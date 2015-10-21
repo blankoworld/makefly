@@ -377,10 +377,10 @@ Voici quelques options que vous pouvez changer :
   * ISSO : Mis &agrave; 1 permet d'activer un syst&egrave;me de commentaires pour ${PROJECTNAME}. &Agrave; noter que votre th&egrave;me doit supporter le syst&egrave;me de commentaires. Attention, par d&eacute;faut cela utilise rave.depotoi.re en tant que serveur, il ne garantit pas un archivage &agrave; long terme des commentaires. Plus d'informations sont disponibles [sur la page d'installation du projet isso](http://posativ.org/isso/docs/install/ "Se rendre sur la page du projet pour en savoir plus").
   * ISSO\_URL (optionnel) : D&eacute;finit un serveur ISSO sur lequel envoyer les commentaires. Par exemple **rave.depotoi.re/pseudo**. Attention : n'utilisez pas de **http://** devant l'adresse. Cela permet d'avoir du http ou du https quand nécessaire.
   * ISSO\_MAX (optionnel) : D&eacute;finit une limite de commentaires &agrave; afficher pour le syst&egrave;me de commentaire ISSO. Par d&eacute;faut **3**.
-  * ELI\_USER: Si utilis&eacute;, ceci active un cadre pour identica. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utiliser l'API d'IDENTICA.
-  * ELI\_TYPE (optionel) : Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur d'IDENTICA. Par d&eacute;faut "user".
-  * ELI\_MAX (optionnel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur IDENTICA ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
-  * ELI\_API (optionnel) : Acc&egrave;s &agrave; l'API de votre syst&egrave;me StatusNet.
+  * ELI\_USER: Si utilis&eacute;, ceci active un cadre pour le r&eacute;seau StatusNet/GNU Social. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utilise l'API de StatusNet/GNU Social.
+  * ELI\_TYPE (optionel) : Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur de StatusNet/GNU Social. Par d&eacute;faut "user".
+  * ELI\_MAX (optionnel) : Permet de choisir le nombre de statuts affich&eacute;s. Sur StatusNet/GNU Social ceci ne peut d&eacute;passer 20 &eacute;l&eacute;ments. Valeur par d&eacute;faut : 5.
+  * ELI\_API : Votre adresse StatusNet. Par exemple : 'https://quitter.se/'.
   * INSTALLDIR : Permet de choisir le dossier de destination lors de l'utilisation de la commande **./${PROJECTNAMELOWER} install** (Cf. Chapitre Publier le r&eacute;sultat sur le web).
   * SORT (optionnel) : Tri la liste des billets. Utilisez ASC pour que les billets soient triés du plus anciens au plus récent. DESC (valeur par défaut) tri les billets du plus récent au plus ancien.
   * AUTO\_EDIT (optionnel) : Permet d'&eacute;diter automatiquement les billets apr&egrave;s leur cr&eacute;ation. Utilise le contenu de la variable EDITOR pour savoir quel &eacute;diteur utiliser.

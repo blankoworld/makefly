@@ -1,4 +1,5 @@
 Current version (0.4.1-trunk)
+	- Upgrade to an ELI version that supports Location and Post time displays
 	- Fix missing space replacements for tag pages
 	- Add some command line variables so that the project can be launched from 
 	another repository
