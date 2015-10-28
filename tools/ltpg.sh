@@ -723,7 +723,7 @@ IFS="\\"
 
 for ((i = 0; i <= $max; i += 1))
 do
-  timestamp=$(($now+$i))
+  timestamp=$(($now-$i))
   TITLE="post_${timestamp}"
   DATE=`date -d "@${timestamp}" +'%Y-%m-%d'`
   DBDIR=${DBDIR} SRCDIR=${SRCDIR} ./create_post.sh -q < <(echo ${AUTHOR}; echo ${TITLE}; echo ${DESC}; echo ${DATE}; echo ${TAGS}; echo ${TYPE}) && echo -e ${CONTENT} > ${SRCDIR}/post_${timestamp}.md || exit 1
