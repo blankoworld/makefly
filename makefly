@@ -386,6 +386,8 @@ local function initializeReplacements(themerc, languagerc, about_file)
     ELI_CSS = '',
     ELI_CSS_DECLARATION = '',
     ELI_STATUS = '',
+    SH_CSS_DECLARATION = '',
+    SH_SCRIPT = '',
     INTRO_CONTENT = '',
     FOOTER_CONTENT = '',
     ABOUT_LINK = '',
@@ -488,6 +490,25 @@ local function processIsso(threads, themerc, isso_css_file, isso_css_filename)
     replacements['ISSO_CSS_DECLARATION'] = utils.replace(template_isso_css_declaration, replacements)
   else
     print (string.format(_("[%s] Comment system"), display_disable))
+  end
+  return threads
+end
+
+local function processSH(threads)
+  if config.SH and config.SH == '1' then
+    print (string.format(_("[%s] Syntax color system"), display_enable))
+    -- copy SyntaxHighlighter js directory
+    table.insert(threads, coroutine.create(function () utils.copy(config.docpath .. '/js/', config.publicpath .. '/js/') end))
+    -- copy SyntaxHighlighter CSS file
+    table.insert(threads, coroutine.create(function () utils.copyFile(config.docpath .. '/' .. config.sh_cssname, config.publicpath .. '/' .. config.sh_cssname) end))
+    -- SyntaxHighlighter javascript declaration in all pages
+    local template_sh_declaration = utils.readFile(config.page_sh_declaration, 'r')
+    replacements['SH_SCRIPT'] = utils.replace(template_sh_declaration, {BLOG_URL = config.BLOG_URL})
+    -- SyntaxHighlighter css declaration in all pages
+    local template_sh_css_declaration = utils.readFile(config.page_sh_css_declaration, 'r')
+    replacements['SH_CSS_DECLARATION'] = utils.replace(template_sh_css_declaration, replacements)
+  else
+    print (string.format(_("[%s] Syntax color system"), display_disable))
   end
   return threads
 end
@@ -617,6 +638,7 @@ local function setDefaultVariables(configtable)
   configtable.tagpath = configtable.publicpath .. '/' .. configtable.TAGDIR_NAME
   configtable.staticpath = currentpath .. '/' .. configtable.staticdir
   configtable.pagepath = currentpath .. '/' .. configtable.pagedir
+  configtable.docpath = currentpath .. '/' .. configtable.docdir
   -- files
   configtable.about_filepath = configtable.specialpath .. '/' .. configtable.ABOUT_FILENAME .. configtable.SRC_EXT
   configtable.eli_cssname = 'eli.css'
@@ -651,6 +673,10 @@ local function setDefaultVariables(configtable)
   configtable.page_eli_declaration = configtable.templatepath .. '/' .. 'eli_declaration' .. configtable.TMPL_EXT
   configtable.page_eli_css_declaration = configtable.templatepath .. '/' .. 'eli_css_declaration' .. configtable.TMPL_EXT
   configtable.page_eli_script = configtable.templatepath .. '/' .. 'eli.js'
+  configtable.sh_cssname = 'SyntaxHighlighter.css'
+  configtable.page_sh_css = configtable.docpath .. '/' .. 'SyntaxHighlighter.css'
+  configtable.page_sh_declaration = configtable.templatepath .. '/' .. 'sh_declaration' .. configtable.TMPL_EXT
+  configtable.page_sh_css_declaration = configtable.templatepath .. '/' .. 'sh_css_declaration' .. configtable.TMPL_EXT
   -- change number values
   configtable.MAX_POST = tonumber(configtable.MAX_POST) -- should not be nil
   configtable.MAX_POST_LINES = configtable.MAX_POST_LINES and tonumber(configtable.MAX_POST_LINES) or nil
@@ -716,6 +742,8 @@ local function compile(args)
     end
   end
   threads = processIsso(threads, themerc, isso_css_file, isso_css_filename)
+  -- SyntaxHighlighter system
+  threads = processSH(threads)
   -- Introduction / footer file
   processSpecialFiles()
   -- Create about's page if exists

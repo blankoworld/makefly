@@ -33,12 +33,14 @@ It gives these functionnalities:
 
 In some short steps, here is how to install the last version (current development):
 
-    sudo apt-get install lua5.1 lua-filesystem
-    curl ${GITPROJECT}archive/master.zip
-    unzip master.zip
-    cd makefly-master
-    cp ${PROJECTNAMELOWER}.rc.example ${PROJECTNAMELOWER}.rc
-    ./${PROJECTNAMELOWER} clean && ./${PROJECTNAMELOWER} compile
+<pre name="code" class="Bash">
+sudo apt-get install lua5.1 lua-filesystem
+curl ${GITPROJECT}archive/master.zip
+unzip master.zip
+cd makefly-master
+cp ${PROJECTNAMELOWER}.rc.example ${PROJECTNAMELOWER}.rc
+./${PROJECTNAMELOWER} clean && ./${PROJECTNAMELOWER} compile
+</pre>
 
 You should have an action list done on your computer. And result is available in **pub directory**.
 
@@ -55,7 +57,9 @@ Some programs on which ${PROJECTNAME} depends:
 
 So use your distribution package manager to install them. For an example on Debian and derivated, it would be:
 
-    apt-get install lua5.1 lua-filesystem
+<pre name="code" class="Bash">
+apt-get install lua5.1 lua-filesystem
+</pre>
 
 For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
 
@@ -63,8 +67,10 @@ For other distribution, please have a look on your distribution's forum/IRC/comm
 
 If your distribution doesn't have *lua-filesystem*, you can attempt to install **luarocks** then install dependancies as:
 
-    sudo apt-get install luarocks
-    luarocks install lua-filesystem
+<pre name="code" class="Bash">
+sudo apt-get install luarocks
+luarocks install lua-filesystem
+</pre>
 
 That's all!
 
@@ -115,7 +121,9 @@ Some useful commands:
 
 Use this command:
 
-    ./${PROJECTNAMELOWER} add
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} add
+</pre>
 
 and answer to all given questions. It will generate some files needed by ${PROJECTNAME}.
 
@@ -166,7 +174,9 @@ This one is named **special** because it can contain some file you have to creat
 
 After having created *${PROJECTNAMELOWER}.rc* (from ${PROJECTNAMELOWER}.rc.example) and having created some posts, just do this:
 
-    ./${PROJECTNAMELOWER} compile
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} compile
+</pre>
 
 It will generate a ${PROJECTNAME} weblog to the **pub** directory (default directory).
 
@@ -178,7 +188,9 @@ The result is compatible with all HTML servers. In fact you could probably use r
 
 If you launch ${PROJECTNAME} on you own server or probably on provider ' server, you should be capable to use **install** script automation. Just launch it as:
 
-    ./${PROJECTNAMELOWER} install
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} install
+</pre>
 
 ...and it will copy all files to **~/public\_html** directory.
 
@@ -207,7 +219,9 @@ Note that **PUBLISH\_DESTINATION** looks like:
 
 Once having complete this variable in **${PROJECTNAMELOWER}.rc** file, just launch:
 
-    ./${PROJECTNAMELOWER} publish
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} publish
+</pre>
 
 For developers: You can also edit **tools/publish.sh** file and change script content to you own code.
 
@@ -215,7 +229,9 @@ For developers: You can also edit **tools/publish.sh** file and change script co
 
 To make easier the theme creation you can use this command:
 
-    ./${PROJECTNAMELOWER} theme myTheme
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} theme myTheme
+</pre>
 
 where **myTheme** is to replace by your own theme name.
 
@@ -231,7 +247,9 @@ A simple way to translate ${PROJECTNAME} to your language is to copy the **lang/
 
 Perhaps would you backup some important files in ${PROJECTNAME}? It's possible via **backup command**. Just launch it like this:
 
-    ./${PROJECTNAMELOWER} backup
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} backup
+</pre>
 
 Requirements:
 
@@ -262,13 +280,17 @@ You can customize (in your **${PROJECTNAMELOWER}.rc** file):
 
 Knowing that ${PROJECTNAME} works the following way:
 
-    ./${PROJECTNAMELOWER} help
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} help
+</pre>
 
 and use some configuration file as **config** and **${PROJECTNAMELOWER}**.rc, we can play with some variables.
 
 For an example:
 
-    LANG=fr_FR.UTF-8 ./${PROJECTNAMELOWER} help
+<pre name="code" class="Bash">
+LANG=fr_FR.UTF-8 ./${PROJECTNAMELOWER} help
+</pre>
 
 Which permits to change the output language in French.
 
@@ -292,7 +314,9 @@ Sources are available:
 
 This file is the documentation. You can [read it on github](${GITPROJECT} "Read documentation on Github") or simply generate an HTML file with this command:
 
-    ./${PROJECTNAMELOWER} doc
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} doc
+</pre>
 
 ## Tips
 
@@ -306,7 +330,9 @@ For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 13625694
 
 Just use the 'content' variable at the beginning of the command:
 
-    content="my little content" ./${PROJECTNAMELOWER} add
+<pre name="code" class="Bash">
+content="my little content" ./${PROJECTNAMELOWER} add
+</pre>
 
 This will add "my little content" into your new post.
 
@@ -333,7 +359,9 @@ When you migrate from **old.domain.tld** to **new.domain.tld**, comments will no
 
 To avoid this problem, just use **migratefrom command** as:
 
-    ./${PROJECTNAMELOWER} migratefrom http://old.domain.tld
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} migratefrom http://old.domain.tld
+</pre>
 
 This will update all your old posts with the old comments' identifier (your old domain) and comments will afressh appear.
 
@@ -376,13 +404,21 @@ Here is some options you can change:
   * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is rave.depotoi.re which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://posativ.org/isso/docs/install/ "Go to isso webpage for more information").
   * ISSO\_URL (optional): Define a ISSO server on which send comments. For example **rave.depotoi.re/pseudo**. Warning: don't use **http://** behind the address. It permits to keep to have http or https when needed.
   * ISSO\_MAX (optional): Define a limit for displayed comments for ISSO comment system. By default **3**.
-  * ELI\_USER: If set, this activate a badge for StatusNet/GNU Social network. Note that your theme should support ELI widget. By default this functionality use StatusNet/GNU Social's API.
+  * ELI\_USER: If set, this activates a badge for StatusNet/GNU Social network. Note that your theme should support ELI widget. By default this functionality use StatusNet/GNU Social's API.
   * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on StatusNet/GNU Social. By default "user".
   * ELI\_MAX (optional): Permit to choose how many statuses to display. On StatusNet/GNU Social, this couldn't bypass the default 20 items. Default value: 5.
   * ELI\_API : Your StatusNet URL. For an example: "https://quitter.se/".
   * INSTALLDIR : Permit to choose a target directory when using **./${PROJECTNAMELOWER} install** command (Read more in *Publish result to the web* chapter)
   * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
   * AUTO\_EDIT (optionnel) : Allow to edit automatically posts after their creation. Use the EDITOR variable content to know which editor to use.
+  * SH : If set, this activates syntax highlighting for code using:
+
+<pre name="code" class="Xml">
+    <pre name="code" class="Bash">
+    
+    man man
+    </pre>
+</pre>
 
 ## Migrate from Nanoblogger
 

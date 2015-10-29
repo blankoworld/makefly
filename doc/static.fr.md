@@ -30,9 +30,11 @@ Le travail consiste à :
 
 Nous allons donc créer un nouveau thème et l'utiliser afin d'obtenir le résultat attendu : 
 
-    cd makefly
-    ./makefly theme SiteVitrine
-    echo "THEME = SiteVitrine" >> makefly.rc
+<pre name="code" class="Bash">
+cd makefly
+./makefly theme SiteVitrine
+echo "THEME = SiteVitrine" >> makefly.rc
+</pre>
 
 Vous avez donc un thème nommé **SiteVitrine**.
 
@@ -40,8 +42,10 @@ Vous avez donc un thème nommé **SiteVitrine**.
 
 De là nous pouvons créer une à plusieurs pages que nous souhaitons voir apparaître : 
 
-    mkdir pages
-    touch pages/project.md
+<pre name="code" class="Bash">
+mkdir pages
+touch pages/project.md
+</pre>
 
 Remplissez le fichier **pages/project.md**.
 
@@ -51,7 +55,9 @@ Remplissez ensuite le fichier **special/about.md** qui contient la page d'à pro
 
 Pour la page d'accueil nous allons utiliser un article qui fera office de texte d'accueil. Rajoutez donc un article comme ceci : 
 
-    ./makefly add
+<pre name="code" class="Bash">
+./makefly add
+</pre>
 
 Renseignez les informations demandées et écrivez votre article.
 
@@ -63,35 +69,38 @@ Le thème **SiteVitrine** se trouve dans le dossier **template**.
 
 L'idée est de modifier le menu utilisé par ${PROJECTNAME} afin d'avoir l'ensemble des pages que nous venons de rajouter. Cela se passe dans le fichier **template/SiteVitrine/footer.tmpl** qui contient le menu de navigation du site. Il suffit donc d'adapter le code suivant : 
 
-    <aside id="navigation">
-      <nav id="secondary">
-        <h2 id="nav">Navigation</h2>
-        <ul>
-          <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
-          <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
-          <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
-        </ul>
-      ${SEARCHBAR}
-      </nav>
-    
-      ${SIDEBAR}
-    </aside>
+<pre name="code" class="Xml">
+<aside id="navigation">
+  <nav id="secondary">
+    <h2 id="nav">Navigation</h2>
+    <ul>
+      <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
+      <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
+      <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
+    </ul>
+  ${SEARCHBAR}
+  </nav>
+
+  ${SIDEBAR}
+</aside>
+</pre>
 
 en : 
 
+<pre name="code" class="Xml">
+<aside id="navigation">
+  <nav id="secondary">
+    <h2 id="nav">Navigation</h2>
+    <ul>
+      <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
+      <li><a href="${BLOG_URL}/project.html">Mon projet</a></li>${ABOUT_LINK}
+    </ul>
+  ${SEARCHBAR}
+  </nav>
 
-    <aside id="navigation">
-      <nav id="secondary">
-        <h2 id="nav">Navigation</h2>
-        <ul>
-          <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
-          <li><a href="${BLOG_URL}/project.html">Mon projet</a></li>${ABOUT_LINK}
-        </ul>
-      ${SEARCHBAR}
-      </nav>
-    
-      ${SIDEBAR}
-    </aside>
+  ${SIDEBAR}
+</aside>
+</pre>
 
 Il suffit ensuite d'agrémenter le thème selon vos préférences.
 

@@ -22,7 +22,9 @@ Remember that this is not difficult, you just need a little bit time to make it.
 
 Create a new theme is easy as explained in the officiel documentation. Just do this:
 
-    ./${PROJECTNAMELOWER} theme myTheme
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} theme myTheme
+</pre>
 
 where **myTheme** is the name of your theme.
 
@@ -139,7 +141,9 @@ Just modify your **makefly.rc** and add this:
 
 Then refresh your blog:
 
-    ./makefly refresh
+<pre name="code" class="Bash">
+./makefly refresh
+</pre>
 
 And you will see the result in your web browser by opening **pub/index.html**.
 
@@ -149,27 +153,37 @@ Let's display our blog title.
 
 Open **template/monochromed/header.tmpl** file and replace this:
 
+<pre name="code" class="Xml">
     <title>Monochromed by TEMPLATED</title>
+</pre>
 
 by this:
 
-    <title>${BLOG_TITLE} - ${TITLE}</title>
+<pre name="code" class="Xml">
+   <title>${BLOG_TITLE} - ${TITLE}</title>
+</pre>
 
 And:
 
+<pre name="code" class="Xml">
     <h1><a href="#">Monochromed</a></h1>
     <span>Design by TEMPLATED</span>
+</pre>
 
 by:
 
+<pre name="code" class="Xml">
     <h1><a href="${BLOG_URL}">${BLOG_TITLE}</a></h1>
     <span>${BLOG_SHORT_DESC}</span>
+</pre>
 
 In fact we just place some variables so that ${PROJECTNAME} makes replacements in all pages.
 
 As previously, test the result:
 
-    ./makefly refresh
+<pre name="code" class="Bash">
+./makefly refresh
+</pre>
 
 And open **pub/index.html** in your web browser.
 
@@ -194,9 +208,11 @@ This will only make posts available on homepage. To have each post create the **
 
 What we are used to see in ${PROJECTNAME} looks like:
 
+<pre name="code" class="Xml">
     <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
     <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
     <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
+</pre>
 
 You can adapt the **template/monochromed/header.tmpl** file to integrate the menu in place of **nav** tag.
 
@@ -297,6 +313,8 @@ Pay attention that some other ones are located in the template main directory fo
   * **isso\_declaration.tmpl**: HTML code that declares the ISSO javascript in our weblog. Commonly placed in the footer. Replace ISSO\_SCRIPT variable in templates.
   * **isso.short.tmpl**: usually used on homepage to only display number of comment using ISSO comment system. Replace ISSO\_SHORT variable in templates.
   * **isso.extended.tmpl**: usually used on each post to display comments using ISSO comment system. Replace ISSO\_EXTENDED variable in templates.
+  * **sh\_declaration.tmpl**: HTML code that declares the ISSO javascript in our weblog. Commonly placed in the footer. Replace SH\_SCRIPT variable in templates.
+  * **sh\_css\_declaration.tmpl**: CSS HTML declaration used in header for SyntaxHighlighter system. Replace SH\_CSS\_DECLARATION variable in templates.
 
 ### More explanation
 
