@@ -33,12 +33,14 @@ Il propose les fonctionnalités suivantes :
 
 En quelques &eacute;tapes voici comment installer la derni&egrave;re version (en d&eacute;veloppement) : 
 
-    sudo apt-get install lua5.1 lua-filesystem
-    curl ${GITPROJECT}archive/master.zip
-    unzip master.zip
-    cd makefly-master
-    cp ${PROJECTNAMELOWER}.rc.fr.example ${PROJECTNAMELOWER}.rc
-    ./${PROJECTNAMELOWER} clean && ./${PROJECTNAMELOWER} compile
+<pre name="code" class="Bash">
+sudo apt-get install lua5.1 lua-filesystem
+curl ${GITPROJECT}archive/master.zip
+unzip master.zip
+cd makefly-master
+cp ${PROJECTNAMELOWER}.rc.fr.example ${PROJECTNAMELOWER}.rc
+./${PROJECTNAMELOWER} clean && ./${PROJECTNAMELOWER} compile
+</pre>
 
 Vous devriez avoir une liste d'actions effectu&eacute;es sur votre machine. Et le r&eacute;sultat se trouve dans le dossier **pub**.
 
@@ -55,7 +57,9 @@ ${PROJECTNAME} d&eacute;pend des &eacute;l&eacute;ment suivants :
 
 Ainsi utilisez le gestionnaire de paquet de votre distribution pour les installer. Par exemple sur Debian et d&eacute;riv&eacute;es, ce serait : 
 
-    apt-get install lua5.1 lua-filesystem
+<pre name="code" class="Bash">
+apt-get install lua5.1 lua-filesystem
+</pre>
 
 Pour d'autres distributions, regardez du c&ocirc;t&eacute; des forums, d'IRC et/ou de la communaut&eacute; de votre distribution. Ils seront heureux de vous aider.
 
@@ -63,8 +67,10 @@ Pour d'autres distributions, regardez du c&ocirc;t&eacute; des forums, d'IRC et/
 
 Si votre distribution ne propose pas le paquet *lua-filesystem*, vous pouvez tenter d'installer **luarocks** puis installer les d&eacute;pendances de la mani&egrave;re suivante : 
 
-    sudo apt-get install luarocks
-    luarocks install lua-filesystem
+<pre name="code" class="Bash">
+sudo apt-get install luarocks
+luarocks install lua-filesystem
+</pre>
 
 Et le tour est jou&eacute; !
 
@@ -115,7 +121,9 @@ Quelques commandes utiles :
 
 Utilisez la commande suivante :
 
-    ./${PROJECTNAMELOWER} add
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} add
+</pre>
 
 et r&eacute;pondez &agrave; toutes les questions pos&eacute;es. Cela g&eacute;n&egrave;rera les fichiers n&eacute;cessaires pour ${PROJECTNAME}.
 
@@ -166,7 +174,9 @@ Ce dossier nomm&eacute; **special** peut contenir certains fichiers que vous dev
 
 Apr&egrave;s avoir cr&eacute;e quelques articles, faites simplement : 
 
-    ./${PROJECTNAMELOWER} compile
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} compile
+</pre>
 
 Ceci g&eacute;n&egrave;rera un blog ${PROJECTNAME} dans le dossier **pub** (r&eacute;pertoire par d&eacute;faut).
 
@@ -178,7 +188,9 @@ Le r&eacute;sultat de ${PROJECTNAME} est compatible avec tous le serveurs HTML. 
 
 Si vous lancez ${PROJECTNAME} sur votre propre serveur ou tr&egrave;s certainement sur le serveur de votre h&eacute;bergeur, vous pourrez utiliser l'installation automatis&eacute;e. Lancez simplement la commande suivante : 
 
-    ./${PROJECTNAMELOWER} install
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} install
+</pre>
 
 ...et cela copiera tous les fichiers dans le r&eacute;pertoire **~/public\_html**.
 
@@ -207,7 +219,9 @@ C'est tout!
 
 Une fois cette variable renseign&eacute;e dans le fichier **${PROJECTNAMELOWER}.rc**, lancez simplement : 
 
-    ./${PROJECTNAMELOWER} publish
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} publish
+</pre>
 
 Pour les d&eacute;velopeurs : Vous pouvez aussi modifier le fichier **tools/publish.sh** et changer le contenu du script par votre propre code.
 
@@ -215,7 +229,9 @@ Pour les d&eacute;velopeurs : Vous pouvez aussi modifier le fichier **tools/publ
 
 Afin de vous faciliter la tâche de cr&eacute;ation d'un nouveau th&egrave;me, vous pouvez utiliser la commande suivante :
 
-    ./${PROJECTNAMELOWER} theme myTheme
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} theme myTheme
+</pre>
 
 o&ugrave; **myTheme** est &agrave; remplacer par le nom de votre th&egrave;me.
 
@@ -231,7 +247,9 @@ Une fa&ccedil;on simple de traduire ${PROJECTNAME} dans votre langage est de cop
 
 Peut-&ecirc;tre voudriez-vous sauvegarder les fichiers importants de ${PROJECTNAME} ? C'est possible via la **commande backup**. Lancez la simplement de cette mani&egrave;re : 
 
-    ./${PROJECTNAMELOWER} backup
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} backup
+</pre>
 
 Requis : 
 
@@ -262,13 +280,17 @@ Vous pouvez personnaliser (dans votre fichier **${PROJECTNAMELOWER}.rc**) :
 
 Sachant que ${PROJECTNAME} fonctionne de la manière suivante : 
 
-    ./${PROJECTNAMELOWER} help
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} help
+</pre>
 
 et utilise quelques fichiers de configuration comme **config** et **${PROJECTNAMELOWER}**.rc, on peut s'amuser avec quelques variables.
 
 Par exemple : 
 
-    LANG=en_US.UTF-8 ./${PROJECTNAMELOWER} help
+<pre name="code" class="Bash">
+LANG=en_US.UTF-8 ./${PROJECTNAMELOWER} help
+</pre>
 
 Ceci permet de changer la langue de sortie en Anglais.
 
@@ -292,7 +314,9 @@ Les sources sont disponibles :
 
 Ce fichier est la documentation. Vous pouvez [le lire sur github](${GITPROJECT} "Lire la documentation sur Github") ou simplement g&eacute;n&eacute;rer un fichier HTML &agrave; l'aide de cette commande : 
 
-    ./${PROJECTNAMELOWER} doc
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} doc
+</pre>
 
 ## Astuces
 
@@ -306,7 +330,9 @@ Par exemple nous sommes le 6 mars 2013, &agrave; 12:30, le timestamp est : 13625
 
 Utilisez juste la variable 'content' au d&eacute;but de la commande : 
 
-    content="mon petit contenu" ./${PROJECTNAMELOWER} add
+<pre name="code" class="Bash">
+content="mon petit contenu" ./${PROJECTNAMELOWER} add
+</pre>
 
 Ceci ajoutera "mon petit contenu" dans votre nouvel article.
 
@@ -333,7 +359,9 @@ Quand vous migrez de **vieux.domaine.tld** &agrave; **nouveau.domaine.tld**, les
 
 Pour r&eacute;gler le probl&egrave;me, utilisez simplement la **commande migratefrom** : 
 
-    ./${PROJECTNAMELOWER} migratefrom http://vieux.domaine.tld
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} migratefrom http://vieux.domaine.tld
+</pre>
 
 Ceci va mettre &agrave; jour tout les anciens articles avec l'identifiant des vieux commentaires (votre vieux domaine) et les commentaires r&eacute;appara&icirc;tront.
 
@@ -387,9 +415,10 @@ Voici quelques options que vous pouvez changer :
   * SH : Si utilis&eacute;, ceci active la coloration syntaxique du code en utilisant : 
 
 <pre name="code" class="Xml">
-  <pre name="code" class="Bash">
+    <pre name="code" class="Bash">
+
     man man
-  </pre>
+    </pre>
 </pre>
 
 ## Migration depuis Nanoblogger
