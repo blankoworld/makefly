@@ -297,6 +297,8 @@ Faites attention car d'autres fichiers sont situés dans le répertoire principa
   * **isso\_declaration.tmpl** : code HTML qui déclare le javascript d'ISSO dans votre blog. Principalement localisé dans le pied de page. Remplace la variable ISSO\_SCRIPT dans les templates.
   * **isso.short.tmpl** : habituellement utilisé sur la page d'accueil pour seulement afficher le nombre de commentaire en utilisant le système de commentaire ISSO. Remplace la variable ISSO\_SHORT dans les templates.
   * **isso.extended.tmpl** : habituellement utilisé sur chaque billet pour afficher les commentaires utilisant le système de commentaire ISSO. Remplace la variable ISSO\_EXTENDED dans les templates.
+  * **sh\_declaration.tmpl** : code HTML qui déclare le javascript de SyntaxHighlighter dans votre blog. Principalement localisé dans le pied de page. Remplace la variable SH\_SCRIPT dans les templates.
+  * **sh\_css\_declaration** : déclaration HTML du CSS utilisée dans l'entête pour le système de coloration syntaxique. Remplace la variable SH\_CSS\_DECLARATION dans les templates.
 
 ### Plus d'explications
 

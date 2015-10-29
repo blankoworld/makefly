@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.2.1-lua\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-04 17:00+0200\n"
+"POT-Creation-Date: 2015-10-29 16:27+0100\n"
 "PO-Revision-Date: 2014-06-20 18:55+0100\n"
 "Last-Translator: Olivier DOSSMANN <od@tempo-consulting.fr>\n"
 "Language-Team: None\n"
@@ -16,66 +16,66 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/blog.lua:194
+#: lib/blog.lua:216
 #, python-format
 msgid "[%s] New post: %s"
 msgstr "[%s] Nouvel article : %s"
 
-#: lib/blog.lua:325
+#: lib/blog.lua:347
 #, python-format
 msgid ""
 "The choosen language '%s' is not available. Choose another one. For an "
 "example 'en_US.UTF-8'."
 msgstr ""
-"Le langage choisi '%s' n'est pas disponible. Choisissez en un autre. "
-"Par exemple 'fr_FR.UTF-8'."
+"Le langage choisi '%s' n'est pas disponible. Choisissez en un autre. Par "
+"exemple 'fr_FR.UTF-8'."
 
-#: lib/blog.lua:418 lib/blog.lua:481
+#: lib/blog.lua:440 lib/blog.lua:503
 #, python-format
 msgid "[%s] Post list %s/%s: BUILT."
 msgstr "[%s] Liste des articles %s/%s : CRÉÉE."
 
-#: lib/blog.lua:498
+#: lib/blog.lua:520
 #, python-format
 msgid "[%s] RSS feed: BUILT."
 msgstr "[%s] Flux RSS : CRÉE"
 
-#: lib/blog.lua:500
+#: lib/blog.lua:522
 #, python-format
 msgid "[%s] Post list: BUILT."
 msgstr "[%s] Liste des articles : CRÉÉE."
 
-#: lib/blog.lua:534
+#: lib/blog.lua:556
 #, python-format
 msgid "[%s] New tag: %s"
 msgstr "[%s] Nouveau mot-clé : %s"
 
-#: lib/blog.lua:570
+#: lib/blog.lua:592
 #, python-format
 msgid "[%s] Tag list: BUILT."
 msgstr "[%s] Liste des mots-clés : CRÉÉE."
 
-#: lib/blog.lua:599
+#: lib/blog.lua:621
 #, python-format
 msgid "[%s] Homepage: BUILT."
 msgstr "[%s] Page d'accueil : CRÉÉE."
 
-#: lib/blog.lua:621
+#: lib/blog.lua:643
 #, python-format
 msgid "[%s] Page '%s': BUILT."
 msgstr "[%s] Page '%s' : CRÉÉE."
 
-#: lib/blog.lua:626
+#: lib/blog.lua:648
 #, python-format
 msgid "[%s] Theme: %s"
 msgstr "[%s] Thème : %s"
 
-#: lib/blog.lua:630
+#: lib/blog.lua:652
 #, python-format
 msgid "[%s] Given theme (%s) seems to not exist."
 msgstr "[%s] Le thème choisi (%s) ne semble pas exister."
 
-#: lib/blog.lua:636 makefly:69
+#: lib/blog.lua:658 makefly:91
 #, python-format
 msgid ""
 "[%s] You cannot choose an extension (%s) similar to template's one (%s)."
@@ -83,132 +83,132 @@ msgstr ""
 "[%s] Vous ne pouvez pas choisir une extension (%s) identique à celle des "
 "templates (%s)."
 
-#: lib/blog.lua:647
+#: lib/blog.lua:669
 #, python-format
 msgid "[%s] No '%s' translation. Use default one: %s."
 msgstr "[%s] Aucune traduction '%s'. Utilisation de celle par défaut : %s."
 
-#: lib/utils.lua:108
+#: lib/utils.lua:130
 #, python-format
 msgid "[%s] %s file not found!"
 msgstr "[%s] fichier %s non trouvé !"
 
-#: lib/utils.lua:152
+#: lib/utils.lua:174
 #, python-format
 msgid "[%s] New folder: %s"
 msgstr "[%s] Nouveau dossier : %s"
 
-#: lib/utils.lua:168
+#: lib/utils.lua:190
 #, python-format
 msgid "[%s] Not a directory: %s"
 msgstr "[%s] N'est pas un dossier : %s"
 
-#: lib/utils.lua:189
+#: lib/utils.lua:211
 #, python-format
 msgid "[%s] Unknown read mode while reading this path: %s."
 msgstr ""
 "[%s] Mode de lecture inconnu durant la lecture de l'adresse suivante : %s."
 
-#: lib/utils.lua:289
+#: lib/utils.lua:311
 #, python-format
 msgid "[%s] %s not found in copy method!"
 msgstr "[%s] %s non trouvé(e) dans la méthode «copy() » !"
 
-#: lib/utils.lua:320
+#: lib/utils.lua:342
 #, python-format
 msgid "[%s] %s not found (in remove process)!"
 msgstr "[%s] %s non trouvé(e) (dans la méthode de suppression) !"
 
-#: lib/utils.lua:472
+#: lib/utils.lua:494
 msgid ", "
 msgstr ", "
 
-#: makefly:52
+#: makefly:74
 msgid "  INFO   "
 msgstr "  INFO   "
 
-#: makefly:53
+#: makefly:75
 msgid " SUCCESS "
 msgstr " SUCCÈS  "
 
-#: makefly:54
+#: makefly:76
 msgid " ENABLE  "
 msgstr " ACTIF   "
 
-#: makefly:55
+#: makefly:77
 msgid " DISABLE "
 msgstr " INACTIF "
 
-#: makefly:56
+#: makefly:78
 msgid " WARNING "
 msgstr "ATTENTION"
 
-#: makefly:57
+#: makefly:79
 msgid "  ERROR  "
 msgstr " ERREUR  "
 
-#: makefly:74 makefly:80
+#: makefly:96 makefly:102
 #, python-format
 msgid "[%s] Removed: %s directory"
 msgstr "[%s] Supprimé : dossier %s"
 
-#: makefly:76 makefly:82
+#: makefly:98 makefly:104
 #, python-format
 msgid "[%s] Missing: %s directory"
 msgstr "[%s] Manquant : dossier %s"
 
-#: makefly:90
+#: makefly:112
 #, python-format
 msgid "[%s] Removed: %s/*%s files"
 msgstr "[%s] Supprimé : fichiers %s/*%s"
 
-#: makefly:101
+#: makefly:123
 #, python-format
 msgid "[%s] Publication failed!"
 msgstr "[%s] Échec de la publication !"
 
-#: makefly:103
+#: makefly:125
 #, python-format
 msgid "[%s] Publish: %s content with %s"
 msgstr "[%s] Publication : du contenu %s avec %s"
 
-#: makefly:118
+#: makefly:140
 #, python-format
 msgid "[%s] New post failed!"
 msgstr "[%s] Échec pour le nouvel article !"
 
-#: makefly:120
+#: makefly:142
 #, python-format
 msgid "[%s] New post added successfully."
 msgstr "[%s] Nouvel article ajouté avec succès."
 
-#: makefly:134
+#: makefly:156
 msgid "List of available commands: "
 msgstr "Liste des commandes disponibles : "
 
-#: makefly:164
+#: makefly:186
 #, python-format
 msgid "[%s] Backup: Files successfully saved in %s: %s, %s, %s, %s, %s and %s"
 msgstr ""
 "[%s] Sauvegarde : Fichiers sauvegardés avec succès dans %s : %s, %s, %s, %s, "
 "%s et %s"
 
-#: makefly:166
+#: makefly:188
 #, python-format
 msgid "[%s] Backup failed!"
 msgstr "[%s] Échec de la sauvegarde !"
 
-#: makefly:176
+#: makefly:198
 #, python-format
 msgid "[%s] No INSTALLDIR found. Please add INSTALLDIR= in your %s"
 msgstr "[%s] INSTALLDIR non trouvé. SVP ajoutez INSTALLDIR= dans votre %s"
 
-#: makefly:180
+#: makefly:202
 #, python-format
 msgid "[%s] %s directory not found!"
 msgstr "[%s] Dossier %s non trouvé !"
 
-#: makefly:183
+#: makefly:205
 #, python-format
 msgid ""
 "This will delete %s content and copy all files from %s into this directory. "
@@ -217,198 +217,203 @@ msgstr ""
 "Ceci va supprimer le contenu de %s et copier tous les fichiers depuis %s "
 "dans ce répertoire. Êtes-vous sûrs [y/n] (y = oui, n = non) ?"
 
-#: makefly:190
+#: makefly:212
 #, python-format
 msgid "[%s] Installation: achieved."
 msgstr "[%s] Installation: terminée."
 
-#: makefly:192
+#: makefly:214
 #, python-format
 msgid "[%s] Installation failed!"
 msgstr "[%s] Échec de l'installation !"
 
-#: makefly:198
+#: makefly:220
 #, python-format
 msgid "[%s] Migration: missing URL parameter."
 msgstr "[%s] Migration : paramètre URL manquant."
 
-#: makefly:207
+#: makefly:229
 #, python-format
 msgid "[%s] Migration failed!"
 msgstr "[%s] Échec de la migration !"
 
-#: makefly:209
+#: makefly:231
 #, python-format
 msgid "[%s] Migration achieved."
 msgstr "[%s] Migration terminée."
 
-#: makefly:215
+#: makefly:237
 #, python-format
 msgid "[%s] Give a name."
 msgstr "[%s] Donnez un nom."
 
-#: makefly:222
+#: makefly:244
 #, python-format
 msgid "[%s] Theme already exists: %s"
 msgstr "[%s] Le thème existe déjà : %s"
 
-#: makefly:243
+#: makefly:265
 #, python-format
 msgid "[%s] Missing 'base' directory"
 msgstr "[%s] Répertoire « base » manquant"
 
-#: makefly:245
+#: makefly:267
 #, python-format
 msgid "[%s] Created: New theme %s is available in '%s' directory."
 msgstr "[%s] Crée: Le nouveau thème %s est disponible dans le répertoire '%s'."
 
-#: makefly:249
+#: makefly:271
 #, python-format
 msgid "%s %s using %s"
 msgstr "%s %s utilisant %s"
 
-#: makefly:256
+#: makefly:278
 #, python-format
 msgid "Version %s"
 msgstr "Version %s"
 
-#: makefly:282
+#: makefly:304
 #, python-format
 msgid "[%s] Built: documentation files."
 msgstr "[%s] Générés : fichiers de la documentation."
 
-#: makefly:298
+#: makefly:320
 #, python-format
 msgid "[%s] Check mandatories information"
 msgstr "[%s] Vérification des informations obligatoires"
 
-#: makefly:302
+#: makefly:324
 #, python-format
 msgid "[%s] Missing information in %s file: %s"
 msgstr "[%s] Information(s) manquante(s) dans le fichier %s : %s"
 
-#: makefly:317
+#: makefly:339
 #, python-format
 msgid "[%s] Wrong flavor: %s"
 msgstr "[%s] Mauvaise couleur : %s"
 
-#: makefly:319
+#: makefly:341
 #, python-format
 msgid "[%s] Specific flavor: %s"
 msgstr "[%s] Couleur spécifique : %s"
 
-#: makefly:389
+#: makefly:413
 #, python-format
 msgid "[%s] About's page available"
 msgstr "[%s] Page d'à propos disponible"
 
-#: makefly:393
+#: makefly:417
 #, python-format
 msgid "[%s] About's page not found"
 msgstr "[%s] Page d'apropos non trouvée"
 
-#: makefly:399 makefly:428
+#: makefly:423 makefly:452
 #, python-format
 msgid "[%s] ELI badge"
 msgstr "[%s] Encart ELI"
 
-#: makefly:437 makefly:441
+#: makefly:461 makefly:465
 #, python-format
 msgid "[%s] Sidebar"
 msgstr "[%s] Panneau latéral"
 
-#: makefly:448 makefly:451
+#: makefly:472 makefly:475
 #, python-format
 msgid "[%s] Search bar"
 msgstr "[%s] Barre de recherche"
 
-#: makefly:457 makefly:468
+#: makefly:481 makefly:492
 #, python-format
 msgid "[%s] Comment system"
 msgstr "[%s] Système de commentaire"
 
-#: makefly:485 makefly:489
+#: makefly:499 makefly:511
+#, python-format
+msgid "[%s] Syntax color system"
+msgstr "[%s] Système de coloration syntaxique"
+
+#: makefly:528 makefly:532
 #, python-format
 msgid "[%s] %s"
 msgstr "[%s] %s"
 
-#: makefly:528
+#: makefly:571
 #, python-format
 msgid "[%s] Missing information in '%s' post: %s"
 msgstr "[%s] Information(s) manquante(s) dans l'article %s : %s"
 
-#: makefly:539
+#: makefly:582
 #, python-format
 msgid "[%s] No DB file(s) found!"
 msgstr "[%s] Aucun fichier DB trouvé !"
 
-#: makefly:546
+#: makefly:589
 #, python-format
 msgid "[%s] Folder content copied: %s"
 msgstr "[%s] Contenu du dossier copié : %s"
 
-#: makefly:560
+#: makefly:603
 #, python-format
 msgid "[%s] No static page(s) found."
 msgstr "[%s] Aucune(s) page(s) statique(s) trouvée(s)."
 
-#: makefly:583
+#: makefly:626
 msgid "unknown"
 msgstr "inconnue"
 
-#: makefly:744
+#: makefly:794
 msgid "clean up result directory"
 msgstr "nettoyage du répertoire de destination"
 
-#: makefly:748
+#: makefly:798
 msgid "list all available commands"
 msgstr "liste des commandes disponibles"
 
-#: makefly:752
+#: makefly:802
 msgid "publish your weblog using tools/publish.sh script"
 msgstr "publication de votre blog en utilisant le script tools/publish.sh"
 
-#: makefly:756
+#: makefly:806
 msgid "same as clean + compile commands"
 msgstr "identique aux commandes clean + compile"
 
-#: makefly:760
+#: makefly:810
 msgid "create a new post"
 msgstr "créer un nouvel article"
 
-#: makefly:764
+#: makefly:814
 msgid "same as 'list'"
 msgstr "identique à 'list'"
 
-#: makefly:768
+#: makefly:818
 msgid "same as 'add'"
 msgstr "identique à 'add'"
 
-#: makefly:772
+#: makefly:822
 msgid "make a backup from your blog"
 msgstr "créer une sauvegarde de votre blog"
 
-#: makefly:780
+#: makefly:830
 msgid "will update all DB files with given [url]"
 msgstr "va mettre à jour tous les fichiers DB avec l'URL donnée"
 
-#: makefly:784
+#: makefly:834
 msgid "will copy 'base' theme to the new one given with [name]"
 msgstr "va copier le thème 'base' vers un nouveau nommé [name]"
 
-#: makefly:788
+#: makefly:838
 msgid "give current program version"
 msgstr "donne la version actuelle du programme"
 
-#: makefly:792
+#: makefly:842
 msgid "generate the documentation in 'doc' directory"
 msgstr "génère la documentation dans le répertoire 'doc'"
 
-#: makefly:796
+#: makefly:846
 msgid "generate the weblog"
 msgstr "génère le blog"
 
-#: makefly:830
+#: makefly:880
 #, python-format
 msgid "'%s' option not found!"
 msgstr "Option '%s' non trouvée !"

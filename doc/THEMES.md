@@ -297,6 +297,8 @@ Pay attention that some other ones are located in the template main directory fo
   * **isso\_declaration.tmpl**: HTML code that declares the ISSO javascript in our weblog. Commonly placed in the footer. Replace ISSO\_SCRIPT variable in templates.
   * **isso.short.tmpl**: usually used on homepage to only display number of comment using ISSO comment system. Replace ISSO\_SHORT variable in templates.
   * **isso.extended.tmpl**: usually used on each post to display comments using ISSO comment system. Replace ISSO\_EXTENDED variable in templates.
+  * **sh\_declaration.tmpl**: HTML code that declares the ISSO javascript in our weblog. Commonly placed in the footer. Replace SH\_SCRIPT variable in templates.
+  * **sh\_css\_declaration.tmpl**: CSS HTML declaration used in header for SyntaxHighlighter system. Replace SH\_CSS\_DECLARATION variable in templates.
 
 ### More explanation
 

@@ -376,13 +376,20 @@ Here is some options you can change:
   * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is rave.depotoi.re which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://posativ.org/isso/docs/install/ "Go to isso webpage for more information").
   * ISSO\_URL (optional): Define a ISSO server on which send comments. For example **rave.depotoi.re/pseudo**. Warning: don't use **http://** behind the address. It permits to keep to have http or https when needed.
   * ISSO\_MAX (optional): Define a limit for displayed comments for ISSO comment system. By default **3**.
-  * ELI\_USER: If set, this activate a badge for identica. Note that your theme should support ELI widget. By default this functionality use IDENTICA's API.
+  * ELI\_USER: If set, this activates a badge for identica. Note that your theme should support ELI widget. By default this functionality use IDENTICA's API.
   * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on IDENTICA. By default "user".
   * ELI\_MAX (optional): Permit to choose how many statuses to display. On identica, this couldn't bypass the default 20 items. Default value: 5.
   * ELI\_API (optional) : Access to your StatusNet API system.
   * INSTALLDIR : Permit to choose a target directory when using **./${PROJECTNAMELOWER} install** command (Read more in *Publish result to the web* chapter)
   * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
   * AUTO\_EDIT (optionnel) : Allow to edit automatically posts after their creation. Use the EDITOR variable content to know which editor to use.
+  * SH : If set, this activates syntax highlighting for code using:
+
+<pre name="code" class="Xml">
+  <pre name="code" class="Bash">
+    man man
+  </pre>
+</pre>
 
 ## Migrate from Nanoblogger
 
