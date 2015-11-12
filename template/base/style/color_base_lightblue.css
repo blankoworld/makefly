@@ -1,0 +1,122 @@
+/* Place your CSS after this comment */
+/*
+ * dark: 061739
+ * medium: 152b55
+ * normal: 2D4471
+ * light: 4e638e
+ * very light: 7788AA
+ * 
+ */
+
+/* ==========================================================================
+   HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
+   ========================================================================== */
+
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+}
+
+::selection {
+    background: #b3d4fc;
+}
+
+hr {
+    border-top: 1px solid #CCCCCC;
+}
+
+article hr {
+  border-color: #7788AA;
+}
+
+.chromeframe {
+    background: #ccc;
+    color: #000;
+}
+
+pre,
+blockquote {
+    border-left: medium solid #CCC;
+    background-color: #061739;
+    color: #7788AA;
+}
+
+pre {
+    border: thin solid #7788AA;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #061739;
+}
+
+a {
+  color: #152b55;
+  text-decoration: underline;
+}
+
+a:hover {
+  background-color: #061739;
+  color: #CCCCCC;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+#content {
+  background-color: transparent;
+}
+
+#content article {
+  border: 1px solid transparent;
+  background-color: #4e638e;
+}
+
+/* ==========================================================================
+   Universal page
+   ========================================================================== */
+
+html {
+  background-color: #2D4471;
+  color: #3C3A47;
+}
+
+body {
+  color: #112233;
+  background-color: #7284A9;
+  border: 1px solid #4e638e;
+  border-right: 3px solid #4e638e;
+  border-bottom: 3px solid #4e638e;
+}
+
+article header h1 {
+  background: none;
+}
+
+body.posts #content, body.tags #content, body.about #content, body.page #content {
+  border: 1px solid transparent;
+  background-color: #7788AA;
+}
+
+aside#navigation {
+  background-color: #4e638e;
+}
+
+#eli_widget article {
+  border-color: #999;
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.ir {
+    background-color: transparent;
+}
