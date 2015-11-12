@@ -364,7 +364,7 @@ Le fichier contient quelques informations obligatoires comme :
 
   * **CSS\_NAME**: nom du template. Par exemple *Minisch 2.4*
   * **CSS\_FILE**: fichier CSS principal du template. Il devrait être contenu dans le dossier '*template/votreTemplate/style/*'. Exemple : *main\_minisch.css*
-  * **CSS\_COLOR\_FILE**: Couleurs particulières du template. Ceci veut dire que vous pouvez avoir plus qu'une couleur pour votre template en donnant simplement plusieurs fichiers CSS. All les fichiers CSS doivent être placés dans le dossier '*template/votreTemplate/style/*'. Par exemple : *color\_minisch\_light.css*
+  * **CSS\_COLOR\_FILE**: Couleurs particulières du template. Ceci veut dire que vous pouvez avoir plus qu'une couleur pour votre template en donnant simplement plusieurs fichiers CSS. Tous les fichiers CSS doivent être placés dans le dossier '*template/votreTemplate/style/*'. Par exemple : *color\_minisch\_light.css*
 
 et quelques autres optionnelles : 
 
