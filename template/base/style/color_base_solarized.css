@@ -15,11 +15,7 @@ textarea {
 }
 
 hr {
-    border-top: 1px solid #CCCCCC;
-}
-
-article hr {
-  border-color: #7788AA;
+    border-top: 1px solid #586e75;
 }
 
 .chromeframe {
@@ -29,27 +25,21 @@ article hr {
 
 pre,
 blockquote {
-    border-left: medium solid #CCC;
-    background-color: #061739;
-    color: #7788AA;
+    border-left: medium solid #93a1a1;
+    background-color: #fdf6e3;
+    color: #657b83;
 }
 
 pre {
-    border: thin solid #7788AA;
+    border: thin solid #93a1a1;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #061739;
+  color: #657b83;
 }
 
 a {
-  color: #152b55;
-  text-decoration: underline;
-}
-
-a:hover {
-  background-color: #061739;
-  color: #CCCCCC;
+  color: #073642;
 }
 
 /* ==========================================================================
@@ -62,7 +52,7 @@ a:hover {
 
 #content article {
   border: 1px solid transparent;
-  background-color: #4e638e;
+  background-color: #eee8d5;
 }
 
 /* ==========================================================================
@@ -70,16 +60,16 @@ a:hover {
    ========================================================================== */
 
 html {
-  background-color: #2D4471;
-  color: #3C3A47;
+  background-color: #eee8d5;
+  color: #657b83;
 }
 
 body {
-  color: #112233;
-  background-color: #7284A9;
-  border: 1px solid #4e638e;
-  border-right: 3px solid #4e638e;
-  border-bottom: 3px solid #4e638e;
+  color: #657b83;
+  background-color: #fdf6e3;
+  border: 1px solid #93a1a1;
+  border-right: 3px solid #93a1a1;
+  border-bottom: 3px solid #93a1a1;
 }
 
 article header h1 {
@@ -88,11 +78,11 @@ article header h1 {
 
 body.posts #content, body.tags #content, body.about #content, body.page #content {
   border: 1px solid transparent;
-  background-color: #7788AA;
+  background-color: #eee8d5;
 }
 
 aside#navigation {
-  background-color: #4e638e;
+  background-color: #eee8d5;
 }
 
 #eli_widget article {
