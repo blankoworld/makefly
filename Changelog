@@ -1,5 +1,9 @@
 Current version (0.4.1-trunk)
+	- New flavor for BASE theme/template: lightblue, solarized and darkside
 	- Upgrade to an ELI version that supports Location and Post time displays
+	- Add new SyntaxHighlighter to colorize code in posts
+	- Fix missing AGPL License in some files
+	- New documentation about making static website
 	- Fix missing space replacements for tag pages
 	- Add some command line variables so that the project can be launched from 
 	another repository
