@@ -126,8 +126,8 @@ Donc créez le fichier **template/monochromed/config.mk** avec ce contenu :
 
 ce qui implique de créer deux fichiers : 
 
-  * template/monochromed/style/main_monochromed.css : toutes les règles CSS communes pour notre template/thème
-  * template/monochromed/style/color_monochromed_light.css : seulement conseillé pour une version colorée de votre template afin que vous puissiez créer plusieurs versions
+  * template/monochromed/style/main\_monochromed.css : toutes les règles CSS communes pour notre template/thème
+  * template/monochromed/style/color\_monochromed\_light.css : seulement conseillé pour une version colorée de votre template afin que vous puissiez créer plusieurs versions
 
 Pour l'instant créez simplement les fichiers. Vous migrerez les règles CSS plus tard.
 

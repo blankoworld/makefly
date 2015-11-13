@@ -390,7 +390,7 @@ Here is some options you can change:
   * POSTDIR\_NAME: The name you want to be displayed in URL when a user go to post list. For an example, if you set it to "myposts": ${PROJECTURL}myposts/ will display all you posts. This is useful for others languages.
   * TAGDIR\_NAME: Same behaviour as POSTDIR\_NAME, but for tags. Change it to "mytags" for an example, and you will have URLs like this: ${PROJECTURL}mytags/ to display tag list.
   * THEME: Name of the theme you want to be used. All themes are available in **template** directory. Each theme have its own directory. For an example, "default" theme have its **template/default** directory.
-  * FLAVOR: This name will be used to select a color from your theme (if exists)
+  * FLAVOR: This name will be used to select a color from your theme (if exists). For an example in BASE theme you have a stylesheet named color\_base\_lightblue.css. Set FLAVOR value to **lightblue**, THEME value to **base** and recompile : your blog is now blue !
   * BACKUPDIR: Name of directory where *backup* command will save all files.
   * BACKUP\_FORMAT: Date format that would be used for the backup file.
   * BACKUP\_PREFIX: prefix used for the backup file between the date and the filename.

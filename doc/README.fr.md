@@ -391,7 +391,7 @@ Voici quelques options que vous pouvez changer :
   * POSTDIR\_NAME : Le nom que vous voudriez afficher dans l'URL quand un utilisateur se rend sur la page de la liste des articles. Par exemple, param&eacute;tr&eacute; &agrave; "mesarticles" : ${PROJECTURL}mesarticles/ affichera la liste de vos articles. Ceci est utile pour divers langages.
   * TAGDIR\_NAME : M&ecirc;me chose que pour le param&egrave;tre *POSTDIR\_NAME*, mais pour les mots-cl&eacute;s (tags) cette fois. Modifiez le en "motcle" par exemple et l'adresse suivante affichera la liste des mots-cl&eacute;s : ${PROJECTURL}motcle/.
   * THEME : Nom du th&egrave;me choisi. Les th&egrave;mes sont disponibles dans le dossier nomm&eacute; **template**. Chaque th&egrave;me poss&egrave;de son propre r&eacute;pertoire. Par exemple, le th&egrave;me *default* poss&egrave;de son propre r&eacute;pertoire **template/default**.
-  * FLAVOR: Ce nom sera utilis&eacute; pour choisir la couleur de votre th&egrave;me (si elle existe)
+  * FLAVOR: Ce nom sera utilis&eacute; pour choisir la couleur de votre th&egrave;me (si elle existe). Par exemple dans le thème BASE, vous avez une feuille de style nommée color\_base\_lightblue.css. Mettez la valeur de FLAVOR à **lightblue**, la valeur de THEME à **base** et recompilez : votre blog est en bleu !
   * BACKUPDIR : Nom du dossier o&ugrave; seront sauv&eacute;s les fichiers r&eacute;sultant de la commande *backup*.
   * BACKUP\_FORMAT : Format de date utilis&eacute; pour le fichier de sauvegarde.
   * BACKUP\_PREFIX : pr&eacute;fixe utilis&eacute; pour le fichier de sauvegarde (entre la date et le nom de fichier).
