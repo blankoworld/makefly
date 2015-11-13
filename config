@@ -1,4 +1,4 @@
-VERSION = 0.4
+VERSION = 0.4.1-trunk
 tmpldir = template
 bindir = bin
 srcdir = src

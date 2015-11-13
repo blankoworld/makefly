@@ -1,0 +1,108 @@
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+}
+
+::selection {
+    background: #b3d4fc;
+}
+
+hr {
+    border-top: 1px solid #93a1a1;
+}
+
+.chromeframe {
+    background: #ccc;
+    color: #000;
+}
+
+pre,
+blockquote {
+    border-left: medium solid #586e75;
+    background-color: #002b36;
+    color: #839496;
+}
+
+pre {
+    border: thin solid #586e75;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #839496;
+}
+
+a {
+  color: #eee8d5;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+#content {
+  background-color: transparent;
+}
+
+#content article {
+  border: 1px solid transparent;
+  background-color: #073642;
+}
+
+/* ==========================================================================
+   Universal page
+   ========================================================================== */
+
+html {
+  background-color: #073642;
+  color: #839496;
+}
+
+body {
+  color: #839496;
+  background-color: #002b36;
+  border: 1px solid #586e75;
+  border-right: 3px solid #586e75;
+  border-bottom: 3px solid #586e75;
+}
+
+article header h1 {
+  background: none;
+}
+
+body.posts #content, body.tags #content, body.about #content, body.page #content {
+  border: 1px solid transparent;
+  background-color: #073642;
+}
+
+aside#navigation {
+  background-color: #073642;
+}
+
+#eli_widget article {
+  border-color: #999;
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.ir {
+    background-color: transparent;
+}
+
+#eli_widget {
+  box-shadow: none;
+  border: 0;
+}
+
+#eli_widget header {
+  background-color: #657b83;
+  border-color: #fdf6e3;
+}

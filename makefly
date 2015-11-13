@@ -1,4 +1,44 @@
-#!/usr/bin/env lua
+#!/bin/sh
+
+_=[[
+	: ${BIN:=$(command -v lua)}
+	if [ -n "$BIN" ]; then
+		"$BIN" -e 'require"os".exit( _VERSION:find(" 5%.1") and 0 or 1)' || BIN=""
+	fi
+	: ${BIN:=$(command -v lua5.1)}
+	: ${BIN:=$(command -v lua-5.1)}
+	: ${BIN:=$(command -v luajit)}
+	exec "$BIN" "$0" "$@"
+	exit $?
+]]
+_=nil
+
+if not _VERSION:find(" 5%.1") then
+	print("WARNING: this version is not compatible with Lua 5.2+")
+	require("os").exit(1)
+end
+
+-------------------------------------------------------------------------------
+-- LICENSE
+--
+-- Makefly, a static weblog engine using Lua
+-- Copyright (C) 2012-2015 DOSSMANN Olivier, <olivier+makefly@dossmann.net>
+--
+-- This file is part of Makefly.
+-- 
+-- Makefly is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU Affero General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+-- 
+-- Makefly is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU Affero General Public License for more details.
+-- 
+-- You should have received a copy of the GNU Affero General Public License
+-- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-------------------------------------------------------------------------------
 
 --[[
 
@@ -20,7 +60,8 @@ PROJECTURL = 'http://makefly.depotoi.re/'
 GITPROJECT = 'https://github.com/blankoworld/makefly/'
 PROJECTNAMELOWER = string.lower(PROJECTNAME)
 
-package.path = package.path .. ";./lib/?.lua"
+currentpath = os.getenv('CURDIR') or '.'
+package.path = package.path .. ";" .. currentpath .. "/?.lua" .. ";./lib/?.lua"
 
 require 'lib.init'
 local utils = require 'lib.utils'
@@ -63,7 +104,7 @@ local function clean(args)
     print(string.format(_('[%s] Missing: %s directory'), display_warning, config.tmppath))
   end
   local docpath = currentpath .. '/' .. config.docdir
-  local docextension = string.gsub(config.PAGE_EXT, '\.(.*)', '%1')
+  local docextension = string.gsub(config.PAGE_EXT, '%.(.*)', '%1')
   local docfiles = utils.listing(docpath, docextension)
   for _, filepath in pairs(docfiles) do
     os.remove(filepath)
@@ -254,7 +295,7 @@ local function doc(args)
     final:push(footer)
     local res = utils.replace(final:flatten(), substitutions)
     -- write result into a file
-    local name = string.gsub(path, "(.*/)(.*)(\.md)", "%2")
+    local name = string.gsub(path, "(.*/)(.*)(%.md)", "%2")
     local filepath = directory .. '/' .. name .. config.PAGE_EXT
     local file = assert(io.open(filepath, 'wb'))
     file:write(res)
@@ -345,6 +386,8 @@ local function initializeReplacements(themerc, languagerc, about_file)
     ELI_CSS = '',
     ELI_CSS_DECLARATION = '',
     ELI_STATUS = '',
+    SH_CSS_DECLARATION = '',
+    SH_SCRIPT = '',
     INTRO_CONTENT = '',
     FOOTER_CONTENT = '',
     ABOUT_LINK = '',
@@ -451,6 +494,25 @@ local function processIsso(threads, themerc, isso_css_file, isso_css_filename)
   return threads
 end
 
+local function processSH(threads)
+  if config.SH and config.SH == '1' then
+    print (string.format(_("[%s] Syntax color system"), display_enable))
+    -- copy SyntaxHighlighter js directory
+    table.insert(threads, coroutine.create(function () utils.copy(config.docpath .. '/js/', config.publicpath .. '/js/') end))
+    -- copy SyntaxHighlighter CSS file
+    table.insert(threads, coroutine.create(function () utils.copyFile(config.docpath .. '/' .. config.sh_cssname, config.publicpath .. '/' .. config.sh_cssname) end))
+    -- SyntaxHighlighter javascript declaration in all pages
+    local template_sh_declaration = utils.readFile(config.page_sh_declaration, 'r')
+    replacements['SH_SCRIPT'] = utils.replace(template_sh_declaration, {BLOG_URL = config.BLOG_URL})
+    -- SyntaxHighlighter css declaration in all pages
+    local template_sh_css_declaration = utils.readFile(config.page_sh_css_declaration, 'r')
+    replacements['SH_CSS_DECLARATION'] = utils.replace(template_sh_css_declaration, replacements)
+  else
+    print (string.format(_("[%s] Syntax color system"), display_disable))
+  end
+  return threads
+end
+
 function processSpecialFiles()
   -- prepare a list of special files
   local special_files = {
@@ -532,7 +594,8 @@ local function processPages(threads, header, footer)
   if pages_result then
     for k,v in pairs(pages_result) do
       local pagetitle = string.match(v, ".+/(.+)%.md")
-      local pagefile = config.publicpath .. '/' .. utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle) .. config.PAGE_EXT
+      local filename = string.gsub(utils.keepUnreservedCharsAndDeleteDuplicate(pagetitle), "%s", "_")
+      local pagefile = config.publicpath .. '/' .. string.lower(filename) .. config.PAGE_EXT
       local co = coroutine.create(function () blog.createPage(v, pagefile, pagetitle, header, footer) end)
       table.insert(threads, co)
     end
@@ -569,12 +632,13 @@ local function setDefaultVariables(configtable)
   configtable.publicpath = currentpath .. '/' .. configtable.destdir
   configtable.templatepath = currentpath .. '/' .. configtable.tmpldir
   configtable.specialpath = currentpath .. '/' .. configtable.specialdir
-  configtable.themepath = configtable.tmpldir .. '/' .. configtable.THEME 
+  configtable.themepath = configtable.templatepath .. '/' .. configtable.THEME 
   configtable.tmppath = currentpath .. '/' .. configtable.tmpdir
   configtable.postpath = configtable.publicpath .. '/' .. configtable.POSTDIR_NAME
   configtable.tagpath = configtable.publicpath .. '/' .. configtable.TAGDIR_NAME
   configtable.staticpath = currentpath .. '/' .. configtable.staticdir
   configtable.pagepath = currentpath .. '/' .. configtable.pagedir
+  configtable.docpath = currentpath .. '/' .. configtable.docdir
   -- files
   configtable.about_filepath = configtable.specialpath .. '/' .. configtable.ABOUT_FILENAME .. configtable.SRC_EXT
   configtable.eli_cssname = 'eli.css'
@@ -609,6 +673,10 @@ local function setDefaultVariables(configtable)
   configtable.page_eli_declaration = configtable.templatepath .. '/' .. 'eli_declaration' .. configtable.TMPL_EXT
   configtable.page_eli_css_declaration = configtable.templatepath .. '/' .. 'eli_css_declaration' .. configtable.TMPL_EXT
   configtable.page_eli_script = configtable.templatepath .. '/' .. 'eli.js'
+  configtable.sh_cssname = 'SyntaxHighlighter.css'
+  configtable.page_sh_css = configtable.docpath .. '/' .. 'SyntaxHighlighter.css'
+  configtable.page_sh_declaration = configtable.templatepath .. '/' .. 'sh_declaration' .. configtable.TMPL_EXT
+  configtable.page_sh_css_declaration = configtable.templatepath .. '/' .. 'sh_css_declaration' .. configtable.TMPL_EXT
   -- change number values
   configtable.MAX_POST = tonumber(configtable.MAX_POST) -- should not be nil
   configtable.MAX_POST_LINES = configtable.MAX_POST_LINES and tonumber(configtable.MAX_POST_LINES) or nil
@@ -674,6 +742,8 @@ local function compile(args)
     end
   end
   threads = processIsso(threads, themerc, isso_css_file, isso_css_filename)
+  -- SyntaxHighlighter system
+  threads = processSH(threads)
   -- Introduction / footer file
   processSpecialFiles()
   -- Create about's page if exists
@@ -782,6 +852,10 @@ commands['compile'] = {
 -- check configuration files
 local config_default = utils.checkConfig(configfile)
 config_default.configurationfile = string.format('%s.rc', PROJECTNAMELOWER)
+local alternative_configurationfile = os.getenv('RC_CONFIG') or nil
+if alternative_configurationfile ~= nil then
+  config_default.configurationfile = alternative_configurationfile
+end
 local config_user = utils.checkConfig(config_default.configurationfile)
 config = utils.mergeConfig(config_default, config_user)
 

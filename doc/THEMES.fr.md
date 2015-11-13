@@ -22,7 +22,9 @@ Rappelez-vous que ce n'est pas difficile, vous avez simplement besoin d'un peu d
 
 Créér un nouveau thème est facile, comme expliqué dans la documentation officielle. Faites simplement : 
 
-    ./${PROJECTNAMELOWER} theme monTheme
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} theme monTheme
+</pre>
 
 où **monTheme** est le nom de votre thème.
 
@@ -44,7 +46,7 @@ Je vous suggère soit de voir une vidéo montrant comment adapter le template Mo
 
 Comme une vidéo est plus parlante qu'un ensemble d'explication, j'ai fait [une vidéo qui vous montre comment chercher/charger/adapter un template existant à ${PROJECTNAME}](${PROJECTURL}monochromed.mkv "Comment adapter un template à ${PROJECTNAME}") (30 MB et 30 minutes approximativement).
 
-NB: Cette vidéo est visionnable avec [VLC media player](https://www.videolan.org/vlc/ "Charger VLC").
+NB : Cette vidéo est visionnable avec [VLC media player](https://www.videolan.org/vlc/ "Charger VLC").
 
 ### Apprendre avec des explications (vous pouvez comparer avec la vidéo)
 
@@ -124,8 +126,8 @@ Donc créez le fichier **template/monochromed/config.mk** avec ce contenu :
 
 ce qui implique de créer deux fichiers : 
 
-  * template/monochromed/style/main_monochromed.css : toutes les règles CSS communes pour notre template/thème
-  * template/monochromed/style/color_monochromed_light.css : seulement conseillé pour une version colorée de votre template afin que vous puissiez créer plusieurs versions
+  * template/monochromed/style/main\_monochromed.css : toutes les règles CSS communes pour notre template/thème
+  * template/monochromed/style/color\_monochromed\_light.css : seulement conseillé pour une version colorée de votre template afin que vous puissiez créer plusieurs versions
 
 Pour l'instant créez simplement les fichiers. Vous migrerez les règles CSS plus tard.
 
@@ -139,7 +141,9 @@ Modifiez simplement votre **makefly.rc** et ajoutez ceci :
 
 Puis réactualisez votre blog : 
 
-    ./makefly refresh
+<pre name="code" class="Bash">
+./makefly refresh
+</pre>
 
 Et vous observerez le résultat dans votre navigateur web en ouvrant **pub/index.html**.
 
@@ -149,27 +153,37 @@ Affichons le titre de notre blog.
 
 Ouvrez le fichier **template/monochromed/header.tmpl** et remplacez ceci : 
 
+<pre name="code" class="Xml">
     <title>Monochromed by TEMPLATED</title>
+</pre>
 
 par ceci : 
 
+<pre name="code" class="Xml">
     <title>${BLOG_TITLE} - ${TITLE}</title>
+</pre>
 
 Et : 
 
+<pre name="code" class="Xml">
     <h1><a href="#">Monochromed</a></h1>
     <span>Design by TEMPLATED</span>
+</pre>
 
 par : 
 
+<pre name="code" class="Xml">
     <h1><a href="${BLOG_URL}">${BLOG_TITLE}</a></h1>
     <span>${BLOG_SHORT_DESC}</span>
+</pre>
 
 En fait nous mettons simplement quelques variables pour que ${PROJECTNAME} fasse des remplacements dans toutes les pages.
 
 Comme précédemment, testez le résultat : 
 
-    ./makefly refresh
+<pre name="code" class="Bash">
+./makefly refresh
+</pre>
 
 Et ouvrez **pub/index.html** dans votre navigateur web.
 
@@ -194,9 +208,11 @@ Cela rendra seulement disponible les billets sur la page d'accueil. Pour avoir c
 
 Ce dont nous sommes habitués à voir dans ${PROJECTNAME} ressemble à : 
 
+<pre name="code" class="Xml">
     <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
     <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
     <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
+</pre>
 
 Vous pouvez adapter le fichier **template/monochromed/header.tmpl** pour intégrer le menu à la place de la balise **nav**.
 
@@ -297,6 +313,8 @@ Faites attention car d'autres fichiers sont situés dans le répertoire principa
   * **isso\_declaration.tmpl** : code HTML qui déclare le javascript d'ISSO dans votre blog. Principalement localisé dans le pied de page. Remplace la variable ISSO\_SCRIPT dans les templates.
   * **isso.short.tmpl** : habituellement utilisé sur la page d'accueil pour seulement afficher le nombre de commentaire en utilisant le système de commentaire ISSO. Remplace la variable ISSO\_SHORT dans les templates.
   * **isso.extended.tmpl** : habituellement utilisé sur chaque billet pour afficher les commentaires utilisant le système de commentaire ISSO. Remplace la variable ISSO\_EXTENDED dans les templates.
+  * **sh\_declaration.tmpl** : code HTML qui déclare le javascript de SyntaxHighlighter dans votre blog. Principalement localisé dans le pied de page. Remplace la variable SH\_SCRIPT dans les templates.
+  * **sh\_css\_declaration** : déclaration HTML du CSS utilisée dans l'entête pour le système de coloration syntaxique. Remplace la variable SH\_CSS\_DECLARATION dans les templates.
 
 ### Plus d'explications
 
@@ -346,7 +364,7 @@ Le fichier contient quelques informations obligatoires comme :
 
   * **CSS\_NAME**: nom du template. Par exemple *Minisch 2.4*
   * **CSS\_FILE**: fichier CSS principal du template. Il devrait être contenu dans le dossier '*template/votreTemplate/style/*'. Exemple : *main\_minisch.css*
-  * **CSS\_COLOR\_FILE**: Couleurs particulières du template. Ceci veut dire que vous pouvez avoir plus qu'une couleur pour votre template en donnant simplement plusieurs fichiers CSS. All les fichiers CSS doivent être placés dans le dossier '*template/votreTemplate/style/*'. Par exemple : *color\_minisch\_light.css*
+  * **CSS\_COLOR\_FILE**: Couleurs particulières du template. Ceci veut dire que vous pouvez avoir plus qu'une couleur pour votre template en donnant simplement plusieurs fichiers CSS. Tous les fichiers CSS doivent être placés dans le dossier '*template/votreTemplate/style/*'. Par exemple : *color\_minisch\_light.css*
 
 et quelques autres optionnelles : 
 

@@ -8,7 +8,7 @@ Isso comment system:
 - tools/migrate_domain_from.sh should be update so that it take 2 params: "from to". From jskomment to jskomment, from jskomment to isso, from isso to isso, etc.
 
 Version 0.4.1:
-- replace space (and other special chars) by '_' for pages (static pages) name. Use filename as HTML page's title, but replace space for HTML file. Example: "Another essay.md" should give "Another essay" as title but "another_essay.html" as filename.
+- FIX: When a post have a variable like ${PROJECTNAME} it's not displayed in output. Exemple: New post, Welcome to ${PROJECTNAME}
 - add 2 pages "about.md" for each language and adapt the prepare-new-version to use the right one into the final archive
 
 Tests:
