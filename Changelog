@@ -1,4 +1,5 @@
 Current version (0.4.1-trunk)
+	- New documentation about deleting posts and how to change the timestamp
 	- New flavor for BASE theme/template: lightblue, solarized and darkside
 	- Upgrade to an ELI version that supports Location and Post time displays
 	- Add new SyntaxHighlighter to colorize code in posts

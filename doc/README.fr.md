@@ -326,6 +326,37 @@ Dans ${PROJECTNAME} vous pouvez &eacute;crire des billets en avance. Il suffit p
 
 Par exemple nous sommes le 6 mars 2013, &agrave; 12:30, le timestamp est : 1362569400. Il faut que dans le dossier **db**, votre article ait un timestamp inf&eacute;rieur &agrave; celui d'aujourd'hui.
 
+### Supprimer un billet
+
+Pour qu'un billet ne soit plus pr&eacute;sent dans votre blog, il s'agit de supprimer deux fichiers : 
+
+  * le contenu de l'article dans le dossier *src*, par exemple src/mon\_billet.md
+  * les informations de l'article dans le dossier *db*, par exemple db/1362569400,mon\_billet.mk
+
+Puis relancez la compilation de votre blog &agrave; l'aide de la commande suivante : 
+
+    ${PROJECTNAMELOWER} refresh
+
+### Changer la date d'un billet
+
+Les informations d'un billet se trouvent dans le dossier **db**. Prenons comme exemple le billet donc les informations sont : *db/1362569400,mon\_billet.mk*. La date du billet est sous la forme d'un timestamp, ici *1362569400*. Pour conna&icirc;tre la date correspondante, vous pouvez taper la commande suivante : 
+
+    date -d '@1362569400'
+
+Ce qui donne le 6 mars 2013 à 12h30.
+
+Imaginez que vous vouliez changer la date pour le 12 mars 2013 à 13h00. Pour conna&icirc;tre le timestamp &agrave; utiliser, il faudrait utiliser la commande suivante : 
+
+    date -d '2013/03/12 13:00:00' +'%s'
+
+Ce qui donne : *1363089600*.
+
+Il nous suffit donc de d&eacute;placer le fichier contenant les informations du billet &agrave; l'aide de la commande suivante : 
+
+    mv db/1362569400,mon_billet.mk db/1363089600,mon_billet.mk
+
+Rien de plus.
+
 ### &Eacute;crire directement le contenu de l'article &agrave; sa cr&eacute;ation
 
 Utilisez juste la variable 'content' au d&eacute;but de la commande : 

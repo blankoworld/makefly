@@ -326,6 +326,37 @@ In ${PROJECTNAME} you can publish early posts. To do that metadata file should h
 
 For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 1362569400. Your post (situated in the **db** directory) have to have a timestamp inferior to current's one (1362569400).
 
+### Delete a post
+
+For a post not to stay on your blog you need to delete two files:
+
+  * post's content in *src* directory, for an example src/my\_post.md
+  * post's metadata in *db* directory, for an example db/1362569400,my\_post.mk
+
+Then relaunch blog compilation by using this command:
+
+    ${PROJECTNAMELOWER} refresh
+
+### Change post's date
+
+Post metadata are located in *db* directory. We take *db/1362569400,mon\_billet.mk* file as an example. Post's date is under a timestamp format. *1362569400* for now. To know the related date, tape the following command:
+
+    date -d '@1362569400'
+
+Which gives 2013, Wednesday, March the 6th. 1h30 PM.
+
+Imagine that you would change the date for 2013, March, the 12th. 1h00 PM. To know which timestamp to use, you need to use the following command:
+
+    date -d '2013/03/12 13:00:00' +'%s'
+
+Which gives: *1363089600*.
+
+We just have to move the metadata file with the following command:
+
+    mv db/1362569400,my_post.mk db/1363089600,my_post.mk
+
+Nothing else.
+
 ### Write directly the post's content during its creation
 
 Just use the 'content' variable at the beginning of the command:
