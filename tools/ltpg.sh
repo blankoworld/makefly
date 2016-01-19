@@ -9,14 +9,16 @@
 ###
 
 # Makefly, a static weblog engine using Lua
-# Copyright (C) 2012 DOSSMANN Olivier
+# Copyright (C) 2012-2015 DOSSMANN Olivier, <olivier+makefly@dossmann.net>
+#
+# This file is part of Makefly.
 # 
-# This program is free software: you can redistribute it and/or modify
+# Makefly is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# This program is distributed in the hope that it will be useful,
+# Makefly is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Affero General Public License for more details.
@@ -721,7 +723,7 @@ IFS="\\"
 
 for ((i = 0; i <= $max; i += 1))
 do
-  timestamp=$(($now+$i))
+  timestamp=$(($now-$i))
   TITLE="post_${timestamp}"
   DATE=`date -d "@${timestamp}" +'%Y-%m-%d'`
   DBDIR=${DBDIR} SRCDIR=${SRCDIR} ./create_post.sh -q < <(echo ${AUTHOR}; echo ${TITLE}; echo ${DESC}; echo ${DATE}; echo ${TAGS}; echo ${TYPE}) && echo -e ${CONTENT} > ${SRCDIR}/post_${timestamp}.md || exit 1

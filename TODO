@@ -4,20 +4,12 @@ TODO:
 Isso comment system:
 
 - develop a code that permit to choose between ISSO OR DISQUS
-- upgrade documentation:
-  - delete links to appspot.com
-  - delete useless variables
 - make a tutorial?
 - tools/migrate_domain_from.sh should be update so that it take 2 params: "from to". From jskomment to jskomment, from jskomment to isso, from isso to isso, etc.
 
-Version 0.3.1:
-- add documentation for static pages directory (in PAGES directory)
-- replace space (and other special chars) by '_' for pages (static pages) name. Use filename as HTML page's title, but replace space for HTML file. Example: "Another essay.md" should give "Another essay" as title but "another_essay.html" as filename.
+Version 0.4.1:
+- FIX: When a post have a variable like ${PROJECTNAME} it's not displayed in output. Exemple: New post, Welcome to ${PROJECTNAME}
 - add 2 pages "about.md" for each language and adapt the prepare-new-version to use the right one into the final archive
-- add same thing for a static pages in pages directory with a "article_test.md" to show how it works. In the content explain to the user that it could edit this pages and add new ones but that it have to create link to this page… It's a trick, not a functionnality to be often use!
-
-Version 0.4:
-Nothing
 
 Tests:
 - test: backup

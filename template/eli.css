@@ -1,5 +1,6 @@
 #eli_widget {
 width: 250px;
+height: auto;
 margin: 0;
 padding: 0;
 border: thin solid #eee;
@@ -33,4 +34,28 @@ display: block;
 margin-bottom: 5px;
 padding: 5px;
 border-bottom: thin solid #eeeeee;
+overflow: hidden;
+}
+
+#eli_widget article img {
+margin: 5px;
+max-width: 230px;
+}
+
+#eli_widget article p {
+margin-top: 0px;
+}
+
+.tooltip {position: relative;}
+.tooltip span {display: none;}
+.tooltip:hover span {
+display: block;
+position: absolute;
+left: 0; top: 10%;
+margin: 20px 0 0;
+width: 200px;
+color: #4D4D4C;
+border: thin solid #eeeeee;
+padding: 4px;
+background: white;
 }

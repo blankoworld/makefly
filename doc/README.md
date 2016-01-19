@@ -25,26 +25,30 @@ It gives these functionnalities:
   * quick theme creation
   * Nanoblogger posts migration (Cf. **Migrate from Nanoblogger** section)
 
-# Installation
+**Note** : ${PROJECTNAME} was not designed to create, edit and delete posts. Even if it offers a script that make new post we suggest you to turn to other projects like [Hymby](https://github.com/blankoworld/hymby) (in development).
 
-## Briefly
+## Installation
+
+### Briefly
 
 In some short steps, here is how to install the last version (current development):
 
-    sudo apt-get install lua5.1 lua-filesystem
-    curl ${GITPROJECT}archive/master.zip
-    unzip master.zip
-    cd makefly-master
-    cp ${PROJECTNAMELOWER}.rc.example ${PROJECTNAMELOWER}.rc
-    ./${PROJECTNAMELOWER} clean && ./${PROJECTNAMELOWER} compile
+<pre name="code" class="Bash">
+sudo apt-get install lua5.1 lua-filesystem
+curl ${GITPROJECT}archive/master.zip
+unzip master.zip
+cd makefly-master
+cp ${PROJECTNAMELOWER}.rc.example ${PROJECTNAMELOWER}.rc
+./${PROJECTNAMELOWER} clean && ./${PROJECTNAMELOWER} compile
+</pre>
 
 You should have an action list done on your computer. And result is available in **pub directory**.
 
-## Detailed
+### Detailed
 
 If you achieve the **Briefly** step, go to **Use it!** section.
 
-### Dependencies
+#### Dependencies
 
 Some programs on which ${PROJECTNAME} depends: 
 
@@ -53,20 +57,24 @@ Some programs on which ${PROJECTNAME} depends:
 
 So use your distribution package manager to install them. For an example on Debian and derivated, it would be:
 
-    apt-get install lua5.1 lua-filesystem
+<pre name="code" class="Bash">
+apt-get install lua5.1 lua-filesystem
+</pre>
 
 For other distribution, please have a look on your distribution's forum/IRC/community. They will enjoy helping you.
 
-### Others methods to install dependancies
+#### Others methods to install dependancies
 
 If your distribution doesn't have the *lua-filesystem* package, you can attempt to install **luarocks** then install dependancies as:
 
-    sudo apt-get install luarocks
-    luarocks install lua-filesystem
+<pre name="code" class="Bash">
+sudo apt-get install luarocks
+luarocks install lua-filesystem
+</pre>
 
 That's all!
 
-### Installation
+#### Installation
 
 There is 2 ways to install ${PROJECTNAME} on your computer:
 
@@ -80,25 +88,25 @@ So you just have to:
 
 And ${PROJECTNAME} is installed.
 
-### Configuration
+#### Configuration
 
-#### Stable version
+##### Stable version
 
 No special configuration required. Check that **${PROJECTNAMELOWER}.rc** file is present. Otherwise copy **${PROJECTNAMELOWER}.rc.example** file or rename it to **${PROJECTNAMELOWER}.rc**.
 
-#### Trunk version
+##### Trunk version
 
 The first time you use ${PROJECTNAME} you don't have any configuration file. An example is available in *${PROJECTNAMELOWER}.rc.example*. Copy it to **${PROJECTNAMELOWER}.rc** to permit ${PROJECTNAME} to work.
 
-#### More info
+##### More info
 
 For more information please read **The ${PROJECTNAMELOWER}.rc configuration file** section.
 
-# Use it!
+## Use it!
 
 **By default the content of the blog is located in the pub directory**.
 
-## In brief
+### In brief
 
 Some useful commands:
 
@@ -107,13 +115,15 @@ Some useful commands:
   * **./${PROJECTNAMELOWER} add**: Create a post and add its main metadata
   * **./${PROJECTNAMELOWER} clean**: Trash the entire final directory content and empty the ${PROJECTNAME}'s *cache*.
 
-## Create content
+### Create content
 
-### Create a new post
+#### Create a new post
 
 Use this command:
 
-    ./${PROJECTNAMELOWER} add
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} add
+</pre>
 
 and answer to all given questions. It will generate some files needed by ${PROJECTNAME}.
 
@@ -121,7 +131,7 @@ Note that ${PROJECTNAME} use the [markdown format](http://daringfireball.net/pro
 
 **Don't forget to edit the file that the './${PROJECTNAMELOWER} add' command return.**
 
-### Static content (pictures, videos, PDF files, etc.)
+#### Static content (pictures, videos, PDF files, etc.)
 
 Sometimes you want to share some files as photos, demonstration, shows, etc. *static* directory exists for this kind of use. Each file that is in this directory will be copied in the result directory.
 
@@ -132,7 +142,7 @@ Example:
 
 It works for each kind of file in this *static* directory.
 
-### Static pages
+#### Static pages
 
 Sometimes you'd prefer to add **static** pages,  for an example legal notices.
 
@@ -143,9 +153,15 @@ Example:
   * We created *pages/notices.md* file
   * After blog's compilation: *pub/mentions.html* file exists
 
-This allow you to create a full website only with static pages.
+This allow you to create a website with static pages.
 
-### The 'special' directory
+Note 1: Page result's name will be in lower case and will replace spaces with underscore (*_* char).
+
+Note 2: No dynamic link will be make to static page. You will need to modify template yourself to include a link to the static page. Cf. *Template ' structure* section.
+
+To learn more about static page I invite you to [read documentation about static pages creation](${PROJECTURL}/static.html.en "Read more about entirely static website without blog function.")
+
+#### The 'special' directory
 
 This one is named **special** because it can contain some file you have to create in order to activate a functionality:
 
@@ -154,23 +170,27 @@ This one is named **special** because it can contain some file you have to creat
   * *introduction.md* : Display this file's content as an introduction on all your website's pages. This could change regarding the choosen theme.
   * *footer.md* : Display this file's content as a footer on all your website's pages. This could change regarding the choosen theme.
 
-## Produce the blog
+### Produce the blog
 
 After having created *${PROJECTNAMELOWER}.rc* (from ${PROJECTNAMELOWER}.rc.example) and having created some posts, just do this:
 
-    ./${PROJECTNAMELOWER} compile
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} compile
+</pre>
 
 It will generate a ${PROJECTNAME} weblog to the **pub** directory (default directory).
 
-# Publish result to the web
+## Publish result to the web
 
 The result is compatible with all HTML servers. In fact you could probably use result with your website provider. You just have to upload all files from **pub** directory to your provider's web directory.
 
-## From a webserver
+### From a webserver
 
 If you launch ${PROJECTNAME} on you own server or probably on provider ' server, you should be capable to use **install** script automation. Just launch it as:
 
-    ./${PROJECTNAMELOWER} install
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} install
+</pre>
 
 ...and it will copy all files to **~/public\_html** directory.
 
@@ -182,7 +202,7 @@ If you launch ${PROJECTNAME} on you own server or probably on provider ' server,
 
 Then relaunch `./${PROJECTNAMELOWER} refresh && ./${PROJECTNAMELOWER} install` to recompile and reinstall the weblog.
 
-## To a remote computer: *publish* command
+### To a remote computer: *publish* command
 
 To publish your blog to a remote computer you have to:
 
@@ -199,29 +219,37 @@ Note that **PUBLISH\_DESTINATION** looks like:
 
 Once having complete this variable in **${PROJECTNAMELOWER}.rc** file, just launch:
 
-    ./${PROJECTNAMELOWER} publish
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} publish
+</pre>
 
 For developers: You can also edit **tools/publish.sh** file and change script content to you own code.
 
-# Create a new theme
+## Create a new theme
 
 To make easier the theme creation you can use this command:
 
-    ./${PROJECTNAMELOWER} theme myTheme
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} theme myTheme
+</pre>
 
 where **myTheme** is to replace by your own theme name.
 
-Note: This exploit a theme called *Base* as example.
+Note: This exploits a theme called *Base* as example.
 
-# Translation
+For template designer have a look here: [Themes documentation](${PROJECTURL}/themes.html.en "Read more about making template for ${PROJECTNAME}").
+
+## Translation
 
 A simple way to translate ${PROJECTNAME} to your language is to copy the **lang/translate.en** file to another translation file. For an example, for french (with fr code), you can copy **lang/translate.en** to **lang/translate.fr** and change values. Then just change *BLOG\_LANG* option in **${PROJECTNAMELOWER}.rc** file.
 
-# Backup
+## Backup
 
 Perhaps would you backup some important files in ${PROJECTNAME}? It's possible via **backup command**. Just launch it like this:
 
-    ./${PROJECTNAMELOWER} backup
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} backup
+</pre>
 
 Requirements:
 
@@ -239,7 +267,7 @@ Files saved:
 
 Result: This will create a *tarball* named *YYYYmmdd-HM\_${PROJECTNAMELOWER}.tar.gz* in **mbackup** directory (for an example 20120823-1732\_${PROJECTNAMELOWER}.tar.gz). You can so backup your ${PROJECTNAME} each day for an example.
 
-## Tip
+### Tip
 
 You can customize (in your **${PROJECTNAMELOWER}.rc** file):
 
@@ -248,46 +276,127 @@ You can customize (in your **${PROJECTNAMELOWER}.rc** file):
   * the suffix of the name by using **BACKUP\_SUFFIX** option
   * the date format using **BACKUP\_FORMAT** option
 
-# Sources
+## Play with the command line
+
+Knowing that ${PROJECTNAME} works the following way:
+
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} help
+</pre>
+
+and use some configuration file as **config** and **${PROJECTNAMELOWER}**.rc, we can play with some variables.
+
+For an example:
+
+<pre name="code" class="Bash">
+LANG=fr_FR.UTF-8 ./${PROJECTNAMELOWER} help
+</pre>
+
+Which permits to change the output language in French.
+
+This way you have the following variables:
+
+  * CURDIR : ${PROJECTNAME} directory path. Permit to launch compilation from another directory. By default the current directory.
+  * LANGDIR : directory path that contains translations. By default the **lang** directory from current path.
+  * LANG : language used by the command line. For an example **en_US.UTF-8** of **fr_FR.UTF-8**.
+  * CONFIG : default ${PROJECTNAME} configuration file path. By default the **config** from current directory.
+  * RC_CONFIG : user's configuration file path. By default the **${PROJECTNAMELOWER}**.rc from current directory.
+
+All these params will permit you to create scripts using ${PROJECTNAME}.
+
+## Sources
 
 Sources are available: 
 
-  * [On gitorious](http://gitorious.org/makefly/master.git/)
   * [On github](${GITPROJECT})
 
-# Documentation
+## Documentation
 
 This file is the documentation. You can [read it on github](${GITPROJECT} "Read documentation on Github") or simply generate an HTML file with this command:
 
-    ./${PROJECTNAMELOWER} doc
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} doc
+</pre>
 
-# Tips
+## Tips
 
-## Write post ahead of current's datetime
+### Write post ahead of current's datetime
 
 In ${PROJECTNAME} you can publish early posts. To do that metadata file should have a timestamp superior to current's one when you generate the weblog. 
 
 For an example we are 2013, the 6th march. 12:30:00. The timestamp is : 1362569400. Your post (situated in the **db** directory) have to have a timestamp inferior to current's one (1362569400).
 
-## Write directly the post's content during its creation
+### Delete a post
+
+For a post not to stay on your blog you need to delete two files:
+
+  * post's content in *src* directory, for an example src/my\_post.md
+  * post's metadata in *db* directory, for an example db/1362569400,my\_post.mk
+
+Then relaunch blog compilation by using this command:
+
+    ${PROJECTNAMELOWER} refresh
+
+### Change post's date
+
+Post metadata are located in *db* directory. We take *db/1362569400,mon\_billet.mk* file as an example. Post's date is under a timestamp format. *1362569400* for now. To know the related date, tape the following command:
+
+    date -d '@1362569400'
+
+Which gives 2013, Wednesday, March the 6th. 1h30 PM.
+
+Imagine that you would change the date for 2013, March, the 12th. 1h00 PM. To know which timestamp to use, you need to use the following command:
+
+    date -d '2013/03/12 13:00:00' +'%s'
+
+Which gives: *1363089600*.
+
+We just have to move the metadata file with the following command:
+
+    mv db/1362569400,my_post.mk db/1363089600,my_post.mk
+
+Nothing else.
+
+### Write directly the post's content during its creation
 
 Just use the 'content' variable at the beginning of the command:
 
-    content="my little content" ./${PROJECTNAMELOWER} add
+<pre name="code" class="Bash">
+content="my little content" ./${PROJECTNAMELOWER} add
+</pre>
 
 This will add "my little content" into your new post.
 
-## Do not lost comments when migrating from an old domain to a new one
+### Having a comment system
+
+${PROJECTNAME} have a free beta service called [Rave Comment](http://rave.depotoi.re/) and available for users.
+
+Once registered, you will receive an URL as: **rave.depotoi.re/mypseudo**.
+
+You just have to edit ${PROJECTNAMELOWER}.rc and change these variables:
+
+    ISSO = 1
+    ISSO_URL = rave.depotoi.re/mypseudo
+
+You will so have a comment system on your website.
+
+Note: comments will not be visible on your computer. Only on remote website.
+
+### [deprecated] Do not lost comments when migrating from an old domain to a new one
+
+**Note**: This tip is **deprecated** since 0.4 ${PROJECTNAME} version as it only works with JSKOMMENT system.
 
 When you migrate from **old.domain.tld** to **new.domain.tld**, comments will not appear.
 
 To avoid this problem, just use **migratefrom command** as:
 
-    ./${PROJECTNAMELOWER} migratefrom http://old.domain.tld
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} migratefrom http://old.domain.tld
+</pre>
 
 This will update all your old posts with the old comments' identifier (your old domain) and comments will afressh appear.
 
-# The ${PROJECTNAMELOWER}.rc configuration file
+## The ${PROJECTNAMELOWER}.rc configuration file
 
 Here is some options you can change:
 
@@ -312,7 +421,7 @@ Here is some options you can change:
   * POSTDIR\_NAME: The name you want to be displayed in URL when a user go to post list. For an example, if you set it to "myposts": ${PROJECTURL}myposts/ will display all you posts. This is useful for others languages.
   * TAGDIR\_NAME: Same behaviour as POSTDIR\_NAME, but for tags. Change it to "mytags" for an example, and you will have URLs like this: ${PROJECTURL}mytags/ to display tag list.
   * THEME: Name of the theme you want to be used. All themes are available in **template** directory. Each theme have its own directory. For an example, "default" theme have its **template/default** directory.
-  * FLAVOR: This name will be used to select a color from your theme (if exists)
+  * FLAVOR: This name will be used to select a color from your theme (if exists). For an example in BASE theme you have a stylesheet named color\_base\_lightblue.css. Set FLAVOR value to **lightblue**, THEME value to **base** and recompile : your blog is now blue !
   * BACKUPDIR: Name of directory where *backup* command will save all files.
   * BACKUP\_FORMAT: Date format that would be used for the backup file.
   * BACKUP\_PREFIX: prefix used for the backup file between the date and the filename.
@@ -323,34 +432,42 @@ Here is some options you can change:
   * PUBLISH\_SCRIPT\_NAME: script filename used to send files from **pub** directory to a destination filled in *PUBLISH\_DESTINATION* variable.
   * SEARCH\_BAR: If set to 1, activate a search bar on ${PROJECTNAME}. Note that your theme should support search bar!
   * MAX\_RSS: Max RSS posts that would be fetch from your users.
-  * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is isso.appspot.com which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://posativ.org/isso/docs/install/ "Go to isso webpage for more information") (fr).
-  * ISSO\_URL (optional): Define a ISSO server on which send comments. By default **http://posativ.org/isso/**.
-  * ISSO\_MAX (optional): Define a limit for displayed comments for ISSO comment system. By default **2**.
-  * ELI\_USER: If set, this activate a badge for identica. Note that your theme should support ELI widget. By default this functionality use IDENTICA's API.
-  * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on IDENTICA. By default "user".
-  * ELI\_MAX (optional): Permit to choose how many statuses to display. On identica, this couldn't bypass the default 20 items. Default value: 5.
-  * ELI\_API (optional) : Access to your StatusNet API system.
+  * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is rave.depotoi.re which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://posativ.org/isso/docs/install/ "Go to isso webpage for more information").
+  * ISSO\_URL (optional): Define a ISSO server on which send comments. For example **rave.depotoi.re/pseudo**. Warning: don't use **http://** behind the address. It permits to keep to have http or https when needed.
+  * ISSO\_MAX (optional): Define a limit for displayed comments for ISSO comment system. By default **3**.
+  * ELI\_USER: If set, this activates a badge for StatusNet/GNU Social network. Note that your theme should support ELI widget. By default this functionality use StatusNet/GNU Social's API.
+  * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on StatusNet/GNU Social. By default "user".
+  * ELI\_MAX (optional): Permit to choose how many statuses to display. On StatusNet/GNU Social, this couldn't bypass the default 20 items. Default value: 5.
+  * ELI\_API : Your StatusNet URL. For an example: "https://quitter.se/".
   * INSTALLDIR : Permit to choose a target directory when using **./${PROJECTNAMELOWER} install** command (Read more in *Publish result to the web* chapter)
   * SORT (optional) : Sort posts' list. Use ASC for posts to be from the oldiest to the latest. DESC (default value) sort posts from the latest to the oldiest.
   * AUTO\_EDIT (optionnel) : Allow to edit automatically posts after their creation. Use the EDITOR variable content to know which editor to use.
+  * SH : If set, this activates syntax highlighting for code using:
 
-# Migrate from Nanoblogger
+<pre name="code" class="Xml">
+    <pre name="code" class="Bash">
+    
+    man man
+    </pre>
+</pre>
+
+## Migrate from Nanoblogger
 
 A script that permits to migrate from Nanoblogger exists: [nb2makefly](http://github.com/blankoworld/nb2makefly "Discover nb2makefly").
 
 I guest you to read the [nb2makefly documentation](https://github.com/blankoworld/nb2makefly/blob/master/README.en.md "Read the nb2makefly documentation") to know more about it.
 
-# The project
+## The project
 
-## Description
+### Description
 
 ${PROJECTNAME} is a subproject of [BlogBox](http://blogbox.depotoi.re/ "Read more about BlogBox project") that aims to give user a better way to host a blog at home.
 
-## Website
+### Website
 
 Stay tuned to [${PROJECTNAME} weblog](${PROJECTURL}blog/ "Visit ${PROJECTNAME} official website") to know more about the project.
 
-## Red alert, bug detected!
+### Red alert, bug detected!
 
 You find a bug? Or something goes wrong? Let's go [opening a ticket on Github](${GITPROJECT}issues). It's simple:
 
@@ -367,21 +484,20 @@ You find a bug? Or something goes wrong? Let's go [opening a ticket on Github]($
 
 This take few minutes and permit to improve ${PROJECTNAME}. Thanks -in advance - a lot for your help!
 
-## Development
+### Development
 
 ${PROJECTNAME} is developed in Lua, CSS and HTML.
 
-The code of the software is available in the given repositories:
+The code of the software is available in the given repository:
 
-  * [Gitorious](https://gitorious.org/makefly/ "Go to ${PROJECTNAME}'s project page on Gitorious")
   * [Github](${GITPROJECT} "Go to ${PROJECTNAME}'s project page on Github")
 
-### Tip to fork the project
+#### Tip to fork the project
 
 The project can be duplicated and renamed easily. For that just use the given variable in ${PROJECTNAMELOWER} file:
 
   * PROJECTNAME
-  * PROJECTNAMEURL
+  * PROJECTURL
   * GITPROJECT
 
 Then rename the ${PROJECTNAMELOWER} file to the name given in PROJECTNAME variable, in lower case.
@@ -390,18 +506,18 @@ I suggest you to rename the ${PROJECTNAMELOWER}.svg file to those given in PROJE
 
 Good fork and good luck!
 
-## Docker file
+### Docker file
 
 A Docker file is available to test ${PROJECTNAME}: https://registry.hub.docker.com/u/bl4n/docker-makefly/
 
-## Contact
+### Contact
 
 You can contact me [to this address](mailto:olivier+makefly@dossmann.net "Contact me").
 
-## License
+### License
 
 This software is published under GNU Affero General Public License 3.0.
 
-## Stats
+### Stats
 
 Some stats about project could be found [on Ohloh.net](http://www.ohloh.net/p/makefly "See ohloh's analysis for ${PROJECTNAME} project").

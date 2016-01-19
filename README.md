@@ -6,13 +6,13 @@ Site Web : [http://makefly.depotoi.re/](http://makefly.depotoi.re/) (FR)
 
 It's not recommanded to use this version as it's a development version.
 
-I suggest you to use the [stable version of Makefly](http://makefly.depotoi.re/makefly_0.3.zip "Download Makefly 0.3 stable version") and read [Makefly 0.3 documentation](http://makefly.depotoi.re/documentation.html "Read Makefly 0.3 documentation") to use it.
+I suggest you to use the [stable version of Makefly](http://makefly.depotoi.re/makefly_0.4.zip "Download Makefly 0.4 stable version") and read [Makefly 0.4 documentation](http://makefly.depotoi.re/documentation.html "Read Makefly 0.4 documentation") to use it.
 
 # Aux utilisateurs
 
 Il n'est pas conseillé d'utiliser cette version puisque c'est une version de développement.
 
-Je vous suggère de vous tourner vers [la version stable de Makefly](http://makefly.depotoi.re/makefly_0.3_fr.zip "Télécharger la version stable 0.3 de Makefly") et de lire [la documentation de Makefly 0.3](http://makefly.depotoi.re/documentation.html "Lire la documentation de Makefly 0.3").
+Je vous suggère de vous tourner vers [la version stable de Makefly](http://makefly.depotoi.re/makefly_0.4_fr.zip "Télécharger la version stable 0.4 de Makefly") et de lire [la documentation de Makefly 0.4](http://makefly.depotoi.re/documentation.html "Lire la documentation de Makefly 0.4").
 
 # For those who are interested in the code
 

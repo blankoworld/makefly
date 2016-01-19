@@ -1,6 +1,28 @@
+-------------------------------------------------------------------------------
+-- LICENSE
+--
+-- Makefly, a static weblog engine using Lua
+-- Copyright (C) 2012-2015 DOSSMANN Olivier, <olivier+makefly@dossmann.net>
+--
+-- This file is part of Makefly.
+-- 
+-- Makefly is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU Affero General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+-- 
+-- Makefly is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU Affero General Public License for more details.
+-- 
+-- You should have received a copy of the GNU Affero General Public License
+-- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-------------------------------------------------------------------------------
+
 local blog = { }
 
-local utils = require 'utils'
+local utils = require 'lib.utils'
 
 -------------------------------------------------------------------------------
 -- Read '@filepath' and do substitutions using 'replacements' global table.
@@ -76,7 +98,7 @@ end
 -- @return a string of your page's name and its extension
 -------------------------------------------------------------------------------
 function blog.getPageName(name, extension)
-  local page_base = utils.keepUnreservedCharsAndDeleteDuplicate(name)
+  local page_base = string.gsub(utils.keepUnreservedCharsAndDeleteDuplicate(name), "%s", "_")
   local result = page_base .. extension
   return result
 end
@@ -322,7 +344,7 @@ function blog.createPostForRSS(content, cfg, title, tmstmp, template, data)
     -- Change temporarly locale
     assert(os.setlocale('C'))
     local rss_date = os.date('!%a, %d %b %Y %T GMT', tmstmp) or ''
-    assert(os.setlocale(oslanguage or en_US.utf-8))
+    assert(os.setlocale(oslanguage or en_US.utf-8), string.format(_("The choosen language '%s' is not available. Choose another one. For an example 'en_US.UTF-8'."), oslanguage))
     local rss_post = utils.replace(template, {DESCRIPTION=markdown(content), TITLE=cfg['TITLE'], LINK=rss_post_html_link, DATE=rss_date})
     assert(rss_file:write(rss_post))
     -- close first_posts file
@@ -459,7 +481,7 @@ function blog.createPostIndex(posts, header, footer, template)
   -- sort posts in a given order
   table.sort(posts, function(a, b) return utils.compare_post(a,b, config.SORT) end)
   -- prepare some values
-  local pagination = require "pagination"
+  local pagination = require "lib.pagination"
   local pagin = pagination.new(#posts, config.MAX_PAGE)
   local post_nb = #posts
   local page_number = 0

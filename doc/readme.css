@@ -27,21 +27,29 @@ h1, h2, h3, h4, h5, p {
 }
 h1 {
     font-size: 48px;
+    text-align: center;
 }
 h2 {
     font-size: 36px;
     /* The bottom margin is small. It's designed to be used with gray meta text
      * below a post title. */
     margin: 24px 0 6px;
+    color: lightcoral;
+    text-decoration: underline;
 }
 h3 {
     font-size: 24px;
+    color: green;
+    text-decoration: underline;
 }
 h4 {
     font-size: 21px;
+    color: blue;
+    text-decoration: underline;
 }
 h5 {
     font-size: 18px;
+    text-decoration: underline;
 }
 a {
     color: #0099ff;

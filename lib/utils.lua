@@ -1,8 +1,32 @@
 -------------------------------------------------------------------------------
+-- LICENSE
+--
+-- Makefly, a static weblog engine using Lua
+-- Copyright (C) 2012-2015 DOSSMANN Olivier, <olivier+makefly@dossmann.net>
+--
+-- This file is part of Makefly.
+-- 
+-- Makefly is free software: you can redistribute it and/or modify
+-- it under the terms of the GNU Affero General Public License as published by
+-- the Free Software Foundation, either version 3 of the License, or
+-- (at your option) any later version.
+-- 
+-- Makefly is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty of
+-- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-- GNU Affero General Public License for more details.
+-- 
+-- You should have received a copy of the GNU Affero General Public License
+-- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-------------------------------------------------------------------------------
+-- 
+-------------------------------------------------------------------------------
 -- General utilities.
 -- @author Olivier DOSSMANN
 -- @copyright Olivier DOSSMANN
 -------------------------------------------------------------------------------
+
+local lfs = require "lfs"
 
 --- Split a string using '@sep' separator
 -- @param sep char to split string
@@ -500,7 +524,7 @@ end
 function utils.keepUnreservedChars(string)
   -- In chap 2.3 a list of reserved chars are given. We use this list
   -- and replace them by _
-  local reserved_chars = '[\:\/\?\#\@\!\$\&\'()*+,;=%]\[]'
+  local reserved_chars = "[:/%?#%]%[@!%$&'()%*%+,;=]"
   local res = string.gsub(string, reserved_chars, '_') or string
   return res
 end

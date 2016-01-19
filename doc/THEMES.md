@@ -22,7 +22,9 @@ Remember that this is not difficult, you just need a little bit time to make it.
 
 Create a new theme is easy as explained in the officiel documentation. Just do this:
 
-    ./${PROJECTNAMELOWER} theme myTheme
+<pre name="code" class="Bash">
+./${PROJECTNAMELOWER} theme myTheme
+</pre>
 
 where **myTheme** is the name of your theme.
 
@@ -50,9 +52,13 @@ NB: This video can be seen with [VLC media player](https://www.videolan.org/vlc/
 
 Sometimes, you're a lazy person. And I too. So you prefer taking other people's templates! I so use [a website template](http://templated.co/ "Choose a template on templated.co website").
 
-Let's have a look to this template : [http://templated.co/monochromed](http://templated.co/monochromed "Discover the template called 'monochromed'"). We will use it for our tutorial.
+#### Template download
 
-I download the template, extract it in **template/monochromed** (in ${PROJECTNAMELOWER} directory).
+Let's have a look to this template: [http://templated.co/monochromed](http://templated.co/monochromed "Discover the template called 'monochromed'"). We will use it for our tutorial.
+
+Download the template, extract it in **template/monochromed** (in ${PROJECTNAMELOWER} directory).
+
+#### To do
 
 Then we have 2 tasks so that the template works on ${PROJECTNAME}:
 
@@ -65,21 +71,206 @@ The **second one** is explained in **Template ' structure** section.
 
 But have a look to the following steps to understand a template migration procedure.
 
-First we TODO TODO TODO
+**Note:** Have a look to **template/monochromed** directory for an example of this tutorial.
 
-Then I suggest you to read the following example to understand how to proceed.
+#### What needs each page
 
-TODO
+First open the **template/monochromed/index.html** file with your web browser. You can see the original monochromed template.
 
-TODO: explain the user how to adapt the theme so that it could be used into ${PROJECTNAME}.
+Open then the same file with your favorite editor. Mine is *vim*. But you can open the file with *gedit* or *geany* for an example. You see the file composed of:
 
-TODO
+  * doctype
+  * head content
+  * body content (homepage class)
+
+The last one (body content) have some elements:
+
+  * Header DIV
+  * Main DIV
+  * Sidebar DIV
+  * Footer DIV
+  * Copyright DIV
+
+As explained in **Template 's structure** we need to create a **header.tmpl** and a **footer.tmpl** file. They will be used in all pages in our weblog.
+
+The idea is to get the begining of the page from doctype to this:
+
+    <!-- Main -->
+      <div id="main">
+        <div class="container">
+
+and to put it into **template/monochromed/header.tmpl** file.
+
+Then get the last 2 DIV from the container DIV to the end of the file and put it into **template/monochromed/footer.tmpl**.
+
+#### Static directory
+
+Each template need a static directory in which you will put some pictures/images, javascript files, etc.
+
+In our example, do this:
+
+  * create static directory in **template/monochromed/static**
+  * copy **css**, **images** and **js** directory into **static** one
+
+It's time to configure our template.
+
+#### config.mk file
+
+As explained in next chapters, **config.mk** file gives some information about your new template/theme.
+
+So create **template/monochromed/config.mk** file with this content:
+
+    CSS_NAME = Monochromed
+    CSS_FILE = main_monochromed.css
+    CSS_COLOR_FILE = color_monochromed_light.css
+
+which implies to create two files:
+
+  * template/monochromed/style/main\_monochromed.css: all common CSS rules for your template/theme
+  * template/monochromed/style/color\_monochromed\_light.css: only recommanded for a color version of your template so that you can create multiple versions
+
+For now, just create the files. You will move all CSS rules later.
+
+#### Test the result
+
+What's about testing the result?
+
+Just modify your **makefly.rc** and add this:
+
+    THEME = monochromed
+
+Then refresh your blog:
+
+<pre name="code" class="Bash">
+./makefly refresh
+</pre>
+
+And you will see the result in your web browser by opening **pub/index.html**.
+
+#### Hey, I want to display the title!
+
+Let's display our blog title.
+
+Open **template/monochromed/header.tmpl** file and replace this:
+
+<pre name="code" class="Xml">
+    <title>Monochromed by TEMPLATED</title>
+</pre>
+
+by this:
+
+<pre name="code" class="Xml">
+   <title>${BLOG_TITLE} - ${TITLE}</title>
+</pre>
+
+And:
+
+<pre name="code" class="Xml">
+    <h1><a href="#">Monochromed</a></h1>
+    <span>Design by TEMPLATED</span>
+</pre>
+
+by:
+
+<pre name="code" class="Xml">
+    <h1><a href="${BLOG_URL}">${BLOG_TITLE}</a></h1>
+    <span>${BLOG_SHORT_DESC}</span>
+</pre>
+
+In fact we just place some variables so that ${PROJECTNAME} makes replacements in all pages.
+
+As previously, test the result:
+
+<pre name="code" class="Bash">
+./makefly refresh
+</pre>
+
+And open **pub/index.html** in your web browser.
+
+#### Where are posts?
+
+See **template/monochromed/onecolumn.html** with your editor. The template give us a row containing a "No sidebar" post that takes all the width.
+
+So take the content of **row** DIV (```<div class="row">```) and put it into **template/monochromed/article.index.tmpl** file.
+
+Then add some variables to display your posts (you can see the result in **template/monochromed/article.index.tmpl**):
+
+  * POST\_TITLE
+  * POST\_DESCRIPTION
+  * POST\_FILE
+  * POSTDIR\_NAME
+  * POST\_TYPE
+  * POST\_CONTENT
+
+This will only make posts available on homepage. To have each post create the **template/monochromed/article.tmpl**. You can copy the **template/monochromed/article.index.tmpl** file instead. As explained in **Template ' structure** section, *article.index.tmpl* is used by homepage and *article.tmpl* by each single post. So just adapt them as your needs.
+
+#### Main menu
+
+What we are used to see in ${PROJECTNAME} looks like:
+
+<pre name="code" class="Xml">
+    <li><a href="${BLOG_URL}">${HOME_TITLE}</a></li>
+    <li><a href="${BLOG_URL}/${POSTDIR_NAME}/${POSTDIR_INDEX}">${POST_LIST_TITLE}</a></li>
+    <li><a href="${BLOG_URL}/${TAGDIR_NAME}/${TAGDIR_INDEX}">${TAG_LIST_TITLE}</a></li>${ABOUT_LINK}
+</pre>
+
+You can adapt the **template/monochromed/header.tmpl** file to integrate the menu in place of **nav** tag.
+
+Note that the ABOUT\_LINK variable needs the **template/monochromed/menu.about.tmpl** file. Copy those from *template/base/menu.about.tmpl*.
+
+#### Some problems appears with the CSS
+
+Now you have a menu and use it you see that CSS is not available for all pages. This is because of the fact that all CSS and JS links are relative. They refers to *css/style.css* for an example. And each page don't have the same depth into our blog tree.
+
+To avoid this kind of problem we recommand in ${PROJECTNAME} to use absolute path. But how to add our blog URL in each CSS and JS files? We use variables. That way, you can add BLOG\_URL variable in your CSS/JS files (located in **template/monochromed/static** directory) to complete all links. For an example in **template/monochromed/static/js/init.js** file replace:
+
+    prefix: 'css/style',
+
+by:
+
+    prefix: '${BLOG_URL}/css/style',
+
+Then adapt **template/monochromed/header.tmpl** to have this:
+
+      <link href='http://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+      <!--[if lte IE 8]><script src="${BLOG_URL}/js/html5shiv.js"></script><![endif]-->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="${BLOG_URL}/js/skel.min.js"></script>
+      <script src="${BLOG_URL}/js/skel-panels.min.js"></script>
+      <script src="${BLOG_URL}/js/init.js"></script>
+      <noscript>
+        <link rel="stylesheet" href="${BLOG_URL}/css/skel-noscript.css" />
+        <link rel="stylesheet" href="${BLOG_URL}/css/style.css" />
+      </noscript>
+      <!--[if lte IE 8]><link rel="stylesheet" href="${BLOG_URL}/css/ie/v8.css" /><![endif]-->
+      <!--[if lte IE 9]><link rel="stylesheet" href="${BLOG_URL}/css/ie/v9.css" /><![endif]-->
+    </head>
+
+Refresh the blog and enjoy!
+
+#### Common files
+
+As explained in **Template ' structure** section, there is a lot of files needed for our template to work. Some needs to be adapted, and some other one can be just used as it is.
+
+So you can copy these files (from **template/base** directory) in your monochromed directory:
+
+  * element.tmpl
+  * menu.about.tmpl
+  * post.footer.tmpl
+  * post.index.tmpl
+  * tagelement.tmpl
+  * taglink.tmpl
+  * tags.tmpl
+
+After a *refresh* your blog will have posts list and tags list available.
+
+What do you think about your blog now?
 
 ----
 
 ## Template ' structure
 
-In ${PROJECTNAME} the structure of templates are not complex. But you need to know how it works to understand the possibilities it offers.
+In ${PROJECTNAME} the structure of templates is not complex. But you need to know how it works to understand the possibilities it offers.
 
 ### Quick list of needed files
 
@@ -91,18 +282,17 @@ Elements:
   * **article.tmpl**: content of a given post from the weblog
   * **config.mk**: contains the configuration of your template. The name, the CSS filename, the second CSS filename, if the sidebar is mandatory, etc.
   * **element.tmpl**: short info about a post to be integrated in the list of posts.
-  * **footer.tmpl**: footer of **all** weblog pages. Should contains the first ```<html>``` tag, the ```<head>``` and the ```<body>``` one.
-  * **header.tmpl**: header of **all** weblog pages. Should contains the last ```</body>``` and ```</html>``` one.
-  * **[deprecated] jskomment.css**: CSS for JSKOMMENT comment system
+  * **header.tmpl**: header of **all** weblog pages. Should contains the first ```<html>``` tag, the ```<head>``` and the ```<body>``` one.
+  * **footer.tmpl**: footer of **all** weblog pages. Should contains the last ```</body>``` and ```</html>``` one.
   * **menu.about.tmpl**: supplementary main menu link to the about's page
   * **menu.search\_bar.tmpl**: supplementary main menu link to display a search bar
-  * **pagination.tmpl**: HTML code used to make a pagination under homepage
+  * **pagination.tmpl**: HTML code used to make a pagination under posts list
   * **post.footer.tmpl**: last HTML code that will be displayed after the list of all posts
   * **post.index.tmpl**: first HTML code to be displayed before the list of all posts
-  * **read\_more\_link.tmpl**: link "Read more" that will be displayed under each post on the homepage
+  * **read\_more\_link.tmpl**: link "Read more" that will be displayed under each post on the homepage. Only available if MAX\_POST\_LINES is used.
   * **sidebar.tmpl**: HTML code that will be used in place of ${SIDEBAR} specific word in header/footer templates. Should contains the **${SIDEBAR\_CONTENT}** specific word.
-  * **static**: directory that contains files that needs to be present in the result. For an example some pictures, javascript files, etc. But NOT CSS files.
-  * **style**: list of possible CSS files. As ${PROJECTNAME} is designed, you can make a stylesheet for main appearance, then add a CSS file for each version of your template. For an example a CSS that makes your template red. Another one that makes your template blue, etc.
+  * **static** [directory]: directory that contains files that needs to be present in the result. For an example some pictures, javascript files, etc. Do not place CSS files here (but not forbidden) as we have *style* directory for this. You should know that files contained in static directory will be completed during a compilation process. But this is only ready for the **BLOG\_URL** variable.
+  * **style** [directory]: list of possible CSS files. As ${PROJECTNAME} is designed, you can make a stylesheet for main appearance, then add a CSS file for each version of your template. For an example a CSS that makes your template red. Another one that makes your template blue, etc. Is configurable with the help of CSS\_COLOR\_FILE in **config.mk** file.
   * **tagelement.tmpl**: a single tag element to be displayed on the tag list page
   * **taglink.tmpl**: a single tag info that would be displayed on each post
   * **tags.tmpl**: the tag list page. Should content the **${TAG\_LIST\_TITLE}** specific word.
@@ -117,11 +307,14 @@ Pay attention that some other ones are located in the template main directory fo
   * **empty.file**: an empty file (some applications are very curious, this one don't escape to this rule)
   * **feed.footer.rss**: XML footer code for RSS feed
   * **feed.header.rss**: XML header code for RSS feed
-  * **[deprecated] jskomment.article.tmpl**: HTML code for each article for JSKOMMENT functionnality
-  * **[deprecated] jskomment.css**: CSS used for JSKOMMENT functionnality
-  * **[deprecated] jskomment\_css\_declaration.tmpl**: CSS HTML declaration used for header
-  * **[deprecated] jskomment\_declaration.tmpl**: HTML code that declares the JSKOMMENT javascript in our weblog. Commonly placed in the footer.
-  * **[deprecated] jskomment.js**: Javascript code used by JSKOMMENT functionnality
+  * **isso.tmpl**: HTML code for each post for ISSO comment functionnality. Replace ISSO\_CONTENT variable in templates.
+  * **isso.css**: CSS used for ISSO functionnality
+  * **isso\_css\_declaration.tmpl**: CSS HTML declaration used in header for ISSO comment system. Replace ISSO\_CSS\_DECLARATION variable in templates.
+  * **isso\_declaration.tmpl**: HTML code that declares the ISSO javascript in our weblog. Commonly placed in the footer. Replace ISSO\_SCRIPT variable in templates.
+  * **isso.short.tmpl**: usually used on homepage to only display number of comment using ISSO comment system. Replace ISSO\_SHORT variable in templates.
+  * **isso.extended.tmpl**: usually used on each post to display comments using ISSO comment system. Replace ISSO\_EXTENDED variable in templates.
+  * **sh\_declaration.tmpl**: HTML code that declares the ISSO javascript in our weblog. Commonly placed in the footer. Replace SH\_SCRIPT variable in templates.
+  * **sh\_css\_declaration.tmpl**: CSS HTML declaration used in header for SyntaxHighlighter system. Replace SH\_CSS\_DECLARATION variable in templates.
 
 ### More explanation
 
@@ -151,7 +344,7 @@ Then, how works the content?
 The content is so build regarding which page we want.
 
 So for **posts** you have **article.tmpl** that describe each single post page, but **article.index.tmpl** describe the code used for one post that is displayed on homepage.
-All posts are listed in a posts page list. The template for this list is **post.index.tmpl** (beginning) and **post.footer.tmpl** (end).
+All posts are listed in a posts page. The template for this list is **post.index.tmpl** (beginning) and **post.footer.tmpl** (end).
 Each post short description on this list is described in **element.tmpl**.
 If you activate the numbering of posts on this page, you will have a pagination. The template of this one is available here: **pagination.tmpl**.
 
@@ -175,21 +368,16 @@ The file contains some mandatories info as:
 
 and optional ones:
 
-  * **JSKOMMENT\_CAPTCHA\_THEME**: Theme used by reCaptcha. Could be one of:
-    * red
-    * white
-    * blackglass
-    * clean
-  * **JSKOMMENT\_CSS**: alternative CSS used for reCaptcha in JSKOMMENT system. Should be located into **template/yourTemplate* directory. Example: *myjskomment.css*
+  * **ISSO\_CSS**: additionnal CSS used for ISSO comment system. Should be located into **template/yourTemplate** directory. Example: *myissocomment.css*
   * **SIDEBAR**: If value is 1 then the sidebar is mandatory for your template. Which means your template have been designed to be only used with a sidebar.
+  * **ISSO\_SHORT**: template used for ISSO\_SHORT variable. In fact, it replaces ISSO\_SHORT variable by the content of this template.
 
 **NB:** These info should be placed like this:
 
-```
-VAR = value
-```
+    VAR = value
 
 You can find some example of *config.mk* file into the **template** directory. Don't hesitate to have a look into this directory. You will learn a lot!
+
 ----
 
 ## Replacement values
@@ -204,7 +392,7 @@ In this section, you will know more about these replacement values, how to find 
 
 ### Translated values
 
-Some specific word can be found here: *lang/translate.en*.
+Some specific words can be found here: *lang/translate.en*.
 
 In this file, each first word in uppercase of each line is a specific word that will be replaced in the result.
 
@@ -216,7 +404,7 @@ There is some specific words that comes from the configuration file (${PROJECTNA
 
   * **BLOG\_CHARSET**
   * **BLOG\_TITLE**
-  * **LANG** (comes from BLOG\_LANG in ${PROJECTNAMELOWER}.rc)
+  * **LANG** (comes from BLOG\_LANG in ${PROJECTNAMELOWER}.rc file)
   * **BLOG\_DESCRIPTION**
   * **BLOG\_SHORT\_DESCRIPTION**
   * **BLOG\_URL** (very used all over the blog)
@@ -228,12 +416,12 @@ Tip: Dislike the previous section about translation file, you cannot add any per
 
 ### Given by the ${PROJECTNAME} engine
 
-To make template you need to know and understand these specific words. They are delivered by the ${PROJECTNAME} engine and permit you to design new template for your weblog.
+To make template you need to know and understand these specific words. They are delivered by the ${PROJECTNAME} engine and permit you to design new templates for your weblog.
 
 Here is a non-exhaustive list. If you find a new one not listed here, please contact us or create a new ticket on [our bug tracking system](${GITPROJECT}issues).
 
   * **ABOUT\_INDEX**: Real html name of *About*'s page. For an example: about.html. If you want a link to the about's page, you just have to make this: "*${BLOG\_URL}/${ABOUT\_INDEX}*".
-  * **ABOUT\_LINK**: Add a menu link regarding *menu.about.tmpl* template. This only works if About's page was activated by the default configuration with "*ABOUT = 1*".
+  * **ABOUT\_LINK**: Add a menu link regarding *menu.about.tmpl* template. This only works if About's page was activated by its presence.
   * **BODY\_CLASS**: The engine is configured to change this value regarding the generated page. By default the value is "single" for all pages. Then you have: 
     * single (default value)
     * about: to say the entire page is an about's one
@@ -248,7 +436,7 @@ Here is a non-exhaustive list. If you find a new one not listed here, please con
   * **DATETIME**: Date using ISO8601 format to be compatible with HTML5 *time* tag. Displayed datetime changes regarding the post you are into.
   * **POST\_TYPE**: Type the user filled in when it creates the post. This permit to use it in CSS and class so that each article have another color for an example.
   * **POSTDIR\_INDEX**: Name of postdir's index page. For an example *index.html*.
-  * **POSTDIR\_NAME**: Posts ' directory name. For an example *posts*. That permit to have a better web indexation for your language.
+  * **POSTDIR\_NAME**: Posts ' directory name. For an example *post*. That permit to have a better web indexation for your language.
   * **POST\_AUTHOR**: Author of the post
   * **POST\_ESCAPED\_TITLE**: Title of the post without whitespaces. Commonly used for comment systems. Example of result: **my\_first\_post**.
   * **POST\_FILE**: Post filename. Example: **my\_first\_post.html**.
@@ -257,7 +445,7 @@ Here is a non-exhaustive list. If you find a new one not listed here, please con
   * **SHORT\_DATE**: Date using short date format (SHORT\_DATE\_FORMAT in ${PROJECTNAMELOWER}.rc configuration file) for post list's page.
   * **SIDEBAR**: Add a sidebar here regarding *sidebar.tmpl* template. Only works if sidebar is activate from the configuration file (${PROJECTNAMELOWER}.rc) or the template's configuration file (config.mk).
   * **SIDEBAR\_CONTENT**: Add the content of **special/sidebar.md** file.
-  * **TAGDIR\_NAME**: Tags directory name. For an example *tags*. This permits a better web indexation for your language.
+  * **TAGDIR\_NAME**: Tags directory name. For an example *tag*. This permits a better web indexation for your language.
   * **TAGDIR\_INDEX**: Tag index filename. Example: **index.html**.
   * **TAGLIST\_CONTENT**: List of all tags from the blog.
   * **TAG\_LINKS\_LIST**: List of tags from a given post.

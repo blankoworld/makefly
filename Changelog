@@ -1,5 +1,24 @@
-Current version (0.4-trunk)
+Current version (0.4.1-trunk)
+	- New documentation about deleting posts and how to change the timestamp
+	- New flavor for BASE theme/template: lightblue, solarized and darkside
+	- Upgrade to an ELI version that supports Location and Post time displays
+	- Add new SyntaxHighlighter to colorize code in posts
+	- Fix missing AGPL License in some files
+	- New documentation about making static website
+	- Fix missing space replacements for tag pages
+	- Add some command line variables so that the project can be launched from 
+	another repository
+	- Add lua fallback at launch
+	- Fix lua syntax problems
+	- Static pages have lowercase without spaces filenames but normal titles
+
+Version 0.4 (released 2015-06-23)
+	- Add documentation about how to create/customize themes
+	- Fix a problem on tags that have a simple quote in their name
 	- Change Jskomment system to Isso one (Cf. http://posativ.org/isso/)
+	- Option "description" is now displayed on minisch/base themes
+	- Include markdown.lua to the project so that lua-markdown package is
+	useless
 	- Add some option on backup tool: prefix, suffix and date format. Delete
 	other one like: compress tool and extension
 	- Fix a problem with titles. Now we can display japanese titles
