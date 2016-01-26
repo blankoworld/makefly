@@ -4,11 +4,29 @@
 
 You can find a [script to migrate from Makefly to Hugo on Github](https://github.com/blankoworld/makefly2hugo).
 
+**Note**: If you're a warrior and want to check the code, have a look here:
+
+  * https://github.com/blankoworld/makefly-devtools : Some tools to attempt to test Makefly
+  * https://github.com/blankoworld/makefly-extras : Some themes
+  * https://github.com/blankoworld/docker-makefly : Makefly in a Docker
+  * https://github.com/blankoworld/nb2makefly : Migrate from Nanoblogger to Makefly
+  * https://github.com/blankoworld/quinoa : A fork from Makefly to make a microblog
+  * https://github.com/blankoworld/rave-comment : Comment system for Makefly
+
 # ATTENTION
 
 **ATTENTION : Après avoir découvert le [générateur de site statique Hugo](http://gohugo.io/) et l'avoir [comparé à Makefly](https://github.com/blankoworld/makefly/wiki/Fonctionnalit%C3%A9s), j'ai décidé de fermer le projet Makefly avec sa dernière version: 0.4.1.**
 
 Vous pouvez trouver un [script de migration de Makefly à Hugo sur Github](https://github.com/blankoworld/makefly2hugo).
+
+**Note** : Si vous êtes un *warrior* et voudriez vérifier le code, jetez un œil ici : 
+
+  * https://github.com/blankoworld/makefly-devtools : Quelques outils pour tenter de tester Makefly
+  * https://github.com/blankoworld/makefly-extras : Quelques thèmes
+  * https://github.com/blankoworld/docker-makefly : Makefly dans un Docker
+  * https://github.com/blankoworld/nb2makefly : Migrer de Nanoblogger à Makefly
+  * https://github.com/blankoworld/quinoa : Un fork de Makefly pour faire un microblog
+  * https://github.com/blankoworld/rave-comment : Système de commentaire pour Makefly
 
 # For Users
 
