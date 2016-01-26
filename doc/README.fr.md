@@ -369,14 +369,13 @@ Ceci ajoutera "mon petit contenu" dans votre nouvel article.
 
 ### Disposer d'un service de commentaires
 
-${PROJECTNAME} dispose d'un service gratuit en bêta test nommé [Rave Comment](http://rave.depotoi.re/) mis à disposition de ses utilisateurs.
+Vous pouvez utiliser [Isso](https://posativ.org/isso/) comme système de commentaire.
 
-Une fois enregistré, vous recevrez une adresse URL telle que : **rave.depotoi.re/monpseudo**.
-
-Il suffit ensuite d'éditer le fichier ${PROJECTNAMELOWER}.rc et d'y modifier les variables suivantes : 
+Une fois installé et configuré, par exemple sur *monsysteme.commentaire.tld*, modifiez
+simplement le fichier ${PROJECTNAMELOWER}.rc et modifiez les variables suivantes : 
 
     ISSO = 1
-    ISSO_URL = rave.depotoi.re/monpseudo
+    ISSO_URL = monsysteme.commentaire.tld
 
 Vous aurez ainsi un système de commentaire sur votre site.
 
@@ -433,8 +432,8 @@ Voici quelques options que vous pouvez changer :
   * PUBLISH\_SCRIPT\_NAME : Nom du fichier script utilis&eacute; pour envoyer les fichiers du dossier **pub** vers une destination renseign&eacute;e dans la variable *PUBLISH\_DESTINATION*.
   * SEARCH\_BAR : Mis &agrave; 1 permet d'activer une barre de recherche sur ${PROJECTNAME}. &Agrave; noter que votre th&egrave;me doit supporter la barre de recherche.
   * MAX\_RSS : Nombre d'articles RSS maximum qui sera r&eacute;cup&eacute;r&eacute; par vos utilisateurs.
-  * ISSO : Mis &agrave; 1 permet d'activer un syst&egrave;me de commentaires pour ${PROJECTNAME}. &Agrave; noter que votre th&egrave;me doit supporter le syst&egrave;me de commentaires. Attention, par d&eacute;faut cela utilise rave.depotoi.re en tant que serveur, il ne garantit pas un archivage &agrave; long terme des commentaires. Plus d'informations sont disponibles [sur la page d'installation du projet isso](http://posativ.org/isso/docs/install/ "Se rendre sur la page du projet pour en savoir plus").
-  * ISSO\_URL (optionnel) : D&eacute;finit un serveur ISSO sur lequel envoyer les commentaires. Par exemple **rave.depotoi.re/pseudo**. Attention : n'utilisez pas de **http://** devant l'adresse. Cela permet d'avoir du http ou du https quand nécessaire.
+  * ISSO : Mis &agrave; 1 permet d'activer un syst&egrave;me de commentaires pour ${PROJECTNAME}. &Agrave; noter que votre th&egrave;me doit supporter le syst&egrave;me de commentaires. Attention, par d&eacute;faut cela utilise mycomment.system.tld en tant que serveur. Plus d'informations sont disponibles [sur la page d'installation du projet isso](http://posativ.org/isso/docs/install/ "Se rendre sur la page du projet pour en savoir plus").
+  * ISSO\_URL (optionnel) : D&eacute;finit un serveur ISSO sur lequel envoyer les commentaires. Par exemple **monsysteme.commentaire.tld**. Attention : n'utilisez pas de **http://** devant l'adresse. Cela permet d'avoir du http ou du https quand nécessaire.
   * ISSO\_MAX (optionnel) : D&eacute;finit une limite de commentaires &agrave; afficher pour le syst&egrave;me de commentaire ISSO. Par d&eacute;faut **3**.
   * ELI\_USER : Si utilis&eacute;, ceci active un cadre pour le r&eacute;seau StatusNet/GNU Social. &Agrave; noter que votre th&egrave;me doit supporter le widget ELI. Par d&eacute;faut cette fonctionnalit&eacute; utilise l'API de StatusNet/GNU Social.
   * ELI\_TYPE (optionel) : Changer cet &eacute;l&eacute;ment par "group" pour suivre un groupe plut&ocirc;t qu'un utilisateur de StatusNet/GNU Social. Par d&eacute;faut "user".
@@ -462,11 +461,7 @@ Je vous invite &agrave; lire la [documentation de nb2makefly](https://github.com
 
 ### Description
 
-${PROJECTNAME} est un sous-projet de [BlogBox](http://blogbox.depotoi.re/ "En savoir plus sur le projet BlogBox") qui vise &agrave; fournir de meilleurs moyens pour h&eacute;berger un blog &agrave; la maison.
-
-### Site web
-
-Visitez fr&eacute;quemment le [blog de ${PROJECTNAME}](${PROJECTURL}blog/ "Visiter le blog officiel de ${PROJECTNAME}") (en) pour avoir des nouvelles du projet.
+${PROJECTNAME} est une alternative simple et rapide à [Nanoblogger](http://nanoblogger.sourceforge.net/).
 
 ### Alerte rouge, bug détecté !
 

@@ -25,7 +25,7 @@ You can also [follow Markdown Interactive Tutorial](http://markdowntutorial.com/
 
 ### If any problem…
 
-Just have a look on [official documentation](http://makefly.depotoi.re/documentation.html) where you will probably find the solution.
+Just have a look on [official documentation](https://github.com/blankoworld/makefly#readme) where you will probably find the solution.
 
 If you really don't find, either contact me at [olivier [AT] dossmann [DOT] net](olivier+makefly@dossmann.net) or [ask about help by opening a new ticket on Github](https://github.com/blankoworld/makefly/issues).
 

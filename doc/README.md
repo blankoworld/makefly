@@ -369,14 +369,13 @@ This will add "my little content" into your new post.
 
 ### Having a comment system
 
-${PROJECTNAME} have a free beta service called [Rave Comment](http://rave.depotoi.re/) and available for users.
+You can use [Isso](https://posativ.org/isso/) as comment system.
 
-Once registered, you will receive an URL as: **rave.depotoi.re/mypseudo**.
-
-You just have to edit ${PROJECTNAMELOWER}.rc and change these variables:
+Once installed and configured, for an example, on *mycomment.system.tld*, you
+just have to edit ${PROJECTNAMELOWER}.rc and change these variables:
 
     ISSO = 1
-    ISSO_URL = rave.depotoi.re/mypseudo
+    ISSO_URL = mycomment.system.tld
 
 You will so have a comment system on your website.
 
@@ -432,8 +431,8 @@ Here is some options you can change:
   * PUBLISH\_SCRIPT\_NAME: script filename used to send files from **pub** directory to a destination filled in *PUBLISH\_DESTINATION* variable.
   * SEARCH\_BAR: If set to 1, activate a search bar on ${PROJECTNAME}. Note that your theme should support search bar!
   * MAX\_RSS: Max RSS posts that would be fetch from your users.
-  * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is rave.depotoi.re which doesn't guarantee a long backup of your comments. More info are available [on isso project installation page](http://posativ.org/isso/docs/install/ "Go to isso webpage for more information").
-  * ISSO\_URL (optional): Define a ISSO server on which send comments. For example **rave.depotoi.re/pseudo**. Warning: don't use **http://** behind the address. It permits to keep to have http or https when needed.
+  * ISSO : If set to 1, this activate a comment system on ${PROJECTNAME}. Note that your theme should support comment system. Warning: default server is mycomment.system.tld which doesn't work as you should install yours. More info are available [on isso project installation page](http://posativ.org/isso/docs/install/ "Go to isso webpage for more information").
+  * ISSO\_URL (optional): Define a ISSO server on which send comments. For example **mycomment.system.tld**. Warning: don't use **http://** behind the address. It permits to keep to have http or https when needed.
   * ISSO\_MAX (optional): Define a limit for displayed comments for ISSO comment system. By default **3**.
   * ELI\_USER: If set, this activates a badge for StatusNet/GNU Social network. Note that your theme should support ELI widget. By default this functionality use StatusNet/GNU Social's API.
   * ELI\_TYPE (optional): Change this to "group" to follow a group instead of a user on StatusNet/GNU Social. By default "user".
@@ -461,11 +460,7 @@ I guest you to read the [nb2makefly documentation](https://github.com/blankoworl
 
 ### Description
 
-${PROJECTNAME} is a subproject of [BlogBox](http://blogbox.depotoi.re/ "Read more about BlogBox project") that aims to give user a better way to host a blog at home.
-
-### Website
-
-Stay tuned to [${PROJECTNAME} weblog](${PROJECTURL}blog/ "Visit ${PROJECTNAME} official website") to know more about the project.
+${PROJECTNAME} is a quick and simple alternative of [Nanoblogger](http://nanoblogger.sourceforge.net/).
 
 ### Red alert, bug detected!
 

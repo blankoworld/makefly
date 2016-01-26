@@ -56,7 +56,7 @@ luarocks install luafilesystem
 ]]--
 
 PROJECTNAME = 'Makefly'
-PROJECTURL = 'http://makefly.depotoi.re/'
+PROJECTURL = 'http://github.com/blankoworld/makefly/'
 GITPROJECT = 'https://github.com/blankoworld/makefly/'
 PROJECTNAMELOWER = string.lower(PROJECTNAME)
 
